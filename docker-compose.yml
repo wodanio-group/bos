@@ -1,0 +1,24 @@
+---
+
+services:
+    
+  postgresql:
+    image: "postgres:17"
+    restart: "unless-stopped"
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_DB=database"
+      - "POSTGRES_USER=database"
+      - "POSTGRES_PASSWORD=database"
+      - "PGDATA=/var/lib/postgresql/data/pgdata"
+    volumes:
+      - "database:/var/lib/postgresql/data"
+    networks:
+      - "app"
+
+networks:
+  app:
+
+volumes:
+  database:

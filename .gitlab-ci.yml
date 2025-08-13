@@ -1,0 +1,25 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_HOST: DOCKER_HOST
+  DOCKER_TLS_CERTDIR: ""
+  CI_REGISTRY: $CI_REGISTRY
+  CI_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE
+  CI_JOB_TOKEN: $CI_JOB_TOKEN
+
+stages:
+  - build
+
+build:
+  stage: build
+  only:
+    - main
+    - staging
+  script:
+    - docker info
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
