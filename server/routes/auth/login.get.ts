@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
   ]);
 
   const redirectTo = client.buildAuthorizationUrl(config, {
-    redirect_uri: runtimeConfig.siteUrl + '/auth/callback',
+    redirect_uri: runtimeConfig.public.siteUrl + '/auth/callback',
     scope: 'openid profile email',
     code_challenge: codeChallenge,
     code_challenge_method: 'S256'

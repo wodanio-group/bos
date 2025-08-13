@@ -6,8 +6,9 @@ export const UserRoleRights: {
   rights: UserRoleRight[];
 }[] = [
   { role: 'ADMIN', rights: [
-    'user.all.edit',
+    'user.all.view', 'user.all.create', 'user.all.edit', 'user.all.delete',
   ] },
+  { role: 'NONE', rights: [] },
 ];
 
 export const getRightsByUserRole = (role: UserRole): UserRoleRight[] => UserRoleRights.find(o => o.role === role)?.rights ?? [];
@@ -19,6 +20,7 @@ export const userToViewModel = (user: User): UserViewModel => {
     id: user.id,
     createdAt: (new Date(user.createdAt)).toISOString(),
     updatedAt: (new Date(user.updatedAt)).toISOString(),
+    email: user.email,
     displayName: user.displayName,
     role: user.role,
     rights: getRightsByUserRole(user.role),

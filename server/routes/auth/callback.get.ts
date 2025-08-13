@@ -1,5 +1,6 @@
 import * as client from "openid-client";
 import prisma from "~~/lib/prisma";
+import type { User } from "@prisma/client";
 import { parse } from "cookie";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
@@ -29,25 +30,37 @@ export default defineEventHandler(async (event) => {
   });
 
   const tokenClaims = tokens.claims(),
-        userinfo = await client.fetchUserInfo(config, tokens.access_token!, tokenClaims?.sub ?? '');
+        userinfo = await client.fetchUserInfo(config, tokens.access_token!, tokenClaims?.sub ?? ''),
+        email = userinfo.email?.trim() ?? null;
 
-  const expiresIn = 60 * 60 * 24 * 7;
+  if (!email)
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Email not found in user',
+    });
+
+  const expiresIn = 60 * 60 * 24 * 14;
 
   const userCount = await prisma.user.count({});
-  const user = await prisma.user.upsert({
-    where: {
-      externalId: userinfo.sub,
-    },
+  const user: User | null = await prisma.user.upsert({
+    where: { email },
     create: {
-      externalId: userinfo.sub,
+      email,
       displayName: userinfo.name,
       role: (userCount <= 0) ? 'ADMIN' : undefined
     },
     update: {
-      externalId: userinfo.sub,
+      email: userinfo.email,
       displayName: userinfo.name,
     },
   });
+
+  if (!user)
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'User not found',
+    });
+
   const token = jwt.sign({
     id: user.id,
   }, runtimeConfig.secret, { expiresIn });

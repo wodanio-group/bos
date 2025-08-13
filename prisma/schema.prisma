@@ -12,13 +12,14 @@ datasource db {
 
 enum UserRole {
   ADMIN
+  NONE
 }
 
 model User {
   id              String      @id @default(uuid())
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
-  externalId      String      @unique
+  email           String      @unique
   displayName     String?
   role            UserRole    @default(ADMIN)
 }
