@@ -7,7 +7,12 @@ export default defineNuxtConfig({
     strict: true,
   },
   runtimeConfig: {
-    token: '',
+    secret: '',
+    openId: {
+      issuer: '',
+      clientId: '',
+      clientSecret: '',
+    },
     public: {
       siteUrl: 'http://localhost:3000',
     },
@@ -59,5 +64,5 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ['@nuxt/image', '@prisma/nuxt', '@prisma/nuxt', '@nuxtjs/sitemap', 'nuxt-umami']
+  modules: ['@nuxt/image', '@prisma/nuxt', '@prisma/nuxt', '@nuxtjs/sitemap', 'nuxt-umami', '@nuxtjs/tailwindcss']
 })
