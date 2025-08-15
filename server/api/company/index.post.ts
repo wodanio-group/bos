@@ -1,0 +1,101 @@
+import {
+  authMiddleware, 
+  companyToViewModel, 
+  contactNoteValidator, 
+  contactCommunicationWayValidator, 
+  contactAddressValidator,
+  getNextAvailableCompanyCustomerId,
+  increaseCompanyCustomerId
+} from "#imports";
+import prisma from "~~/lib/prisma";
+import { z } from "zod";
+
+export default defineEventHandler(async (event) => {
+  await authMiddleware(event, {
+    rights: ['contact.all.create'] 
+  });
+
+  const body = z.object({
+    externalId: z.string().trim().optional().nullable(),
+    name: z.string().trim().optional().nullable(),
+    name2: z.string().trim().optional().nullable(),
+    taxId: z.string().trim().optional().nullable(),
+    vatId: z.string().trim().optional().nullable(),
+    persons: z.array(z.object({
+      id: z.string().uuid(),
+      role: z.string().optional().nullable(),
+    })).default([]),
+    communicationWays: z.array(contactCommunicationWayValidator).default([]),
+    addresses: z.array(contactAddressValidator).default([]),
+    notes: z.array(contactNoteValidator).default([]),
+  }).safeParse(await readBody(event));
+
+  if (!body.success)
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Validation failed',
+      data: body.error.flatten().fieldErrors,
+    });
+
+  const countryIsoCodes = body.data.addresses.map(o => o.country).flat(),
+        countryCount    = await prisma.country.count({ where: { isoCode: { in: countryIsoCodes } } });
+  if (countryIsoCodes.length !== countryCount)
+    throw createError({
+      status: 400,
+      statusMessage: 'No valid countries'
+    });
+
+  const item = await prisma.company.create({
+    data: {
+      externalId: body.data.externalId,
+      name: body.data.name,
+      name2: body.data.name2,
+      taxId: body.data.taxId,
+      vatId: body.data.vatId,
+      customerId: await getNextAvailableCompanyCustomerId(),
+      companyPersons: {
+        create: body.data.persons.map(o => ({
+          personId: o.id,
+          role: o.role,
+        }))
+      },
+      contactCommunicationWays: {
+        create: body.data.communicationWays.map(o => ({
+          type: o.type,
+          category: o.category,
+          value: o.value,
+        }))
+      },
+      contactAddresses: {
+        create: body.data.addresses.map(o => ({
+          category: o.category,
+          address: o.address,
+          address2: o.address2,
+          address3: o.address3,
+          address4: o.address4,
+          zipCode: o.zipCode,
+          city: o.city,
+          country: {
+            connect: {
+              isoCode: o.country,
+            }
+          }
+        }))
+      },
+      contactNotes: {
+        create: body.data.notes.map(o => ({
+          content: o.content
+        }))
+      },
+    },
+    include: {
+      companyPersons: true,
+      contactCommunicationWays: true,
+      contactAddresses: true,
+      contactNotes: true
+    },
+  });
+  await increaseCompanyCustomerId();
+
+  return companyToViewModel(item);
+});

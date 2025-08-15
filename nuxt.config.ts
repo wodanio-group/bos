@@ -6,12 +6,23 @@ export default defineNuxtConfig({
     typeCheck: true,
     strict: true,
   },
+  nitro: {
+    experimental: {
+      openAPI: true
+    },
+    openAPI: {
+      meta: {
+        title: 'WodanioCRM'
+      },
+    },
+  },
   runtimeConfig: {
     secret: '',
     openId: {
       issuer: '',
       clientId: '',
       clientSecret: '',
+      allowAutoCreate: 'true',
     },
     public: {
       siteUrl: 'http://localhost:3000',

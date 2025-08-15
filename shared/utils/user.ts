@@ -1,5 +1,6 @@
 import type { User } from "@prisma/client";
 import type { UserViewModel, UserRole, UserRoleRight } from "../types/user";
+import { z } from "zod";
 
 export const UserRoleRights: {
   role: UserRole;
@@ -7,9 +8,12 @@ export const UserRoleRights: {
 }[] = [
   { role: 'ADMIN', rights: [
     'user.all.view', 'user.all.create', 'user.all.edit', 'user.all.delete',
+    'contact.all.view', 'contact.all.create', 'contact.all.edit', 'contact.all.delete',
   ] },
   { role: 'NONE', rights: [] },
 ];
+
+export const userRoleValidator = z.enum(['ADMIN', 'NONE']).default('NONE');
 
 export const getRightsByUserRole = (role: UserRole): UserRoleRight[] => UserRoleRights.find(o => o.role === role)?.rights ?? [];
 

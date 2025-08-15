@@ -1,3 +1,5 @@
+import { getRouterParams, H3Event } from "h3";
+import { z } from "zod";
 
 export const stringToAlias = (str: string): string => {
   return str.trim().toLowerCase()
@@ -11,3 +13,12 @@ export const stringToAlias = (str: string): string => {
     .join('')
     .replaceAll(/-{2,}/g, '-');
 }
+
+export const getValidatedParamsId = (event: H3Event, validator?: z.ZodString): string | null => {
+  const params = z.object({
+    id: (validator ?? z.string().uuid())
+  }).safeParse(getRouterParams(event));
+  if (!params.success)
+    return null;
+  return params.data.id;
+};

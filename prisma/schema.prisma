@@ -10,16 +10,173 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ------------
+// User
+// ------------
+
 enum UserRole {
   ADMIN
   NONE
 }
 
 model User {
-  id              String      @id @default(uuid())
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  email           String      @unique
-  displayName     String?
-  role            UserRole    @default(ADMIN)
+  id                String        @id @default(uuid())
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  email             String        @unique
+  displayName       String?
+  role              UserRole      @default(ADMIN)
+  publicKey         String        @default(uuid())
+  publicSecret      String        @default(uuid())
+}
+
+// ------------
+// Options
+// ------------
+
+enum OptionKey {
+  CUSTOMER_ID_COUNTER
+  CUSTOMER_ID_SCHEMA
+}
+
+model Option {
+  key         OptionKey   @id
+  value       Json        @default("{}")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+// ------------
+// Contact & Company
+// ------------
+
+enum ContactGender {
+  MALE
+  FEMALE
+  DIVERSE
+  NONE
+}
+
+model Person {
+  id                          String                    @id @default(uuid())
+  createdAt                   DateTime                  @default(now())
+  updatedAt                   DateTime                  @updatedAt
+  externalId                  String?
+  firstname                   String?
+  surename                    String?
+  familyname                  String?
+  gender                      ContactGender             @default(NONE)
+  birthdayAt                  DateTime?
+  companyPersons              CompanyPerson[]
+  contactCommunicationWays    ContactCommunicationWay[]
+  contactAddresses            ContactAddress[]
+  contactNotes                ContactNote[]
+}
+
+model Company {
+  id                          String                    @id @default(uuid())
+  createdAt                   DateTime                  @default(now())
+  updatedAt                   DateTime                  @updatedAt
+  externalId                  String?
+  name                        String?
+  name2                       String?
+  customerId                  String?
+  taxId                       String?
+  vatId                       String?
+  companyPersons              CompanyPerson[]
+  contactCommunicationWays    ContactCommunicationWay[]
+  contactAddresses            ContactAddress[]
+  contactNotes                ContactNote[]
+}
+
+model CompanyPerson {
+  createdAt     DateTime      @default(now())
+  main          Boolean       @default(false)
+  role          String?
+  personId      String
+  person        Person        @relation(fields: [personId], references: [id], onDelete: Cascade)
+  companyId     String
+  company       Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  @@id([personId, companyId])
+}
+
+// --- CommunicationWay
+
+enum ContactCommunicationWayType {
+  PHONE
+  EMAIL
+  WEB
+}
+
+enum ContactCommunicationWayCategory {
+  INVOICING
+  WORK
+  FAX
+  MOBILE
+  AUTOBOX
+  NEWSLETTER
+  PRIVAT
+  NONE
+}
+
+model ContactCommunicationWay {
+  id              String                            @id @default(uuid())
+  createdAt       DateTime                          @default(now())
+  updatedAt       DateTime                          @updatedAt
+  type            ContactCommunicationWayType
+  category        ContactCommunicationWayCategory
+  value           String?
+  personId        String?
+  person          Person?                           @relation(fields: [personId], references: [id], onDelete: Cascade)
+  companyId       String?
+  company         Company?                          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+// --- Address
+
+enum ContactAddressCategory {
+  HEADQUARTER
+  INVOICE
+  WORK
+  DELIVERY
+  PICKUP
+  PRIVAT
+  NONE
+}
+
+model ContactAddress {
+  id              String                  @id @default(uuid())
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  category        ContactAddressCategory
+  address         String?
+  address2        String?
+  address3        String?
+  address4        String?
+  zipCode         String?
+  city            String?
+  countryId       String
+  country         Country                 @relation(fields: [countryId], references: [isoCode])
+  personId        String?
+  person          Person?                 @relation(fields: [personId], references: [id], onDelete: Cascade)
+  companyId       String?
+  company         Company?                @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+model Country {
+  isoCode           String            @id
+  contactAddresses  ContactAddress[]
+}
+
+// --- Note
+
+model ContactNote {
+  id              String          @id @default(uuid())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  content         String
+  personId        String?
+  person          Person?         @relation(fields: [personId], references: [id], onDelete: Cascade)
+  companyId       String?
+  company         Company?        @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }

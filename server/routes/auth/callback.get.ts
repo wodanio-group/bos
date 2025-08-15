@@ -39,21 +39,31 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Email not found in user',
     });
 
-  const expiresIn = 60 * 60 * 24 * 14;
+  const allowAutoCreate = (runtimeConfig.openId.allowAutoCreate === 'true'),
+        expiresIn       = 60 * 60 * 24 * 14;
 
   const userCount = await prisma.user.count({});
-  const user: User | null = await prisma.user.upsert({
+  const user: User | null = (allowAutoCreate || userCount <= 0) ? (await prisma.user.upsert({
     where: { email },
     create: {
       email,
       displayName: userinfo.name,
-      role: (userCount <= 0) ? 'ADMIN' : undefined
+      role: (userCount <= 0) ? 'ADMIN' : 'NONE'
     },
     update: {
       email: userinfo.email,
       displayName: userinfo.name,
     },
-  });
+  })) : (await (async () => { try {
+    return (await prisma.user.update({
+      where: { email },
+      data: {
+        displayName: userinfo.name,
+      }
+    }));
+  } catch (e) {
+    return null;
+  } })());
 
   if (!user)
     throw createError({
