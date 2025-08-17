@@ -1,0 +1,63 @@
+
+general:
+  name: "Name"
+  email: "Email"
+  role: "Role"
+  createdAt: "Created at"
+  updatedAt: "Updated at"
+  id: "ID"
+  edit: "Edit"
+  delete: "Delete"
+  cancel: "Cancel"
+  submit: "Submit"
+  view: "View"
+  save: "Save"
+  noItemsFound: "No items found"
+  searchPlaceholder: "Search ..."
+
+format:
+  datetime: "dd. LLL yyyy, HH:mm"
+  date: "dd. LLL yyyy"
+  time: "HH:mm"
+
+roles:
+  ADMIN: "Administrator"
+  NONE: "None"
+
+layout:
+  aside:
+    dashboard: "Dashboard"
+    companies: "Companies"
+    persons: "Persons"
+    users: "User Management"
+    profile: "Profile"
+    search: "Search ..."
+    logout: "Logout"
+  dialogSearch:
+    searchPlaceholder: "Search ..."
+    noResults: "No results"
+
+company:
+  title: "Companies"
+
+person:
+  title: "Persons"
+
+user:
+  title: "User Management"
+  add: "Add"
+  editTitleAdd: "Add User"
+  editTitleEdit: "Edit \"{name}\""
+  deleteTitle: "Delete \"{name}\""
+  deleteDescription: "Do you want to permanently delete the user?"
+  success:
+    upsert: "User saved"
+    delete: "User deleted"
+  error:
+    upsert: "Error while saving"
+    delete: "Error while deletion"
+
+profile:
+  hello: "Hello, {name}!"
+  user: "User"
+  userinfo: "Userinfo"

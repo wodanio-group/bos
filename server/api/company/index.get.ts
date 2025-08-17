@@ -8,8 +8,9 @@ export default defineEventHandler(async (event) => {
   });
 
   const query = z.object({
-    take: z.number().default(100),
-    page: z.number().default(1),
+    take: z.coerce.number().default(100),
+    page: z.coerce.number().default(1),
+    search: z.string().optional().nullable(),
   }).safeParse(getQuery(event));
 
   if (!query.success)
@@ -22,6 +23,25 @@ export default defineEventHandler(async (event) => {
   return (await prisma.company.findMany({
     take: query.data.take,
     skip: ((query.data.page - 1) * query.data.take),
+    where: { AND: [
+
+      ...(query.data.search ? [{ OR: [
+        { externalId: { contains: query.data.search } },
+        { name: { contains: query.data.search } },
+        { name2: { contains: query.data.search } },
+        { customerId: { contains: query.data.search } },
+        { vatId: { contains: query.data.search } },
+        { taxId: { contains: query.data.search } },
+        { contactCommunicationWays: { some: { value: { contains: query.data.search } } } },
+        { contactAddresses: { some: { address: { contains: query.data.search } } } },
+        { contactAddresses: { some: { address2: { contains: query.data.search } } } },
+        { contactAddresses: { some: { address3: { contains: query.data.search } } } },
+        { contactAddresses: { some: { address4: { contains: query.data.search } } } },
+        { contactAddresses: { some: { zipCode: { contains: query.data.search } } } },
+        { contactAddresses: { some: { city: { contains: query.data.search } } } },
+      ] }] : []),
+
+    ] },
     orderBy: {
       createdAt: 'desc'
     },

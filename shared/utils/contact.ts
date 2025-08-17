@@ -104,6 +104,14 @@ export const personToViewModel = (item: Person): PersonViewModel => {
   };
 }
 
+export const personDisplayName = (item: Person | PersonViewModel, opts?: {}): string => {
+  return [
+    item.firstname,
+    item.surename,
+    item.familyname,
+  ].filter(o => o).join(' ');
+}
+
 export const companyToViewModel = (item: Company): CompanyViewModel => {
   return {
     id: item.id,
@@ -123,6 +131,14 @@ export const companyToViewModel = (item: Company): CompanyViewModel => {
     addresses: ((item as any)?.contactAddresses ?? []).map((o: any) => contactAddressViewModel(o)),
     notes: ((item as any)?.contactNotes ?? []).map((o: any) => contactNoteViewModel(o)),
   };
+}
+
+export const companyDisplayName = (item: Company | CompanyViewModel, opts?: { withCustomerId?: boolean }): string => {
+  return [
+    item.name,
+    item.name2,
+    ...((opts?.withCustomerId === true && item.customerId) ? [ `(${item.customerId})` ] : []),
+  ].filter(o => o).join(' ');
 }
 
 export const getNextAvailableCompanyCustomerId = async (): Promise<string> => {

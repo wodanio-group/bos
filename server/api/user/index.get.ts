@@ -8,8 +8,9 @@ export default defineEventHandler(async (event) => {
   });
 
   const query = z.object({
-    take: z.number().default(100),
-    page: z.number().default(1),
+    take: z.coerce.number().default(100),
+    page: z.coerce.number().default(1),
+    search: z.string().optional().nullable(),
   }).safeParse(getQuery(event));
 
   if (!query.success)
@@ -22,6 +23,14 @@ export default defineEventHandler(async (event) => {
   return (await prisma.user.findMany({
     take: query.data.take,
     skip: ((query.data.page - 1) * query.data.take),
+    where: { AND: [
+
+      ...(query.data.search ? [{ OR: [
+        { email: { contains: query.data.search } },
+        { displayName: { contains: query.data.search } },
+      ] }] : []),
+
+    ] },
     orderBy: {
       createdAt: 'desc'
     }
