@@ -25,7 +25,7 @@ export default defineNuxtConfig({
       issuer: '',
       clientId: '',
       clientSecret: '',
-      allowAutoCreate: 'true',
+      allowAutoCreate: true,
     },
     public: {
       siteUrl: 'http://localhost:3000',
@@ -140,6 +140,7 @@ export default defineNuxtConfig({
     'nuxt-umami',
     '@nuxtjs/tailwindcss',
     'reka-ui/nuxt',
-    '@nuxtjs/i18n'
+    '@nuxtjs/i18n',
+    'nuxt-charts',
   ]
 })

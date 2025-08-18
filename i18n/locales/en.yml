@@ -24,6 +24,11 @@ roles:
   ADMIN: "Administrator"
   NONE: "None"
 
+registrationError:
+  title: "Error"
+  text: "The login or registration could not be completed successfully. Automatic registration may have been disabled. Please contact the administrator."
+  retry: "Retry"
+
 layout:
   aside:
     dashboard: "Dashboard"
@@ -37,11 +42,18 @@ layout:
     searchPlaceholder: "Search ..."
     noResults: "No results"
 
+dashboard:
+  title: "Dashboard"
+
 company:
   title: "Companies"
+  item:
+    title: "{name}"
 
 person:
   title: "Persons"
+  item:
+    title: "{name}"
 
 user:
   title: "User Management"

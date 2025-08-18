@@ -1,9 +1,38 @@
 import { computed, useState } from "#imports";
+import { z } from "zod";
 import type { BaseViewModel } from "~~/shared/types/base";
 
 export const useCrud = <T extends BaseViewModel>(opts: {
   apiPath: string
 }) => {
+
+  const route = useRoute();
+
+  const itemState = useState<T | null>(`crudItem${opts.apiPath}`, () => null);
+  const item = computed(() => itemState.value);
+
+  const loadItem = async (id?: string) => {
+    try {
+      const params = z.object({
+        id: z.preprocess(
+          (v) => {
+            if (v === '+' || v === undefined) return undefined;
+            if (v === null) return null;
+            return String(v).trim().toLowerCase();
+          },
+          z.union([ z.string().uuid(), z.null() ]).optional()
+        )
+      }).parse(route?.params ?? {});   
+      const pId = id ?? params.id ?? null;
+      if (!pId)
+        throw new Error('No id');
+      itemState.value = (await $fetch(`${opts.apiPath}/${pId}`, {
+        method: 'GET'
+      }));
+    } catch (e) {
+      itemState.value = null;
+    }
+  };
 
   const itemsState = useState<T[]>(`crudItems${opts.apiPath}`, () => []);
   const filterAndSearchState = useState<{
@@ -126,6 +155,8 @@ export const useCrud = <T extends BaseViewModel>(opts: {
   }
 
   return {
+    item,
+    loadItem,
     items,
     pagination,
     paginationIsFirst,

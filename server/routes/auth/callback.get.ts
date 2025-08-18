@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Email not found in user',
     });
 
-  const allowAutoCreate = (runtimeConfig.openId.allowAutoCreate === 'true'),
+  const allowAutoCreate = (runtimeConfig.openId.allowAutoCreate === true),
         expiresIn       = 60 * 60 * 24 * 14;
 
   const userCount = await prisma.user.count({});
@@ -65,18 +65,21 @@ export default defineEventHandler(async (event) => {
     return null;
   } })());
 
-  if (!user)
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'User not found',
-    });
+  if (!user) {
+    event.node.res.setHeader('Set-Cookie', [
+      `token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`,
+      'pkce_verifier=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
+      'redirect_path=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
+    ]);
+    return sendRedirect(event, '/registration-error');
+  }
 
   const token = jwt.sign({
     id: user.id,
   }, runtimeConfig.secret, { expiresIn });
 
   event.node.res.setHeader('Set-Cookie', [
-    `token=${token}; HttpOnly; Path=/; SameSite=Lax; Max-Age=${expiresIn}`,
+    `token=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${expiresIn}`,
     'pkce_verifier=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
     'redirect_path=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
   ]);
