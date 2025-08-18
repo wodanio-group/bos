@@ -29,8 +29,8 @@ export default defineNuxtConfig({
     },
     public: {
       siteUrl: 'http://localhost:3000',
-      siteTitle: 'Wodanio CRM',
-      logoUrl: 'https://de-zlg1.s3.wodanio.net/cdn/wodanio/logo/logo.svg',
+      siteTitle: 'Wodanio Business Operation System',
+      logoUrl: 'https://de-zlg1.s3.wodanio.net/cdn/wodanio/logo/bos-logo.svg',
     },
   },
   app: {
