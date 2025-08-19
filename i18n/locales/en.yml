@@ -5,7 +5,11 @@ general:
   role: "Role"
   createdAt: "Created at"
   updatedAt: "Updated at"
+  firstname: "Firstname"
+  familyname: "Familyname"
+  gender: "Gender"
   id: "ID"
+  customerId: "Customer ID"
   edit: "Edit"
   delete: "Delete"
   cancel: "Cancel"
@@ -22,6 +26,12 @@ format:
 
 roles:
   ADMIN: "Administrator"
+  NONE: "None"
+
+genders:
+  MALE: "Male"
+  FEMALE: "Female"
+  DIVERSE: "Diverse"
   NONE: "None"
 
 registrationError:
@@ -47,11 +57,25 @@ dashboard:
 
 company:
   title: "Companies"
+  deleteTitle: "Delete \"{name}\""
+  deleteDescription: "Do you want to permanently delete the company?"
+  deleteSuccessToast: "Company \"{name}\" deleted"
+  deleteErrorToast: "Error while deletion"
+  createDialogTitle: "Create Company"
+  createSuccess: "Company \"{name}\" created!"
+  createError: "Error while creation"
   item:
     title: "{name}"
 
 person:
   title: "Persons"
+  deleteTitle: "Delete \"{name}\""
+  deleteDescription: "Do you want to permanently delete the person?"
+  deleteSuccessToast: "Person \"{name}\" deleted"
+  deleteErrorToast: "Error while deletion"
+  createDialogTitle: "Create Person"
+  createSuccess: "Person \"{name}\" created!"
+  createError: "Error while creation"
   item:
     title: "{name}"
 

@@ -1,4 +1,4 @@
-import type { CountryViewModel, PersonViewModel, CompanyViewModel, ContactNoteViewModel, ContactCommunicationWayViewModel, ContactAddressViewModel } from "../types/contact";
+import type { CountryViewModel, PersonViewModel, CompanyViewModel, ContactNoteViewModel, ContactCommunicationWayViewModel, ContactAddressViewModel, ContactGender } from "../types/contact";
 import type { Country, Person, Company, ContactNote, ContactCommunicationWay, ContactAddress, CompanyPerson } from "@prisma/client";
 import { getOptions, setOptions } from "./option";
 import { z } from "zod";
@@ -32,6 +32,13 @@ export const contactAddressValidator = z.object({
 export const contactNoteValidator = z.object({
   content: z.string().trim(),
 });
+
+export const ContactGenders: ContactGender[] = [
+  'MALE',
+  'FEMALE',
+  'DIVERSE',
+  'NONE',
+];
 
 export const countryToViewModel = (item: Country): CountryViewModel => {
   return {
