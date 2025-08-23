@@ -1,7 +1,20 @@
 <template>
 
   <Page
-    :title="$t('company.item.title', { name: item ? companyDisplayName(item) : '?' })">
+    v-if="item"
+    :title="$t('company.item.title', { name: companyDisplayName(item) })"
+    :subtitle="$t('company.item.subtitle')">
+
+    <ContactNoteSectionBox
+      :contact="item"
+      class="col-span-8">
+
+    </ContactNoteSectionBox>
+
+    <CompanyInfoSectionBox
+      :company="item"
+      class="col-span-4">
+    </CompanyInfoSectionBox>
 
   </Page>
 

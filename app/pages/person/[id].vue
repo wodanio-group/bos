@@ -1,7 +1,8 @@
 <template>
 
   <Page
-    :title="$t('person.item.title', { name: item ? personDisplayName(item) : '?' })">
+    :title="$t('person.item.title', { name: item ? personDisplayName(item) : '?' })"
+    :subtitle="$t('person.item.subtitle')">
 
   </Page>
 

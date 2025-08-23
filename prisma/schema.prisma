@@ -170,13 +170,22 @@ model Country {
 
 // --- Note
 
+enum ContactNoteType {
+  NOTE
+  CALL
+  MEETING
+  OTHER
+}
+
 model ContactNote {
-  id              String          @id @default(uuid())
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id              String            @id @default(uuid())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  type            ContactNoteType   @default(NOTE)
+  timestamp       DateTime?
   content         String
   personId        String?
-  person          Person?         @relation(fields: [personId], references: [id], onDelete: Cascade)
+  person          Person?           @relation(fields: [personId], references: [id], onDelete: Cascade)
   companyId       String?
-  company         Company?        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company         Company?          @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }

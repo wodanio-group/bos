@@ -21,6 +21,16 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     secret: '',
+    sevdesk: {
+      apiUrl: 'https://my.sevdesk.de/api/v1',
+      apiToken: '',
+    },
+    bullmq: {
+      sysname: 'wodaniobos',
+    },
+    redis: {
+      url: ''
+    },
     openId: {
       issuer: '',
       clientId: '',

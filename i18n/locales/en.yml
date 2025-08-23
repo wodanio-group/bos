@@ -8,7 +8,10 @@ general:
   firstname: "Firstname"
   familyname: "Familyname"
   gender: "Gender"
+  vatId: "VAT ID"
+  taxId: "Tax ID"
   id: "ID"
+  externalId: "External ID"
   customerId: "Customer ID"
   edit: "Edit"
   delete: "Delete"
@@ -24,6 +27,30 @@ format:
   date: "dd. LLL yyyy"
   time: "HH:mm"
 
+contactCommunicationWayTypes:
+  PHONE: "Phone"
+  WEB: "Web"
+  EMAIL: "Email"
+
+contactCommunicationWayCategories:
+  INVOICING: "Invoicing"
+  WORK: "Work"
+  FAX: "Fax"
+  MOBILE: "Mobile"
+  AUTOBOX: "Autobox"
+  NEWSLETTER: "Newsletter"
+  PRIVAT: "Private"
+  NONE: "None"
+
+contactAddressCategories:
+  HEADQUARTER: "Headquarter"
+  INVOICE: "Invoice"
+  WORK: "Work"
+  DELIVERY: "Delivery"
+  PICKUP: "Pickup"
+  PRIVAT: "Privat"
+  NONE: "None"
+
 roles:
   ADMIN: "Administrator"
   NONE: "None"
@@ -33,6 +60,9 @@ genders:
   FEMALE: "Female"
   DIVERSE: "Diverse"
   NONE: "None"
+
+countries:
+  DE: "Germany"
 
 registrationError:
   title: "Error"
@@ -66,6 +96,7 @@ company:
   createError: "Error while creation"
   item:
     title: "{name}"
+    subtitle: "Company"
 
 person:
   title: "Persons"
@@ -78,6 +109,7 @@ person:
   createError: "Error while creation"
   item:
     title: "{name}"
+    subtitle: "Person"
 
 user:
   title: "User Management"

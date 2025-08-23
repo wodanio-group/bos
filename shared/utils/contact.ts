@@ -1,4 +1,4 @@
-import type { CountryViewModel, PersonViewModel, CompanyViewModel, ContactNoteViewModel, ContactCommunicationWayViewModel, ContactAddressViewModel, ContactGender } from "../types/contact";
+import type { CountryViewModel, PersonViewModel, CompanyViewModel, ContactNoteViewModel, ContactCommunicationWayViewModel, ContactAddressViewModel, ContactGender, ContactNoteType } from "../types/contact";
 import type { Country, Person, Company, ContactNote, ContactCommunicationWay, ContactAddress, CompanyPerson } from "@prisma/client";
 import { getOptions, setOptions } from "./option";
 import { z } from "zod";
@@ -11,6 +11,8 @@ export const contactCommunicationWayTypeValidator = z.enum(['PHONE', 'EMAIL', 'W
 export const contactCommunicationWayCategoryValidator = z.enum(['INVOICING', 'WORK', 'FAX', 'MOBILE', 'AUTOBOX', 'NEWSLETTER', 'PRIVAT', 'NONE']);
 
 export const contactAddressCategoryValidator = z.enum(['HEADQUARTER', 'INVOICE', 'WORK', 'DELIVERY', 'PICKUP', 'PRIVAT', 'NONE']);
+
+export const contactNoteTypeValidator = z.enum(['NOTE', 'CALL', 'MEETING', 'OTHER']);
 
 export const contactCommunicationWayValidator = z.object({
   type: contactCommunicationWayTypeValidator,
@@ -30,6 +32,8 @@ export const contactAddressValidator = z.object({
 });
 
 export const contactNoteValidator = z.object({
+  type: contactNoteTypeValidator,
+  timestamp: z.string().datetime().optional().nullable(),
   content: z.string().trim(),
 });
 
@@ -38,6 +42,13 @@ export const ContactGenders: ContactGender[] = [
   'FEMALE',
   'DIVERSE',
   'NONE',
+];
+
+export const ContactNoteTypes: ContactNoteType[] = [
+  'NOTE',
+  'CALL',
+  'MEETING',
+  'OTHER'
 ];
 
 export const countryToViewModel = (item: Country): CountryViewModel => {
@@ -82,6 +93,8 @@ export const contactNoteViewModel = (item: ContactNote): ContactNoteViewModel =>
   return {
     createdAt: (new Date(item.createdAt)).toISOString(),
     updatedAt: (new Date(item.updatedAt)).toISOString(),
+    type: item.type,
+    timestamp: item.timestamp ? (new Date(item.timestamp)).toISOString() : null,
     content: item.content,
   };
 }

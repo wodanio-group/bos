@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
 
     ] },
     orderBy: {
-      createdAt: 'desc'
+      createdAt: 'asc'
     },
     include: {
       companyPersons: true,

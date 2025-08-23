@@ -3,7 +3,8 @@ import type {
   ContactGender as OrmContactGender, 
   ContactCommunicationWayType as OrmContactCommunicationWayType,
   ContactCommunicationWayCategory as OrmContactCommunicationWayCategory,
-  ContactAddressCategory as OrmContactAddressCategory
+  ContactAddressCategory as OrmContactAddressCategory,
+  ContactNoteType as OrmContactNoteType
 } from "@prisma/nuxt";
 
 export type ContactGender = OrmContactGender; 
@@ -13,6 +14,8 @@ export type ContactCommunicationWayType = OrmContactCommunicationWayType;
 export type ContactCommunicationWayCategory = OrmContactCommunicationWayCategory;
 
 export type ContactAddressCategory = OrmContactAddressCategory;
+
+export type ContactNoteType = OrmContactNoteType;
 
 export interface CountryViewModel {
   isoCode: string;
@@ -36,6 +39,8 @@ export interface ContactAddressViewModel extends BaseAtViewModel {
 }
 
 export interface ContactNoteViewModel extends BaseAtViewModel {
+  type: ContactNoteType;
+  timestamp: string | null;
   content: string;
 }
 

@@ -7,6 +7,7 @@ export const UserRoleRights: {
   rights: UserRoleRight[];
 }[] = [
   { role: 'ADMIN', rights: [
+    'sevdesk.sync',
     'user.all.view', 'user.all.create', 'user.all.edit', 'user.all.delete',
     'contact.all.view', 'contact.all.create', 'contact.all.edit', 'contact.all.delete',
   ] },

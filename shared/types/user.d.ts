@@ -4,7 +4,8 @@ import type { BaseViewModel } from "./base";
 export type UserRole = OrmUserRole;
 
 export type UserRoleRight = 
-  'user.all.view' | 'user.all.create' | 'user.all.edit' | 'user.all.delete'
+  'sevdesk.sync'
+  | 'user.all.view' | 'user.all.create' | 'user.all.edit' | 'user.all.delete'
   | 'contact.all.view' | 'contact.all.create' | 'contact.all.edit' | 'contact.all.delete';
 
 export interface UserViewModel extends BaseViewModel {

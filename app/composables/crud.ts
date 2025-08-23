@@ -26,7 +26,7 @@ export const useCrud = <T extends BaseViewModel>(opts: {
       const pId = id ?? params.id ?? null;
       if (!pId)
         throw new Error('No id');
-      itemState.value = (await $fetch(`${opts.apiPath}/${pId}`, {
+      itemState.value = (await $fetch<any>(`${opts.apiPath}/${pId}`, {
         method: 'GET'
       }));
     } catch (e) {
