@@ -11,10 +11,10 @@
 
     </ContactNoteSectionBox>
 
-    <CompanyInfoSectionBox
-      :company="item"
+    <ContactInfoSectionBox
+      :contact="item"
       class="col-span-4">
-    </CompanyInfoSectionBox>
+    </ContactInfoSectionBox>
 
   </Page>
 

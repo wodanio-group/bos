@@ -16,18 +16,20 @@ datasource db {
 
 enum UserRole {
   ADMIN
+  USER
   NONE
 }
 
 model User {
-  id                String        @id @default(uuid())
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  email             String        @unique
-  displayName       String?
-  role              UserRole      @default(ADMIN)
-  publicKey         String        @default(uuid())
-  publicSecret      String        @default(uuid())
+  id                        String                    @id @default(uuid())
+  createdAt                 DateTime                  @default(now())
+  updatedAt                 DateTime                  @updatedAt
+  email                     String                    @unique
+  displayName               String?
+  role                      UserRole                  @default(ADMIN)
+  publicKey                 String                    @default(uuid())
+  publicSecret              String                    @default(uuid())
+  timeTrackingActivities    TimeTrackingActivity[]
 }
 
 // ------------
@@ -87,6 +89,7 @@ model Company {
   contactCommunicationWays    ContactCommunicationWay[]
   contactAddresses            ContactAddress[]
   contactNotes                ContactNote[]
+  timeTrackingActivities      TimeTrackingActivity[]
 }
 
 model CompanyPerson {
@@ -188,4 +191,20 @@ model ContactNote {
   person          Person?           @relation(fields: [personId], references: [id], onDelete: Cascade)
   companyId       String?
   company         Company?          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+// --- Time Tracking
+
+model TimeTrackingActivity {
+  id              String            @id @default(uuid())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  userId          String
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  from            DateTime
+  to              DateTime?
+  description     String?
+  companyId       String?
+  company         Company?          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  exportedAt      DateTime?
 }

@@ -2,16 +2,48 @@
 
   <PageSectionBox>
     <template #headerLeft>
+      <template v-for="filter in (filters ?? [])">
+        <div
+          class="w-[200px]"
+          v-if="filter.type === 'date'">
+          <Input
+            type="date"
+            :title="filter.title"
+            @update:modelValue="emit('updateFilter', filter.key, String($event))">
+          </Input>
+        </div>
+        <div
+          class="w-[200px]"
+          v-if="filter.type === 'select'">
+          <Select
+            :title="filter.title"
+            :items="[
+              { value: '' },
+              ...filter.items,
+            ]"
+            @update:modelValue="emit('updateFilter', filter.key, String($event))">
+          </Select>
+        </div>
+      </template>
       <InputSearch
         class="w-[260px]"
-        @update:modelValue="onUpdateSearch"/>
+        @update:modelValue="onUpdateSearch"
+        v-if="hideSearch !== true"/>
     </template>
     <template #headerRight>
       <Button 
         type="button"
+        :icon="action.icon"
+        :title="action.title"
+        @click="emit('action', action.key)"
+        v-for="action in (headerActions ?? [])">
+      </Button>
+      <Button 
+        type="button"
         icon="lucide:plus"
         :title="$t('user.add')"
-        @click="emit('action', addActionKey ?? 'add')">
+        @click="emit('action', addActionKey ?? 'add')"
+        v-if="hideAddButto !== true">
       </Button>
     </template>
 
@@ -99,7 +131,19 @@ const props = defineProps<{
     fieldName: string,
     transform?: ((value: any, item?: any) => (string | null)),
   }[],
-  actions: {
+  filters?: {
+    title: string,
+    icon?: string,
+    key: string,
+    type: 'date' | 'select',
+    items?: { title: string, value: string }[],
+  }[],
+  headerActions?: {
+    title: string,
+    icon?: string,
+    key: string,
+  }[],
+  actions?: {
     title: string,
     icon?: string,
     key: string,
@@ -107,10 +151,13 @@ const props = defineProps<{
   paginationIsFirst?: boolean,
   paginationIsLast?: boolean,
   paginationState?: { take: number, page: number },
+  hideSearch?: boolean,
+  hideAddButto?: boolean,
 }>();
 
 const emit = defineEmits<{
   (event: 'action', key: string, item?: any ): void,
+  (event: 'updateFilter', key: string, value: string): void,
   (event: 'updateSearch', value: string | null): void,
   (event: 'update:paginationIsFirst', value: boolean): void,
   (event: 'update:paginationIsLast', value: boolean): void,

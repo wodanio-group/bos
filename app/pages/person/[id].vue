@@ -1,8 +1,20 @@
 <template>
 
   <Page
+    v-if="item"
     :title="$t('person.item.title', { name: item ? personDisplayName(item) : '?' })"
     :subtitle="$t('person.item.subtitle')">
+
+    <ContactNoteSectionBox
+      :contact="item"
+      class="col-span-8">
+
+    </ContactNoteSectionBox>
+
+    <ContactInfoSectionBox
+      :contact="item"
+      class="col-span-4">
+    </ContactInfoSectionBox>
 
   </Page>
 

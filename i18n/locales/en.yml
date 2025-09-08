@@ -1,6 +1,10 @@
 
 general:
   name: "Name"
+  user: "User"
+  from: "From"
+  to: "To"
+  duration: "Duration"
   email: "Email"
   role: "Role"
   createdAt: "Created at"
@@ -26,6 +30,7 @@ format:
   datetime: "dd. LLL yyyy, HH:mm"
   date: "dd. LLL yyyy"
   time: "HH:mm"
+  duration: "hh:mm"
 
 contactCommunicationWayTypes:
   PHONE: "Phone"
@@ -53,6 +58,7 @@ contactAddressCategories:
 
 roles:
   ADMIN: "Administrator"
+  USER: "User"
   NONE: "None"
 
 genders:
@@ -75,6 +81,7 @@ layout:
     companies: "Companies"
     persons: "Persons"
     users: "User Management"
+    timeTrackings: "Time Trackings"
     profile: "Profile"
     search: "Search ..."
     logout: "Logout"
@@ -129,3 +136,9 @@ profile:
   hello: "Hello, {name}!"
   user: "User"
   userinfo: "Userinfo"
+
+timeTracking:
+  title: "Time Tracking"
+  start: "Start"
+  stop: "Stop"
+  csvExport: "CSV Export"

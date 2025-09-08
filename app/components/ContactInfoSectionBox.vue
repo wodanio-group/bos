@@ -29,26 +29,25 @@
 </template>
 
 <script setup lang="ts">
-import type { CompanyViewModel } from '~~/shared/types/contact';
+import type { CompanyViewModel, PersonViewModel } from '~~/shared/types/contact';
 
 const props = defineProps<{
-  company: CompanyViewModel
+  contact: CompanyViewModel | PersonViewModel
 }>();
-
-console.log(props.company.addresses)
+const isCompany = computed(() => ('customerId' in props.contact));
 
 const lines: {
   type?: 'text' | 'div',
   title?: string | null,
   value?: string | null
 }[] = [
-  { title: $t('general.externalId'), value: props.company.externalId },
-  { title: $t('general.customerId'), value: props.company.customerId },
-  { title: $t('general.name'), value: companyDisplayName(props.company) },
-  { title: $t('general.vatId'), value: props.company.vatId },
-  { title: $t('general.taxId'), value: props.company.taxId },
-  { type: 'div' },
-  ...props.company.communicationWays
+  { title: $t('general.externalId'), value: props.contact.externalId },
+  { title: $t('general.customerId'), value: ('customerId' in props.contact) ? props.contact.customerId : null },
+  { title: $t('general.name'), value: isCompany.value ? companyDisplayName(props.contact as any) : personDisplayName(props.contact as any) },
+  { title: $t('general.vatId'), value: ('vatId' in props.contact) ? props.contact.vatId : null },
+  { title: $t('general.taxId'), value: ('taxId' in props.contact) ? props.contact.taxId : null },
+  ...(((props.contact.communicationWays.length > 0) ? [{ type: 'div' }] : []) as any),
+  ...props.contact.communicationWays
     .sort((a, b) => String(a.type).localeCompare(String(b.type)))
     .map(o => {
 
@@ -61,8 +60,8 @@ const lines: {
             : `<a class="hover:underline" href="${o.value}" target="_blank">${o.value}</a>`
       };
     }),
-  { type: 'div' },
-  ...props.company.addresses
+  ...(((props.contact.addresses.length > 0) ? [{ type: 'div' }] : []) as any),
+  ...props.contact.addresses
     .map(o => {
 
       return {

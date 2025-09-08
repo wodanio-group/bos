@@ -23,7 +23,7 @@
       type="button"
       :disabled="isLast === true"
       class="w-8 h-8 relative flex justify-center items-center border border-secondary-200 text-sm text-secondary-600 rounded-lg cursor-pointer transition-colors hover:bg-secondary-50 disabled:opacity-40 disabled:cursor-not-allowed"
-      @click="onFirstLast('prev')">
+      @click="onFirstLast('next')">
       <Icon icon="lucide:chevron-right" class="text-base"/>
     </button>
   </div>

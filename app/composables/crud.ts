@@ -3,7 +3,8 @@ import { z } from "zod";
 import type { BaseViewModel } from "~~/shared/types/base";
 
 export const useCrud = <T extends BaseViewModel>(opts: {
-  apiPath: string
+  apiPath: string,
+  query?: any
 }) => {
 
   const route = useRoute();
@@ -105,6 +106,7 @@ export const useCrud = <T extends BaseViewModel>(opts: {
       itemsState.value = (await $fetch<T[]>(opts.apiPath, {
         method: 'GET',
         query: {
+          ...(opts.query ?? {}),
           ...filterAndSearchState.value,
         },
       }));

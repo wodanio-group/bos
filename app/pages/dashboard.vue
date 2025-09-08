@@ -2,6 +2,10 @@
 
   <Page :title="$t('dashboard.title')">
 
+    <TimeTrackingStartStopSection
+      class="col-span-12 lg:col-span-4">
+    </TimeTrackingStartStopSection>
+
   </Page>
 
 </template>

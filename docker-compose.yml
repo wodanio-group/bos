@@ -27,6 +27,14 @@ services:
     networks:
       - "app"
 
+  gotenberg:
+    image: "gotenberg/gotenberg:latest"
+    restart: "unless-stopped"
+    ports:
+      - "8001:3000"
+    networks:
+      - "app"
+
 networks:
   app:
 
