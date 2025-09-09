@@ -129,17 +129,18 @@ const onSearch = () => {
   searchOpen.value = true;
 };
 
+let handler: any;
 onMounted(() => {
-  const handler = (e: KeyboardEvent) => {
+  handler = (e: KeyboardEvent) => {
     if (e.code === 'KeyS' && e.metaKey) {
       e.preventDefault();
       onSearch();
     }
   };
   window.addEventListener('keydown', handler);
-  onBeforeUnmount(() => {
-    window.removeEventListener('keydown', handler);
-  });
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handler);
 });
 
 </script>

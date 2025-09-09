@@ -67,7 +67,7 @@ export const contactCommunicationWayToViewModel = (item: ContactCommunicationWay
   };
 }
 
-export const compareContactCommunicationWay = (a: typeof contactCommunicationWayValidator._type | ContactCommunicationWay | ContactCommunicationWayViewModel, b: typeof contactCommunicationWayValidator._type | ContactCommunicationWay | ContactCommunicationWayViewModel) => 
+export const compareContactCommunicationWay = (a: z.infer<typeof contactCommunicationWayValidator> | ContactCommunicationWay | ContactCommunicationWayViewModel, b: z.infer<typeof contactCommunicationWayValidator> | ContactCommunicationWay | ContactCommunicationWayViewModel) => 
   (a.type === b.type && a.category === b.category && a.value === b.value);
 
 export const contactAddressViewModel = (item: ContactAddress): ContactAddressViewModel => {
@@ -85,7 +85,7 @@ export const contactAddressViewModel = (item: ContactAddress): ContactAddressVie
   };
 }
 
-export const compareContactAddress = (a: typeof contactAddressValidator._type | ContactAddress | ContactAddressViewModel, b: typeof contactAddressValidator._type | ContactAddress | ContactAddressViewModel) => 
+export const compareContactAddress = (a: z.infer<typeof contactAddressValidator> | ContactAddress | ContactAddressViewModel, b: z.infer<typeof contactAddressValidator> | ContactAddress | ContactAddressViewModel) => 
   (a.address === b.address && a.address2 === b.address2 && a.address3 === b.address3 && a.address4 === b.address4
     && a.zipCode === b.zipCode && a.city === b.city);
 
@@ -99,7 +99,7 @@ export const contactNoteViewModel = (item: ContactNote): ContactNoteViewModel =>
   };
 }
 
-export const compareContactNote = (a: typeof contactNoteValidator._type | ContactNote | ContactNoteViewModel, b: typeof contactNoteValidator._type | ContactNote | ContactNoteViewModel) => 
+export const compareContactNote = (a: z.infer<typeof contactNoteValidator> | ContactNote | ContactNoteViewModel, b: z.infer<typeof contactNoteValidator> | ContactNote | ContactNoteViewModel) => 
   (a.content === b.content);
 
 export const personToViewModel = (item: Person): PersonViewModel => {
