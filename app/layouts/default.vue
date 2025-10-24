@@ -113,8 +113,8 @@ const onClickItem = (item: IMenuItem) => {
 
 const mainMenuItems: IMenuItem[] = [
   { title: $t('layout.aside.dashboard'), icon: 'lucide:gauge', to: '/dashboard' },
-  // TODO: ...(!user?.rights.includes('contact.all.view') ? [] : [{ title: $t('layout.aside.companies'), icon: 'lucide:building', to: '/company' }]),
-  // TODO: ...(!user?.rights.includes('contact.all.view') ? [] : [{ title: $t('layout.aside.persons'), icon: 'lucide:users-round', to: '/person' }]),
+  ...(!user?.rights.includes('contact.all.view') ? [] : [{ title: $t('layout.aside.companies'), icon: 'lucide:building', to: '/company' }]),
+  ...(!user?.rights.includes('contact.all.view') ? [] : [{ title: $t('layout.aside.persons'), icon: 'lucide:users-round', to: '/person' }]),
   ...(!(user?.rights.includes('timetracking.all.view') || user?.rights.includes('timetracking.own.view')) ? [] : [{ title: $t('layout.aside.timeTrackings'), icon: 'lucide:timer', to: '/time-tracking' }]),
 ];
 

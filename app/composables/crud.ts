@@ -101,6 +101,14 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     loadItems();
   };
 
+  /* const filter = computed<Record<string, string | number | null>>(() => ({}));
+  const filterSet = (filter: Record<string, string | number | null>) => {
+    filterAndSearchState.value = {
+      ...filterAndSearchState.value, filter
+    };
+    loadItems();
+  }; */
+
   const loadItems = async () => {
     try {
       itemsState.value = (await $fetch<T[]>(opts.apiPath, {

@@ -9,7 +9,7 @@
       itemClickActionKey="view"
       :fields="[
         { title: $t('general.customerId'), fieldName: 'customerId' },
-        { title: $t('general.name'), fieldName: 'name', transform: (v, o) => companyDisplayName(o) },
+        { title: $t('general.name'), fieldName: 'name', transform: (v: any, o: any) => companyDisplayName(o) },
       ]"
       :actions="[
         { title: $t('general.view'), icon: 'lucide:external-link', key: 'view' },

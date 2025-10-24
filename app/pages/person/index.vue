@@ -8,7 +8,7 @@
       addActionKey="openAdd"
       itemClickActionKey="view"
       :fields="[
-        { title: $t('general.name'), fieldName: 'name', transform: (v, o) => personDisplayName(o) },
+        { title: $t('general.name'), fieldName: 'name', transform: (v: any, o: any) => personDisplayName(o) },
       ]"
       :actions="[
         { title: $t('general.view'), icon: 'lucide:external-link', key: 'view' },
