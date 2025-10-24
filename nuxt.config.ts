@@ -54,9 +54,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: [
-    '@fortawesome/fontawesome-free/css/all.css',
-  ],
   umami: {
     id: '4ffdd1cc-169b-406f-8310-ecb0aa7c2c12',
     host: 'https://analytics.apps.wodanio.com',
