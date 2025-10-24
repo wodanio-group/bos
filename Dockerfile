@@ -6,6 +6,8 @@ COPY . .
 
 RUN npm install \
   && NITRO_PRESET=node-server npm run build
+  
+RUN rm -rf ./app ./lib ./public ./server ./shared
 
 ENV NODE_ENV=production
 
