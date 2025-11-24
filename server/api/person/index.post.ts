@@ -86,6 +86,8 @@ export default defineEventHandler(async (event) => {
       },
       contactNotes: {
         create: body.data.notes.map(o => ({
+          type: o.type,
+          timestamp: o.timestamp,
           content: o.content
         }))
       },

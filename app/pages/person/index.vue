@@ -12,6 +12,7 @@
       ]"
       :actions="[
         { title: $t('general.view'), icon: 'lucide:external-link', key: 'view' },
+        { title: $t('general.edit'), icon: 'lucide:square-pen', key: 'view-edit' },
         { title: $t('general.delete'), icon: 'lucide:trash-2', key: 'requestDelete' },
       ]"
       :paginationState="pagination"
@@ -123,11 +124,15 @@ const actionHandler = async (key: string, item?: PersonViewModel | null) => { sw
     toast.add({ type: 'success', title: $t('person.createError', { name: personDisplayName(createdItem) }) });
     createForm.value = defaultCreateForm;
     openCreateForm.value = true;
-    actionHandler('view', createdItem);
+    actionHandler('view-edit', createdItem);
     break;
   case 'view':
     if (!item) return;
     navigateTo(`/person/${item.id}`);
+    break;
+  case 'view-edit':
+    if (!item) return;
+    navigateTo(`/person/edit/${item.id}`);
     break;
   case 'delete':
     if (item && !(await deleteById(item.id)))

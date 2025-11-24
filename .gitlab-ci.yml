@@ -1,20 +1,25 @@
-image: "docker:latest"
-
 services:
-  - "docker:dind"
+  - name: "registry.apps.wodanio.com/docker/docker:dind"
+    alias: "docker"
 
 variables:
+  DOCKER_HOST: "tcp://docker:2375"
   DOCKER_TLS_CERTDIR: ""
 
 stages:
   - "build"
 
-build:
+before_script:
+  - "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
+
+build:main:
   stage: "build"
   only:
     - "main"
     - "staging"
   script:
-    - "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
-    - "docker build --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH ."
-    - "docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH"
+    - "docker buildx create --use"
+    - "docker buildx build \
+        --provenance=false \
+        --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH \
+        --push ."

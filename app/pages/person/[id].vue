@@ -5,16 +5,19 @@
     :title="$t('person.item.title', { name: item ? personDisplayName(item) : '?' })"
     :subtitle="$t('person.item.subtitle')">
 
-    <ContactNoteSectionBox
-      :contact="item"
-      class="col-span-8">
+    <div class="col-span-8">
+      <contact-note-section-box
+        :notes="item.notes"
+        @update="onUpdateNotes($event)">
+      </contact-note-section-box>
+    </div>
 
-    </ContactNoteSectionBox>
-
-    <ContactInfoSectionBox
-      :contact="item"
-      class="col-span-4">
-    </ContactInfoSectionBox>
+    <div class="col-span-4">
+      <contact-info-section-box
+        :contact="item"
+        @edit="navigateTo(`/person/edit/${item.id}`)">
+      </contact-info-section-box>
+    </div>
 
   </Page>
 
@@ -28,10 +31,26 @@ definePageMeta({
   middleware: ['auth']
 });
 
-const { item, loadItem } = useCrud<PersonViewModel>({
+const toast = useToast();
+const { item, upsert, loadItem } = useCrud<PersonViewModel>({
   apiPath: '/api/person'
 });
 await loadItem();
+
+const onUpdateNotes = async (notes: Partial<ContactNoteViewModel>[]) => {
+  try {
+    if (!item.value)
+      return;
+    await upsert({
+      ...item.value,
+      notes: notes as any
+    });
+    await loadItem();
+    toast.add({ type: 'success', title: $t('person.notes.toast.success') });
+  } catch (e) {
+    toast.add({ type: 'error', title: $t('person.notes.toast.error') });
+  }
+}
 
 </script>
 

@@ -5,7 +5,8 @@
       <Button
         type="button"
         icon="lucide:edit"
-        :title="$t('general.edit')">
+        :title="$t('general.edit')"
+        @click="emits('edit')">
       </Button>
     </template>
     <div
@@ -30,6 +31,10 @@
 
 <script setup lang="ts">
 import type { CompanyViewModel, PersonViewModel } from '~~/shared/types/contact';
+
+const emits = defineEmits<{
+  edit: []
+}>();
 
 const props = defineProps<{
   contact: CompanyViewModel | PersonViewModel

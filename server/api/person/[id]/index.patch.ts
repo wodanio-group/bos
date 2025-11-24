@@ -123,6 +123,8 @@ export default defineEventHandler(async (event) => {
         create: body.data.notes
           .filter(o => !findItem.contactNotes.find(oo => compareContactNote(o, oo)))
           .map(o => ({
+            type: o.type,
+            timestamp: o.timestamp,
             content: o.content
           })),
         deleteMany: findItem.contactNotes

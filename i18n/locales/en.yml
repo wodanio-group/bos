@@ -37,6 +37,12 @@ contactCommunicationWayTypes:
   WEB: "Web"
   EMAIL: "Email"
 
+contactNoteTypes:
+  NOTE: "Note"
+  CALL: "Call"
+  MEETING: "Meeting"
+  OTHER: "Other"
+
 contactCommunicationWayCategories:
   INVOICING: "Invoicing"
   WORK: "Work"
@@ -101,9 +107,20 @@ company:
   createDialogTitle: "Create Company"
   createSuccess: "Company \"{name}\" created!"
   createError: "Error while creation"
+  notes:
+    toast:
+      success: "Company Notes updated successfully."
+      error: "Error while update company notes."
   item:
     title: "{name}"
     subtitle: "Company"
+  edit:
+    title: "{name}"
+    subtitle: "Edit Company"
+    save: "Save"
+    toast:
+      success: "Company updated successfully."
+      error: "Error while update company."
 
 person:
   title: "Persons"
@@ -114,9 +131,20 @@ person:
   createDialogTitle: "Create Person"
   createSuccess: "Person \"{name}\" created!"
   createError: "Error while creation"
+  notes:
+    toast:
+      success: "Person Notes updated successfully."
+      error: "Error while update person notes."
   item:
     title: "{name}"
     subtitle: "Person"
+  edit:
+    title: "{name}"
+    subtitle: "Edit Person"
+    save: "Save"
+    toast:
+      success: "Person updated successfully."
+      error: "Error while update person."
 
 user:
   title: "User Management"
@@ -142,3 +170,19 @@ timeTracking:
   start: "Start"
   stop: "Stop"
   csvExport: "CSV Export"
+
+contactNoteSectionBox:
+  title: "Notes"
+  input:
+    content: "Content"
+    type: "Type"
+    timestamp: "Timestamp"
+    submit:
+      input: "Save"
+      create: "Create"
+    edit: "Edit"
+    delete: "Delete"
+    from: "from"
+  delete:
+    title: "Delete Note"
+    description: "Do you want to permanently delete the note?"

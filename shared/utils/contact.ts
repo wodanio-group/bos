@@ -33,7 +33,7 @@ export const contactAddressValidator = z.object({
 
 export const contactNoteValidator = z.object({
   type: contactNoteTypeValidator,
-  timestamp: z.string().datetime().optional().nullable(),
+  timestamp: z.iso.datetime().optional().nullable(),
   content: z.string().trim(),
 });
 
@@ -100,7 +100,7 @@ export const contactNoteViewModel = (item: ContactNote): ContactNoteViewModel =>
 }
 
 export const compareContactNote = (a: z.infer<typeof contactNoteValidator> | ContactNote | ContactNoteViewModel, b: z.infer<typeof contactNoteValidator> | ContactNote | ContactNoteViewModel) => 
-  (a.content === b.content);
+  (a.type === b.type && a.timestamp === b.timestamp && a.content === b.content);
 
 export const personToViewModel = (item: Person): PersonViewModel => {
   return {

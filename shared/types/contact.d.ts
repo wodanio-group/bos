@@ -76,3 +76,5 @@ export interface CompanyViewModel extends BaseViewModel {
   addresses: ContactAddressViewModel[];
   notes: ContactNoteViewModel[];
 }
+
+export type ContactViewModel = PersonViewModel | CompanyViewModel;
