@@ -1,7 +1,8 @@
 <template>
 
   <PageSectionBox
-    :title="$t('timeTracking.title')">
+    :title="$t('timeTracking.title')"
+    :overflowHidden="true">
     <template #headerRight>
       <p
         class="text-sm font-semibold"
@@ -15,16 +16,16 @@
         type="button"
         class="relative flex justify-center items-center gap-1 flex-col w-28 h-28 border-2 border-primary-950 bg-primary-900 rounded-full shadow-2xl"
         @click="toggleTracking()">
-        <Icon 
-          icon="lucide:play" 
-          class="text-secondary-100 text-2xl"
+        <atom-icon 
+          icon="play" 
+          class="text-secondary-100 !text-2xl"
           v-if="!isRunning"/>
         <span 
           class="text-secondary-100 text-sm text-center"
           v-if="!isRunning">{{ $t('timeTracking.start') }}</span>
-        <Icon 
-          icon="lucide:pause" 
-          class="text-secondary-100 text-2xl"
+        <atom-icon 
+          icon="pause" 
+          class="text-secondary-100 !text-2xl"
           v-if="isRunning"/>
         <span 
           class="text-secondary-100 text-sm text-center"

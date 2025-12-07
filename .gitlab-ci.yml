@@ -5,11 +5,13 @@ services:
 variables:
   DOCKER_HOST: "tcp://docker:2375"
   DOCKER_TLS_CERTDIR: ""
+  DOCKER_HUB_IMAGE_NAME: "wodanio/bos"
 
 stages:
   - "build"
 
 before_script:
+  - "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD"
   - "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
 
 build:main:
@@ -21,5 +23,7 @@ build:main:
     - "docker buildx create --use"
     - "docker buildx build \
         --provenance=false \
+        --tag $DOCKER_HUB_IMAGE_NAME:$CI_COMMIT_BRANCH \
         --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH \
         --push ."
+

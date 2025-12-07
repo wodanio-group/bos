@@ -14,11 +14,12 @@ export const UserRoleRights: {
   ] },
   { role: 'USER', rights: [
     'timetracking.own.view', 'timetracking.own.create', 'timetracking.own.editnoneexported',
+    'contact.all.view',
   ] },
   { role: 'NONE', rights: [] },
 ];
 
-export const userRoleValidator = z.enum(['ADMIN', 'NONE']).default('NONE');
+export const userRoleValidator = z.enum(['ADMIN', 'USER', 'NONE']).default('NONE');
 
 export const getRightsByUserRole = (role: UserRole): UserRoleRight[] => UserRoleRights.find(o => o.role === role)?.rights ?? [];
 

@@ -1,12 +1,13 @@
-import prisma from "~~/lib/prisma";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
 import { parse } from "cookie";
 import { createError, getHeader, type H3Event } from "h3";
 import type { User } from "@prisma/client";
 import { useRuntimeConfig } from "#imports";
-import type { UserRoleRight } from "../types/user";
-import { hasRoleRights } from "./user";
+import type { UserRoleRight } from "~~/shared/types/user";
+import { hasRoleRights } from "~~/shared/utils/user";
+import { filterString } from "~~/shared/utils/default";
+import { prisma } from "~~/lib/prisma.server";
 
 export const getUserFromRequest = async (event: H3Event): Promise<User | null> => {
   try {
@@ -47,4 +48,19 @@ export const authMiddleware = async (event: H3Event, opts?: { rights?: UserRoleR
       statusMessage: 'Unauthorized',
     });
   return user;
+};
+
+export const authMiddlewarePascomConnector = async (event: H3Event): Promise<void> => {
+  const runtimeConfig = useRuntimeConfig(),
+        authHeader = getHeader(event, 'Authorization'),
+        headerAuthHash = authHeader?.startsWith('Basic ') ? authHeader.slice(6) : null,
+        headerAuthArr = headerAuthHash ? Buffer.from(headerAuthHash, 'base64').toString('ascii').split(':') : null;
+  const requiredUsername  = filterString(runtimeConfig.pascom.connector.username),
+        requiredPassword  = filterString(runtimeConfig.pascom.connector.password),
+        username          = filterString(headerAuthArr?.at(0)),
+        password          = filterString(headerAuthArr?.at(1));
+  if (requiredUsername === null || requiredPassword === null || requiredUsername !== username || requiredPassword !== password) 
+    throw createError({
+      statusCode: 401,
+    });
 };

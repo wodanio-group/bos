@@ -1,9 +1,9 @@
 import * as client from "openid-client";
-import prisma from "~~/lib/prisma";
 import type { User } from "@prisma/client";
 import { parse } from "cookie";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
+import { prisma } from "~~/lib/prisma.server";
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(),

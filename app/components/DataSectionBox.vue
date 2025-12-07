@@ -6,23 +6,23 @@
         <div
           class="w-[200px]"
           v-if="filter.type === 'date'">
-          <Input
+          <atom-input
             type="date"
             :title="filter.title"
             @update:modelValue="emit('updateFilter', filter.key, String($event))">
-          </Input>
+          </atom-input>
         </div>
         <div
           class="w-[200px]"
           v-if="filter.type === 'select'">
-          <Select
+          <atom-select
             :title="filter.title"
             :items="[
               { value: '' },
               ...filter.items,
             ]"
             @update:modelValue="emit('updateFilter', filter.key, String($event))">
-          </Select>
+          </atom-select>
         </div>
       </template>
       <InputSearch
@@ -31,20 +31,20 @@
         v-if="hideSearch !== true"/>
     </template>
     <template #headerRight>
-      <Button 
+      <atom-button 
         type="button"
         :icon="action.icon"
         :title="action.title"
         @click="emit('action', action.key)"
         v-for="action in (headerActions ?? [])">
-      </Button>
-      <Button 
+      </atom-button>
+      <atom-button 
         type="button"
-        icon="lucide:plus"
+        icon="plus"
         :title="$t('user.add')"
         @click="emit('action', addActionKey ?? 'add')"
         v-if="hideAddButto !== true">
-      </Button>
+      </atom-button>
     </template>
 
     <div class="block relative w-full">
@@ -76,7 +76,7 @@
                   <DropdownMenuRoot>
                     <DropdownMenuTrigger
                       class="transition-colors hover:bg-secondary-100 px-1 rounded">
-                      <Icon icon="lucide:ellipsis" class="text-lg"/>
+                      <atom-icon icon="ellipsis" class="!text-lg"/>
                     </DropdownMenuTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuContent
@@ -86,7 +86,7 @@
                           class="flex justify-start items-center gap-2 px-3 py-1 cursor-pointer text-sm text-left rounded-lg transition-colors hover:bg-secondary-100"
                           v-for="action in (actions ?? [])"
                           @select="emit('action', action.key, item )">
-                          <Icon v-if="action.icon" :icon="action.icon"/>
+                          <atom-icon v-if="action.icon" :icon="action.icon"/>
                           <span>{{ action.title }}</span>
                         </DropdownMenuItem>
                       </DropdownMenuContent>

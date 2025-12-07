@@ -1,4 +1,4 @@
-import prisma from "~~/lib/prisma";
+import { prisma } from "~~/lib/prisma.server";
 import { CountryViewModel } from "~~/shared/types/contact";
 import { OptionKey, OptionValue } from "~~/shared/types/option";
 

@@ -6,24 +6,16 @@ export default defineNuxtConfig({
     typeCheck: true,
     strict: true,
   },
-  nitro: {
-    experimental: {
-      openAPI: true
-    },
-    openAPI: {
-      meta: {
-        title: 'WodanioCRM'
-      },
-    },
-  },
   routeRules: {
     '/': { redirect: { to: '/dashboard', statusCode: 301 } },
   },
   runtimeConfig: {
     secret: '',
-    sevdesk: {
-      apiUrl: 'https://my.sevdesk.de/api/v1',
-      apiToken: '',
+    pascom: {
+      connector: {
+        username: '',
+        password: '',
+      },
     },
     bullmq: {
       sysname: 'wodaniobos',
@@ -47,13 +39,12 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-8',
       viewport: 'viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no',
-      link: [
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap' },
-      ],
     },
   },
+  css: [
+    './css/fonts.css',
+    'lucide-static/font/lucide.css',
+  ],
   umami: {
     id: '4ffdd1cc-169b-406f-8310-ecb0aa7c2c12',
     host: 'https://analytics.apps.wodanio.com',
@@ -61,9 +52,6 @@ export default defineNuxtConfig({
     enabled: true,
     useDirective: true,
     ignoreLocalhost: true,
-  },
-  sitemap: {
-    autoLastmod: true,
   },
   i18n: {
     locales: [
@@ -141,9 +129,6 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxt/image',
-    '@prisma/nuxt',
-    '@prisma/nuxt',
-    '@nuxtjs/sitemap',
     'nuxt-umami',
     '@nuxtjs/tailwindcss',
     'reka-ui/nuxt',

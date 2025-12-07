@@ -1,8 +1,6 @@
-import type { CountryViewModel, PersonViewModel, CompanyViewModel, ContactNoteViewModel, ContactCommunicationWayViewModel, ContactAddressViewModel, ContactGender, ContactNoteType } from "../types/contact";
+import type { CountryViewModel, PersonViewModel, CompanyViewModel, ContactNoteViewModel, ContactCommunicationWayViewModel, ContactAddressViewModel, ContactGender, ContactNoteType, ContactAddressCategory, ContactCommunicationWayCategory, ContactCommunicationWayType } from "../types/contact";
 import type { Country, Person, Company, ContactNote, ContactCommunicationWay, ContactAddress, CompanyPerson } from "@prisma/client";
-import { getOptions, setOptions } from "./option";
 import { z } from "zod";
-import { DateTime } from "luxon";
 
 export const contactGenderValidator = z.enum(['MALE', 'FEMALE', 'DIVERSE', 'NONE']).default('NONE');
 
@@ -49,6 +47,39 @@ export const ContactNoteTypes: ContactNoteType[] = [
   'CALL',
   'MEETING',
   'OTHER'
+];
+
+export const ContactCommunicationWayTypes: ContactCommunicationWayType[] = [
+  'PHONE', 
+  'EMAIL', 
+  'WEB'
+];
+
+export const ContactCommunicationWayCategories: ContactCommunicationWayCategory[] = [
+  'INVOICING', 
+  'WORK', 
+  'FAX', 
+  'MOBILE', 
+  'AUTOBOX', 
+  'NEWSLETTER', 
+  'PRIVAT', 
+  'NONE'
+];
+
+export const ContactAddressCategories: ContactAddressCategory[] = [
+  'HEADQUARTER', 
+  'INVOICE', 
+  'WORK', 
+  'DELIVERY', 
+  'PICKUP', 
+  'PRIVAT', 
+  'NONE'
+];
+
+export const CountryCodes: string[] = [
+  'DE',
+  'CH',
+  'AT',
 ];
 
 export const countryToViewModel = (item: Country): CountryViewModel => {
@@ -159,23 +190,4 @@ export const companyDisplayName = (item: Company | CompanyViewModel, opts?: { wi
     item.name2,
     ...((opts?.withCustomerId === true && item.customerId) ? [ `(${item.customerId})` ] : []),
   ].filter(o => o).join(' ');
-}
-
-export const getNextAvailableCompanyCustomerId = async (): Promise<string> => {
-  const opts = await getOptions(['CUSTOMER_ID_COUNTER', 'CUSTOMER_ID_SCHEMA']),
-        counter = opts.find(o => o.key === 'CUSTOMER_ID_COUNTER')!.value.counter,
-        schema = opts.find(o => o.key === 'CUSTOMER_ID_SCHEMA')!.value.schema;
-  return schema
-    .replace('%YYYY', DateTime.now().toFormat('yyyy'))
-    .replace('%YY', DateTime.now().toFormat('yy'))
-    .replace('%COUNTER', counter);
-}
-
-export const increaseCompanyCustomerId = async (): Promise<void> => {
-  const opts = await getOptions(['CUSTOMER_ID_COUNTER']),
-        counter = Number(opts.find(o => o.key === 'CUSTOMER_ID_COUNTER')!.value.counter);
-  await setOptions([{
-    key: 'CUSTOMER_ID_COUNTER',
-    value: { counter: (counter + 1) }
-  }]);
 }

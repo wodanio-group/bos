@@ -7,7 +7,14 @@
     <template #header>
       <atom-button
         type="button"
-        icon="lucide:save"
+        icon="circle-x"
+        :title="$t('general.cancel')"
+        :outline="true"
+        @click="navigateBack()">
+      </atom-button>
+      <atom-button
+        type="button"
+        icon="save"
         :title="$t('company.edit.save')"
         @click="onSave()">
       </atom-button>
@@ -35,6 +42,8 @@ const { item, upsert, loadItem } = useCrud<CompanyViewModel>({
 });
 await loadItem();
 
+const navigateBack = (id?: string) => navigateTo(`/company/${id ?? item.value?.id}`);
+
 const changedItem = ref<ContactViewModel | null>(null);
 const onSave = async () => {
   try {
@@ -42,7 +51,7 @@ const onSave = async () => {
       return;
     await upsert(changedItem.value as CompanyViewModel);
     toast.add({ type: 'success', title: $t('company.edit.toast.success') });
-    navigateTo(`/company/${item.value.id}`);
+    navigateBack();
   } catch (e) {
     toast.add({ type: 'error', title: $t('company.edit.toast.error') });
   }

@@ -16,17 +16,17 @@
     </p>
     <div
       class="flex justify-end items-center gap-1 mt-4">
-      <Button
+      <atom-button
         type="button"
         :title="cancelButtonTitle ?? $t('general.cancel')"
         @click="emit('cancel')">
-      </Button>
-      <Button
+      </atom-button>
+      <atom-button
         type="button"
         :title="submitButtonTitle ?? $t('general.submit')"
         :icon="submitButtonIcon"
         @click="emit('submit')">
-      </Button>
+      </atom-button>
     </div>
   </Dialog>
 

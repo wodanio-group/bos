@@ -14,7 +14,7 @@
         class="absolute top-2 right-2 h-7 w-7 rounded-lg flex items-center justify-center bg-secondary-100 transition-colors border border-secondary-200 hover:bg-secondary-200"
         v-if="hideClose !== true"
         @click="emit('update:open', false)">
-        <Icon icon="lucide:x" class="text-lg text-secondary-800"/>
+        <atom-icon icon="x" class="!text-lg text-secondary-800"/>
       </button>
       <slot></slot>
       <div

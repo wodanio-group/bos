@@ -1,5 +1,6 @@
-import { authMiddleware, timeTrackingActivityToViewModel } from "#imports";
-import prisma from "~~/lib/prisma";
+import { timeTrackingActivityToViewModel } from "#imports";
+import { prisma } from "~~/lib/prisma.server";
+import { authMiddleware } from "~~/server/utils/auth";
 
 export default defineEventHandler(async (event) => {
   const user = await authMiddleware(event, {

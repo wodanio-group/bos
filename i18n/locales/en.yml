@@ -1,23 +1,37 @@
 
 general:
   name: "Name"
+  name2: "Name suffix"
   user: "User"
   from: "From"
   to: "To"
   duration: "Duration"
   email: "Email"
+  web: "Web"
+  phone: "Phone"
   role: "Role"
   createdAt: "Created at"
   updatedAt: "Updated at"
+  address: "Address"
+  address2: "Address suffix"
   firstname: "Firstname"
+  surname: "Surname"
   familyname: "Familyname"
   gender: "Gender"
   vatId: "VAT ID"
   taxId: "Tax ID"
+  birthday: "Birthday"
+  category: "Category"
+  zipCode: "Zip Code"
+  city: "City"
+  country: "Country"
+  type: "Type"
   id: "ID"
+  value: "Value"
   externalId: "External ID"
   customerId: "Customer ID"
   edit: "Edit"
+  add: "Add"
   delete: "Delete"
   cancel: "Cancel"
   submit: "Submit"
@@ -75,6 +89,8 @@ genders:
 
 countries:
   DE: "Germany"
+  AT: "Austria"
+  CH: "Switzerland"
 
 registrationError:
   title: "Error"
@@ -114,6 +130,11 @@ company:
   item:
     title: "{name}"
     subtitle: "Company"
+    delete:
+      title: "Delete \"{name}\""
+      description: "Do you want to permanently delete the company?"
+      success: "Company \"{name}\" deleted"
+      error: "Error while deletion"
   edit:
     title: "{name}"
     subtitle: "Edit Company"
@@ -138,6 +159,11 @@ person:
   item:
     title: "{name}"
     subtitle: "Person"
+    delete:
+      title: "Delete \"{name}\""
+      description: "Do you want to permanently delete the person?"
+      success: "Person \"{name}\" deleted"
+      error: "Error while deletion"
   edit:
     title: "{name}"
     subtitle: "Edit Person"
@@ -186,3 +212,11 @@ contactNoteSectionBox:
   delete:
     title: "Delete Note"
     description: "Do you want to permanently delete the note?"
+
+contactEdit:
+  baseInfo:
+    title: "Informations"
+  communicationWays:
+    title: "Communication Ways"
+  addresses:
+    title: "Adresses"

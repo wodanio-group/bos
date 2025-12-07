@@ -20,7 +20,7 @@
         'text-yellow-50': (toast.type === 'warning'),
       }"
       v-for="toast in toasts">
-      <Icon :icon="getIconForToast(toast)"/>
+      <atom-icon :icon="getIconForToast(toast)"/>
       <span>{{ toast.title }}</span>
     </div>
   </div>

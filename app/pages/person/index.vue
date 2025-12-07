@@ -11,9 +11,9 @@
         { title: $t('general.name'), fieldName: 'name', transform: (v: any, o: any) => personDisplayName(o) },
       ]"
       :actions="[
-        { title: $t('general.view'), icon: 'lucide:external-link', key: 'view' },
-        { title: $t('general.edit'), icon: 'lucide:square-pen', key: 'view-edit' },
-        { title: $t('general.delete'), icon: 'lucide:trash-2', key: 'requestDelete' },
+        { title: $t('general.view'), icon: 'external-link', key: 'view' },
+        { title: $t('general.edit'), icon: 'square-pen', key: 'view-edit' },
+        { title: $t('general.delete'), icon: 'trash-2', key: 'requestDelete' },
       ]"
       :paginationState="pagination"
       :paginationIsFirst="paginationIsFirst"
@@ -30,7 +30,7 @@
         class="grid grid-cols-2 gap-2"
         @submit.prevent="actionHandler('create')">
         <p class="text-lg text-secondary-600 col-span-2">{{ $t('person.createDialogTitle') }}</p>
-        <Select 
+        <atom-select 
           class="col-span-2"
           :title="$t('general.gender')"
           :required="true"
@@ -39,23 +39,23 @@
             title: $t(`genders.${gender}`)
           }))"
           v-model="createForm.gender">
-        </Select>
-        <Input 
+        </atom-select>
+        <atom-input 
           :required="true"
           type="text"
           :title="$t('general.firstname')"
           v-model="createForm.firstname"/>
-        <Input 
+        <atom-input 
           :required="true"
           type="text"
           :title="$t('general.familyname')"
           v-model="createForm.familyname"/>
         <div class="flex justify-end mt-2 col-span-2">
-          <Button
+          <atom-button
             type="submit"
-            icon="lucide:save"
+            icon="save"
             :title="$t('general.save')">
-          </Button>
+          </atom-button>
         </div>
       </form>
     </Dialog>
@@ -65,7 +65,7 @@
       :title="$t('person.deleteTitle', { name: selectedDeleteItem ? personDisplayName(selectedDeleteItem) : '?' })"
       :description="$t('person.deleteDescription')"
       :submitButtonTitle="$t('general.delete')"
-      submitButtonIcon="lucide:trash-2"
+      submitButtonIcon="trash-2"
       @submit="actionHandler('delete', selectedDeleteItem)"
       @cancel="selectedDeleteItem = null"
       @update:open="actionHandler('requestDelete', $event ? selectedDeleteItem : null)"/>

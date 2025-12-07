@@ -4,6 +4,15 @@
     v-if="item"
     :title="$t('person.item.title', { name: item ? personDisplayName(item) : '?' })"
     :subtitle="$t('person.item.subtitle')">
+    <template #header>
+      <atom-button
+        type="button"
+        icon="trash-2"
+        :title="$t('general.delete')"
+        :outline="true"
+        @click="showDeletePopover = true">
+      </atom-button>
+    </template>
 
     <div class="col-span-8">
       <contact-note-section-box
@@ -19,6 +28,16 @@
       </contact-info-section-box>
     </div>
 
+    <SimpleAlertDialog
+      :open="showDeletePopover === true"
+      :title="$t('person.item.delete.title', { name: item ? personDisplayName(item) : '?' })"
+      :description="$t('person.item.delete.description')"
+      :submitButtonTitle="$t('general.delete')"
+      submitButtonIcon="trash-2"
+      @submit="onDelete"
+      @cancel="showDeletePopover = false"
+      @update:open="showDeletePopover = $event"/>
+
   </Page>
 
 </template>
@@ -32,7 +51,7 @@ definePageMeta({
 });
 
 const toast = useToast();
-const { item, upsert, loadItem } = useCrud<PersonViewModel>({
+const { item, upsert, loadItem, deleteById } = useCrud<PersonViewModel>({
   apiPath: '/api/person'
 });
 await loadItem();
@@ -51,6 +70,19 @@ const onUpdateNotes = async (notes: Partial<ContactNoteViewModel>[]) => {
     toast.add({ type: 'error', title: $t('person.notes.toast.error') });
   }
 }
+
+const showDeletePopover = ref(false);
+const onDelete = async () => {
+  try {
+    if (!item.value)
+      return;
+    await deleteById(item.value.id);
+    toast.add({ type: 'success', title: $t('person.item.delete.success') });
+    navigateTo(`/person`);
+  } catch (e) {
+    toast.add({ type: 'error', title: $t('person.item.delete.error') });
+  }
+};
 
 </script>
 

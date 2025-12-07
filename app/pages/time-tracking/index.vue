@@ -13,15 +13,15 @@
         { title: $t('general.user'), fieldName: 'user', transform: (id: string) => users.find(u => u.id === id)?.displayName ?? '-' },
       ]"
       :filters="[
-        { title: $t('general.from'), icon: 'lucide:calendar-days', key: 'from', type: 'date' },
-        { title: $t('general.to'), icon: 'lucide:calendar-days', key: 'to', type: 'date' },
-        { title: $t('general.user'), icon: 'lucide:calendar-days', key: 'user', type: 'select', items: users.map(u => ({ title: u.displayName ?? '?', value: u.id })) },
+        { title: $t('general.from'), icon: 'calendar-days', key: 'from', type: 'date' },
+        { title: $t('general.to'), icon: 'calendar-days', key: 'to', type: 'date' },
+        { title: $t('general.user'), icon: 'calendar-days', key: 'user', type: 'select', items: users.map(u => ({ title: u.displayName ?? '?', value: u.id })) },
       ]"
       :header-actions="[
-        { title: $t('timeTracking.csvExport'), icon: 'lucide:arrow-down-to-line', key: 'csvExport' }
+        { title: $t('timeTracking.csvExport'), icon: 'arrow-down-to-line', key: 'csvExport' }
       ]"
       :actions="[
-        { title: $t('general.delete'), icon: 'lucide:trash-2', key: 'requestDelete' },
+        { title: $t('general.delete'), icon: 'trash-2', key: 'requestDelete' },
       ]"
       :paginationState="pagination"
       :paginationIsFirst="paginationIsFirst"

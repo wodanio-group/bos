@@ -16,12 +16,12 @@ export const useToast = () => {
     if (toast.icon)
       return toast.icon;
     return (toast.type === 'success')
-      ? 'lucide:circle-check'
+      ? 'circle-check'
       : (toast.type === 'error')
-        ? 'lucide:circle-x'
+        ? 'circle-x'
         : (toast.type === 'warning')
-          ? 'lucide:triangle-alert'
-          : 'lucide:info';
+          ? 'triangle-alert'
+          : 'info';
   };
   return { toasts, getIconForToast, add };
 };

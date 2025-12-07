@@ -1,6 +1,7 @@
-import { authMiddleware, companyToViewModel } from "#imports";
-import prisma from "~~/lib/prisma";
+import { companyToViewModel } from "#imports";
+import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
+import { authMiddleware } from "~~/server/utils/auth";
 
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {

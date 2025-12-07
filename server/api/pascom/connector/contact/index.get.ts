@@ -1,0 +1,72 @@
+import { prisma } from "~~/lib/prisma.server";
+import { authMiddlewarePascomConnector } from "~~/server/utils/auth";
+
+export default defineEventHandler(async (event) => {
+  await authMiddlewarePascomConnector(event);
+  const rows: string[][] = [
+    ['displayname', 'phone', 'givenname', 'surname', 'organisation', 'email', 'mobile', 'homephone', 'fax', 'homepage', 'customernumber'],
+  ];
+
+  const companies = await prisma.company.findMany({
+            include: {
+              contactCommunicationWays: true,
+            },
+          }),
+        persons = await prisma.person.findMany({
+            include: {
+              contactCommunicationWays: true,
+              companyPersons: {
+                include: {
+                  company: true,
+                },
+              },
+            },
+          });
+
+  rows.push(...companies.map(company => ([
+    companyDisplayName(company),
+    (company.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'WORK')?.value
+      ?? (company.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').at(0)?.value
+      ?? '',
+    '', 
+    '',
+    companyDisplayName(company),
+    (company.contactCommunicationWays ?? []).filter(o => o.type === 'EMAIL').find(o => o.category === 'WORK')?.value
+      ?? (company.contactCommunicationWays ?? []).filter(o => o.type === 'EMAIL').at(0)?.value
+      ?? '',
+    (company.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'MOBILE')?.value ?? '',
+    (company.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'PRIVAT')?.value ?? '',
+    (company.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'FAX')?.value ?? '',
+    (company.contactCommunicationWays ?? []).filter(o => o.type === 'WEB').find(o => o.category === 'WORK')?.value
+      ?? (company.contactCommunicationWays ?? []).filter(o => o.type === 'WEB').at(0)?.value
+      ?? '',
+    company.customerId ?? '',
+  ])));
+
+  rows.push(...persons.map(person => ([
+    personDisplayName(person),
+    (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'WORK')?.value
+      ?? (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').at(0)?.value
+      ?? '',
+    person.firstname ?? '', 
+    person.surename ?? person.familyname ?? '', 
+    person.companyPersons.at(0)?.company
+      ? companyDisplayName(person.companyPersons.at(0)?.company) 
+      : '',
+    (person.contactCommunicationWays ?? []).filter(o => o.type === 'EMAIL').find(o => o.category === 'WORK')?.value
+      ?? (person.contactCommunicationWays ?? []).filter(o => o.type === 'EMAIL').at(0)?.value
+      ?? '',
+    (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'MOBILE')?.value ?? '',
+    (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'PRIVAT')?.value ?? '',
+    (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'FAX')?.value ?? '',
+    (person.contactCommunicationWays ?? []).filter(o => o.type === 'WEB').find(o => o.category === 'WORK')?.value
+      ?? (person.contactCommunicationWays ?? []).filter(o => o.type === 'WEB').at(0)?.value
+      ?? '',
+    person.companyPersons?.at(0)?.company?.customerId ?? '',
+  ])));
+
+  setHeader(event, "Content-Type", "text/csv; charset=utf-8");
+  return rows
+    .map(line => line.join(';'))
+    .join('\n');
+});

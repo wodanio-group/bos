@@ -2,12 +2,12 @@
 
   <PageSectionBox>
     <template #headerRight>
-      <Button
+      <atom-button
         type="button"
-        icon="lucide:edit"
+        icon="square-pen"
         :title="$t('general.edit')"
         @click="emits('edit')">
-      </Button>
+      </atom-button>
     </template>
     <div
       class="flex flex-col gap-4 py-4">

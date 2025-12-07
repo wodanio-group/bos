@@ -1,5 +1,5 @@
-import { authMiddleware } from "#imports";
-import prisma from "~~/lib/prisma";
+import { authMiddleware } from "~~/server/utils/auth";
+import { prisma } from "~~/lib/prisma.server";
 import { countryToViewModel } from "~~/shared/utils/contact";
 
 export default defineEventHandler(async (event) => {

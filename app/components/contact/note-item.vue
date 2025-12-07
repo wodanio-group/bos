@@ -72,7 +72,7 @@
       :title="$t('contactNoteSectionBox.delete.title')"
       :description="$t('contactNoteSectionBox.delete.description')"
       :submitButtonTitle="$t('general.delete')"
-      submitButtonIcon="lucide:trash-2"
+      submitButtonIcon="trash-2"
       @submit="onDelete()"
       @cancel="showDelete = false"
       @update:open="showDelete = $event"/>

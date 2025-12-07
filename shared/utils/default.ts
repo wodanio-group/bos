@@ -22,3 +22,16 @@ export const getValidatedParamsId = (event: H3Event, validator?: z.ZodString): s
     return null;
   return params.data.id;
 };
+
+export const filterString = (str: string | string[] | null | undefined): string | null => {
+  return filterStringExtended(str) ?? null;
+};
+
+export const filterStringExtended = (str: string | string[] | null | undefined): string | null | undefined => {
+  if (str === undefined || str === 'undefined') return undefined;
+  if (str === null || str === 'null') return null;
+  if (Array.isArray(str)) str = str.join('');
+  str = str.trim();
+  return (str.length > 0) ? str : null;
+};
+

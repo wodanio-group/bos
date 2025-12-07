@@ -1,12 +1,12 @@
 import { 
-  authMiddleware, 
   personToViewModel, 
   contactGenderValidator, 
   contactNoteValidator, 
   contactCommunicationWayValidator, 
   contactAddressValidator 
 } from "#imports";
-import prisma from "~~/lib/prisma";
+import { authMiddleware } from "~~/server/utils/auth";
+import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 
 export default defineEventHandler(async (event) => {

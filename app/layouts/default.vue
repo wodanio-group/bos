@@ -23,39 +23,41 @@
         class="relative flex items-center justify-between px-3 py-2 text-sm text-primary-950 rounded-lg bg-secondary-100"
         @click.prevent="onSearch()">
         <span class="flex justify-start items-center gap-2">
-          <Icon icon="lucide:search"/>
+          <atom-icon icon="search"/>
           <span>{{ $t('layout.aside.search') }}</span>
         </span>
         <span class="hidden lg:inline-block">⌘ S</span>
       </button>
 
       <nav class="w-full  flex flex-col">
-        <NuxtLink
-          class="flex justify-start items-center gap-2 text-sm text-primary-950 px-3 py-2 rounded-lg transition-colors hover:bg-secondary-100 cursor-pointer"
-          v-for="item in mainMenuItems"
-          :key="item.title+item.to"
-          :to="item.to"
-          :href="item.href"
-          @click="onClickItem(item)">
-          <Icon :icon="item.icon" class="text-lg"/>
-          <span>{{ item.title }}</span>
-        </NuxtLink>
+        <template v-for="item in mainMenuItems" :key="item.to ?? item.href ?? item.title">
+          <NuxtLink
+            class="flex justify-start items-center gap-2 text-sm text-primary-950 px-3 py-2 rounded-lg transition-colors hover:bg-secondary-100 cursor-pointer"
+            :to="item.to"
+            :href="item.href"
+            @click="onClickItem(item)"
+            v-if="item.hide !== true">
+            <atom-icon :icon="item.icon" class="!text-lg"/>
+            <span>{{ item.title }}</span>
+          </NuxtLink>
+        </template>
       </nav>
 
     </div>
     <div class="w-full flex flex-col gap-4 justify-start">
       
       <nav class="w-full flex flex-col">
-        <NuxtLink
-          class="flex justify-start items-center gap-2 text-sm text-primary-950 px-3 py-2 rounded-lg transition-colors hover:bg-secondary-100 cursor-pointer"
-          v-for="item in secondMenuItems"
-          :key="item.title+item.to"
-          :to="item.to"
-          :href="item.href"
-          @click="onClickItem(item)">
-          <Icon :icon="item.icon" class="text-lg"/>
-          <span>{{ item.title }}</span>
-        </NuxtLink>
+        <template v-for="item in secondMenuItems" :key="item.to ?? item.href ?? item.title">
+          <NuxtLink
+            class="flex justify-start items-center gap-2 text-sm text-primary-950 px-3 py-2 rounded-lg transition-colors hover:bg-secondary-100 cursor-pointer"
+            :to="item.to"
+            :href="item.href"
+            @click="onClickItem(item)"
+            v-if="item.hide !== true">
+            <atom-icon :icon="item.icon" class="!text-lg"/>
+            <span>{{ item.title }}</span>
+          </NuxtLink>
+        </template>
       </nav>
 
     </div>
@@ -65,8 +67,8 @@
     type="button"
     class="fixed top-4 right-4 w-10 h-10 flex lg:hidden justify-center items-center bg-secondary-100 rounded-xl shadow-lg shadow-primary-950/20 z-[45]"
     @click="layoutMenu.toggle()">
-    <Icon icon="lucide:x" class="text-primary-950 text-xl" v-if="(layoutMenu.open.value === true)"/>
-    <Icon icon="lucide:menu" class="text-primary-950 text-xl" v-if="(layoutMenu.open.value !== true)"/>
+    <atom-icon icon="x" class="text-primary-950 !text-xl" v-if="(layoutMenu.open.value === true)"/>
+    <atom-icon icon="menu" class="text-primary-950 !text-xl" v-if="(layoutMenu.open.value !== true)"/>
   </button>
 
   <main 
@@ -81,7 +83,7 @@
   <div
     class="flex justify-center items-center fixed top-0 left-0 w-screen h-screen backdrop-blur-2xl z-[9999]"
     v-if="!user">
-    <Icon icon="lucide:loader-circle" class="animate-spin text-primary-900 text-3xl"/>
+    <atom-icon icon="loader-circle" class="animate-spin text-primary-900 !text-3xl"/>
   </div>
 
 </template>
@@ -93,6 +95,7 @@ interface IMenuItem {
   icon: string;
   to?: string;
   href?: string;
+  hide?: boolean;
   onClick?: (() => (any | Promise<any>))
 }
 
@@ -111,18 +114,18 @@ const onClickItem = (item: IMenuItem) => {
     return item.onClick();
 }
 
-const mainMenuItems: IMenuItem[] = [
-  { title: $t('layout.aside.dashboard'), icon: 'lucide:gauge', to: '/dashboard' },
-  ...(!user?.rights.includes('contact.all.view') ? [] : [{ title: $t('layout.aside.companies'), icon: 'lucide:building', to: '/company' }]),
-  ...(!user?.rights.includes('contact.all.view') ? [] : [{ title: $t('layout.aside.persons'), icon: 'lucide:users-round', to: '/person' }]),
-  ...(!(user?.rights.includes('timetracking.all.view') || user?.rights.includes('timetracking.own.view')) ? [] : [{ title: $t('layout.aside.timeTrackings'), icon: 'lucide:timer', to: '/time-tracking' }]),
-];
+const mainMenuItems = computed<IMenuItem[]>(() => ([
+  { title: $t('layout.aside.dashboard'), icon: 'gauge', to: '/dashboard' },
+  { title: $t('layout.aside.companies'), icon: 'building', to: '/company', hide: !user?.rights.includes('contact.all.view') },
+  { title: $t('layout.aside.persons'), icon: 'users-round', to: '/person', hide: !user?.rights.includes('contact.all.view') },
+  { title: $t('layout.aside.timeTrackings'), icon: 'timer', to: '/time-tracking', hide: !(user?.rights.includes('timetracking.all.view') || user?.rights.includes('timetracking.own.view')) },
+]));
 
-const secondMenuItems: IMenuItem[] = [
-  ...(!user?.rights.includes('user.all.view') ? [] : [{ title: $t('layout.aside.users'), icon: 'lucide:users-round', to: '/user' }]),
-  { title: $t('layout.aside.profile'), icon: 'lucide:circle-user-round', to: '/profile' },
-  { title: $t('layout.aside.logout'), icon: 'lucide:log-out', onClick: () => auth.logout() },
-];
+const secondMenuItems = computed<IMenuItem[]>(() => ([
+  { title: $t('layout.aside.users'), icon: 'users-round', to: '/user', hide: !user?.rights.includes('user.all.view') },
+  { title: $t('layout.aside.profile'), icon: 'circle-user-round', to: '/profile' },
+  { title: $t('layout.aside.logout'), icon: 'log-out', onClick: () => auth.logout() },
+]));
 
 const searchOpen = ref<boolean>(false);
 const onSearch = () => {

@@ -10,16 +10,16 @@
       :placeholder="$t('general.searchPlaceholder')"
       v-model="value"
       type="text"/>
-    <Icon 
-      icon="lucide:search" 
+    <atom-icon 
+      icon="search" 
       class="text-secondary-600 absolute top-1/2 -translate-y-1/2 left-3"/>
     <button
       v-if="hasInput"
       type="button"
       class="absolute top-1/2 -translate-y-1/2 right-3"
       @click.prevent="onClear()">
-      <Icon 
-        icon="lucide:x" 
+      <atom-icon 
+        icon="x" 
         class="text-secondary-600"/>
     </button>
   </label>

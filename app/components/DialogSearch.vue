@@ -30,7 +30,7 @@
                 :value="item"
                 class="cursor-pointer px-4 py-2 rounded-md data-[highlighted]:bg-secondary-100 inline-flex w-full items-center gap-4"
                 @select="onSelect(item)">
-                <Icon :icon="item.type === 'person' ? 'lucide:user-round' : 'lucide:building'" />
+                <atom-icon :icon="item.type === 'person' ? 'user-round' : 'building'" />
                 <span>{{ item.title }}</span>
               </ComboboxItem>
             </ComboboxGroup>

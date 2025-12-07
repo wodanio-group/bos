@@ -1,6 +1,6 @@
-import { authMiddleware, userToViewModel } from "#imports";
-import prisma from "~~/lib/prisma";
-import { getValidatedParamsId } from "~~/shared/utils/default";
+import { authMiddleware } from "~~/server/utils/auth";
+import { prisma } from "~~/lib/prisma.server";
+import { getValidatedParamsId } from "#imports";
 
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {

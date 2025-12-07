@@ -1,13 +1,12 @@
 import {
-  authMiddleware, 
   companyToViewModel, 
   contactNoteValidator, 
   contactCommunicationWayValidator, 
   contactAddressValidator,
-  getNextAvailableCompanyCustomerId,
-  increaseCompanyCustomerId
 } from "#imports";
-import prisma from "~~/lib/prisma";
+import { authMiddleware } from "~~/server/utils/auth";
+import { increaseCompanyCustomerId, getNextAvailableCompanyCustomerId } from "~~/server/utils/contact";
+import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 
 export default defineEventHandler(async (event) => {

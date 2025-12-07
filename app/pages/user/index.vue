@@ -13,8 +13,8 @@
         { title: $t('general.role'), fieldName: 'role', transform: (v: string | null) => (v ? $t(`roles.${v}`) : null) },
       ]"
       :actions="[
-        { title: $t('general.edit'), icon: 'lucide:edit', key: 'openEdit' },
-        { title: $t('general.delete'), icon: 'lucide:trash-2', key: 'requestDelete' },
+        { title: $t('general.edit'), icon: 'edit', key: 'openEdit' },
+        { title: $t('general.delete'), icon: 'trash-2', key: 'requestDelete' },
       ]"
       :paginationState="pagination"
       :paginationIsFirst="paginationIsFirst"
@@ -31,17 +31,17 @@
         class="flex flex-col gap-2"
         @submit.prevent="actionHandler('edit')">
         <p class="text-lg text-secondary-600">{{ $t((selectedEditItem === null) ? 'user.editTitleAdd' : 'user.editTitleEdit', { name: selectedEditItem?.displayName ?? selectedEditItem?.email ?? '?' }) }}</p>
-        <Input 
+        <atom-input 
           :required="true"
           type="email"
           :title="$t('general.email')"
           v-model="editForm.email"/>
-        <Input
+        <atom-input
           :required="true"
           type="text"
           :title="$t('general.name')"
           v-model="editForm.displayName"/>
-        <Select 
+        <atom-select 
           :title="$t('general.role')"
           :required="true"
           :items="UserRoleRights.map(r => ({
@@ -49,13 +49,13 @@
             title: $t(`roles.${r.role}`)
           }))"
           v-model="editForm.role">
-        </Select>
+        </atom-select>
         <div class="flex justify-end mt-2">
-          <Button
+          <atom-button
             type="submit"
-            icon="lucide:save"
+            icon="save"
             :title="$t('general.save')">
-          </Button>
+          </atom-button>
         </div>
       </form>
     </Dialog>
@@ -65,7 +65,7 @@
       :title="$t('user.deleteTitle', { name: selectedDeleteItem?.displayName ?? selectedDeleteItem?.email ?? '?' })"
       :description="$t('user.deleteDescription')"
       :submitButtonTitle="$t('general.delete')"
-      submitButtonIcon="lucide:trash-2"
+      submitButtonIcon="trash-2"
       @submit="actionHandler('delete', selectedDeleteItem)"
       @cancel="selectedDeleteItem = null"
       @update:open="actionHandler('requestDelete', $event ? selectedDeleteItem : null)"/>

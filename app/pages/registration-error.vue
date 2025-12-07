@@ -11,12 +11,12 @@
       <p class="relative text-lg font-semibold text-secondary-800 mt-6">{{ $t('registrationError.title') }}</p>
       <p class="relative text-sm text-secondary-800 mt-2">{{ $t('registrationError.text') }}</p>
       <div class="relative block mt-4">
-        <Button
+        <atom-button
           type="button"
-          icon="lucide:refresh-ccw"
+          icon="refresh-ccw"
           @click="auth.login()">
           {{ $t('registrationError.retry') }}
-        </Button>
+        </atom-button>
       </div>
     </div>
   </div>

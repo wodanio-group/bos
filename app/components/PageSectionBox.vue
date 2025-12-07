@@ -13,7 +13,12 @@
         <slot name="headerRight"></slot>
       </div>
     </div>
-    <div class="block relative">
+    <div 
+      class="block relative overflow-x-hidden overflow-y-auto"
+      :class="{
+        'max-h-[360px]': (fixedHeight === true),
+        '!overflow-hidden': (overflowHidden === true),
+      }">
       <slot></slot>
     </div>
   </section>
@@ -24,7 +29,9 @@
 
 const props = defineProps<{
   title?: string,
-  hiddeHeader?: boolean
+  hiddeHeader?: boolean,
+  overflowHidden?: boolean
+  fixedHeight?: boolean,
 }>();
 
 </script>

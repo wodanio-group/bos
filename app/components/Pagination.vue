@@ -7,7 +7,7 @@
       :disabled="isFirst === true"
       class="w-8 h-8 relative flex justify-center items-center border border-secondary-200 text-sm text-secondary-600 rounded-lg cursor-pointer transition-colors hover:bg-secondary-50 disabled:opacity-40 disabled:cursor-not-allowed"
       @click="onFirstLast('prev')">
-      <Icon icon="lucide:chevron-left" class="text-base"/>
+      <atom-icon icon="chevron-left" class="!text-base"/>
     </button>
     <button
       type="button"
@@ -24,7 +24,7 @@
       :disabled="isLast === true"
       class="w-8 h-8 relative flex justify-center items-center border border-secondary-200 text-sm text-secondary-600 rounded-lg cursor-pointer transition-colors hover:bg-secondary-50 disabled:opacity-40 disabled:cursor-not-allowed"
       @click="onFirstLast('next')">
-      <Icon icon="lucide:chevron-right" class="text-base"/>
+      <atom-icon icon="chevron-right" class="!text-base"/>
     </button>
   </div>
 
