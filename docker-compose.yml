@@ -1,16 +1,36 @@
 ---
 
 services:
+
+  bos:
+    image: "wodanio/bos:latest"
+    build: "."
+    restart: "unless-stopped"
+    ports:
+      - "3000:3000"
+    environment:
+      - "NUXT_PUBLIC_SITE_URL=http://localhost:3000"
+      - "NUXT_PUBLIC_LOGO_URL=https://de-zlg1.s3.wodanio.net/cdn/wodanio/logo/bos-logo.svg"
+      - "NUXT_PUBLIC_SITE_TITLE=Wodanio Business Operation System"
+      - "NUXT_SECRET=bossecret"
+      - "NUXT_DATABASE_URL=postgres://bos:bos@postgresql:5432/bos"
+      - "NUXT_REDIS_URL=redis://redis:6379/0"
+      - "NUXT_OPEN_ID_ISSUER=https://sso.example.com/realms/prod"
+      - "NUXT_OPEN_ID_CLIENT_ID=bos"
+      - "NUXT_OPEN_ID_CLIENT_SECRET=bosclientsecret"
+      - "NUXT_OPEN_ID_ALLOW_AUTO_CREATE=true"
+      - "NUXT_PASCOM_CONNECTOR_USERNAME=pascomuser"
+      - "NUXT_PASCOM_CONNECTOR_PASSWORD=pascompassword"
+    networks:
+      - "app"
     
   postgresql:
     image: "postgres:17"
     restart: "unless-stopped"
-    ports:
-      - "5432:5432"
     environment:
-      - "POSTGRES_DB=database"
-      - "POSTGRES_USER=database"
-      - "POSTGRES_PASSWORD=database"
+      - "POSTGRES_DB=bos"
+      - "POSTGRES_USER=bos"
+      - "POSTGRES_PASSWORD=bos"
       - "PGDATA=/var/lib/postgresql/data/pgdata"
     volumes:
       - "database:/var/lib/postgresql/data"
@@ -20,18 +40,8 @@ services:
   redis:
     image: "redis:latest"
     restart: "unless-stopped"
-    ports:
-      - "6379:6379"
     volumes:
       - "redis:/data"
-    networks:
-      - "app"
-
-  gotenberg:
-    image: "gotenberg/gotenberg:latest"
-    restart: "unless-stopped"
-    ports:
-      - "8001:3000"
     networks:
       - "app"
 

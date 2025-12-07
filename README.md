@@ -9,4 +9,72 @@ The Wodanio BOS is a CRM system built with NuxtJS v4 and Prisma ORM. It includes
 - Simple **user-role management**  
 - **Pascom contact export** via CSV  
 - **i18n** support for EN  
-- **REST API** with Swagger/OpenAPI documentation  
+- **REST API** with Swagger/OpenAPI documentation
+
+## Deployment
+
+Wodanio BOS requires an OpenID Provider, PostgreSQL (v17 recommended), and Redis.
+
+The application runs on port `3000`.
+
+### Quick Start
+
+Clone GitHub repository:
+```
+git clone https://github.com/wodanio-group/bos.git wodaniobos
+```
+
+Navigate to the Wodanio BOS directory
+```
+cd ./wodaniobos
+```
+
+Start Docker Compose:
+```
+docker compose up -d
+```
+
+### Docker Image (Docker Hub)
+
+| Image | Description |
+| --- | --- |
+| `wodanio/bos:latest` `wodanio/bos:main` | Latest stable build |
+| `wodanio/bos:staging` | Latest development build (for testing only) |
+
+### Environment Variables
+
+| Variable | Default | Required | Description |
+| --- | --- | --- | --- |
+| `NUXT_SECRET` | | Yes | Secret for hashing |
+| `NUXT_PUBLIC_SITE_URL` | `http://localhost:3000` | Yes | System URL |
+| `NUXT_PUBLIC_SITE_TITLE` | `Wodanio Business Operation System` | | System application title |
+| `NUXT_PUBLIC_LOGO_URL` | `https://de-zlg1.s3.wodanio.net/cdn/wodanio/logo/bos-logo.svg` | | System logo URL |
+| `NUXT_DATABASE_URL` | | Yes | PostgreSQL connection string like `postgres://bos:bos@postgresql:5432/bos` |
+| `NUXT_REDIS_URL` | `redis://localhost:6379/0` | Yes | Redis URL like `redis://localhost:6379/0` |
+| `NUXT_OPEN_ID_ISSUER` | | Yes | OpenID issuer URL |
+| `NUXT_OPEN_ID_CLIENT_ID` | | Yes | OpenID client ID |
+| `NUXT_OPEN_ID_CLIENT_SECRET` | | Yes | OpenID client secret |
+| `NUXT_OPEN_ID_ALLOW_AUTO_CREATE` | `true` | | Set to `false` to disable automatic user creation |
+| `NUXT_PASCOM_CONNECTOR_USERNAME` | | | Pascom connector basic auth username (optional) |
+| `NUXT_PASCOM_CONNECTOR_PASSWORD` | | | Pascom connector basic auth password (optional) |
+
+## Pascom Connector
+
+If you want to use the Pascom connector for contact imports, please set the environment variables `NUXT_PASCOM_CONNECTOR_USERNAME` and `NUXT_PASCOM_CONNECTOR_PASSWORD` and configure it as follows on your Pascom instance:
+
+1. Log in to your Pascom instance as an administrator
+2. Go to Settings > Connector and add a new "CSV Phonebook Sync"
+3. Configure the connector as follows:
+    - Name: choose any name
+    - Type: `Fetch from url`
+    - Encoding of the CSV File: `UTF-8`
+    - Delimiter: `;`
+    - Line Separator: `Windows (CRLF)`
+    - Field Enclosure: `"`
+4. Save the connector and then add the following information:
+    - Automation: `Hourly` (recommended)
+    - Mode: `Create and update records. Remove missing records from previous imports.` (recommended)
+    - CSV file URL: `<URL for your Instanc>/api/pascom/connector/contact`
+    - Username: `<NUXT_PASCOM_CONNECTOR_USERNAME>`
+    - Password: `<NUXT_PASCOM_CONNECTOR_PASSWORD>`
+5. Save the configuration

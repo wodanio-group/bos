@@ -21,7 +21,7 @@ export default defineNuxtConfig({
       sysname: 'wodaniobos',
     },
     redis: {
-      url: ''
+      url: 'redis://localhost:6379/0'
     },
     openId: {
       issuer: '',
@@ -118,13 +118,6 @@ export default defineNuxtConfig({
       plugins: [
         require('@tailwindcss/forms')
       ],
-    },
-  },
-  vite: {
-    resolve: {
-      alias: {
-        '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js',
-      },
     },
   },
   modules: [

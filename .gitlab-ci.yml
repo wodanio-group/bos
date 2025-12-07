@@ -21,9 +21,14 @@ build:main:
     - "staging"
   script:
     - "docker buildx create --use"
-    - "docker buildx build \
+    - |
+      TAGS="--tag $DOCKER_HUB_IMAGE_NAME:$CI_COMMIT_BRANCH \
+            --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH"
+      if [ "$CI_COMMIT_BRANCH" = "main" ]; then
+        TAGS="$TAGS --tag $DOCKER_HUB_IMAGE_NAME:latest"
+      fi
+      docker buildx build \
         --provenance=false \
-        --tag $DOCKER_HUB_IMAGE_NAME:$CI_COMMIT_BRANCH \
-        --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH \
-        --push ."
+        $TAGS \
+        --push .
 

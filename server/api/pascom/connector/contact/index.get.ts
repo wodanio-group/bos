@@ -68,6 +68,6 @@ export default defineEventHandler(async (event) => {
 
   setHeader(event, "Content-Type", "text/csv; charset=utf-8");
   return rows
-    .map(line => line.join(';'))
+    .map(line => '"'+line.join('";"')+'"')
     .join('\n');
 });

@@ -3,7 +3,7 @@ import { PrismaClient } from '../prisma/generated/client';
 import { Pool } from 'pg';
 
 const prismaClientSingleton = () => {
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
+  const pool = new Pool({ connectionString: process.env.NUXT_DATABASE_URL! });
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 };
