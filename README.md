@@ -11,6 +11,9 @@ The Wodanio BOS is a CRM system built with NuxtJS v4 and Prisma ORM. It includes
 - **i18n** support for EN  
 - **REST API** with Swagger/OpenAPI documentation
 
+**Preview:**
+![Preview](./public/preview.png)
+
 ## Deployment
 
 Wodanio BOS requires an OpenID Provider, PostgreSQL (v17 recommended), and Redis.

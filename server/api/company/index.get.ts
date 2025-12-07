@@ -26,6 +26,8 @@ export default defineEventHandler(async (event) => {
     skip: ((query.data.page - 1) * query.data.take),
     where: { AND: [
 
+      // TODO: make search case insensitive
+
       ...(query.data.search ? [{ OR: [
         { externalId: { contains: query.data.search } },
         { name: { contains: query.data.search } },

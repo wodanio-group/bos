@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
     vatId: z.string().trim().optional().nullable(),
     persons: z.array(z.object({
       id: z.string().uuid(),
+      main: z.boolean().default(false),
       role: z.string().optional().nullable(),
     })).optional().nullable(),
     communicationWays: z.array(contactCommunicationWayValidator).optional().nullable(),
@@ -72,6 +73,7 @@ export default defineEventHandler(async (event) => {
           .filter(o => !findItem.companyPersons.find(oo => o.id === oo.personId))
           .map(o => ({
             personId: o.id,
+            main: o.main,
             role: o.role,
           })),
         deleteMany: findItem.companyPersons

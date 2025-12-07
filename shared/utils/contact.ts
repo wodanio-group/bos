@@ -176,6 +176,7 @@ export const companyToViewModel = (item: Company): CompanyViewModel => {
     vatId: item.vatId,
     persons: (((item as any)?.companyPersons ?? []) as CompanyPerson[]).map(o => ({
       id: o.personId,
+      main: o.main,
       role: o.role,
     })),
     communicationWays: ((item as any)?.contactCommunicationWays ?? []).map((o: any) => contactCommunicationWayToViewModel(o)),

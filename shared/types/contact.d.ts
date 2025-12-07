@@ -70,6 +70,7 @@ export interface CompanyViewModel extends BaseViewModel {
   vatId: string | null;
   persons: {
     id: string;
+    main: boolean;
     role: string | null;
   }[];
   communicationWays: ContactCommunicationWayViewModel[];

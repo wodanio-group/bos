@@ -16,12 +16,14 @@ export default defineEventHandler(async (event) => {
 
   const body = z.object({
     externalId: z.string().trim().optional().nullable(),
+    customerId: z.string().trim().optional().nullable(),
     name: z.string().trim().optional().nullable(),
     name2: z.string().trim().optional().nullable(),
     taxId: z.string().trim().optional().nullable(),
     vatId: z.string().trim().optional().nullable(),
     persons: z.array(z.object({
       id: z.string().uuid(),
+      main: z.boolean().default(false),
       role: z.string().optional().nullable(),
     })).default([]),
     communicationWays: z.array(contactCommunicationWayValidator).default([]),
@@ -51,10 +53,11 @@ export default defineEventHandler(async (event) => {
       name2: body.data.name2,
       taxId: body.data.taxId,
       vatId: body.data.vatId,
-      customerId: await getNextAvailableCompanyCustomerId(),
+      customerId: body.data.customerId ?? (await getNextAvailableCompanyCustomerId()),
       companyPersons: {
         create: body.data.persons.map(o => ({
           personId: o.id,
+          main: o.main,
           role: o.role,
         }))
       },
