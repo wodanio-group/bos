@@ -5,7 +5,7 @@ import { OptionKey, OptionValue } from "~~/shared/types/option";
 export default defineNitroPlugin(async (nitroApp) => {
 
   const options: { key: OptionKey, value: OptionValue }[] = [
-    { key: 'CUSTOMER_ID_COUNTER', value: { counter: 100001 } },
+    { key: 'CUSTOMER_ID_COUNTER', value: { counter: 10001 } },
     { key: 'CUSTOMER_ID_SCHEMA', value: { schema: 'C%YYYY%COUNTER' } }
   ];
 
