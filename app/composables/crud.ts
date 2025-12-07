@@ -121,47 +121,30 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     } catch (e) { }
   };
 
-  const upsert = async (item: T): Promise<T | null> => {
-    try {
-      return ((item.id)
-        ? (await updateById(item.id, item))
-        : (await create(item)));
-    } catch (e) {
-      return null;
-    }
+  const upsert = async (item: T): Promise<T> => {
+    return ((item.id)
+      ? (await updateById(item.id, item))
+      : (await create(item)));
   }
 
-  const create = async (item: T): Promise<T | null> => {
-    try {
-      return (await $fetch<any>(`${opts.apiPath}`, {
-        method: 'POST',
-        body: item
-      }));
-    } catch (e) {
-      return null;
-    }
+  const create = async (item: T): Promise<T> => {
+    return (await $fetch<any>(`${opts.apiPath}`, {
+      method: 'POST',
+      body: item
+    }));
   }
 
-  const updateById = async (id: string, item: T): Promise<T | null> => {
-    try {
-      return (await $fetch<any>(`${opts.apiPath}/${id}`, {
-        method: 'PATCH',
-        body: item
-      }));
-    } catch (e) {
-      return null;
-    }
+  const updateById = async (id: string, item: T): Promise<T> => {
+    return (await $fetch<any>(`${opts.apiPath}/${id}`, {
+      method: 'PATCH',
+      body: item
+    }));
   }
 
-  const deleteById = async (id: string): Promise<boolean> => {
-    try {
-      await $fetch(`${opts.apiPath}/${id}`, {
-        method: 'DELETE'
-      });
-      return true;
-    } catch (e) {
-      return false;
-    }
+  const deleteById = async (id: string): Promise<void> => {
+    await $fetch(`${opts.apiPath}/${id}`, {
+      method: 'DELETE'
+    });
   }
 
   return {

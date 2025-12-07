@@ -135,11 +135,16 @@ const actionHandler = async (key: string, item?: PersonViewModel | null) => { sw
     navigateTo(`/person/edit/${item.id}`);
     break;
   case 'delete':
-    if (item && !(await deleteById(item.id)))
-      return toast.add({ type: 'error', title: $t('person.deleteErrorToast', { name: item ? personDisplayName(item) : '?' }) });
-    loadItems();
-    toast.add({ type: 'success', title: $t('person.deleteSuccessToast', { name: item ? personDisplayName(item) : '?' }) });
-    selectedDeleteItem.value = null;
+    try {
+      if (!item)
+        return;
+      await deleteById(item.id)
+      loadItems();
+      toast.add({ type: 'success', title: $t('person.deleteSuccessToast', { name: item ? personDisplayName(item) : '?' }) });
+      selectedDeleteItem.value = null;
+    } catch (e) {
+      toast.add({ type: 'error', title: $t('person.deleteErrorToast', { name: item ? personDisplayName(item) : '?' }) });
+    }
     break;
   case 'requestDelete':
     selectedDeleteItem.value = item ?? null;

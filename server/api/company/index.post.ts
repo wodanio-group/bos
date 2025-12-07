@@ -8,7 +8,7 @@ import { authMiddleware } from "~~/server/utils/auth";
 import { increaseCompanyCustomerId, getNextAvailableCompanyCustomerId } from "~~/server/utils/contact";
 import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
-import { uniq } from "lodash";
+import _ from "lodash";
 
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
       data: body.error.flatten().fieldErrors,
     });
 
-  const countryIsoCodes = uniq(body.data.addresses.map(o => o.country).flat()),
+  const countryIsoCodes = _.uniq(body.data.addresses.map(o => o.country).flat()),
         countryCount    = await prisma.country.count({ where: { isoCode: { in: countryIsoCodes } } });
   if (countryIsoCodes.length !== countryCount)
     throw createError({

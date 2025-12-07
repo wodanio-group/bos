@@ -11,6 +11,7 @@ import {
 import { authMiddleware } from "~~/server/utils/auth";
 import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
+import _ from "lodash";
 
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
@@ -54,7 +55,7 @@ export default defineEventHandler(async (event) => {
   if (!findItem)
     throw createError({ statusCode: 404 });
 
-  const countryIsoCodes = body.data.addresses?.map(o => o.country)?.flat() ?? [],
+  const countryIsoCodes = _.uniq(body.data.addresses?.map(o => o.country)?.flat() ?? []),
         countryCount    = await prisma.country.count({ where: { isoCode: { in: countryIsoCodes } } });
   if (countryIsoCodes.length !== countryCount)
     throw createError({

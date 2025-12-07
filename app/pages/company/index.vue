@@ -118,11 +118,16 @@ const actionHandler = async (key: string, item?: CompanyViewModel | null) => { s
     navigateTo(`/company/edit/${item.id}`);
     break;
   case 'delete':
-    if (item && !(await deleteById(item.id)))
-      return toast.add({ type: 'error', title: $t('company.deleteErrorToast', { name: item ? companyDisplayName(item) : '?' }) });
-    loadItems();
-    toast.add({ type: 'success', title: $t('company.deleteSuccessToast', { name: item ? companyDisplayName(item) : '?' }) });
-    selectedDeleteItem.value = null;
+    try {
+      if (!item)
+        return;
+      await deleteById(item.id);
+      loadItems();
+      toast.add({ type: 'success', title: $t('company.deleteSuccessToast', { name: item ? companyDisplayName(item) : '?' }) });
+      selectedDeleteItem.value = null;
+    } catch (e) {
+      toast.add({ type: 'error', title: $t('company.deleteErrorToast', { name: item ? companyDisplayName(item) : '?' }) });
+    }
     break;
   case 'requestDelete':
     selectedDeleteItem.value = item ?? null;

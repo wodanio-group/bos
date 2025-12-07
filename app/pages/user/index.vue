@@ -118,11 +118,16 @@ const actionHandler = async (key: string, item?: UserViewModel | null) => { swit
     toast.add({ type: 'success', title: $t('user.success.upsert') });
     break;
   case 'delete':
-    if (item && !(await deleteById(item.id)))
-      return toast.add({ type: 'error', title: $t('user.error.delete') });
-    loadItems();
-    selectedDeleteItem.value = null;
-    toast.add({ type: 'success', title: $t('user.success.delete') });
+    try {
+      if (!item)
+        return;
+      await deleteById(item.id)
+      loadItems();
+      selectedDeleteItem.value = null;
+      toast.add({ type: 'success', title: $t('user.success.delete') });
+    } catch (e) {
+      toast.add({ type: 'error', title: $t('user.error.delete') });
+    }
     break;
   case 'openEdit':
     selectedEditItem.value = item ?? null;
