@@ -2,7 +2,7 @@ import { z } from "zod";
 import jwt from "jsonwebtoken";
 import { parse } from "cookie";
 import { createError, getHeader, type H3Event } from "h3";
-import type { User } from "@prisma/client";
+import type { User } from "~~/lib/prisma.server";
 import { useRuntimeConfig } from "#imports";
 import type { UserRoleRight } from "~~/shared/types/user";
 import { hasRoleRights } from "~~/shared/utils/user";

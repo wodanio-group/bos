@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { User } from "~~/lib/prisma.server";
 import type { UserViewModel, UserRole, UserRoleRight } from "../types/user";
 import { z } from "zod";
 

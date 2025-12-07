@@ -1,5 +1,5 @@
 import * as client from "openid-client";
-import type { User } from "@prisma/client";
+import type { User } from "~~/lib/prisma.server";
 import { parse } from "cookie";
 import { z } from "zod";
 import jwt from "jsonwebtoken";

@@ -1,5 +1,5 @@
 import type { CountryViewModel, PersonViewModel, CompanyViewModel, ContactNoteViewModel, ContactCommunicationWayViewModel, ContactAddressViewModel, ContactGender, ContactNoteType, ContactAddressCategory, ContactCommunicationWayCategory, ContactCommunicationWayType } from "../types/contact";
-import type { Country, Person, Company, ContactNote, ContactCommunicationWay, ContactAddress, CompanyPerson } from "@prisma/client";
+import type { Country, Person, Company, ContactNote, ContactCommunicationWay, ContactAddress, CompanyPerson } from "~~/lib/prisma.server";
 import { z } from "zod";
 
 export const contactGenderValidator = z.enum(['MALE', 'FEMALE', 'DIVERSE', 'NONE']).default('NONE');

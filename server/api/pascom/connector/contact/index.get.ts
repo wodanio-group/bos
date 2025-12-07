@@ -43,27 +43,28 @@ export default defineEventHandler(async (event) => {
     company.customerId ?? '',
   ])));
 
-  rows.push(...persons.map(person => ([
-    personDisplayName(person),
-    (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'WORK')?.value
-      ?? (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').at(0)?.value
-      ?? '',
-    person.firstname ?? '', 
-    person.surename ?? person.familyname ?? '', 
-    person.companyPersons.at(0)?.company
-      ? companyDisplayName(person.companyPersons.at(0)?.company) 
-      : '',
-    (person.contactCommunicationWays ?? []).filter(o => o.type === 'EMAIL').find(o => o.category === 'WORK')?.value
-      ?? (person.contactCommunicationWays ?? []).filter(o => o.type === 'EMAIL').at(0)?.value
-      ?? '',
-    (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'MOBILE')?.value ?? '',
-    (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'PRIVAT')?.value ?? '',
-    (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'FAX')?.value ?? '',
-    (person.contactCommunicationWays ?? []).filter(o => o.type === 'WEB').find(o => o.category === 'WORK')?.value
-      ?? (person.contactCommunicationWays ?? []).filter(o => o.type === 'WEB').at(0)?.value
-      ?? '',
-    person.companyPersons?.at(0)?.company?.customerId ?? '',
-  ])));
+  rows.push(...persons.map(person => {
+    const company = person.companyPersons.at(0)?.company;
+    return [
+      personDisplayName(person),
+      (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'WORK')?.value
+        ?? (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').at(0)?.value
+        ?? '',
+      person.firstname ?? '', 
+      person.surename ?? person.familyname ?? '', 
+      company ? companyDisplayName(company) : '',
+      (person.contactCommunicationWays ?? []).filter(o => o.type === 'EMAIL').find(o => o.category === 'WORK')?.value
+        ?? (person.contactCommunicationWays ?? []).filter(o => o.type === 'EMAIL').at(0)?.value
+        ?? '',
+      (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'MOBILE')?.value ?? '',
+      (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'PRIVAT')?.value ?? '',
+      (person.contactCommunicationWays ?? []).filter(o => o.type === 'PHONE').find(o => o.category === 'FAX')?.value ?? '',
+      (person.contactCommunicationWays ?? []).filter(o => o.type === 'WEB').find(o => o.category === 'WORK')?.value
+        ?? (person.contactCommunicationWays ?? []).filter(o => o.type === 'WEB').at(0)?.value
+        ?? '',
+      company?.customerId ?? '',
+    ];
+  }));
 
   setHeader(event, "Content-Type", "text/csv; charset=utf-8");
   return rows

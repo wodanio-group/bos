@@ -1,4 +1,4 @@
-import type { TimeTrackingActivity } from "@prisma/client";
+import type { TimeTrackingActivity } from "~~/lib/prisma.server";
 import type { TimeTrackingActivityViewModel } from "../types/time-tracking";
 
 export const timeTrackingActivityToViewModel = (item: TimeTrackingActivity): TimeTrackingActivityViewModel => {

@@ -1,4 +1,4 @@
-import type { UserRole as OrmUserRole } from "@prisma/client";
+import type { UserRole as OrmUserRole } from "~~/lib/prisma.server";
 import type { BaseViewModel } from "./base";
 
 export type UserRole = OrmUserRole;

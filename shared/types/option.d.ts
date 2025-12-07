@@ -1,4 +1,4 @@
-import type { OptionKey as OrmOptionKey } from "@prisma/client";
+import type { OptionKey as OrmOptionKey } from "~~/lib/prisma.server";
 
 export type OptionKey = OrmOptionKey;
 
