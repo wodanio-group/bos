@@ -1,13 +1,13 @@
 import type { BaseAtViewModel, BaseViewModel, BaseAtViewModel } from "./base";
 import type {
-  ContactGender as OrmContactGender, 
+  ContactGender as OrmContactGender,
   ContactCommunicationWayType as OrmContactCommunicationWayType,
   ContactCommunicationWayCategory as OrmContactCommunicationWayCategory,
   ContactAddressCategory as OrmContactAddressCategory,
   ContactNoteType as OrmContactNoteType
 } from "@prisma/nuxt";
 
-export type ContactGender = OrmContactGender; 
+export type ContactGender = OrmContactGender;
 
 export type ContactCommunicationWayType = OrmContactCommunicationWayType;
 
@@ -70,7 +70,6 @@ export interface CompanyViewModel extends BaseViewModel {
   vatId: string | null;
   persons: {
     id: string;
-    main: boolean;
     role: string | null;
   }[];
   communicationWays: ContactCommunicationWayViewModel[];

@@ -50,29 +50,29 @@ export const ContactNoteTypes: ContactNoteType[] = [
 ];
 
 export const ContactCommunicationWayTypes: ContactCommunicationWayType[] = [
-  'PHONE', 
-  'EMAIL', 
+  'PHONE',
+  'EMAIL',
   'WEB'
 ];
 
 export const ContactCommunicationWayCategories: ContactCommunicationWayCategory[] = [
-  'INVOICING', 
-  'WORK', 
-  'FAX', 
-  'MOBILE', 
-  'AUTOBOX', 
-  'NEWSLETTER', 
-  'PRIVAT', 
+  'INVOICING',
+  'WORK',
+  'FAX',
+  'MOBILE',
+  'AUTOBOX',
+  'NEWSLETTER',
+  'PRIVAT',
   'NONE'
 ];
 
 export const ContactAddressCategories: ContactAddressCategory[] = [
-  'HEADQUARTER', 
-  'INVOICE', 
-  'WORK', 
-  'DELIVERY', 
-  'PICKUP', 
-  'PRIVAT', 
+  'HEADQUARTER',
+  'INVOICE',
+  'WORK',
+  'DELIVERY',
+  'PICKUP',
+  'PRIVAT',
   'NONE'
 ];
 
@@ -98,7 +98,7 @@ export const contactCommunicationWayToViewModel = (item: ContactCommunicationWay
   };
 }
 
-export const compareContactCommunicationWay = (a: z.infer<typeof contactCommunicationWayValidator> | ContactCommunicationWay | ContactCommunicationWayViewModel, b: z.infer<typeof contactCommunicationWayValidator> | ContactCommunicationWay | ContactCommunicationWayViewModel) => 
+export const compareContactCommunicationWay = (a: z.infer<typeof contactCommunicationWayValidator> | ContactCommunicationWay | ContactCommunicationWayViewModel, b: z.infer<typeof contactCommunicationWayValidator> | ContactCommunicationWay | ContactCommunicationWayViewModel) =>
   (a.type === b.type && a.category === b.category && a.value === b.value);
 
 export const contactAddressViewModel = (item: ContactAddress): ContactAddressViewModel => {
@@ -116,9 +116,9 @@ export const contactAddressViewModel = (item: ContactAddress): ContactAddressVie
   };
 }
 
-export const compareContactAddress = (a: z.infer<typeof contactAddressValidator> | ContactAddress | ContactAddressViewModel, b: z.infer<typeof contactAddressValidator> | ContactAddress | ContactAddressViewModel) => 
-  (a.address === b.address && a.address2 === b.address2 && a.address3 === b.address3 && a.address4 === b.address4
-    && a.zipCode === b.zipCode && a.city === b.city);
+export const compareContactAddress = (a: z.infer<typeof contactAddressValidator> | ContactAddress | ContactAddressViewModel, b: z.infer<typeof contactAddressValidator> | ContactAddress | ContactAddressViewModel) =>
+(a.address === b.address && a.address2 === b.address2 && a.address3 === b.address3 && a.address4 === b.address4
+  && a.zipCode === b.zipCode && a.city === b.city);
 
 export const contactNoteViewModel = (item: ContactNote): ContactNoteViewModel => {
   return {
@@ -130,7 +130,7 @@ export const contactNoteViewModel = (item: ContactNote): ContactNoteViewModel =>
   };
 }
 
-export const compareContactNote = (a: z.infer<typeof contactNoteValidator> | ContactNote | ContactNoteViewModel, b: z.infer<typeof contactNoteValidator> | ContactNote | ContactNoteViewModel) => 
+export const compareContactNote = (a: z.infer<typeof contactNoteValidator> | ContactNote | ContactNoteViewModel, b: z.infer<typeof contactNoteValidator> | ContactNote | ContactNoteViewModel) =>
   (a.type === b.type && a.timestamp === b.timestamp && a.content === b.content);
 
 export const personToViewModel = (item: Person): PersonViewModel => {
@@ -176,7 +176,6 @@ export const companyToViewModel = (item: Company): CompanyViewModel => {
     vatId: item.vatId,
     persons: (((item as any)?.companyPersons ?? []) as CompanyPerson[]).map(o => ({
       id: o.personId,
-      main: o.main,
       role: o.role,
     })),
     communicationWays: ((item as any)?.contactCommunicationWays ?? []).map((o: any) => contactCommunicationWayToViewModel(o)),
@@ -189,6 +188,6 @@ export const companyDisplayName = (item: Company | CompanyViewModel, opts?: { wi
   return [
     item.name,
     item.name2,
-    ...((opts?.withCustomerId === true && item.customerId) ? [ `(${item.customerId})` ] : []),
+    ...((opts?.withCustomerId === true && item.customerId) ? [`(${item.customerId})`] : []),
   ].filter(o => o).join(' ');
 }

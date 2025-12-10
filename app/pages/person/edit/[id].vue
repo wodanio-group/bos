@@ -43,7 +43,7 @@ const { item, upsert, loadItem } = useCrud<PersonViewModel>({
 });
 await loadItem();
 
-const navigateBack = (id?: string) => navigateTo(`/company/${id ?? item.value?.id}`);
+const navigateBack = (id?: string) => navigateTo(`/person/${id ?? item.value?.id}`);
 
 const changedItem = ref<ContactViewModel | null>(null);
 const onSave = async () => {
