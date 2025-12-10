@@ -9,8 +9,7 @@
         @click="emits('edit')">
       </atom-button>
     </template>
-    <div
-      class="flex flex-col gap-4 py-4">
+    <div class="flex flex-col gap-4 py-4">
       <template
         v-for="line in lines">
         <div
@@ -24,6 +23,16 @@
           class="w-full h-0 border-t border-t-secondary-200">
         </div>
       </template>
+    </div>
+    <div 
+      class="border-t border-t-secondary-200 flex flex-col gap-4 p-4"
+      v-if="hasRelations">
+      <contact-info-section-box-person-company-relation-item
+        v-for="item of personCompanyRelationItems"
+        :key="item.id"
+        :contactType="(contactType === 'company') ? 'person' : 'company'"
+        :item="item">
+      </contact-info-section-box-person-company-relation-item>
     </div>
   </PageSectionBox>
 
@@ -39,7 +48,15 @@ const emits = defineEmits<{
 const props = defineProps<{
   contact: CompanyViewModel | PersonViewModel
 }>();
-const isCompany = computed(() => ('customerId' in props.contact));
+const contactType = computed<'company' | 'person'>(() => (props.contact && 'firstname' in props.contact) ? 'person' : 'company');
+const hasRelations = computed(() => (contactType.value === 'company' && props.contact && 'persons' in props.contact && props.contact.persons.length > 0) 
+                      || (contactType.value === 'person' && props.contact && 'companies' in props.contact && props.contact.companies.length > 0));
+
+const personCompanyRelationItems = computed(() => (props.contact && 'persons' in props.contact)
+  ? props.contact.persons
+  : (props.contact && 'companies' in props.contact)
+    ? props.contact.companies
+    : []);
 
 const lines: {
   type?: 'text' | 'div',
@@ -48,7 +65,7 @@ const lines: {
 }[] = [
   { title: $t('general.externalId'), value: props.contact.externalId },
   { title: $t('general.customerId'), value: ('customerId' in props.contact) ? props.contact.customerId : null },
-  { title: $t('general.name'), value: isCompany.value ? companyDisplayName(props.contact as any) : personDisplayName(props.contact as any) },
+  { title: $t('general.name'), value: (contactType.value === 'company') ? companyDisplayName(props.contact as any) : personDisplayName(props.contact as any) },
   { title: $t('general.vatId'), value: ('vatId' in props.contact) ? props.contact.vatId : null },
   { title: $t('general.taxId'), value: ('taxId' in props.contact) ? props.contact.taxId : null },
   ...(((props.contact.communicationWays.length > 0) ? [{ type: 'div' }] : []) as any),

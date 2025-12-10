@@ -53,7 +53,6 @@ export interface PersonViewModel extends BaseViewModel {
   birthdayAt: string | null;
   companies: {
     id: string;
-    main: boolean;
     role: string | null;
   }[];
   communicationWays: ContactCommunicationWayViewModel[];

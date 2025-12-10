@@ -14,13 +14,13 @@
       icon="search" 
       class="text-secondary-600 absolute top-1/2 -translate-y-1/2 left-3"/>
     <button
-      v-if="hasInput"
+      v-if="hasInput && hideClearButton !== true"
       type="button"
-      class="absolute top-1/2 -translate-y-1/2 right-3"
+      class="absolute top-1/2 -translate-y-1/2 right-3 outline-[1]"
       @click.prevent="onClear()">
       <atom-icon 
         icon="x" 
-        class="text-secondary-600"/>
+        class="text-secondary-600 !leading-[1]"/>
     </button>
   </label>
 
@@ -29,6 +29,10 @@
 <script setup lang="ts">
 
 const value = defineModel<string>();
+
+const props = defineProps<{
+  hideClearButton?: boolean,
+}>();
 
 const hasInput = computed<boolean>(() => (value.value?.length ?? 0) > 0);
 

@@ -10,6 +10,7 @@ general:
   web: "Web"
   phone: "Phone"
   role: "Role"
+  roleAt: "{role} at"
   createdAt: "Created at"
   updatedAt: "Updated at"
   address: "Address"
@@ -220,3 +221,11 @@ contactEdit:
     title: "Communication Ways"
   addresses:
     title: "Adresses"
+  personCompanyRelations:
+    companiesTitle: "Companies"
+    personsTitle: "Persons"
+    searchDialog:
+      company:
+        title: "Search and select company..."
+      person:
+        title: "Search and select person..."

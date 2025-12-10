@@ -2,7 +2,7 @@
 
   <page-section-box 
     :title="$t('contactEdit.baseInfo.title')"
-    class="col-span-12">
+    class="col-span-1 lg:col-span-12">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4">
 
       <atom-input
@@ -74,7 +74,7 @@
 
   <page-section-box 
     :title="$t('contactEdit.communicationWays.title')"
-    class="col-span-6"
+    class="col-span-1 lg:col-span-6"
     :fixed-height="true">
     <div class="flex flex-col p-4">
 
@@ -155,7 +155,7 @@
 
   <page-section-box 
     :title="$t('contactEdit.addresses.title')"
-    class="col-span-6"
+    class="col-span-1 lg:col-span-6"
     :fixed-height="true">
     <template #headerRight>
       <atom-button
@@ -181,6 +181,47 @@
       </div>
     </div>
   </page-section-box>
+
+  <page-section-box 
+    :title="$t((contactType === 'person') ? 'contactEdit.personCompanyRelations.companiesTitle' : 'contactEdit.personCompanyRelations.personsTitle')"
+    class="col-span-1 lg:col-span-12"
+    :fixed-height="true">
+    <template #headerRight>
+      <atom-button
+        type="button"
+        :title="$t('general.add')"
+        icon="plus"
+        @click="openSearchPersonCompanyRelationDialog = true">
+      </atom-button>
+    </template>
+    <div class="flex flex-col gap-4 p-4">
+      <template
+        :key="item.id"
+        v-for="item in personCompanyRelationItems">
+        <contact-edit-person-company-relation-item
+          :contact-type="(contactType === 'company') ? 'person' : 'company'"
+          :item="item"
+          @change="updatePersonCompanyRelationItems($event)"
+          @delete="deletePersonCompanyRelationItem(item.id)">
+        </contact-edit-person-company-relation-item>
+      </template>
+      <div 
+        class="flex justify-center items-center w-full py-2"
+        v-if="personCompanyRelationItems.length <= 0">
+        <p class="text-xs text-gray-400 leading-none text-center" v-html="$t('general.noItemsFound')"></p>
+      </div>
+    </div>
+  </page-section-box>
+
+  <contact-person-company-relation-search-dialog
+    :open="openSearchPersonCompanyRelationDialog"
+    :contact-type="(contactType === 'company') ? 'person' : 'company'"
+    @select="(() => {
+      updatePersonCompanyRelationItems({ id: $event, role: null });
+      openSearchPersonCompanyRelationDialog = false;
+    })()"
+    @close="openSearchPersonCompanyRelationDialog = false">
+  </contact-person-company-relation-search-dialog>
 
 </template>
 
@@ -241,7 +282,25 @@ const updateCommunicationWays = (value: Partial<(ContactCommunicationWayViewMode
   }
 }; 
 
-watch([baseInfos, addresses, communicationWays], ([baseInfos, addresses, communicationWays]) => {
+const openSearchPersonCompanyRelationDialog = ref<boolean>(false);
+const personCompanyRelationFieldName = computed(() => (contactType.value === 'company') ? 'persons' : 'companies');
+const personCompanyRelationItems = ref<{ id: string, role: string | null }[]>((props.contact && 'persons' in props.contact)
+  ? props.contact.persons
+  : (props.contact && 'companies' in props.contact)
+    ? props.contact.companies
+    : []);
+const updatePersonCompanyRelationItems = (value: { id: string, role: string | null }) => {
+  if (personCompanyRelationItems.value.find(o => o.id === value.id)) {
+    personCompanyRelationItems.value = personCompanyRelationItems.value.map(o => (o.id === value.id) ? value : o);
+  } else {
+    personCompanyRelationItems.value.push(value);
+  }
+};
+const deletePersonCompanyRelationItem = (id: string) => {
+  personCompanyRelationItems.value = personCompanyRelationItems.value.filter(o => (o.id !== id));
+};
+
+watch([baseInfos, addresses, communicationWays, personCompanyRelationItems], ([baseInfos, addresses, communicationWays, personCompanyRelationItems]) => {
   if (!props.contact)
     return;
   emits('change', {
@@ -250,6 +309,7 @@ watch([baseInfos, addresses, communicationWays], ([baseInfos, addresses, communi
     birthdayAt: (baseInfos.birthdayAt.length > 0) ? `${baseInfos.birthdayAt}T00:00:00Z`: null,
     addresses: addresses as ContactAddressViewModel[],
     communicationWays: communicationWays as ContactCommunicationWayViewModel[],
+    [personCompanyRelationFieldName.value]: personCompanyRelationItems,
   });
 }, { deep: true, immediate: true });
 

@@ -146,7 +146,6 @@ export const personToViewModel = (item: Person): PersonViewModel => {
     birthdayAt: item.birthdayAt ? (new Date(item.birthdayAt)).toISOString() : null,
     companies: (((item as any)?.companyPersons ?? []) as CompanyPerson[]).map(o => ({
       id: o.companyId,
-      main: o.main,
       role: o.role,
     })),
     communicationWays: ((item as any)?.contactCommunicationWays ?? []).map((o: any) => contactCommunicationWayToViewModel(o)),

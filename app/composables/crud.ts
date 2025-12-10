@@ -4,12 +4,13 @@ import type { BaseViewModel } from "~~/shared/types/base";
 
 export const useCrud = <T extends BaseViewModel>(opts: {
   apiPath: string,
-  query?: any
+  query?: any,
+  key?: string,
 }) => {
 
   const route = useRoute();
 
-  const itemState = useState<T | null>(`crudItem${opts.apiPath}`, () => null);
+  const itemState = useState<T | null>(`crudItem${opts.key ?? ''}${opts.apiPath}`, () => null);
   const item = computed(() => itemState.value);
 
   const loadItem = async (id?: string) => {
@@ -35,12 +36,12 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     }
   };
 
-  const itemsState = useState<T[]>(`crudItems${opts.apiPath}`, () => []);
+  const itemsState = useState<T[]>(`crudItems${opts.key ?? ''}${opts.apiPath}`, () => []);
   const filterAndSearchState = useState<{
     take: number,
     page: number,
     search: string | null,
-  }>(`crudFilerAndSearchState${opts.apiPath}`, () => ({
+  }>(`crudFilerAndSearchState${opts.key ?? ''}${opts.apiPath}`, () => ({
     take: 100,
     page: 1,
     search: null
