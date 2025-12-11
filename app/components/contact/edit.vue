@@ -306,6 +306,13 @@ watch([baseInfos, addresses, communicationWays, personCompanyRelationItems], ([b
   emits('change', {
     ...props.contact,
     ...baseInfos,
+    name: filterString(baseInfos.name),
+    name2: filterString(baseInfos.name2),
+    taxId: filterString(baseInfos.taxId),
+    vatId: filterString(baseInfos.vatId),
+    firstname: filterString(baseInfos.firstname),
+    surename: filterString(baseInfos.surename),
+    familyname: filterString(baseInfos.familyname),
     birthdayAt: (baseInfos.birthdayAt.length > 0) ? `${baseInfos.birthdayAt}T00:00:00Z`: null,
     addresses: addresses as ContactAddressViewModel[],
     communicationWays: communicationWays as ContactCommunicationWayViewModel[],

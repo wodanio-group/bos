@@ -52,6 +52,7 @@ watch(values, () => {
   emits('change', {
     ...props.communicationWay,
     ...values.value,
+    value: filterString(values.value.value),
   });
 }, { deep: true, immediate: true });
 

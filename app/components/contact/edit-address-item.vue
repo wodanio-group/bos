@@ -80,7 +80,13 @@ const values = ref({
 });
 
 watch(values, () => {
-  emits('change', values.value);
+  emits('change', {
+    ...values.value,
+    address: filterString(values.value.address),
+    address2: filterString(values.value.address2),
+    zipCode: filterString(values.value.zipCode),
+    city: filterString(values.value.city),
+  });
 }, { deep: true, immediate: true });
 
 </script>

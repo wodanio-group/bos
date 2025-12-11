@@ -9,6 +9,7 @@ import { increaseCompanyCustomerId, getNextAvailableCompanyCustomerId } from "~~
 import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 import _ from "lodash";
+import { queue } from "../../utils/queue";
 
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
@@ -101,6 +102,7 @@ export default defineEventHandler(async (event) => {
     },
   });
   await increaseCompanyCustomerId();
+  await queue.add('pes.customer.upsert', { companyId: item.id });
 
   return companyToViewModel(item);
 });

@@ -1,6 +1,7 @@
 import { prisma } from "~~/lib/prisma.server";
 import { getValidatedParamsId } from "~~/shared/utils/default";
 import { authMiddleware } from "~~/server/utils/auth";
+import { queue } from '../../../utils/queue';
 
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
@@ -19,6 +20,8 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 404
     });
+
+  await queue.add('pes.customer.delete', { companyId: id });
 
   await prisma.company.delete({ where: { id } });
 

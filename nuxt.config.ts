@@ -11,6 +11,10 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     secret: '',
+    pes: {
+      url: '',
+      apiToken: '',
+    },
     pascom: {
       connector: {
         username: '',

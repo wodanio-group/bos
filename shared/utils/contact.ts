@@ -190,3 +190,17 @@ export const companyDisplayName = (item: Company | CompanyViewModel, opts?: { wi
     ...((opts?.withCustomerId === true && item.customerId) ? [`(${item.customerId})`] : []),
   ].filter(o => o).join(' ');
 }
+
+export const contactGetPrimaryAddress = (contact: PersonViewModel | CompanyViewModel, category: ContactAddressCategory): ContactAddressViewModel | null => {
+  const items = ((contact.addresses as ContactAddressCategory[]) ?? [])
+  return items.find(o => o.category === category) 
+    ?? items.at(0) 
+    ?? null;
+};
+
+export const contactGetPrimaryCommunicationWay = (contact: PersonViewModel | CompanyViewModel, type: ContactCommunicationWayType, category: ContactCommunicationWayCategory): ContactCommunicationWayViewModel | null => {
+  const items = ((contact.communicationWays as ContactCommunicationWayViewModel[]) ?? [])
+  return items.find(o => o.type === type && o.category === category) 
+    ?? items.filter(o => o.type === type).at(0) 
+    ?? null;
+};
