@@ -8,17 +8,25 @@
         class="pb-4"
         mode="create"
         :reset-on-submit="true"
-        @update="onUpdate($event)">
+        @update="onUpdate($event)"
+        v-if="disableChanges !== true">
       </contact-note-item>
 
       <contact-note-item 
         class="border-t border-t-gray-200 py-4 last:pb-0"
+        :disable-changes="disableChanges === true"
         :note="note"
         :key="index"
         v-for="(note, index) in computedNotes"
         @update="onUpdate($event, index)"
         @delete="onDelete(index)">
       </contact-note-item>
+
+      <div 
+        class="flex justify-center items-center w-full py-2"
+        v-if="disableChanges === true && computedNotes.length <= 0">
+        <p class="text-xs text-gray-400 leading-none text-center" v-html="$t('general.noItemsFound')"></p>
+      </div>
 
     </div>
   </PageSectionBox>
@@ -33,7 +41,8 @@ const emits = defineEmits<{
 }>();
 
 const props = defineProps<{
-  notes: ContactNoteViewModel[];
+  disableChanges?: boolean,
+  notes: ContactNoteViewModel[],
 }>();
 const computedNotes = computed(() => props.notes
   .sort((a, b) => (b.timestamp ?? '').localeCompare(a.timestamp ?? '')));

@@ -1,12 +1,14 @@
 <template>
 
-  <PageSectionBox>
+  <PageSectionBox
+    :title="$t('contactInfoSectionBox.title')">
     <template #headerRight>
       <atom-button
         type="button"
         icon="square-pen"
         :title="$t('general.edit')"
-        @click="emits('edit')">
+        @click="emits('edit')"
+        v-if="disableEdit !== true">
       </atom-button>
     </template>
     <div class="flex flex-col gap-4 py-4">
@@ -25,7 +27,7 @@
       </template>
     </div>
     <div 
-      class="border-t border-t-secondary-200 flex flex-col gap-4 p-4"
+      class="border-t border-t-secondary-200 flex flex-col px-4 py-2"
       v-if="hasRelations">
       <contact-info-section-box-person-company-relation-item
         v-for="item of personCompanyRelationItems"
@@ -46,6 +48,7 @@ const emits = defineEmits<{
 }>();
 
 const props = defineProps<{
+  disableEdit?: boolean,
   contact: CompanyViewModel | PersonViewModel
 }>();
 const contactType = computed<'company' | 'person'>(() => (props.contact && 'firstname' in props.contact) ? 'person' : 'company');

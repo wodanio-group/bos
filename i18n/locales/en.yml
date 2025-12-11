@@ -31,6 +31,8 @@ general:
   value: "Value"
   externalId: "External ID"
   customerId: "Customer ID"
+  person: "Person"
+  company: "Company"
   edit: "Edit"
   add: "Add"
   delete: "Delete"
@@ -197,6 +199,9 @@ timeTracking:
   start: "Start"
   stop: "Stop"
   csvExport: "CSV Export"
+
+contactInfoSectionBox:
+  title: "Infos"
 
 contactNoteSectionBox:
   title: "Notes"

@@ -10,12 +10,14 @@
         icon="trash-2"
         :title="$t('general.delete')"
         :outline="true"
-        @click="showDeletePopover = true">
+        @click="showDeletePopover = true"
+        v-if="hasRightContactAllDelete">
       </atom-button>
     </template>
 
     <div class="col-span-8">
       <contact-note-section-box
+        :disable-changes="hasRightContactAllEdit !== true"
         :notes="item.notes"
         @update="onUpdateNotes($event)">
       </contact-note-section-box>
@@ -23,6 +25,7 @@
 
     <div class="col-span-4">
       <contact-info-section-box
+        :disable-edit="hasRightContactAllEdit !== true"
         :contact="item"
         @edit="navigateTo(`/person/edit/${item.id}`)">
       </contact-info-section-box>
@@ -50,11 +53,16 @@ definePageMeta({
   middleware: ['auth']
 });
 
+const auth = useAuth();
+const user = await auth.getUser();
 const toast = useToast();
 const { item, upsert, loadItem, deleteById } = useCrud<PersonViewModel>({
   apiPath: '/api/person'
 });
 await loadItem();
+
+const hasRightContactAllEdit = computed(() => user && user.rights.includes('contact.all.edit')),
+      hasRightContactAllDelete = computed(() => user && user.rights.includes('contact.all.delete'));
 
 const onUpdateNotes = async (notes: Partial<ContactNoteViewModel>[]) => {
   try {

@@ -10,12 +10,12 @@
         { title: $t('general.from'), fieldName: 'from', transform: (value: string | null) => ((value !== null) ? DateTime.fromISO(value).toFormat($t('format.datetime')) : '-') },
         { title: $t('general.to'), fieldName: 'to', transform: (value: string | null) => ((value !== null) ? DateTime.fromISO(value).toFormat($t('format.datetime')) : '-') },
         { title: $t('general.duration'), fieldName: 'duration', transform: (value: number) => ((value > 0) ? Duration.fromMillis(value).toFormat($t('format.duration')) : '-') },
-        { title: $t('general.user'), fieldName: 'user', transform: (id: string) => users.find(u => u.id === id)?.displayName ?? '-' },
+        ...((hasRightUserAllView === true) ? [{ title: $t('general.user'), fieldName: 'user', transform: (id: string) => users.find(u => u.id === id)?.displayName ?? '-' }] : []),
       ]"
       :filters="[
         { title: $t('general.from'), icon: 'calendar-days', key: 'from', type: 'date' },
         { title: $t('general.to'), icon: 'calendar-days', key: 'to', type: 'date' },
-        { title: $t('general.user'), icon: 'calendar-days', key: 'user', type: 'select', items: users.map(u => ({ title: u.displayName ?? '?', value: u.id })) },
+        ...(((hasRightUserAllView === true) ? [{ title: $t('general.user'), icon: 'calendar-days', key: 'user', type: 'select', items: users.map(u => ({ title: u.displayName ?? '?', value: u.id })) }] : []) as any),
       ]"
       :header-actions="[
         { title: $t('timeTracking.csvExport'), icon: 'arrow-down-to-line', key: 'csvExport' }
@@ -50,8 +50,9 @@ const user = await auth.getUser();
 
 const toast = useToast();
 
+const hasRightUserAllView = computed(() => user && user.rights.includes('user.all.view'));
 const users = ref<UserViewModel[]>([]);
-if (user && user.rights.includes('user.all.view')) {
+if (hasRightUserAllView.value === true) {
   const userCrud = useCrud<UserViewModel>({
     apiPath: '/api/user'
   });

@@ -12,12 +12,13 @@
       ]"
       :actions="[
         { title: $t('general.view'), icon: 'external-link', key: 'view' },
-        { title: $t('general.edit'), icon: 'square-pen', key: 'view-edit' },
-        { title: $t('general.delete'), icon: 'trash-2', key: 'requestDelete' },
+        ...((hasRightContactAllEdit === true) ? [{ title: $t('general.edit'), icon: 'square-pen', key: 'view-edit' }] : []),
+        ...((hasRightContactAllDelete === true) ? [{ title: $t('general.delete'), icon: 'trash-2', key: 'requestDelete' }] : []),
       ]"
       :paginationState="pagination"
       :paginationIsFirst="paginationIsFirst"
       :paginationIsLast="paginationIsLast"
+      :hideAddButto="hasRightContactAllCreate !== true"
       @update:paginationState="paginationSet"
       @updateSearch="searchSet"
       @action="actionHandler">
@@ -84,6 +85,8 @@ definePageMeta({
   middleware: ['auth']
 });
 
+const auth = useAuth();
+const user = await auth.getUser();
 const toast = useToast();
 
 const { 
@@ -100,6 +103,10 @@ const {
   apiPath: '/api/person'
 });
 await loadItems();
+
+const hasRightContactAllCreate = computed(() => user && user.rights.includes('contact.all.create')),
+      hasRightContactAllEdit = computed(() => user && user.rights.includes('contact.all.edit')),
+      hasRightContactAllDelete = computed(() => user && user.rights.includes('contact.all.delete'));
 
 const selectedDeleteItem = useState<PersonViewModel | null>('personSelectedDeleteItem', () => null),
       defaultCreateForm = {

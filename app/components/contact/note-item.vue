@@ -15,18 +15,20 @@
           <span v-html="$t('contactNoteSectionBox.input.from')"></span>
           <span v-html="formatedTimestamp"></span>
         </div>
-        <span>|</span>
+        <span v-if="disableChanges !== true">|</span>
         <button
           type="button"
           class="hover:underline outline-none"
-          @click="overwriteMode = 'input'">
+          @click="overwriteMode = 'input'"
+          v-if="disableChanges !== true">
           <span v-html="$t('contactNoteSectionBox.input.edit')"></span>
         </button>
-        <span>|</span>
+        <span v-if="disableChanges !== true">|</span>
         <button
           type="button"
           class="hover:underline outline-none"
-          @click="showDelete = true">
+          @click="showDelete = true"
+          v-if="disableChanges !== true">
           <span v-html="$t('contactNoteSectionBox.input.delete')"></span>
         </button>
       </div>
@@ -94,6 +96,7 @@ const props = defineProps<{
   mode?: 'create' | 'input' | 'view',
   resetOnSubmit?: boolean,
   note?: ContactNoteViewModel,
+  disableChanges?: boolean,
 }>();
 const overwriteMode = ref<'create' | 'input' | 'view' | null>(null);
 const computedMode = computed(() => overwriteMode.value ?? props.mode ?? (props.note ? 'view' : 'input'));

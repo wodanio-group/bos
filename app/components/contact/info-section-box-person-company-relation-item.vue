@@ -5,12 +5,17 @@
       <span 
         class="text-xs font-semibold text-secondary-600"
         v-html="$t('general.roleAt', { role: props.item.role ?? '' })"
-        v-if="contactType === 'company'">
+        v-if="contactType === 'company' && hasRole">
       </span>
       <span 
         class="text-xs font-semibold text-secondary-600"
         v-html="props.item.role"
-        v-if="contactType === 'person'">
+        v-if="contactType === 'person' && hasRole">
+      </span>
+      <span 
+        class="text-xs font-semibold text-secondary-600"
+        v-html="$t('general.'+contactType)"
+        v-if="!hasRole">
       </span>
     </div>
     <NuxtLink
@@ -42,5 +47,6 @@ const name = computed(() => (item.value && props.contactType === 'company')
   : (item.value && props.contactType === 'person')
     ? personDisplayName(item.value as any)
     : '?');
+const hasRole = computed(() => filterString(props.item.role) !== null);
 
 </script>
