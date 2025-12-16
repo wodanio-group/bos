@@ -47,6 +47,9 @@ export default defineEventHandler(async (event) => {
     ] },
     orderBy: {
       [query.data.sortBy]: query.data.sortOrder
+    },
+    include: {
+      user: true
     }
   })).map(o => userTokenToViewModel(o));
 });

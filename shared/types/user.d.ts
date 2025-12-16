@@ -22,4 +22,8 @@ export interface UserTokenViewModel extends BaseViewModel {
   name: string | null;
   userId: string;
   token?: string | null;
+  user?: {
+    email: string;
+    displayName: string | null;
+  };
 }

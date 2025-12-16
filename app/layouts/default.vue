@@ -123,6 +123,7 @@ const mainMenuItems = computed<IMenuItem[]>(() => ([
 
 const secondMenuItems = computed<IMenuItem[]>(() => ([
   { title: $t('layout.aside.users'), icon: 'users-round', to: '/user', hide: !user?.rights.includes('user.all.view') },
+  { title: $t('layout.aside.userTokens'), icon: 'key', to: '/user/token', hide: !(user?.rights.includes('user.token.all.view') || user?.rights.includes('user.token.own.view')) },
   { title: $t('layout.aside.profile'), icon: 'circle-user-round', to: '/profile' },
   { title: $t('layout.aside.logout'), icon: 'log-out', onClick: () => auth.logout() },
 ]));

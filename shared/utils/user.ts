@@ -38,14 +38,18 @@ export const userToViewModel = (user: User): UserViewModel => {
   };
 }
 
-export const userTokenToViewModel = (userToken: UserToken, token?: string): UserTokenViewModel => {
+export const userTokenToViewModel = (userToken: UserToken & { user?: User }, token?: string): UserTokenViewModel => {
   return {
     id: userToken.id,
     createdAt: (new Date(userToken.createdAt)).toISOString(),
     updatedAt: (new Date(userToken.updatedAt)).toISOString(),
     name: userToken.name,
     userId: userToken.userId,
-    token
+    token,
+    user: userToken.user ? {
+      email: userToken.user.email,
+      displayName: userToken.user.displayName,
+    } : undefined,
   };
 }
 
