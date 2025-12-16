@@ -97,11 +97,13 @@ const {
   paginationIsLast,
   paginationSet,
   searchSet,
+  sortSet,
   create,
   deleteById,
 } = useCrud<PersonViewModel>({
   apiPath: '/api/person'
 });
+sortSet('familyname', 'asc');
 await loadItems();
 
 const hasRightContactAllCreate = computed(() => user && user.rights.includes('contact.all.create')),

@@ -41,10 +41,14 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     take: number,
     page: number,
     search: string | null,
+    sortBy: string | null,
+    sortOrder: 'asc' | 'desc' | null,
   }>(`crudFilerAndSearchState${opts.key ?? ''}${opts.apiPath}`, () => ({
     take: 100,
     page: 1,
-    search: null
+    search: null,
+    sortBy: null,
+    sortOrder: null,
   }));
 
   const items = computed(() => itemsState.value);
@@ -102,6 +106,53 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     loadItems();
   };
 
+  const sort = computed<{ sortBy: string | null, sortOrder: 'asc' | 'desc' | null }>(() => ({
+    sortBy: filterAndSearchState.value.sortBy,
+    sortOrder: filterAndSearchState.value.sortOrder
+  }));
+  const sortSet = (sortBy: string | null, sortOrder: 'asc' | 'desc' | null = 'asc') => {
+    filterAndSearchState.value = {
+      ...filterAndSearchState.value,
+      sortBy,
+      sortOrder
+    };
+    loadItems();
+  };
+  const sortToggle = (sortBy: string) => {
+    const currentSortBy = filterAndSearchState.value.sortBy;
+    const currentSortOrder = filterAndSearchState.value.sortOrder;
+
+    if (currentSortBy === sortBy) {
+      // Toggle between asc, desc, and null
+      if (currentSortOrder === 'asc') {
+        filterAndSearchState.value = {
+          ...filterAndSearchState.value,
+          sortOrder: 'desc'
+        };
+      } else if (currentSortOrder === 'desc') {
+        filterAndSearchState.value = {
+          ...filterAndSearchState.value,
+          sortBy: null,
+          sortOrder: null
+        };
+      } else {
+        filterAndSearchState.value = {
+          ...filterAndSearchState.value,
+          sortBy,
+          sortOrder: 'asc'
+        };
+      }
+    } else {
+      // Set new sort field with asc order
+      filterAndSearchState.value = {
+        ...filterAndSearchState.value,
+        sortBy,
+        sortOrder: 'asc'
+      };
+    }
+    loadItems();
+  };
+
   /* const filter = computed<Record<string, string | number | null>>(() => ({}));
   const filterSet = (filter: Record<string, string | number | null>) => {
     filterAndSearchState.value = {
@@ -112,12 +163,22 @@ export const useCrud = <T extends BaseViewModel>(opts: {
 
   const loadItems = async () => {
     try {
+      const queryParams: any = {
+        ...(opts.query ?? {}),
+        ...filterAndSearchState.value,
+      };
+
+      // Remove null sort values from query
+      if (queryParams.sortBy === null) {
+        delete queryParams.sortBy;
+      }
+      if (queryParams.sortOrder === null) {
+        delete queryParams.sortOrder;
+      }
+
       itemsState.value = (await $fetch<T[]>(opts.apiPath, {
         method: 'GET',
-        query: {
-          ...(opts.query ?? {}),
-          ...filterAndSearchState.value,
-        },
+        query: queryParams,
       }));
     } catch (e) { }
   };
@@ -162,6 +223,9 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     paginationSet,
     search,
     searchSet,
+    sort,
+    sortSet,
+    sortToggle,
     loadItems,
     upsert,
     create,

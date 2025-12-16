@@ -84,9 +84,11 @@ const {
   searchSet,
   create,
   deleteById,
+  sortSet,
 } = useCrud<CompanyViewModel>({
   apiPath: '/api/company'
 });
+sortSet('customerId', 'desc');
 await loadItems();
 
 const hasRightContactAllCreate = computed(() => user && user.rights.includes('contact.all.create')),

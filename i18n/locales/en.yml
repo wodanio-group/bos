@@ -116,6 +116,11 @@ layout:
 
 dashboard:
   title: "Dashboard"
+  stats:
+    companies: "Companies"
+    totalCompanies: "Total companies"
+    persons: "Persons"
+    totalPersons: "Total persons"
 
 company:
   title: "Companies"

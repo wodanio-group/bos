@@ -30,6 +30,16 @@ model User {
   publicKey                 String                    @default(uuid())
   publicSecret              String                    @default(uuid())
   timeTrackingActivities    TimeTrackingActivity[]
+  userTokens                UserToken[]
+}
+
+model UserToken {
+  id                        String                    @id @default(uuid())
+  createdAt                 DateTime                  @default(now())
+  updatedAt                 DateTime                  @updatedAt
+  name                      String?
+  userId                    String
+  user                      User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // ------------

@@ -207,6 +207,7 @@ export type UserWhereInput = {
   publicKey?: Prisma.StringFilter<"User"> | string
   publicSecret?: Prisma.StringFilter<"User"> | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityListRelationFilter
+  userTokens?: Prisma.UserTokenListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -219,6 +220,7 @@ export type UserOrderByWithRelationInput = {
   publicKey?: Prisma.SortOrder
   publicSecret?: Prisma.SortOrder
   timeTrackingActivities?: Prisma.TimeTrackingActivityOrderByRelationAggregateInput
+  userTokens?: Prisma.UserTokenOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -234,6 +236,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   publicKey?: Prisma.StringFilter<"User"> | string
   publicSecret?: Prisma.StringFilter<"User"> | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityListRelationFilter
+  userTokens?: Prisma.UserTokenListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -274,6 +277,7 @@ export type UserCreateInput = {
   publicKey?: string
   publicSecret?: string
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -286,6 +290,7 @@ export type UserUncheckedCreateInput = {
   publicKey?: string
   publicSecret?: string
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -298,6 +303,7 @@ export type UserUpdateInput = {
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -310,6 +316,7 @@ export type UserUncheckedUpdateInput = {
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -399,6 +406,20 @@ export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
 }
 
+export type UserCreateNestedOneWithoutUserTokensInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserTokensInput, Prisma.UserUncheckedCreateWithoutUserTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserTokensInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserTokensInput, Prisma.UserUncheckedCreateWithoutUserTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserTokensInput
+  upsert?: Prisma.UserUpsertWithoutUserTokensInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserTokensInput, Prisma.UserUpdateWithoutUserTokensInput>, Prisma.UserUncheckedUpdateWithoutUserTokensInput>
+}
+
 export type UserCreateNestedOneWithoutTimeTrackingActivitiesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutTimeTrackingActivitiesInput, Prisma.UserUncheckedCreateWithoutTimeTrackingActivitiesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutTimeTrackingActivitiesInput
@@ -413,6 +434,70 @@ export type UserUpdateOneRequiredWithoutTimeTrackingActivitiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTimeTrackingActivitiesInput, Prisma.UserUpdateWithoutTimeTrackingActivitiesInput>, Prisma.UserUncheckedUpdateWithoutTimeTrackingActivitiesInput>
 }
 
+export type UserCreateWithoutUserTokensInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUserTokensInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUserTokensInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserTokensInput, Prisma.UserUncheckedCreateWithoutUserTokensInput>
+}
+
+export type UserUpsertWithoutUserTokensInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserTokensInput, Prisma.UserUncheckedUpdateWithoutUserTokensInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserTokensInput, Prisma.UserUncheckedCreateWithoutUserTokensInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserTokensInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserTokensInput, Prisma.UserUncheckedUpdateWithoutUserTokensInput>
+}
+
+export type UserUpdateWithoutUserTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutTimeTrackingActivitiesInput = {
   id?: string
   createdAt?: Date | string
@@ -422,6 +507,7 @@ export type UserCreateWithoutTimeTrackingActivitiesInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTimeTrackingActivitiesInput = {
@@ -433,6 +519,7 @@ export type UserUncheckedCreateWithoutTimeTrackingActivitiesInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTimeTrackingActivitiesInput = {
@@ -460,6 +547,7 @@ export type UserUpdateWithoutTimeTrackingActivitiesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
@@ -471,6 +559,7 @@ export type UserUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -480,10 +569,12 @@ export type UserUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
 
 export type UserCountOutputType = {
   timeTrackingActivities: number
+  userTokens: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   timeTrackingActivities?: boolean | UserCountOutputTypeCountTimeTrackingActivitiesArgs
+  userTokens?: boolean | UserCountOutputTypeCountUserTokensArgs
 }
 
 /**
@@ -503,6 +594,13 @@ export type UserCountOutputTypeCountTimeTrackingActivitiesArgs<ExtArgs extends r
   where?: Prisma.TimeTrackingActivityWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUserTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserTokenWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -514,6 +612,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   publicKey?: boolean
   publicSecret?: boolean
   timeTrackingActivities?: boolean | Prisma.User$timeTrackingActivitiesArgs<ExtArgs>
+  userTokens?: boolean | Prisma.User$userTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -553,6 +652,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "email" | "displayName" | "role" | "publicKey" | "publicSecret", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   timeTrackingActivities?: boolean | Prisma.User$timeTrackingActivitiesArgs<ExtArgs>
+  userTokens?: boolean | Prisma.User$userTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -562,6 +662,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     timeTrackingActivities: Prisma.$TimeTrackingActivityPayload<ExtArgs>[]
+    userTokens: Prisma.$UserTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -967,6 +1068,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   timeTrackingActivities<T extends Prisma.User$timeTrackingActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$timeTrackingActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeTrackingActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userTokens<T extends Prisma.User$userTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1413,6 +1515,30 @@ export type User$timeTrackingActivitiesArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.TimeTrackingActivityScalarFieldEnum | Prisma.TimeTrackingActivityScalarFieldEnum[]
+}
+
+/**
+ * User.userTokens
+ */
+export type User$userTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserToken
+   */
+  select?: Prisma.UserTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserToken
+   */
+  omit?: Prisma.UserTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserTokenInclude<ExtArgs> | null
+  where?: Prisma.UserTokenWhereInput
+  orderBy?: Prisma.UserTokenOrderByWithRelationInput | Prisma.UserTokenOrderByWithRelationInput[]
+  cursor?: Prisma.UserTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserTokenScalarFieldEnum | Prisma.UserTokenScalarFieldEnum[]
 }
 
 /**

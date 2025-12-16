@@ -12,6 +12,8 @@ export default defineEventHandler(async (event) => {
     take: z.coerce.number().default(100),
     page: z.coerce.number().default(1),
     search: z.string().optional().nullable(),
+    sortBy: z.enum(['createdAt', 'updatedAt', 'name', 'customerId']).optional().default('createdAt'),
+    sortOrder: z.enum(['asc', 'desc']).optional().default('desc'),
   }).safeParse(getQuery(event));
 
   if (!query.success)
@@ -46,7 +48,7 @@ export default defineEventHandler(async (event) => {
 
     ] },
     orderBy: {
-      createdAt: 'desc'
+      [query.data.sortBy]: query.data.sortOrder
     },
     include: {
       companyPersons: true,

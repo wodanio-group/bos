@@ -32,7 +32,14 @@ export const getUserFromRequest = async (event: H3Event): Promise<User | null> =
       where: { 
         id: token.data.id
       }
-    }));
+    })) ?? (await prisma.userToken.findUnique({
+      where: { 
+        id: token.data.id
+      },
+      include: {
+        user: true
+      }
+    }))?.user ?? null;
 
     return user;
   } catch (e) {
