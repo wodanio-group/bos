@@ -12,6 +12,7 @@ import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 import _ from "lodash";
 import { queue } from "../../../utils/queue";
+import { getImportListIds } from "../../../utils/listmonk";
 
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
@@ -141,6 +142,14 @@ export default defineEventHandler(async (event) => {
     },
   });
   await queue.add('pes.customer.upsert', { companyId: item.id });
+  
+  for (const email of item.contactCommunicationWays.filter(o => o.type === 'EMAIL' && o.value !== null && o.value.length > 0).map(o => o.value)) {
+    await queue.add('listmonk.subscription.add', {
+      email,
+      name: companyDisplayName(item),
+      listIds: getImportListIds(),
+    });
+  }
 
   return companyToViewModel(item);
 });

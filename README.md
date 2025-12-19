@@ -60,6 +60,8 @@ docker compose up -d
 | `NUXT_OPEN_ID_ALLOW_AUTO_CREATE` | `true` | | Set to `false` to disable automatic user creation |
 | `NUXT_PASCOM_CONNECTOR_USERNAME` | | | Pascom connector basic auth username (optional) |
 | `NUXT_PASCOM_CONNECTOR_PASSWORD` | | | Pascom connector basic auth password (optional) |
+| `NUXT_LISTMONK_URL` | | | Listmonk instance URL (optional) |
+| `NUXT_LISTMONK_IMPORT_LIST_IDS` | | | Comma or semicolon-separated list of Listmonk list UUIDs for contact imports (optional) |
 
 ## Pascom Connector
 

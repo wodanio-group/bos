@@ -6,4 +6,8 @@ export default defineNitroPlugin(async (nitroApp) => {
     pattern: '0 0 */1 * * *',
   });
 
+  queue.upsertJobScheduler('listmonk.contacts.import', {
+    pattern: '0 0 */12 * * *',
+  });
+
 });

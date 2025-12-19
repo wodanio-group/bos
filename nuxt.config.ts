@@ -33,6 +33,10 @@ export default defineNuxtConfig({
       clientSecret: '',
       allowAutoCreate: true,
     },
+    listmonk: {
+      url: '',
+      importListIds: '',
+    },
     public: {
       siteUrl: 'http://localhost:3000',
       siteTitle: 'Wodanio Business Operation System',
