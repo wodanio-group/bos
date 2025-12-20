@@ -44,7 +44,7 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     sortBy: string | null,
     sortOrder: 'asc' | 'desc' | null,
   }>(`crudFilerAndSearchState${opts.key ?? ''}${opts.apiPath}`, () => ({
-    take: 100,
+    take: 25,
     page: 1,
     search: null,
     sortBy: null,
