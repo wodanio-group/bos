@@ -3,6 +3,50 @@ import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 import { authMiddleware } from "~~/server/utils/auth";
 
+/**
+ * @swagger
+ * /api/company:
+ *   get:
+ *     summary: List all companies
+ *     description: Returns a paginated list of all companies with optional search and sorting. Requires contact.all.view permission.
+ *     tags: [Companies]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - $ref: '#/components/parameters/page'
+ *       - $ref: '#/components/parameters/take'
+ *       - $ref: '#/components/parameters/search'
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           enum: [createdAt, updatedAt, name, customerId]
+ *           default: createdAt
+ *         description: Field to sort by
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: desc
+ *         description: Sort order (ascending or descending)
+ *     responses:
+ *       200:
+ *         description: List of companies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/CompanyViewModel'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
+ */
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
     rights: ['contact.all.view'] 

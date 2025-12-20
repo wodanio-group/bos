@@ -1,9 +1,9 @@
-import { 
-  personToViewModel, 
-  contactGenderValidator, 
-  contactNoteValidator, 
-  contactCommunicationWayValidator, 
-  contactAddressValidator 
+import {
+  personToViewModel,
+  contactGenderValidator,
+  contactNoteValidator,
+  contactCommunicationWayValidator,
+  contactAddressValidator
 } from "#imports";
 import { authMiddleware } from "~~/server/utils/auth";
 import { prisma } from "~~/lib/prisma.server";
@@ -12,6 +12,100 @@ import _ from "lodash";
 import { queue } from "../../utils/queue";
 import { getImportListIds } from "../../utils/listmonk";
 
+/**
+ * @swagger
+ * /api/person:
+ *   post:
+ *     summary: Create a new person
+ *     description: Creates a new person with optional companies, communication ways, addresses, and notes. Requires contact.all.create permission. Email addresses are automatically subscribed to Listmonk.
+ *     tags: [Persons]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               externalId:
+ *                 type: string
+ *                 nullable: true
+ *                 description: External identifier for the person
+ *               firstname:
+ *                 type: string
+ *                 nullable: true
+ *                 description: First name of the person
+ *               surename:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Sure name (middle name) of the person
+ *               familyname:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Family name (last name) of the person
+ *               gender:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Gender of the person
+ *               birthdayAt:
+ *                 type: string
+ *                 format: date-time
+ *                 nullable: true
+ *                 description: Birthday of the person
+ *               companies:
+ *                 type: array
+ *                 default: []
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - id
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       format: uuid
+ *                       description: Company ID
+ *                     main:
+ *                       type: boolean
+ *                       default: false
+ *                       description: Whether this is the main company association
+ *                     role:
+ *                       type: string
+ *                       nullable: true
+ *                       description: Role at the company
+ *               communicationWays:
+ *                 type: array
+ *                 default: []
+ *                 items:
+ *                   type: object
+ *                   description: Communication methods (email, phone, etc.)
+ *               addresses:
+ *                 type: array
+ *                 default: []
+ *                 items:
+ *                   type: object
+ *                   description: Physical addresses
+ *               notes:
+ *                 type: array
+ *                 default: []
+ *                 items:
+ *                   type: object
+ *                   description: Notes about the person
+ *     responses:
+ *       200:
+ *         description: Successfully created person
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/PersonViewModel'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
+ */
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
     rights: ['contact.all.create'] 

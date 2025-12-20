@@ -1,6 +1,31 @@
 import { prisma } from "~~/lib/prisma.server";
 import { authMiddlewarePascomConnector } from "~~/server/utils/auth";
 
+/**
+ * @swagger
+ * /api/pascom/connector/contact:
+ *   get:
+ *     summary: Export contacts for Pascom connector
+ *     description: Retrieves all companies and persons with their contact information in CSV format for Pascom phone system integration
+ *     tags: [Integrations]
+ *     security:
+ *       - basicAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved contacts in CSV format
+ *         content:
+ *           text/csv:
+ *             schema:
+ *               type: string
+ *               example: |
+ *                 "displayname";"phone";"givenname";"surname";"organisation";"email";"mobile";"homephone";"fax";"homepage";"customernumber"
+ *                 "Acme Corp";"555-1234";"";"";Acme Corp";"info@acme.com";"555-5678";"";"555-9012";"www.acme.com";"CUST001"
+ *                 "John Doe";"555-2345";"John";"Doe";"Acme Corp";"john@acme.com";"555-6789";"555-3456";"";"";"CUST001"
+ *       401:
+ *         description: Unauthorized - Invalid or missing Basic authentication credentials
+ *       500:
+ *         description: Internal server error
+ */
 export default defineEventHandler(async (event) => {
   await authMiddlewarePascomConnector(event);
   const rows: string[][] = [

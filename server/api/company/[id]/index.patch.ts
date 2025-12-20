@@ -1,7 +1,7 @@
 import {
   companyToViewModel,
-  contactNoteValidator, 
-  contactCommunicationWayValidator, 
+  contactNoteValidator,
+  contactCommunicationWayValidator,
   contactAddressValidator,
   compareContactCommunicationWay,
   compareContactAddress,
@@ -14,6 +14,98 @@ import _ from "lodash";
 import { queue } from "../../../utils/queue";
 import { getImportListIds } from "../../../utils/listmonk";
 
+/**
+ * @swagger
+ * /api/company/{id}:
+ *   patch:
+ *     summary: Update a company
+ *     description: Updates an existing company's information including associated persons, communication ways, addresses, and notes. Only provided fields will be updated. Requires contact.all.create permission.
+ *     tags: [Companies]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Company ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               externalId:
+ *                 type: string
+ *                 nullable: true
+ *                 description: External system identifier
+ *               name:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Primary company name
+ *               name2:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Secondary company name
+ *               taxId:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Tax identification number
+ *               vatId:
+ *                 type: string
+ *                 nullable: true
+ *                 description: VAT identification number
+ *               persons:
+ *                 type: array
+ *                 nullable: true
+ *                 items:
+ *                   type: object
+ *                   required: [id]
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       format: uuid
+ *                       description: Person ID
+ *                     main:
+ *                       type: boolean
+ *                       default: false
+ *                       description: Whether this is the main contact person
+ *                     role:
+ *                       type: string
+ *                       nullable: true
+ *                       description: Person's role in the company
+ *               communicationWays:
+ *                 type: array
+ *                 nullable: true
+ *                 description: Contact communication methods (replaces existing)
+ *               addresses:
+ *                 type: array
+ *                 nullable: true
+ *                 description: Company addresses (replaces existing)
+ *               notes:
+ *                 type: array
+ *                 nullable: true
+ *                 description: Company notes (replaces existing)
+ *     responses:
+ *       200:
+ *         description: Company updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CompanyViewModel'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
+ *       404:
+ *         $ref: '#/components/responses/NotFound'
+ */
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
     rights: ['contact.all.create'] 

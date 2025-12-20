@@ -3,6 +3,56 @@ import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 import { authMiddleware } from "~~/server/utils/auth";
 
+/**
+ * @swagger
+ * /api/user/token:
+ *   get:
+ *     summary: List user tokens
+ *     description: Returns a paginated list of user tokens. Users with user.token.all.view permission can view all tokens, while users with user.token.own.view can only view their own tokens.
+ *     tags: [User Tokens]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - $ref: '#/components/parameters/page'
+ *       - $ref: '#/components/parameters/take'
+ *       - $ref: '#/components/parameters/search'
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           enum: [createdAt, updatedAt, name]
+ *           default: createdAt
+ *         description: Field to sort by
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: desc
+ *         description: Sort order
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Filter tokens by user ID (only available for users with user.token.all.view permission)
+ *     responses:
+ *       200:
+ *         description: List of user tokens
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/UserTokenViewModel'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
+ */
 export default defineEventHandler(async (event) => {
   const user = await authMiddleware(event, {
     rights: ['user.token.all.view', 'user.token.own.view']

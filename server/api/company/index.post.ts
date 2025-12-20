@@ -1,7 +1,7 @@
 import {
-  companyToViewModel, 
-  contactNoteValidator, 
-  contactCommunicationWayValidator, 
+  companyToViewModel,
+  contactNoteValidator,
+  contactCommunicationWayValidator,
   contactAddressValidator,
 } from "#imports";
 import { authMiddleware } from "~~/server/utils/auth";
@@ -12,6 +12,92 @@ import _ from "lodash";
 import { queue } from "../../utils/queue";
 import { getImportListIds } from "../../utils/listmonk";
 
+/**
+ * @swagger
+ * /api/company:
+ *   post:
+ *     summary: Create a new company
+ *     description: Creates a new company with associated persons, communication ways, addresses, and notes. Automatically generates a customer ID if not provided. Requires contact.all.create permission.
+ *     tags: [Companies]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               externalId:
+ *                 type: string
+ *                 nullable: true
+ *                 description: External system identifier
+ *               customerId:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Customer ID (auto-generated if not provided)
+ *               name:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Primary company name
+ *               name2:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Secondary company name
+ *               taxId:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Tax identification number
+ *               vatId:
+ *                 type: string
+ *                 nullable: true
+ *                 description: VAT identification number
+ *               persons:
+ *                 type: array
+ *                 default: []
+ *                 items:
+ *                   type: object
+ *                   required: [id]
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       format: uuid
+ *                       description: Person ID
+ *                     main:
+ *                       type: boolean
+ *                       default: false
+ *                       description: Whether this is the main contact person
+ *                     role:
+ *                       type: string
+ *                       nullable: true
+ *                       description: Person's role in the company
+ *               communicationWays:
+ *                 type: array
+ *                 default: []
+ *                 description: Contact communication methods
+ *               addresses:
+ *                 type: array
+ *                 default: []
+ *                 description: Company addresses
+ *               notes:
+ *                 type: array
+ *                 default: []
+ *                 description: Company notes
+ *     responses:
+ *       200:
+ *         description: Company created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CompanyViewModel'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
+ */
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
     rights: ['contact.all.create'] 

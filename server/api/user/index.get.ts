@@ -3,6 +3,36 @@ import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 import { authMiddleware } from "~~/server/utils/auth";
 
+/**
+ * @swagger
+ * /api/user:
+ *   get:
+ *     summary: List all users
+ *     description: Returns a paginated list of all users. Requires user.all.view permission.
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - $ref: '#/components/parameters/page'
+ *       - $ref: '#/components/parameters/take'
+ *       - $ref: '#/components/parameters/search'
+ *     responses:
+ *       200:
+ *         description: List of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/UserViewModel'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
+ */
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
     rights: ['user.all.view'] 

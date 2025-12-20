@@ -4,6 +4,48 @@ import { z } from "zod";
 import { authMiddleware } from "~~/server/utils/auth";
 import jwt from "jsonwebtoken";
 
+/**
+ * @swagger
+ * /api/user/token:
+ *   post:
+ *     summary: Create a new user token
+ *     description: Creates a new authentication token for a user. Users with user.token.all.create permission can create tokens for any user, while users with user.token.own.create can only create tokens for themselves.
+ *     tags: [User Tokens]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 nullable: true
+ *                 description: Optional name for the token
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *                 nullable: true
+ *                 description: User ID to create token for (defaults to current user, only available for users with user.token.all.create permission)
+ *     responses:
+ *       200:
+ *         description: Token created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserTokenViewModel'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
+ *       404:
+ *         $ref: '#/components/responses/NotFound'
+ */
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig();
   const user = await authMiddleware(event, {

@@ -67,6 +67,38 @@ docker compose up -d
 | `NUXT_PES_URL` | | | PES (Product Engineering System) API base URL (optional) |
 | `NUXT_PES_API_TOKEN` | | | PES API authentication token (optional) |
 
+## API Documentation
+
+The Wodanio BOS provides a comprehensive REST API with interactive OpenAPI/Swagger documentation.
+
+### Accessing the API Documentation
+
+Once the application is running, you can access the API documentation at:
+
+**Swagger UI (Interactive Documentation):**
+```
+http://localhost:3000/api/docs
+```
+
+**OpenAPI Specification (YAML):**
+```
+http://localhost:3000/api/docs/yaml
+```
+
+Replace `localhost:3000` with your actual deployment URL (configured via `NUXT_PUBLIC_SITE_URL`).
+
+### API Authentication
+
+The API supports two authentication methods:
+
+1. **Bearer Token Authentication:**
+   - Create an API token via the UI (User menu → API Tokens)
+   - Include the token in the Authorization header: `Authorization: Bearer <your-token>`
+
+2. **Cookie Authentication:**
+   - Automatically used when logged in via the web interface
+   - Session cookie is set after OpenID Connect login
+
 ## Pascom Connector
 
 If you want to use the Pascom connector for contact imports, please set the environment variables `NUXT_PASCOM_CONNECTOR_USERNAME` and `NUXT_PASCOM_CONNECTOR_PASSWORD` and configure it as follows on your Pascom instance:

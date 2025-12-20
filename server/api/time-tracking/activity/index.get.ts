@@ -3,6 +3,60 @@ import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 import { authMiddleware } from "~~/server/utils/auth";
 
+/**
+ * @swagger
+ * /api/time-tracking/activity:
+ *   get:
+ *     summary: List all time tracking activities
+ *     description: Returns a paginated list of time tracking activities. Users with timetracking.all.view permission can see all activities, while users with only timetracking.own.view permission can only see their own activities. Supports filtering by user, company, running status, and search text.
+ *     tags: [Time Tracking]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - $ref: '#/components/parameters/page'
+ *       - $ref: '#/components/parameters/take'
+ *       - $ref: '#/components/parameters/search'
+ *       - in: query
+ *         name: isRunning
+ *         schema:
+ *           type: boolean
+ *           default: false
+ *         description: Filter for currently running activities (activities without an end time)
+ *       - in: query
+ *         name: isNotRunning
+ *         schema:
+ *           type: boolean
+ *           default: false
+ *         description: Filter for completed activities (activities with an end time)
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Filter activities by user ID
+ *       - in: query
+ *         name: companyId
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Filter activities by company ID
+ *     responses:
+ *       200:
+ *         description: List of time tracking activities
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/TimeTrackingActivityViewModel'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
+ */
 export default defineEventHandler(async (event) => {
   const user = await authMiddleware(event, {
     rights: ['timetracking.all.view', 'timetracking.own.view'] 

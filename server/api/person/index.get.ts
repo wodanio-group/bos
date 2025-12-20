@@ -3,6 +3,50 @@ import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 import { authMiddleware } from "~~/server/utils/auth";
 
+/**
+ * @swagger
+ * /api/person:
+ *   get:
+ *     summary: List all persons
+ *     description: Returns a paginated list of all persons with their associated companies, communication ways, addresses, and notes. Requires contact.all.view permission.
+ *     tags: [Persons]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - $ref: '#/components/parameters/page'
+ *       - $ref: '#/components/parameters/take'
+ *       - $ref: '#/components/parameters/search'
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           enum: [createdAt, updatedAt, firstname, surename, familyname]
+ *           default: createdAt
+ *         description: Field to sort by
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: desc
+ *         description: Sort order (ascending or descending)
+ *     responses:
+ *       200:
+ *         description: List of persons
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/PersonViewModel'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
+ */
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
     rights: ['contact.all.view'] 
