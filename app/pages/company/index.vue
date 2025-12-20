@@ -143,5 +143,9 @@ const actionHandler = async (key: string, item?: CompanyViewModel | null) => { s
     break;
 } };
 
+onUnmounted(() => {
+  createForm.value = defaultCreateForm;
+});
+
 </script>
 

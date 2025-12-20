@@ -57,18 +57,18 @@ const companiesCount = ref(0);
 const personsCount = ref(0);
 
 // Load company count
-const { items: companies, loadItems: loadCompanies } = useCrud<CompanyViewModel>({
+const { items: companies, loadItems: loadCompanies, paginationSetTake: paginationSetTakeCompanies } = useCrud<CompanyViewModel>({
   apiPath: '/api/company',
-  query: { take: 999999 },
 });
+paginationSetTakeCompanies(999999);
 await loadCompanies();
 companiesCount.value = companies.value.length;
 
 // Load person count
-const { items: persons, loadItems: loadPersons } = useCrud<PersonViewModel>({
+const { items: persons, loadItems: loadPersons, paginationSetTake: paginationSetTakePersons } = useCrud<PersonViewModel>({
   apiPath: '/api/person',
-  query: { take: 999999 },
 });
+paginationSetTakePersons(999999);
 await loadPersons();
 personsCount.value = persons.value.length;
 

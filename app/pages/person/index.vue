@@ -160,5 +160,9 @@ const actionHandler = async (key: string, item?: PersonViewModel | null) => { sw
     break;
 } };
 
+onUnmounted(() => {
+  createForm.value = defaultCreateForm;
+});
+
 </script>
 
