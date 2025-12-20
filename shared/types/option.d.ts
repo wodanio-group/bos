@@ -58,3 +58,46 @@ export type OptionSet = {
    */
   value: OptionValue;
 };
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     OptionViewModel:
+ *       type: object
+ *       description: View model representation of an application option with timestamps
+ *       properties:
+ *         key:
+ *           type: string
+ *           description: The unique identifier key for the option
+ *         value:
+ *           description: The value associated with the option key (can be of any type)
+ *           oneOf:
+ *             - type: string
+ *             - type: number
+ *             - type: boolean
+ *             - type: object
+ *             - type: array
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: Timestamp when the option was last updated
+ *       required:
+ *         - key
+ *         - value
+ *         - updatedAt
+ */
+export interface OptionViewModel {
+  /**
+   * The unique identifier key for the option
+   */
+  key: OptionKey;
+  /**
+   * The value associated with the option key
+   */
+  value: OptionValue;
+  /**
+   * Timestamp when the option was last updated
+   */
+  updatedAt: string;
+}

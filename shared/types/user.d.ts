@@ -19,6 +19,8 @@ export type UserRole = OrmUserRole;
  *     UserRoleRight:
  *       type: string
  *       enum:
+ *         - option.all.view
+ *         - option.all.edit
  *         - user.all.view
  *         - user.all.create
  *         - user.all.edit
@@ -47,12 +49,13 @@ export type UserRole = OrmUserRole;
  *       description: |
  *         Granular permission rights for role-based access control.
  *         Format: {resource}.{scope}.{action}
- *         - resource: user, user.token, pes, timetracking, contact
+ *         - resource: option, user, user.token, pes, timetracking, contact
  *         - scope: all (all records), own (user's own records)
  *         - action: view, create, edit, delete, read, interact, editnoneexported
  */
 export type UserRoleRight =
-  'user.all.view' | 'user.all.create' | 'user.all.edit' | 'user.all.delete'
+  'option.all.view' | 'option.all.edit'
+  | 'user.all.view' | 'user.all.create' | 'user.all.edit' | 'user.all.delete'
   | 'user.token.all.view' | 'user.token.all.create' | 'user.token.all.edit' | 'user.token.all.delete'
   | 'user.token.own.view' | 'user.token.own.create' | 'user.token.own.edit' | 'user.token.own.delete'
   | 'pes.read' | 'pes.interact' | 'pes.delete'

@@ -7,6 +7,7 @@ export const UserRoleRights: {
   rights: UserRoleRight[];
 }[] = [
   { role: 'ADMIN', rights: [
+    'option.all.view', 'option.all.edit',
     'user.all.view', 'user.all.create', 'user.all.edit', 'user.all.delete',
     'user.token.all.view', 'user.token.all.create', 'user.token.all.edit', 'user.token.all.delete',
     'pes.read', 'pes.interact', 'pes.delete',

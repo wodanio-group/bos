@@ -105,6 +105,7 @@ layout:
     dashboard: "Dashboard"
     companies: "Companies"
     persons: "Persons"
+    options: "Options"
     users: "User Management"
     userTokens: "API Tokens"
     timeTrackings: "Time Trackings"
@@ -180,6 +181,17 @@ person:
     toast:
       success: "Person updated successfully."
       error: "Error while update person."
+
+option:
+  title: "Options"
+  editTitle: "Edit Option \"{key}\""
+  valuePlaceholder: "Enter JSON value..."
+  valueHint: "Value must be valid JSON (object, array, string, number, or boolean)"
+  success:
+    upsert: "Option saved"
+  error:
+    upsert: "Error while saving"
+    invalidJson: "Invalid JSON format"
 
 user:
   title: "User Management"
