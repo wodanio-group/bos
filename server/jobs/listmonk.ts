@@ -12,7 +12,10 @@ export const importContacts = async (job: Job): Promise<void> => {
     return;
   const contacts: { email: string, name: string | null }[] = [
     ...((await prisma.company.findMany({
-      include: { contactCommunicationWays: { where: { type: 'EMAIL' } } } 
+      include: { contactCommunicationWays: { where: {
+        type: 'EMAIL',
+        category: { notIn: ['INVOICING', 'PRIVAT'] },
+      } } } 
     }))
       .map(o => o.contactCommunicationWays
         .map(oo => oo.value)
@@ -24,7 +27,10 @@ export const importContacts = async (job: Job): Promise<void> => {
       ))
       .flat(),
     ...((await prisma.person.findMany({
-      include: { contactCommunicationWays: { where: { type: 'EMAIL' } } } 
+      include: { contactCommunicationWays: { where: {
+        type: 'EMAIL',
+        category: { notIn: ['INVOICING', 'PRIVAT'] },
+      } } } 
     }))
       .map(o => o.contactCommunicationWays
         .map(oo => oo.value)

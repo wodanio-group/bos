@@ -197,7 +197,8 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  for (const email of item.contactCommunicationWays.filter(o => o.type === 'EMAIL' && o.value !== null && o.value.length > 0).map(o => o.value)) {
+  for (const email of item.contactCommunicationWays
+    .filter(o => o.type === 'EMAIL' && !['INVOICING', 'PRIVAT'].includes(o.category) && o.value !== null && o.value.length > 0).map(o => o.value)) {
     await queue.add('listmonk.subscription.add', {
       email,
       name: personDisplayName(item),
