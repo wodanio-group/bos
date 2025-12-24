@@ -9,7 +9,7 @@ import { getRightsByUserRole } from "~~/shared/utils/user";
  * /api/task/{id}:
  *   patch:
  *     summary: Update a task
- *     description: Updates an existing task. Requires task.all.edit or task.own.edit permission.
+ *     description: Updates an existing task. Requires task.all.edit or task.own.edit permission. If user has only task.own.edit, userId will be forced to the logged-in user if provided.
  *     tags: [Tasks]
  *     security:
  *       - bearerAuth: []
@@ -57,7 +57,7 @@ import { getRightsByUserRole } from "~~/shared/utils/user";
  *               userId:
  *                 type: string
  *                 format: uuid
- *                 description: ID of the user assigned to this task
+ *                 description: ID of the user assigned to this task (optional, forced to logged-in user if user has only task.own.edit)
  *               companyId:
  *                 type: string
  *                 format: uuid
@@ -136,14 +136,26 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Forbidden',
     });
 
-  // Verify referenced entities exist if they are being updated
-  if (body.data.userId) {
-    const user = await prisma.user.findUnique({ where: { id: body.data.userId } });
-    if (!user)
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'User not found',
-      });
+  // Determine userId based on permissions
+  let targetUserId: string | undefined;
+  if (body.data.userId !== undefined) {
+    if (!hasAllEdit && hasOwnEdit) {
+      // User has only task.own.edit - force to logged-in user
+      targetUserId = user.id;
+    } else {
+      // User has task.all.edit - use provided userId or keep unchanged
+      targetUserId = body.data.userId;
+    }
+
+    // Verify the target user exists if userId is being changed
+    if (targetUserId) {
+      const targetUser = await prisma.user.findUnique({ where: { id: targetUserId } });
+      if (!targetUser)
+        throw createError({
+          statusCode: 400,
+          statusMessage: 'User not found',
+        });
+    }
   }
 
   if (body.data.companyId) {
@@ -191,7 +203,7 @@ export default defineEventHandler(async (event) => {
       startAt: body.data.startAt,
       dueDateAt: body.data.dueDateAt,
       doneAt: body.data.doneAt,
-      userId: body.data.userId,
+      userId: targetUserId,
       companyId: body.data.companyId,
       personId: body.data.personId,
       leadId: body.data.leadId,

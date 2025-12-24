@@ -2,13 +2,14 @@ import { taskToViewModel, taskTypeValidator } from "#imports";
 import { authMiddleware } from "~~/server/utils/auth";
 import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
+import { getRightsByUserRole } from "~~/shared/utils/user";
 
 /**
  * @swagger
  * /api/task:
  *   post:
  *     summary: Create a new task
- *     description: Creates a new task. Requires task.all.create or task.own.create permission.
+ *     description: Creates a new task. Requires task.all.create or task.own.create permission. If user has only task.own.create, userId will be forced to the logged-in user. If userId is not provided, it defaults to the logged-in user.
  *     tags: [Tasks]
  *     security:
  *       - bearerAuth: []
@@ -22,7 +23,6 @@ import { z } from "zod";
  *             required:
  *               - type
  *               - name
- *               - userId
  *             properties:
  *               type:
  *                 $ref: '#/components/schemas/TaskType'
@@ -52,7 +52,7 @@ import { z } from "zod";
  *               userId:
  *                 type: string
  *                 format: uuid
- *                 description: ID of the user assigned to this task
+ *                 description: ID of the user assigned to this task (optional, defaults to logged-in user)
  *               companyId:
  *                 type: string
  *                 format: uuid
@@ -88,7 +88,7 @@ import { z } from "zod";
  *         $ref: '#/components/responses/Forbidden'
  */
 export default defineEventHandler(async (event) => {
-  await authMiddleware(event, {
+  const user = await authMiddleware(event, {
     rights: ['task.all.create', 'task.own.create']
   });
 
@@ -99,7 +99,7 @@ export default defineEventHandler(async (event) => {
     startAt: z.string().trim().datetime().optional().nullable(),
     dueDateAt: z.string().trim().datetime().optional().nullable(),
     doneAt: z.string().trim().datetime().optional().nullable(),
-    userId: z.string().uuid(),
+    userId: z.string().uuid().optional(),
     companyId: z.string().uuid().optional().nullable(),
     personId: z.string().uuid().optional().nullable(),
     leadId: z.string().uuid().optional().nullable(),
@@ -113,9 +113,23 @@ export default defineEventHandler(async (event) => {
       data: body.error.flatten().fieldErrors,
     });
 
-  // Verify referenced entities exist
-  const user = await prisma.user.findUnique({ where: { id: body.data.userId } });
-  if (!user)
+  // Determine userId based on permissions
+  const userRights = getRightsByUserRole(user.role);
+  const hasAllCreate = userRights.includes('task.all.create');
+  const hasOwnCreate = userRights.includes('task.own.create');
+
+  let targetUserId: string;
+  if (!hasAllCreate && hasOwnCreate) {
+    // User has only task.own.create - force to logged-in user
+    targetUserId = user.id;
+  } else {
+    // User has task.all.create - use provided userId or default to logged-in user
+    targetUserId = body.data.userId ?? user.id;
+  }
+
+  // Verify the target user exists
+  const targetUser = await prisma.user.findUnique({ where: { id: targetUserId } });
+  if (!targetUser)
     throw createError({
       statusCode: 400,
       statusMessage: 'User not found',
@@ -165,7 +179,7 @@ export default defineEventHandler(async (event) => {
       startAt: body.data.startAt,
       dueDateAt: body.data.dueDateAt,
       doneAt: body.data.doneAt,
-      userId: body.data.userId,
+      userId: targetUserId,
       companyId: body.data.companyId,
       personId: body.data.personId,
       leadId: body.data.leadId,

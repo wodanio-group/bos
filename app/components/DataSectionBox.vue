@@ -84,7 +84,7 @@
                         class="bg-white border border-secondary-200 rounded-lg shadow-lg py-1 shadow-secondary-100">
                         <DropdownMenuItem
                           class="flex justify-start items-center gap-2 px-3 py-1 cursor-pointer text-sm text-left rounded-lg transition-colors hover:bg-secondary-100"
-                          v-for="action in (actions ?? [])"
+                          v-for="action in (typeof actions === 'function' ? actions(item) : (actions ?? []))"
                           @select="emit('action', action.key, item )">
                           <atom-icon v-if="action.icon" :icon="action.icon"/>
                           <span>{{ action.title }}</span>
@@ -147,7 +147,11 @@ const props = defineProps<{
     title: string,
     icon?: string,
     key: string,
-  }[],
+  }[] | ((item: any) => {
+    title: string,
+    icon?: string,
+    key: string,
+  }[]),
   paginationIsFirst?: boolean,
   paginationIsLast?: boolean,
   paginationState?: { take: number, page: number },

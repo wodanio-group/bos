@@ -105,6 +105,7 @@ layout:
     dashboard: "Dashboard"
     companies: "Companies"
     persons: "Persons"
+    tasks: "Tasks"
     options: "Options"
     users: "User Management"
     userTokens: "API Tokens"
@@ -181,6 +182,62 @@ person:
     toast:
       success: "Person updated successfully."
       error: "Error while update person."
+
+task:
+  title: "Tasks"
+  deleteTitle: "Delete \"{name}\""
+  deleteDescription: "Do you want to permanently delete the task?"
+  deleteSuccessToast: "Task \"{name}\" deleted"
+  deleteErrorToast: "Error while deletion"
+  createDialogTitle: "Create Task"
+  createSuccess: "Task \"{name}\" created!"
+  createError: "Error while creation"
+  currentUser: "You"
+  types:
+    CALL: "Call"
+    MAIL: "Mail"
+    ACTION: "Action"
+    OTHER: "Other"
+  status:
+    open: "Open"
+    done: "Done"
+  fields:
+    type: "Type"
+    name: "Name"
+    content: "Content"
+    startDate: "Start Date"
+    dueDate: "Due Date"
+    doneDate: "Done Date"
+    status: "Status"
+    isDone: "Mark as done"
+    user: "User"
+    company: "Company"
+    person: "Person"
+  item:
+    title: "{name}"
+    subtitle: "Task"
+    details: "Details"
+    metadata: "Metadata"
+    delete:
+      title: "Delete \"{name}\""
+      description: "Do you want to permanently delete the task?"
+      success: "Task \"{name}\" deleted"
+      error: "Error while deletion"
+  edit:
+    title: "{name}"
+    subtitle: "Edit Task"
+    details: "Task Details"
+    save: "Save"
+    toast:
+      success: "Task updated successfully."
+      error: "Error while update task."
+  toggleDone:
+    title: "Toggle Done/Open"
+    setDone: "Set done"
+    setOpen: "Set open"
+    markedDone: "Task \"{name}\" marked as done"
+    markedOpen: "Task \"{name}\" marked as open"
+    error: "Error while updating task status"
 
 option:
   title: "Options"
