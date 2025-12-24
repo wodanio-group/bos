@@ -56,20 +56,20 @@ const hasRightTimetrackingOwn = computed(() => user
 const companiesCount = ref(0);
 const personsCount = ref(0);
 
-// Load company count
-const { items: companies, loadItems: loadCompanies, paginationSetTake: paginationSetTakeCompanies } = useCrud<CompanyViewModel>({
-  apiPath: '/api/company',
+// Load stats from the new stats endpoint
+const { data: stats } = await useFetch<StatsItem[]>('/api/stats', {
+  method: 'POST',
+  body: {
+    keys: ['TOTAL_COMPANY_COUNT', 'TOTAL_PERSON_COUNT']
+  }
 });
-paginationSetTakeCompanies(999999);
-await loadCompanies();
-companiesCount.value = companies.value.length;
 
-// Load person count
-const { items: persons, loadItems: loadPersons, paginationSetTake: paginationSetTakePersons } = useCrud<PersonViewModel>({
-  apiPath: '/api/person',
-});
-paginationSetTakePersons(999999);
-await loadPersons();
-personsCount.value = persons.value.length;
+if (stats.value) {
+  const companyStats = stats.value.find(s => s.key === 'TOTAL_COMPANY_COUNT');
+  const personStats = stats.value.find(s => s.key === 'TOTAL_PERSON_COUNT');
+
+  companiesCount.value = companyStats?.value ?? 0;
+  personsCount.value = personStats?.value ?? 0;
+}
 
 </script>
