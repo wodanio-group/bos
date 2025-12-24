@@ -208,6 +208,9 @@ export type UserWhereInput = {
   publicSecret?: Prisma.StringFilter<"User"> | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityListRelationFilter
   userTokens?: Prisma.UserTokenListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
+  leadOwners?: Prisma.LeadListRelationFilter
+  opportunityOwners?: Prisma.OpportunityListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -221,6 +224,9 @@ export type UserOrderByWithRelationInput = {
   publicSecret?: Prisma.SortOrder
   timeTrackingActivities?: Prisma.TimeTrackingActivityOrderByRelationAggregateInput
   userTokens?: Prisma.UserTokenOrderByRelationAggregateInput
+  tasks?: Prisma.TaskOrderByRelationAggregateInput
+  leadOwners?: Prisma.LeadOrderByRelationAggregateInput
+  opportunityOwners?: Prisma.OpportunityOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -237,6 +243,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   publicSecret?: Prisma.StringFilter<"User"> | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityListRelationFilter
   userTokens?: Prisma.UserTokenListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
+  leadOwners?: Prisma.LeadListRelationFilter
+  opportunityOwners?: Prisma.OpportunityListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -278,6 +287,9 @@ export type UserCreateInput = {
   publicSecret?: string
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -291,6 +303,9 @@ export type UserUncheckedCreateInput = {
   publicSecret?: string
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUpdateInput = {
@@ -304,6 +319,9 @@ export type UserUpdateInput = {
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -317,6 +335,9 @@ export type UserUncheckedUpdateInput = {
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -390,6 +411,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -434,6 +460,52 @@ export type UserUpdateOneRequiredWithoutTimeTrackingActivitiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTimeTrackingActivitiesInput, Prisma.UserUpdateWithoutTimeTrackingActivitiesInput>, Prisma.UserUncheckedUpdateWithoutTimeTrackingActivitiesInput>
 }
 
+export type UserCreateNestedOneWithoutTasksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTasksInput, Prisma.UserUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTasksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTasksInput, Prisma.UserUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTasksInput
+  upsert?: Prisma.UserUpsertWithoutTasksInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTasksInput, Prisma.UserUpdateWithoutTasksInput>, Prisma.UserUncheckedUpdateWithoutTasksInput>
+}
+
+export type UserCreateNestedOneWithoutLeadOwnersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadOwnersInput, Prisma.UserUncheckedCreateWithoutLeadOwnersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadOwnersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutLeadOwnersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadOwnersInput, Prisma.UserUncheckedCreateWithoutLeadOwnersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadOwnersInput
+  upsert?: Prisma.UserUpsertWithoutLeadOwnersInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadOwnersInput, Prisma.UserUpdateWithoutLeadOwnersInput>, Prisma.UserUncheckedUpdateWithoutLeadOwnersInput>
+}
+
+export type UserCreateNestedOneWithoutOpportunityOwnersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOpportunityOwnersInput, Prisma.UserUncheckedCreateWithoutOpportunityOwnersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOpportunityOwnersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutOpportunityOwnersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOpportunityOwnersInput, Prisma.UserUncheckedCreateWithoutOpportunityOwnersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOpportunityOwnersInput
+  upsert?: Prisma.UserUpsertWithoutOpportunityOwnersInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOpportunityOwnersInput, Prisma.UserUpdateWithoutOpportunityOwnersInput>, Prisma.UserUncheckedUpdateWithoutOpportunityOwnersInput>
+}
+
 export type UserCreateWithoutUserTokensInput = {
   id?: string
   createdAt?: Date | string
@@ -444,6 +516,9 @@ export type UserCreateWithoutUserTokensInput = {
   publicKey?: string
   publicSecret?: string
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutUserTokensInput = {
@@ -456,6 +531,9 @@ export type UserUncheckedCreateWithoutUserTokensInput = {
   publicKey?: string
   publicSecret?: string
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutUserTokensInput = {
@@ -484,6 +562,9 @@ export type UserUpdateWithoutUserTokensInput = {
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserTokensInput = {
@@ -496,6 +577,9 @@ export type UserUncheckedUpdateWithoutUserTokensInput = {
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutTimeTrackingActivitiesInput = {
@@ -508,6 +592,9 @@ export type UserCreateWithoutTimeTrackingActivitiesInput = {
   publicKey?: string
   publicSecret?: string
   userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutTimeTrackingActivitiesInput = {
@@ -520,6 +607,9 @@ export type UserUncheckedCreateWithoutTimeTrackingActivitiesInput = {
   publicKey?: string
   publicSecret?: string
   userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutTimeTrackingActivitiesInput = {
@@ -548,6 +638,9 @@ export type UserUpdateWithoutTimeTrackingActivitiesInput = {
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
   userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
@@ -560,6 +653,237 @@ export type UserUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
   userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserCreateWithoutTasksInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
+}
+
+export type UserUncheckedCreateWithoutTasksInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type UserCreateOrConnectWithoutTasksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTasksInput, Prisma.UserUncheckedCreateWithoutTasksInput>
+}
+
+export type UserUpsertWithoutTasksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTasksInput, Prisma.UserUncheckedUpdateWithoutTasksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTasksInput, Prisma.UserUncheckedCreateWithoutTasksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTasksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTasksInput, Prisma.UserUncheckedUpdateWithoutTasksInput>
+}
+
+export type UserUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserCreateWithoutLeadOwnersInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
+}
+
+export type UserUncheckedCreateWithoutLeadOwnersInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type UserCreateOrConnectWithoutLeadOwnersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeadOwnersInput, Prisma.UserUncheckedCreateWithoutLeadOwnersInput>
+}
+
+export type UserUpsertWithoutLeadOwnersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLeadOwnersInput, Prisma.UserUncheckedUpdateWithoutLeadOwnersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeadOwnersInput, Prisma.UserUncheckedCreateWithoutLeadOwnersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLeadOwnersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLeadOwnersInput, Prisma.UserUncheckedUpdateWithoutLeadOwnersInput>
+}
+
+export type UserUpdateWithoutLeadOwnersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLeadOwnersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserCreateWithoutOpportunityOwnersInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
+}
+
+export type UserUncheckedCreateWithoutOpportunityOwnersInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type UserCreateOrConnectWithoutOpportunityOwnersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutOpportunityOwnersInput, Prisma.UserUncheckedCreateWithoutOpportunityOwnersInput>
+}
+
+export type UserUpsertWithoutOpportunityOwnersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOpportunityOwnersInput, Prisma.UserUncheckedUpdateWithoutOpportunityOwnersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOpportunityOwnersInput, Prisma.UserUncheckedCreateWithoutOpportunityOwnersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutOpportunityOwnersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOpportunityOwnersInput, Prisma.UserUncheckedUpdateWithoutOpportunityOwnersInput>
+}
+
+export type UserUpdateWithoutOpportunityOwnersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOpportunityOwnersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 
@@ -570,11 +894,17 @@ export type UserUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
 export type UserCountOutputType = {
   timeTrackingActivities: number
   userTokens: number
+  tasks: number
+  leadOwners: number
+  opportunityOwners: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   timeTrackingActivities?: boolean | UserCountOutputTypeCountTimeTrackingActivitiesArgs
   userTokens?: boolean | UserCountOutputTypeCountUserTokensArgs
+  tasks?: boolean | UserCountOutputTypeCountTasksArgs
+  leadOwners?: boolean | UserCountOutputTypeCountLeadOwnersArgs
+  opportunityOwners?: boolean | UserCountOutputTypeCountOpportunityOwnersArgs
 }
 
 /**
@@ -601,6 +931,27 @@ export type UserCountOutputTypeCountUserTokensArgs<ExtArgs extends runtime.Types
   where?: Prisma.UserTokenWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLeadOwnersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountOpportunityOwnersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OpportunityWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -613,6 +964,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   publicSecret?: boolean
   timeTrackingActivities?: boolean | Prisma.User$timeTrackingActivitiesArgs<ExtArgs>
   userTokens?: boolean | Prisma.User$userTokensArgs<ExtArgs>
+  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
+  leadOwners?: boolean | Prisma.User$leadOwnersArgs<ExtArgs>
+  opportunityOwners?: boolean | Prisma.User$opportunityOwnersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -653,6 +1007,9 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   timeTrackingActivities?: boolean | Prisma.User$timeTrackingActivitiesArgs<ExtArgs>
   userTokens?: boolean | Prisma.User$userTokensArgs<ExtArgs>
+  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
+  leadOwners?: boolean | Prisma.User$leadOwnersArgs<ExtArgs>
+  opportunityOwners?: boolean | Prisma.User$opportunityOwnersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -663,6 +1020,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     timeTrackingActivities: Prisma.$TimeTrackingActivityPayload<ExtArgs>[]
     userTokens: Prisma.$UserTokenPayload<ExtArgs>[]
+    tasks: Prisma.$TaskPayload<ExtArgs>[]
+    leadOwners: Prisma.$LeadPayload<ExtArgs>[]
+    opportunityOwners: Prisma.$OpportunityPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1069,6 +1429,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   timeTrackingActivities<T extends Prisma.User$timeTrackingActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$timeTrackingActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeTrackingActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userTokens<T extends Prisma.User$userTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tasks<T extends Prisma.User$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leadOwners<T extends Prisma.User$leadOwnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadOwnersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  opportunityOwners<T extends Prisma.User$opportunityOwnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$opportunityOwnersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1539,6 +1902,78 @@ export type User$userTokensArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.UserTokenScalarFieldEnum | Prisma.UserTokenScalarFieldEnum[]
+}
+
+/**
+ * User.tasks
+ */
+export type User$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Task
+   */
+  select?: Prisma.TaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Task
+   */
+  omit?: Prisma.TaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskInclude<ExtArgs> | null
+  where?: Prisma.TaskWhereInput
+  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
+}
+
+/**
+ * User.leadOwners
+ */
+export type User$leadOwnersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lead
+   */
+  select?: Prisma.LeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lead
+   */
+  omit?: Prisma.LeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadInclude<ExtArgs> | null
+  where?: Prisma.LeadWhereInput
+  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
+  cursor?: Prisma.LeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
+}
+
+/**
+ * User.opportunityOwners
+ */
+export type User$opportunityOwnersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Opportunity
+   */
+  select?: Prisma.OpportunitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Opportunity
+   */
+  omit?: Prisma.OpportunityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OpportunityInclude<ExtArgs> | null
+  where?: Prisma.OpportunityWhereInput
+  orderBy?: Prisma.OpportunityOrderByWithRelationInput | Prisma.OpportunityOrderByWithRelationInput[]
+  cursor?: Prisma.OpportunityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OpportunityScalarFieldEnum | Prisma.OpportunityScalarFieldEnum[]
 }
 
 /**

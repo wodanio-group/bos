@@ -17,7 +17,7 @@
     "@nuxtjs/i18n": "^10.2.1",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@prisma/adapter-pg": "^7.0.1",
-    "@prisma/client": "^7.0.1",
+    "@prisma/client": "^7.2.0",
     "@tailwindcss/forms": "^0.5.10",
     "bullmq": "^5.65.1",
     "cookie": "^1.1.1",
@@ -32,7 +32,6 @@
     "nuxt-umami": "^3.2.1",
     "openid-client": "^6.8.1",
     "pg": "^8.16.3",
-    "prisma": "^7.0.1",
     "reka-ui": "^2.6.1",
     "scss": "^0.2.4",
     "swagger-jsdoc": "^6.2.8",
@@ -50,6 +49,7 @@
     "@types/luxon": "^3.7.1",
     "@types/pg": "^8.15.6",
     "@types/swagger-jsdoc": "^6.0.4",
+    "prisma": "^7.2.0",
     "vue-tsc": "^3.1.6"
   }
 }

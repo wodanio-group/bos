@@ -31,6 +31,9 @@ model User {
   publicSecret              String                    @default(uuid())
   timeTrackingActivities    TimeTrackingActivity[]
   userTokens                UserToken[]
+  tasks                     Task[]
+  leadOwners                Lead[]
+  opportunityOwners         Opportunity[]
 }
 
 model UserToken {
@@ -83,6 +86,9 @@ model Person {
   contactCommunicationWays    ContactCommunicationWay[]
   contactAddresses            ContactAddress[]
   contactNotes                ContactNote[]
+  tasks                       Task[]
+  leads                       Lead[]
+  opportunities               Opportunity[]
 }
 
 model Company {
@@ -100,6 +106,9 @@ model Company {
   contactAddresses            ContactAddress[]
   contactNotes                ContactNote[]
   timeTrackingActivities      TimeTrackingActivity[]
+  tasks                       Task[]
+  leads                       Lead[]
+  opportunities               Opportunity[]
 }
 
 model CompanyPerson {
@@ -218,3 +227,141 @@ model TimeTrackingActivity {
   company         Company?          @relation(fields: [companyId], references: [id], onDelete: Cascade)
   exportedAt      DateTime?
 }
+
+// --- Task
+
+enum TaskType {
+  CALL
+  MAIL
+  ACTION
+  OTHER
+}
+
+model Task {
+  id              String            @id @default(uuid())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  type            TaskType
+  name            String
+  content         String?
+  startAt         DateTime?
+  dueDateAt       DateTime?
+  doneAt          DateTime?
+  userId          String
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyId       String?
+  company         Company?          @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  personId        String?
+  person          Person?           @relation(fields: [personId], references: [id], onDelete: SetNull)
+  leadId          String?
+  lead            Lead?             @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  opportunityId   String?
+  opportunity     Opportunity?      @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+}
+
+// --- Campaign
+
+model Campaign {
+  id                    String            @id @default(uuid())
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  alias                 String            @unique
+  name                  String
+  shortDescription      String?
+  allowPublicCreation   Boolean           @default(false)
+  leads                 Lead[]
+}
+
+// --- Lead
+
+model LeadStatus {
+  id              String            @id @default(uuid())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  alias           String            @unique
+  name            String
+  default         Boolean           @default(false)
+  order           Int
+  leads           Lead[]
+}
+
+model Lead {
+  id              String            @id @default(uuid())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  firstname       String?
+  familyname      String?
+  companyName     String?
+  jobTitle        String?
+  email           String?
+  phoneNumber     String?
+  mobileNumber    String?
+  attrs           Json              @default("{}")
+  note            String?
+  internalNote    String?
+  ownerId         String?
+  owner           User?             @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  leadStatusId    String
+  leadStatus      LeadStatus        @relation(fields: [leadStatusId], references: [id])
+  companyId       String?
+  company         Company?          @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  personId        String?
+  person          Person?           @relation(fields: [personId], references: [id], onDelete: SetNull)
+  campaignId      String?
+  campaign        Campaign?         @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  tasks           Task[]
+  opportunities   Opportunity[]
+}
+
+// --- Opportunity
+
+model OpportunityStage {
+  id                      String                @id @default(uuid())
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  alias                   String                @unique
+  name                    String
+  default                 Boolean               @default(false)
+  order                   Int
+  opportunities           Opportunity[]
+}
+
+enum OpportunityStatus {
+  OPEN
+  WON
+  LOST
+}
+
+enum OpportunityRecurringUnit {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  HALF_YEARLY
+  ANNUALLY
+}
+
+model Opportunity {
+  id                      String                      @id @default(uuid())
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
+  name                    String
+  description             String?
+  amount                  Float                       @default(0)
+  recurringAmount         Float                       @default(0)
+  recurringCount          Float                       @default(0)
+  recurringUnit           OpportunityRecurringUnit?
+  probabilityPercent      Float                       @default(0)
+  status                  OpportunityStatus           @default(OPEN)
+  opportunityStageId      String
+  opportunityStage        OpportunityStage            @relation(fields: [opportunityStageId], references: [id])
+  companyId               String?
+  company                 Company?                    @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  personId                String?
+  person                  Person?                     @relation(fields: [personId], references: [id], onDelete: SetNull)
+  leadId                  String?
+  lead                    Lead?                       @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  ownerId                 String?
+  owner                   User?                       @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  tasks                   Task[]
+} 

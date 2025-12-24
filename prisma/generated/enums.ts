@@ -80,3 +80,34 @@ export const ContactNoteType = {
 } as const
 
 export type ContactNoteType = (typeof ContactNoteType)[keyof typeof ContactNoteType]
+
+
+export const TaskType = {
+  CALL: 'CALL',
+  MAIL: 'MAIL',
+  ACTION: 'ACTION',
+  OTHER: 'OTHER'
+} as const
+
+export type TaskType = (typeof TaskType)[keyof typeof TaskType]
+
+
+export const OpportunityStatus = {
+  OPEN: 'OPEN',
+  WON: 'WON',
+  LOST: 'LOST'
+} as const
+
+export type OpportunityStatus = (typeof OpportunityStatus)[keyof typeof OpportunityStatus]
+
+
+export const OpportunityRecurringUnit = {
+  DAILY: 'DAILY',
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY',
+  HALF_YEARLY: 'HALF_YEARLY',
+  ANNUALLY: 'ANNUALLY'
+} as const
+
+export type OpportunityRecurringUnit = (typeof OpportunityRecurringUnit)[keyof typeof OpportunityRecurringUnit]

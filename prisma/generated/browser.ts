@@ -72,3 +72,33 @@ export type ContactNote = Prisma.ContactNoteModel
  * 
  */
 export type TimeTrackingActivity = Prisma.TimeTrackingActivityModel
+/**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel
+/**
+ * Model Campaign
+ * 
+ */
+export type Campaign = Prisma.CampaignModel
+/**
+ * Model LeadStatus
+ * 
+ */
+export type LeadStatus = Prisma.LeadStatusModel
+/**
+ * Model Lead
+ * 
+ */
+export type Lead = Prisma.LeadModel
+/**
+ * Model OpportunityStage
+ * 
+ */
+export type OpportunityStage = Prisma.OpportunityStageModel
+/**
+ * Model Opportunity
+ * 
+ */
+export type Opportunity = Prisma.OpportunityModel

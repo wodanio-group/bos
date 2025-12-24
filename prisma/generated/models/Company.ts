@@ -219,6 +219,9 @@ export type CompanyWhereInput = {
   contactAddresses?: Prisma.ContactAddressListRelationFilter
   contactNotes?: Prisma.ContactNoteListRelationFilter
   timeTrackingActivities?: Prisma.TimeTrackingActivityListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
+  leads?: Prisma.LeadListRelationFilter
+  opportunities?: Prisma.OpportunityListRelationFilter
 }
 
 export type CompanyOrderByWithRelationInput = {
@@ -236,6 +239,9 @@ export type CompanyOrderByWithRelationInput = {
   contactAddresses?: Prisma.ContactAddressOrderByRelationAggregateInput
   contactNotes?: Prisma.ContactNoteOrderByRelationAggregateInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityOrderByRelationAggregateInput
+  tasks?: Prisma.TaskOrderByRelationAggregateInput
+  leads?: Prisma.LeadOrderByRelationAggregateInput
+  opportunities?: Prisma.OpportunityOrderByRelationAggregateInput
 }
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
@@ -256,6 +262,9 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   contactAddresses?: Prisma.ContactAddressListRelationFilter
   contactNotes?: Prisma.ContactNoteListRelationFilter
   timeTrackingActivities?: Prisma.TimeTrackingActivityListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
+  leads?: Prisma.LeadListRelationFilter
+  opportunities?: Prisma.OpportunityListRelationFilter
 }, "id">
 
 export type CompanyOrderByWithAggregationInput = {
@@ -303,6 +312,9 @@ export type CompanyCreateInput = {
   contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateInput = {
@@ -320,6 +332,9 @@ export type CompanyUncheckedCreateInput = {
   contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUpdateInput = {
@@ -337,6 +352,9 @@ export type CompanyUpdateInput = {
   contactAddresses?: Prisma.ContactAddressUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateInput = {
@@ -354,6 +372,9 @@ export type CompanyUncheckedUpdateInput = {
   contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateManyInput = {
@@ -516,6 +537,54 @@ export type CompanyUpdateOneWithoutTimeTrackingActivitiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutTimeTrackingActivitiesInput, Prisma.CompanyUpdateWithoutTimeTrackingActivitiesInput>, Prisma.CompanyUncheckedUpdateWithoutTimeTrackingActivitiesInput>
 }
 
+export type CompanyCreateNestedOneWithoutTasksInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutTasksInput, Prisma.CompanyUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutTasksInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneWithoutTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutTasksInput, Prisma.CompanyUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutTasksInput
+  upsert?: Prisma.CompanyUpsertWithoutTasksInput
+  disconnect?: Prisma.CompanyWhereInput | boolean
+  delete?: Prisma.CompanyWhereInput | boolean
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutTasksInput, Prisma.CompanyUpdateWithoutTasksInput>, Prisma.CompanyUncheckedUpdateWithoutTasksInput>
+}
+
+export type CompanyCreateNestedOneWithoutLeadsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutLeadsInput, Prisma.CompanyUncheckedCreateWithoutLeadsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutLeadsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneWithoutLeadsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutLeadsInput, Prisma.CompanyUncheckedCreateWithoutLeadsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutLeadsInput
+  upsert?: Prisma.CompanyUpsertWithoutLeadsInput
+  disconnect?: Prisma.CompanyWhereInput | boolean
+  delete?: Prisma.CompanyWhereInput | boolean
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutLeadsInput, Prisma.CompanyUpdateWithoutLeadsInput>, Prisma.CompanyUncheckedUpdateWithoutLeadsInput>
+}
+
+export type CompanyCreateNestedOneWithoutOpportunitiesInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutOpportunitiesInput, Prisma.CompanyUncheckedCreateWithoutOpportunitiesInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutOpportunitiesInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneWithoutOpportunitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutOpportunitiesInput, Prisma.CompanyUncheckedCreateWithoutOpportunitiesInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutOpportunitiesInput
+  upsert?: Prisma.CompanyUpsertWithoutOpportunitiesInput
+  disconnect?: Prisma.CompanyWhereInput | boolean
+  delete?: Prisma.CompanyWhereInput | boolean
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutOpportunitiesInput, Prisma.CompanyUpdateWithoutOpportunitiesInput>, Prisma.CompanyUncheckedUpdateWithoutOpportunitiesInput>
+}
+
 export type CompanyCreateWithoutCompanyPersonsInput = {
   id?: string
   createdAt?: Date | string
@@ -530,6 +599,9 @@ export type CompanyCreateWithoutCompanyPersonsInput = {
   contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutCompanyPersonsInput = {
@@ -546,6 +618,9 @@ export type CompanyUncheckedCreateWithoutCompanyPersonsInput = {
   contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutCompanyPersonsInput = {
@@ -578,6 +653,9 @@ export type CompanyUpdateWithoutCompanyPersonsInput = {
   contactAddresses?: Prisma.ContactAddressUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutCompanyPersonsInput = {
@@ -594,6 +672,9 @@ export type CompanyUncheckedUpdateWithoutCompanyPersonsInput = {
   contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutContactCommunicationWaysInput = {
@@ -610,6 +691,9 @@ export type CompanyCreateWithoutContactCommunicationWaysInput = {
   contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutContactCommunicationWaysInput = {
@@ -626,6 +710,9 @@ export type CompanyUncheckedCreateWithoutContactCommunicationWaysInput = {
   contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutContactCommunicationWaysInput = {
@@ -658,6 +745,9 @@ export type CompanyUpdateWithoutContactCommunicationWaysInput = {
   contactAddresses?: Prisma.ContactAddressUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutContactCommunicationWaysInput = {
@@ -674,6 +764,9 @@ export type CompanyUncheckedUpdateWithoutContactCommunicationWaysInput = {
   contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutContactAddressesInput = {
@@ -690,6 +783,9 @@ export type CompanyCreateWithoutContactAddressesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutContactAddressesInput = {
@@ -706,6 +802,9 @@ export type CompanyUncheckedCreateWithoutContactAddressesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutContactAddressesInput = {
@@ -738,6 +837,9 @@ export type CompanyUpdateWithoutContactAddressesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutContactAddressesInput = {
@@ -754,6 +856,9 @@ export type CompanyUncheckedUpdateWithoutContactAddressesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutContactNotesInput = {
@@ -770,6 +875,9 @@ export type CompanyCreateWithoutContactNotesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutCompanyInput
   contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutContactNotesInput = {
@@ -786,6 +894,9 @@ export type CompanyUncheckedCreateWithoutContactNotesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutCompanyInput
   contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutCompanyInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutContactNotesInput = {
@@ -818,6 +929,9 @@ export type CompanyUpdateWithoutContactNotesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutCompanyNestedInput
   contactAddresses?: Prisma.ContactAddressUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutContactNotesInput = {
@@ -834,6 +948,9 @@ export type CompanyUncheckedUpdateWithoutContactNotesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutCompanyNestedInput
   contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutCompanyNestedInput
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutTimeTrackingActivitiesInput = {
@@ -850,6 +967,9 @@ export type CompanyCreateWithoutTimeTrackingActivitiesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutCompanyInput
   contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutTimeTrackingActivitiesInput = {
@@ -866,6 +986,9 @@ export type CompanyUncheckedCreateWithoutTimeTrackingActivitiesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutCompanyInput
   contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutCompanyInput
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutTimeTrackingActivitiesInput = {
@@ -898,6 +1021,9 @@ export type CompanyUpdateWithoutTimeTrackingActivitiesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutCompanyNestedInput
   contactAddresses?: Prisma.ContactAddressUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
@@ -914,6 +1040,285 @@ export type CompanyUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutCompanyNestedInput
   contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutCompanyNestedInput
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutTasksInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  name?: string | null
+  name2?: string | null
+  customerId?: string | null
+  taxId?: string | null
+  vatId?: string | null
+  companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutCompanyInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutCompanyInput
+  contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutCompanyInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutTasksInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  name?: string | null
+  name2?: string | null
+  customerId?: string | null
+  taxId?: string | null
+  vatId?: string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutCompanyInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutCompanyInput
+  contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutCompanyInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutTasksInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutTasksInput, Prisma.CompanyUncheckedCreateWithoutTasksInput>
+}
+
+export type CompanyUpsertWithoutTasksInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutTasksInput, Prisma.CompanyUncheckedUpdateWithoutTasksInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutTasksInput, Prisma.CompanyUncheckedCreateWithoutTasksInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutTasksInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutTasksInput, Prisma.CompanyUncheckedUpdateWithoutTasksInput>
+}
+
+export type CompanyUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyPersons?: Prisma.CompanyPersonUpdateManyWithoutCompanyNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutCompanyNestedInput
+  contactAddresses?: Prisma.ContactAddressUpdateManyWithoutCompanyNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutCompanyNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutCompanyNestedInput
+  contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutCompanyNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutLeadsInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  name?: string | null
+  name2?: string | null
+  customerId?: string | null
+  taxId?: string | null
+  vatId?: string | null
+  companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutCompanyInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutCompanyInput
+  contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutCompanyInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutLeadsInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  name?: string | null
+  name2?: string | null
+  customerId?: string | null
+  taxId?: string | null
+  vatId?: string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutCompanyInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutCompanyInput
+  contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutCompanyInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCompanyInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutLeadsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutLeadsInput, Prisma.CompanyUncheckedCreateWithoutLeadsInput>
+}
+
+export type CompanyUpsertWithoutLeadsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutLeadsInput, Prisma.CompanyUncheckedUpdateWithoutLeadsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutLeadsInput, Prisma.CompanyUncheckedCreateWithoutLeadsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutLeadsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutLeadsInput, Prisma.CompanyUncheckedUpdateWithoutLeadsInput>
+}
+
+export type CompanyUpdateWithoutLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyPersons?: Prisma.CompanyPersonUpdateManyWithoutCompanyNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutCompanyNestedInput
+  contactAddresses?: Prisma.ContactAddressUpdateManyWithoutCompanyNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutCompanyNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutCompanyNestedInput
+  contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutCompanyNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCompanyNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutOpportunitiesInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  name?: string | null
+  name2?: string | null
+  customerId?: string | null
+  taxId?: string | null
+  vatId?: string | null
+  companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutCompanyInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutCompanyInput
+  contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutCompanyInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutOpportunitiesInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  name?: string | null
+  name2?: string | null
+  customerId?: string | null
+  taxId?: string | null
+  vatId?: string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutCompanyInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutCompanyInput
+  contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutCompanyInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutCompanyInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutOpportunitiesInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutOpportunitiesInput, Prisma.CompanyUncheckedCreateWithoutOpportunitiesInput>
+}
+
+export type CompanyUpsertWithoutOpportunitiesInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutOpportunitiesInput, Prisma.CompanyUncheckedUpdateWithoutOpportunitiesInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutOpportunitiesInput, Prisma.CompanyUncheckedCreateWithoutOpportunitiesInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutOpportunitiesInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutOpportunitiesInput, Prisma.CompanyUncheckedUpdateWithoutOpportunitiesInput>
+}
+
+export type CompanyUpdateWithoutOpportunitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyPersons?: Prisma.CompanyPersonUpdateManyWithoutCompanyNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutCompanyNestedInput
+  contactAddresses?: Prisma.ContactAddressUpdateManyWithoutCompanyNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutOpportunitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutCompanyNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutCompanyNestedInput
+  contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutCompanyNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutCompanyNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 
@@ -927,6 +1332,9 @@ export type CompanyCountOutputType = {
   contactAddresses: number
   contactNotes: number
   timeTrackingActivities: number
+  tasks: number
+  leads: number
+  opportunities: number
 }
 
 export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -935,6 +1343,9 @@ export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   contactAddresses?: boolean | CompanyCountOutputTypeCountContactAddressesArgs
   contactNotes?: boolean | CompanyCountOutputTypeCountContactNotesArgs
   timeTrackingActivities?: boolean | CompanyCountOutputTypeCountTimeTrackingActivitiesArgs
+  tasks?: boolean | CompanyCountOutputTypeCountTasksArgs
+  leads?: boolean | CompanyCountOutputTypeCountLeadsArgs
+  opportunities?: boolean | CompanyCountOutputTypeCountOpportunitiesArgs
 }
 
 /**
@@ -982,6 +1393,27 @@ export type CompanyCountOutputTypeCountTimeTrackingActivitiesArgs<ExtArgs extend
   where?: Prisma.TimeTrackingActivityWhereInput
 }
 
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountOpportunitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OpportunityWhereInput
+}
+
 
 export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -998,6 +1430,9 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   contactAddresses?: boolean | Prisma.Company$contactAddressesArgs<ExtArgs>
   contactNotes?: boolean | Prisma.Company$contactNotesArgs<ExtArgs>
   timeTrackingActivities?: boolean | Prisma.Company$timeTrackingActivitiesArgs<ExtArgs>
+  tasks?: boolean | Prisma.Company$tasksArgs<ExtArgs>
+  leads?: boolean | Prisma.Company$leadsArgs<ExtArgs>
+  opportunities?: boolean | Prisma.Company$opportunitiesArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
 
@@ -1044,6 +1479,9 @@ export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   contactAddresses?: boolean | Prisma.Company$contactAddressesArgs<ExtArgs>
   contactNotes?: boolean | Prisma.Company$contactNotesArgs<ExtArgs>
   timeTrackingActivities?: boolean | Prisma.Company$timeTrackingActivitiesArgs<ExtArgs>
+  tasks?: boolean | Prisma.Company$tasksArgs<ExtArgs>
+  leads?: boolean | Prisma.Company$leadsArgs<ExtArgs>
+  opportunities?: boolean | Prisma.Company$opportunitiesArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CompanyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1057,6 +1495,9 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     contactAddresses: Prisma.$ContactAddressPayload<ExtArgs>[]
     contactNotes: Prisma.$ContactNotePayload<ExtArgs>[]
     timeTrackingActivities: Prisma.$TimeTrackingActivityPayload<ExtArgs>[]
+    tasks: Prisma.$TaskPayload<ExtArgs>[]
+    leads: Prisma.$LeadPayload<ExtArgs>[]
+    opportunities: Prisma.$OpportunityPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1467,6 +1908,9 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   contactAddresses<T extends Prisma.Company$contactAddressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$contactAddressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactAddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   contactNotes<T extends Prisma.Company$contactNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$contactNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   timeTrackingActivities<T extends Prisma.Company$timeTrackingActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$timeTrackingActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeTrackingActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tasks<T extends Prisma.Company$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leads<T extends Prisma.Company$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  opportunities<T extends Prisma.Company$opportunitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$opportunitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2010,6 +2454,78 @@ export type Company$timeTrackingActivitiesArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.TimeTrackingActivityScalarFieldEnum | Prisma.TimeTrackingActivityScalarFieldEnum[]
+}
+
+/**
+ * Company.tasks
+ */
+export type Company$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Task
+   */
+  select?: Prisma.TaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Task
+   */
+  omit?: Prisma.TaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskInclude<ExtArgs> | null
+  where?: Prisma.TaskWhereInput
+  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
+}
+
+/**
+ * Company.leads
+ */
+export type Company$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lead
+   */
+  select?: Prisma.LeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lead
+   */
+  omit?: Prisma.LeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadInclude<ExtArgs> | null
+  where?: Prisma.LeadWhereInput
+  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
+  cursor?: Prisma.LeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
+}
+
+/**
+ * Company.opportunities
+ */
+export type Company$opportunitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Opportunity
+   */
+  select?: Prisma.OpportunitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Opportunity
+   */
+  omit?: Prisma.OpportunityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OpportunityInclude<ExtArgs> | null
+  where?: Prisma.OpportunityWhereInput
+  orderBy?: Prisma.OpportunityOrderByWithRelationInput | Prisma.OpportunityOrderByWithRelationInput[]
+  cursor?: Prisma.OpportunityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OpportunityScalarFieldEnum | Prisma.OpportunityScalarFieldEnum[]
 }
 
 /**

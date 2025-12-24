@@ -218,6 +218,9 @@ export type PersonWhereInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayListRelationFilter
   contactAddresses?: Prisma.ContactAddressListRelationFilter
   contactNotes?: Prisma.ContactNoteListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
+  leads?: Prisma.LeadListRelationFilter
+  opportunities?: Prisma.OpportunityListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -234,6 +237,9 @@ export type PersonOrderByWithRelationInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayOrderByRelationAggregateInput
   contactAddresses?: Prisma.ContactAddressOrderByRelationAggregateInput
   contactNotes?: Prisma.ContactNoteOrderByRelationAggregateInput
+  tasks?: Prisma.TaskOrderByRelationAggregateInput
+  leads?: Prisma.LeadOrderByRelationAggregateInput
+  opportunities?: Prisma.OpportunityOrderByRelationAggregateInput
 }
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -253,6 +259,9 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   contactCommunicationWays?: Prisma.ContactCommunicationWayListRelationFilter
   contactAddresses?: Prisma.ContactAddressListRelationFilter
   contactNotes?: Prisma.ContactNoteListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
+  leads?: Prisma.LeadListRelationFilter
+  opportunities?: Prisma.OpportunityListRelationFilter
 }, "id">
 
 export type PersonOrderByWithAggregationInput = {
@@ -299,6 +308,9 @@ export type PersonCreateInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutPersonInput
   contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutPersonInput
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -315,6 +327,9 @@ export type PersonUncheckedCreateInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutPersonInput
   contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutPersonInput
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUpdateInput = {
@@ -331,6 +346,9 @@ export type PersonUpdateInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutPersonNestedInput
   contactAddresses?: Prisma.ContactAddressUpdateManyWithoutPersonNestedInput
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -347,6 +365,9 @@ export type PersonUncheckedUpdateInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutPersonNestedInput
   contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutPersonNestedInput
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -501,6 +522,54 @@ export type PersonUpdateOneWithoutContactNotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutContactNotesInput, Prisma.PersonUpdateWithoutContactNotesInput>, Prisma.PersonUncheckedUpdateWithoutContactNotesInput>
 }
 
+export type PersonCreateNestedOneWithoutTasksInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTasksInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTasksInput
+  upsert?: Prisma.PersonUpsertWithoutTasksInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutTasksInput, Prisma.PersonUpdateWithoutTasksInput>, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+}
+
+export type PersonCreateNestedOneWithoutLeadsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeadsInput, Prisma.PersonUncheckedCreateWithoutLeadsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeadsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutLeadsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeadsInput, Prisma.PersonUncheckedCreateWithoutLeadsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeadsInput
+  upsert?: Prisma.PersonUpsertWithoutLeadsInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutLeadsInput, Prisma.PersonUpdateWithoutLeadsInput>, Prisma.PersonUncheckedUpdateWithoutLeadsInput>
+}
+
+export type PersonCreateNestedOneWithoutOpportunitiesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutOpportunitiesInput, Prisma.PersonUncheckedCreateWithoutOpportunitiesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutOpportunitiesInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutOpportunitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutOpportunitiesInput, Prisma.PersonUncheckedCreateWithoutOpportunitiesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutOpportunitiesInput
+  upsert?: Prisma.PersonUpsertWithoutOpportunitiesInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutOpportunitiesInput, Prisma.PersonUpdateWithoutOpportunitiesInput>, Prisma.PersonUncheckedUpdateWithoutOpportunitiesInput>
+}
+
 export type PersonCreateWithoutCompanyPersonsInput = {
   id?: string
   createdAt?: Date | string
@@ -514,6 +583,9 @@ export type PersonCreateWithoutCompanyPersonsInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutPersonInput
   contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutPersonInput
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutCompanyPersonsInput = {
@@ -529,6 +601,9 @@ export type PersonUncheckedCreateWithoutCompanyPersonsInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutPersonInput
   contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutPersonInput
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCompanyPersonsInput = {
@@ -560,6 +635,9 @@ export type PersonUpdateWithoutCompanyPersonsInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutPersonNestedInput
   contactAddresses?: Prisma.ContactAddressUpdateManyWithoutPersonNestedInput
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCompanyPersonsInput = {
@@ -575,6 +653,9 @@ export type PersonUncheckedUpdateWithoutCompanyPersonsInput = {
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutPersonNestedInput
   contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutPersonNestedInput
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutContactCommunicationWaysInput = {
@@ -590,6 +671,9 @@ export type PersonCreateWithoutContactCommunicationWaysInput = {
   companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutPersonInput
   contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutPersonInput
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutContactCommunicationWaysInput = {
@@ -605,6 +689,9 @@ export type PersonUncheckedCreateWithoutContactCommunicationWaysInput = {
   companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutPersonInput
   contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutPersonInput
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutContactCommunicationWaysInput = {
@@ -636,6 +723,9 @@ export type PersonUpdateWithoutContactCommunicationWaysInput = {
   companyPersons?: Prisma.CompanyPersonUpdateManyWithoutPersonNestedInput
   contactAddresses?: Prisma.ContactAddressUpdateManyWithoutPersonNestedInput
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutContactCommunicationWaysInput = {
@@ -651,6 +741,9 @@ export type PersonUncheckedUpdateWithoutContactCommunicationWaysInput = {
   companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutPersonNestedInput
   contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutPersonNestedInput
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutContactAddressesInput = {
@@ -666,6 +759,9 @@ export type PersonCreateWithoutContactAddressesInput = {
   companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutPersonInput
   contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutPersonInput
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutContactAddressesInput = {
@@ -681,6 +777,9 @@ export type PersonUncheckedCreateWithoutContactAddressesInput = {
   companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutPersonInput
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutPersonInput
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutContactAddressesInput = {
@@ -712,6 +811,9 @@ export type PersonUpdateWithoutContactAddressesInput = {
   companyPersons?: Prisma.CompanyPersonUpdateManyWithoutPersonNestedInput
   contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutPersonNestedInput
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutContactAddressesInput = {
@@ -727,6 +829,9 @@ export type PersonUncheckedUpdateWithoutContactAddressesInput = {
   companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutPersonNestedInput
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutPersonNestedInput
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutContactNotesInput = {
@@ -742,6 +847,9 @@ export type PersonCreateWithoutContactNotesInput = {
   companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutPersonInput
   contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutPersonInput
   contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutContactNotesInput = {
@@ -757,6 +865,9 @@ export type PersonUncheckedCreateWithoutContactNotesInput = {
   companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutPersonInput
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutPersonInput
   contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutContactNotesInput = {
@@ -788,6 +899,9 @@ export type PersonUpdateWithoutContactNotesInput = {
   companyPersons?: Prisma.CompanyPersonUpdateManyWithoutPersonNestedInput
   contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutPersonNestedInput
   contactAddresses?: Prisma.ContactAddressUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutContactNotesInput = {
@@ -803,6 +917,273 @@ export type PersonUncheckedUpdateWithoutContactNotesInput = {
   companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutPersonNestedInput
   contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutPersonNestedInput
   contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutTasksInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  firstname?: string | null
+  surename?: string | null
+  familyname?: string | null
+  gender?: $Enums.ContactGender
+  birthdayAt?: Date | string | null
+  companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutPersonInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutPersonInput
+  contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutPersonInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutTasksInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  firstname?: string | null
+  surename?: string | null
+  familyname?: string | null
+  gender?: $Enums.ContactGender
+  birthdayAt?: Date | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutPersonInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutPersonInput
+  contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutPersonInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutTasksInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+}
+
+export type PersonUpsertWithoutTasksInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutTasksInput, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutTasksInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutTasksInput, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+}
+
+export type PersonUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  surename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  familyname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumContactGenderFieldUpdateOperationsInput | $Enums.ContactGender
+  birthdayAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  companyPersons?: Prisma.CompanyPersonUpdateManyWithoutPersonNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutPersonNestedInput
+  contactAddresses?: Prisma.ContactAddressUpdateManyWithoutPersonNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  surename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  familyname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumContactGenderFieldUpdateOperationsInput | $Enums.ContactGender
+  birthdayAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutPersonNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutPersonNestedInput
+  contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutPersonNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutLeadsInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  firstname?: string | null
+  surename?: string | null
+  familyname?: string | null
+  gender?: $Enums.ContactGender
+  birthdayAt?: Date | string | null
+  companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutPersonInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutPersonInput
+  contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutPersonInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutLeadsInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  firstname?: string | null
+  surename?: string | null
+  familyname?: string | null
+  gender?: $Enums.ContactGender
+  birthdayAt?: Date | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutPersonInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutPersonInput
+  contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutPersonInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutLeadsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutLeadsInput, Prisma.PersonUncheckedCreateWithoutLeadsInput>
+}
+
+export type PersonUpsertWithoutLeadsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutLeadsInput, Prisma.PersonUncheckedUpdateWithoutLeadsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutLeadsInput, Prisma.PersonUncheckedCreateWithoutLeadsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutLeadsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutLeadsInput, Prisma.PersonUncheckedUpdateWithoutLeadsInput>
+}
+
+export type PersonUpdateWithoutLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  surename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  familyname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumContactGenderFieldUpdateOperationsInput | $Enums.ContactGender
+  birthdayAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  companyPersons?: Prisma.CompanyPersonUpdateManyWithoutPersonNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutPersonNestedInput
+  contactAddresses?: Prisma.ContactAddressUpdateManyWithoutPersonNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  surename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  familyname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumContactGenderFieldUpdateOperationsInput | $Enums.ContactGender
+  birthdayAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutPersonNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutPersonNestedInput
+  contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutPersonNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutOpportunitiesInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  firstname?: string | null
+  surename?: string | null
+  familyname?: string | null
+  gender?: $Enums.ContactGender
+  birthdayAt?: Date | string | null
+  companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutPersonInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutPersonInput
+  contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutPersonInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutOpportunitiesInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  firstname?: string | null
+  surename?: string | null
+  familyname?: string | null
+  gender?: $Enums.ContactGender
+  birthdayAt?: Date | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutPersonInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutPersonInput
+  contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutPersonInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutOpportunitiesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutOpportunitiesInput, Prisma.PersonUncheckedCreateWithoutOpportunitiesInput>
+}
+
+export type PersonUpsertWithoutOpportunitiesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutOpportunitiesInput, Prisma.PersonUncheckedUpdateWithoutOpportunitiesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutOpportunitiesInput, Prisma.PersonUncheckedCreateWithoutOpportunitiesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutOpportunitiesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutOpportunitiesInput, Prisma.PersonUncheckedUpdateWithoutOpportunitiesInput>
+}
+
+export type PersonUpdateWithoutOpportunitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  surename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  familyname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumContactGenderFieldUpdateOperationsInput | $Enums.ContactGender
+  birthdayAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  companyPersons?: Prisma.CompanyPersonUpdateManyWithoutPersonNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutPersonNestedInput
+  contactAddresses?: Prisma.ContactAddressUpdateManyWithoutPersonNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutOpportunitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  surename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  familyname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumContactGenderFieldUpdateOperationsInput | $Enums.ContactGender
+  birthdayAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutPersonNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutPersonNestedInput
+  contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutPersonNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 
@@ -815,6 +1196,9 @@ export type PersonCountOutputType = {
   contactCommunicationWays: number
   contactAddresses: number
   contactNotes: number
+  tasks: number
+  leads: number
+  opportunities: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -822,6 +1206,9 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   contactCommunicationWays?: boolean | PersonCountOutputTypeCountContactCommunicationWaysArgs
   contactAddresses?: boolean | PersonCountOutputTypeCountContactAddressesArgs
   contactNotes?: boolean | PersonCountOutputTypeCountContactNotesArgs
+  tasks?: boolean | PersonCountOutputTypeCountTasksArgs
+  leads?: boolean | PersonCountOutputTypeCountLeadsArgs
+  opportunities?: boolean | PersonCountOutputTypeCountOpportunitiesArgs
 }
 
 /**
@@ -862,6 +1249,27 @@ export type PersonCountOutputTypeCountContactNotesArgs<ExtArgs extends runtime.T
   where?: Prisma.ContactNoteWhereInput
 }
 
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountOpportunitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OpportunityWhereInput
+}
+
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -877,6 +1285,9 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   contactCommunicationWays?: boolean | Prisma.Person$contactCommunicationWaysArgs<ExtArgs>
   contactAddresses?: boolean | Prisma.Person$contactAddressesArgs<ExtArgs>
   contactNotes?: boolean | Prisma.Person$contactNotesArgs<ExtArgs>
+  tasks?: boolean | Prisma.Person$tasksArgs<ExtArgs>
+  leads?: boolean | Prisma.Person$leadsArgs<ExtArgs>
+  opportunities?: boolean | Prisma.Person$opportunitiesArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
@@ -922,6 +1333,9 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   contactCommunicationWays?: boolean | Prisma.Person$contactCommunicationWaysArgs<ExtArgs>
   contactAddresses?: boolean | Prisma.Person$contactAddressesArgs<ExtArgs>
   contactNotes?: boolean | Prisma.Person$contactNotesArgs<ExtArgs>
+  tasks?: boolean | Prisma.Person$tasksArgs<ExtArgs>
+  leads?: boolean | Prisma.Person$leadsArgs<ExtArgs>
+  opportunities?: boolean | Prisma.Person$opportunitiesArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -934,6 +1348,9 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     contactCommunicationWays: Prisma.$ContactCommunicationWayPayload<ExtArgs>[]
     contactAddresses: Prisma.$ContactAddressPayload<ExtArgs>[]
     contactNotes: Prisma.$ContactNotePayload<ExtArgs>[]
+    tasks: Prisma.$TaskPayload<ExtArgs>[]
+    leads: Prisma.$LeadPayload<ExtArgs>[]
+    opportunities: Prisma.$OpportunityPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1343,6 +1760,9 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   contactCommunicationWays<T extends Prisma.Person$contactCommunicationWaysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$contactCommunicationWaysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactCommunicationWayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   contactAddresses<T extends Prisma.Person$contactAddressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$contactAddressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactAddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   contactNotes<T extends Prisma.Person$contactNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$contactNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tasks<T extends Prisma.Person$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leads<T extends Prisma.Person$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  opportunities<T extends Prisma.Person$opportunitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$opportunitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1862,6 +2282,78 @@ export type Person$contactNotesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ContactNoteScalarFieldEnum | Prisma.ContactNoteScalarFieldEnum[]
+}
+
+/**
+ * Person.tasks
+ */
+export type Person$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Task
+   */
+  select?: Prisma.TaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Task
+   */
+  omit?: Prisma.TaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskInclude<ExtArgs> | null
+  where?: Prisma.TaskWhereInput
+  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
+}
+
+/**
+ * Person.leads
+ */
+export type Person$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lead
+   */
+  select?: Prisma.LeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lead
+   */
+  omit?: Prisma.LeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadInclude<ExtArgs> | null
+  where?: Prisma.LeadWhereInput
+  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
+  cursor?: Prisma.LeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
+}
+
+/**
+ * Person.opportunities
+ */
+export type Person$opportunitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Opportunity
+   */
+  select?: Prisma.OpportunitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Opportunity
+   */
+  omit?: Prisma.OpportunityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OpportunityInclude<ExtArgs> | null
+  where?: Prisma.OpportunityWhereInput
+  orderBy?: Prisma.OpportunityOrderByWithRelationInput | Prisma.OpportunityOrderByWithRelationInput[]
+  cursor?: Prisma.OpportunityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OpportunityScalarFieldEnum | Prisma.OpportunityScalarFieldEnum[]
 }
 
 /**

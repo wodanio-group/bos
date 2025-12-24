@@ -61,7 +61,13 @@ export const ModelName = {
   ContactAddress: 'ContactAddress',
   Country: 'Country',
   ContactNote: 'ContactNote',
-  TimeTrackingActivity: 'TimeTrackingActivity'
+  TimeTrackingActivity: 'TimeTrackingActivity',
+  Task: 'Task',
+  Campaign: 'Campaign',
+  LeadStatus: 'LeadStatus',
+  Lead: 'Lead',
+  OpportunityStage: 'OpportunityStage',
+  Opportunity: 'Opportunity'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -223,6 +229,111 @@ export const TimeTrackingActivityScalarFieldEnum = {
 } as const
 
 export type TimeTrackingActivityScalarFieldEnum = (typeof TimeTrackingActivityScalarFieldEnum)[keyof typeof TimeTrackingActivityScalarFieldEnum]
+
+
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  type: 'type',
+  name: 'name',
+  content: 'content',
+  startAt: 'startAt',
+  dueDateAt: 'dueDateAt',
+  doneAt: 'doneAt',
+  userId: 'userId',
+  companyId: 'companyId',
+  personId: 'personId',
+  leadId: 'leadId',
+  opportunityId: 'opportunityId'
+} as const
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const CampaignScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  alias: 'alias',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  allowPublicCreation: 'allowPublicCreation'
+} as const
+
+export type CampaignScalarFieldEnum = (typeof CampaignScalarFieldEnum)[keyof typeof CampaignScalarFieldEnum]
+
+
+export const LeadStatusScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  alias: 'alias',
+  name: 'name',
+  default: 'default',
+  order: 'order'
+} as const
+
+export type LeadStatusScalarFieldEnum = (typeof LeadStatusScalarFieldEnum)[keyof typeof LeadStatusScalarFieldEnum]
+
+
+export const LeadScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  firstname: 'firstname',
+  familyname: 'familyname',
+  companyName: 'companyName',
+  jobTitle: 'jobTitle',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  mobileNumber: 'mobileNumber',
+  attrs: 'attrs',
+  note: 'note',
+  internalNote: 'internalNote',
+  ownerId: 'ownerId',
+  leadStatusId: 'leadStatusId',
+  companyId: 'companyId',
+  personId: 'personId',
+  campaignId: 'campaignId'
+} as const
+
+export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
+
+
+export const OpportunityStageScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  alias: 'alias',
+  name: 'name',
+  default: 'default',
+  order: 'order'
+} as const
+
+export type OpportunityStageScalarFieldEnum = (typeof OpportunityStageScalarFieldEnum)[keyof typeof OpportunityStageScalarFieldEnum]
+
+
+export const OpportunityScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  description: 'description',
+  amount: 'amount',
+  recurringAmount: 'recurringAmount',
+  recurringCount: 'recurringCount',
+  recurringUnit: 'recurringUnit',
+  probabilityPercent: 'probabilityPercent',
+  status: 'status',
+  opportunityStageId: 'opportunityStageId',
+  companyId: 'companyId',
+  personId: 'personId',
+  leadId: 'leadId',
+  ownerId: 'ownerId'
+} as const
+
+export type OpportunityScalarFieldEnum = (typeof OpportunityScalarFieldEnum)[keyof typeof OpportunityScalarFieldEnum]
 
 
 export const SortOrder = {
