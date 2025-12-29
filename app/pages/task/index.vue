@@ -178,7 +178,7 @@
             <span class="text-sm text-secondary-500">{{ $t('task.fields.company') }}</span>
             <div>
               <molecule-link-button
-                :to="`/contact/company/${selectedViewItem.companyId}`"
+                :to="`/company/${selectedViewItem.companyId}`"
                 :title="getCompanyName(selectedViewItem.companyId)" />
             </div>
           </div>
@@ -187,7 +187,7 @@
             <span class="text-sm text-secondary-500">{{ $t('task.fields.person') }}</span>
             <div>
               <molecule-link-button
-                :to="`/contact/person/${selectedViewItem.personId}`"
+                :to="`/person/${selectedViewItem.personId}`"
                 :title="getPersonName(selectedViewItem.personId)" />
             </div>
           </div>
@@ -232,7 +232,7 @@
       @update:open="!$event && (selectedDeleteItem = null)"/>
 
     <!-- User Search Dialog -->
-    <DialogEntitySearch
+    <organism-dialog-entity-search
       :open="openUserSearchDialog"
       :title="$t('task.selectUser')"
       :search-fn="searchUsers"
@@ -240,7 +240,7 @@
       @close="openUserSearchDialog = false"/>
 
     <!-- Company Search Dialog -->
-    <DialogEntitySearch
+    <organism-dialog-entity-search
       :open="openCompanySearchDialog"
       :title="$t('task.selectCompany')"
       :search-fn="searchCompanies"
@@ -248,7 +248,7 @@
       @close="openCompanySearchDialog = false"/>
 
     <!-- Person Search Dialog -->
-    <DialogEntitySearch
+    <organism-dialog-entity-search
       :open="openPersonSearchDialog"
       :title="$t('task.selectPerson')"
       :search-fn="searchPersons"

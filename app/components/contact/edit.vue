@@ -213,7 +213,7 @@
     </div>
   </page-section-box>
 
-  <DialogEntitySearch
+  <organism-dialog-entity-search
     :open="openSearchPersonCompanyRelationDialog"
     :title="$t(`contactEdit.personCompanyRelations.searchDialog.${(contactType === 'company') ? 'person' : 'company'}.title`)"
     :search-fn="searchPersonCompanyRelation"
@@ -222,7 +222,7 @@
       openSearchPersonCompanyRelationDialog = false;
     }"
     @close="openSearchPersonCompanyRelationDialog = false">
-  </DialogEntitySearch>
+  </organism-dialog-entity-search>
 
 </template>
 

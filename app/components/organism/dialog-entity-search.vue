@@ -8,6 +8,7 @@
     </template>
     <div class="flex flex-col">
       <InputSearch
+        ref="searchInputRef"
         :hide-clear-button="true"
         @update:model-value="onUpdateSearch">
       </InputSearch>
@@ -37,7 +38,7 @@
  * Abstract search dialog component for searching entities
  *
  * @example Usage for searching companies:
- * <DialogEntitySearch
+ * <organism-dialog-entity-search
  *   :open="openDialog"
  *   title="Search for a company"
  *   :search-fn="async (query) => {
@@ -90,7 +91,9 @@ const onUpdateOpen = (open: boolean) => {
   searchResults.value = [];
 }
 
+const searchInputRef = ref<any>(null);
 const searchResults = ref<SearchResult[]>([]);
+
 const onUpdateSearch = async (value: string | null | undefined) => {
   const search = filterString(value);
   if (!search || search.length < minSearchLength.value) {
@@ -105,6 +108,15 @@ const onUpdateSearch = async (value: string | null | undefined) => {
     }
   }
 }
+
+// Auto-focus input when dialog opens
+watch(() => props.open, (newValue) => {
+  if (newValue && searchInputRef.value) {
+    nextTick(() => {
+      searchInputRef.value?.$el?.querySelector('input')?.focus();
+    });
+  }
+});
 
 let handler: any;
 onMounted(() => {
