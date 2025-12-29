@@ -24,48 +24,97 @@
       @action="actionHandler">
     </DataSectionBox>
 
-    <!-- Create Dialog -->
+    <!-- Task Form Dialog (Create/Edit) -->
     <Dialog
-      :open="openCreateDialog === true"
-      @update:open="openCreateDialog = $event">
+      :open="openTaskFormDialog"
+      @update:open="openTaskFormDialog = $event">
+      <template #headerLeft>
+        <p class="text-lg text-secondary-600">
+          {{ taskFormMode === 'create' ? $t('task.createDialogTitle') : $t('task.edit.title', { name: taskForm.name }) }}
+        </p>
+      </template>
       <form
         class="flex flex-col gap-2"
-        @submit.prevent="onCreate">
-        <p class="text-lg text-secondary-600">{{ $t('task.createDialogTitle') }}</p>
+        @submit.prevent="onSubmitTaskForm">
+
+        <atom-select
+          :required="true"
+          :title="$t('task.fields.status')"
+          v-model="taskForm.isDone"
+          :items="taskStatusOptions"/>
 
         <atom-select
           :required="true"
           :title="$t('task.fields.type')"
-          v-model="createForm.type"
+          v-model="taskForm.type"
           :items="taskTypeOptions"/>
 
         <atom-input
           :required="true"
           type="text"
           :title="$t('task.fields.name')"
-          v-model="createForm.name"/>
+          v-model="taskForm.name"/>
 
         <atom-textarea
           :title="$t('task.fields.content')"
-          v-model="createForm.content"/>
+          v-model="taskForm.content"/>
 
-        <atom-input
-          type="datetime-local"
-          :title="$t('task.fields.startDate')"
-          v-model="createForm.startAt"/>
+        <div class="grid grid-cols-2 gap-2">
+          <atom-input
+            type="datetime-local"
+            :title="$t('task.fields.startDate')"
+            v-model="taskForm.startAt"/>
 
-        <atom-input
-          type="datetime-local"
-          :title="$t('task.fields.dueDate')"
-          v-model="createForm.dueDateAt"/>
+          <atom-input
+            type="datetime-local"
+            :title="$t('task.fields.dueDate')"
+            v-model="taskForm.dueDateAt"/>
+        </div>
 
-        <atom-select
-          :required="true"
-          :title="$t('task.fields.status')"
-          v-model="createForm.isDone"
-          :items="taskStatusOptions"/>
+        <div class="grid grid-cols-2 gap-2" v-if="hasRightContactAllView">
+          <div class="flex flex-col gap-1">
+            <label class="text-xs text-gray-600 font-semibold">{{ $t('task.fields.company') }}</label>
+            <button
+              type="button"
+              class="w-full px-4 py-1.5 text-sm text-primary-950 border border-secondary-200 rounded-lg shadow shadow-gray-100 text-left hover:bg-secondary-50 focus:border-gray-500 focus:outline-none focus:ring-0 transition-colors"
+              @click="openCompanySearchDialog = true">
+              <span v-if="taskForm.companyId">{{ getCompanyName(taskForm.companyId) }}</span>
+              <span v-else class="text-secondary-400">{{ $t('task.selectCompany') }}</span>
+            </button>
+          </div>
 
-        <div class="flex justify-end mt-2">
+          <div class="flex flex-col gap-1">
+            <label class="text-xs text-gray-600 font-semibold">{{ $t('task.fields.person') }}</label>
+            <button
+              type="button"
+              class="w-full px-4 py-1.5 text-sm text-primary-950 border border-secondary-200 rounded-lg shadow shadow-gray-100 text-left hover:bg-secondary-50 focus:border-gray-500 focus:outline-none focus:ring-0 transition-colors"
+              @click="openPersonSearchDialog = true">
+              <span v-if="taskForm.personId">{{ getPersonName(taskForm.personId) }}</span>
+              <span v-else class="text-secondary-400">{{ $t('task.selectPerson') }}</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-1" v-if="hasRightUserAllView">
+          <label class="text-xs text-gray-600 font-semibold">{{ $t('task.fields.user') }}</label>
+          <button
+            type="button"
+            class="w-full px-4 py-1.5 text-sm text-primary-950 border border-secondary-200 rounded-lg shadow shadow-gray-100 text-left hover:bg-secondary-50 focus:border-gray-500 focus:outline-none focus:ring-0 transition-colors"
+            @click="openUserSearchDialog = true">
+            <span v-if="taskForm.userId">{{ getUserName(taskForm.userId) }}</span>
+            <span v-else class="text-secondary-400">{{ $t('task.selectUser') }}</span>
+          </button>
+        </div>
+
+        <div class="flex justify-end gap-2 mt-2">
+          <atom-button
+            v-if="taskFormMode === 'edit'"
+            type="button"
+            icon="x"
+            :title="$t('general.cancel')"
+            :outline="true"
+            @click="onCancelEdit">
+          </atom-button>
           <atom-button
             type="submit"
             icon="save"
@@ -79,20 +128,23 @@
     <Dialog
       :open="openViewDialog === true"
       @update:open="openViewDialog = $event">
+      <template #headerLeft>
+        <p 
+          class="text-lg text-secondary-600"
+          v-if="selectedViewItem">{{ selectedViewItem.name }}</p>
+      </template>
       <div class="flex flex-col gap-4" v-if="selectedViewItem">
-        <p class="text-lg text-secondary-600">{{ selectedViewItem.name }}</p>
 
         <!-- Content Section (Full Width) -->
         <div class="flex flex-col gap-1" v-if="selectedViewItem.content">
-          <span class="text-sm text-secondary-500">{{ $t('task.fields.content') }}</span>
-          <span class="text-base whitespace-pre-wrap">{{ selectedViewItem.content }}</span>
+          <span class="text-sm text-primary-950 whitespace-pre-wrap">{{ selectedViewItem.content }}</span>
         </div>
 
         <!-- Two Column Grid for Other Information -->
         <div class="grid grid-cols-2 gap-4">
           <div class="flex flex-col gap-1">
             <span class="text-sm text-secondary-500">{{ $t('task.fields.status') }}</span>
-            <span class="text-base">
+            <span class="text-sm text-primary-950">
               <span v-if="selectedViewItem.doneAt" class="text-green-600">
                 {{ $t('task.status.done') }}
               </span>
@@ -104,41 +156,45 @@
 
           <div class="flex flex-col gap-1">
             <span class="text-sm text-secondary-500">{{ $t('task.fields.type') }}</span>
-            <span class="text-base">{{ $t(`task.types.${selectedViewItem.type}`) }}</span>
+            <span class="text-sm text-primary-950">{{ $t(`task.types.${selectedViewItem.type}`) }}</span>
           </div>
 
           <div class="flex flex-col gap-1" v-if="selectedViewItem.startAt">
             <span class="text-sm text-secondary-500">{{ $t('task.fields.startDate') }}</span>
-            <span class="text-base">{{ new Date(selectedViewItem.startAt).toLocaleString() }}</span>
+            <span class="text-sm text-primary-950">{{ new Date(selectedViewItem.startAt).toLocaleString() }}</span>
           </div>
 
           <div class="flex flex-col gap-1" v-if="selectedViewItem.dueDateAt">
             <span class="text-sm text-secondary-500">{{ $t('task.fields.dueDate') }}</span>
-            <span class="text-base">{{ new Date(selectedViewItem.dueDateAt).toLocaleString() }}</span>
+            <span class="text-sm text-primary-950">{{ new Date(selectedViewItem.dueDateAt).toLocaleString() }}</span>
           </div>
 
-          <div class="flex flex-col gap-1" v-if="hasRightUserAllView">
+          <div class="col-span-2 flex flex-col gap-1" v-if="hasRightUserAllView">
             <span class="text-sm text-secondary-500">{{ $t('task.fields.user') }}</span>
-            <span class="text-base">{{ getUserName(selectedViewItem.userId) }}</span>
+            <span class="text-sm text-primary-950">{{ getUserName(selectedViewItem.userId) }}</span>
           </div>
 
           <div class="flex flex-col gap-1" v-if="hasRightContactAllView && selectedViewItem.companyId">
             <span class="text-sm text-secondary-500">{{ $t('task.fields.company') }}</span>
-            <NuxtLink :to="`/contact/company/${selectedViewItem.companyId}`" class="text-base text-primary-600 hover:underline">
-              {{ getCompanyName(selectedViewItem.companyId) }}
-            </NuxtLink>
+            <div>
+              <molecule-link-button
+                :to="`/contact/company/${selectedViewItem.companyId}`"
+                :title="getCompanyName(selectedViewItem.companyId)" />
+            </div>
           </div>
 
           <div class="flex flex-col gap-1" v-if="hasRightContactAllView && selectedViewItem.personId">
             <span class="text-sm text-secondary-500">{{ $t('task.fields.person') }}</span>
-            <NuxtLink :to="`/contact/person/${selectedViewItem.personId}`" class="text-base text-primary-600 hover:underline">
-              {{ getPersonName(selectedViewItem.personId) }}
-            </NuxtLink>
+            <div>
+              <molecule-link-button
+                :to="`/contact/person/${selectedViewItem.personId}`"
+                :title="getPersonName(selectedViewItem.personId)" />
+            </div>
           </div>
 
           <div class="flex flex-col gap-1" v-if="selectedViewItem.doneAt">
             <span class="text-sm text-secondary-500">{{ $t('task.fields.doneDate') }}</span>
-            <span class="text-base">{{ new Date(selectedViewItem.doneAt).toLocaleString() }}</span>
+            <span class="text-sm text-primary-950">{{ new Date(selectedViewItem.doneAt).toLocaleString() }}</span>
           </div>
         </div>
 
@@ -164,60 +220,6 @@
       </div>
     </Dialog>
 
-    <!-- Edit Dialog -->
-    <Dialog
-      :open="openEditDialog === true"
-      @update:open="openEditDialog = $event">
-      <form
-        class="flex flex-col gap-2"
-        @submit.prevent="onUpdate"
-        v-if="selectedEditItem">
-        <p class="text-lg text-secondary-600">{{ $t('task.edit.title', { name: selectedEditItem.name }) }}</p>
-
-        <atom-select
-          :required="true"
-          :title="$t('task.fields.type')"
-          v-model="editForm.type"
-          :items="taskTypeOptions"/>
-
-        <atom-input
-          :required="true"
-          type="text"
-          :title="$t('task.fields.name')"
-          v-model="editForm.name"/>
-
-        <atom-textarea
-          :title="$t('task.fields.content')"
-          v-model="editForm.content"/>
-
-        <div class="grid grid-cols-2 gap-2">
-          <atom-input
-            type="datetime-local"
-            :title="$t('task.fields.startDate')"
-            v-model="editForm.startAt"/>
-
-          <atom-input
-            type="datetime-local"
-            :title="$t('task.fields.dueDate')"
-            v-model="editForm.dueDateAt"/>
-        </div>
-
-        <atom-select
-          :required="true"
-          :title="$t('task.fields.status')"
-          v-model="editForm.isDone"
-          :items="taskStatusOptions"/>
-
-        <div class="flex justify-end mt-2">
-          <atom-button
-            type="submit"
-            icon="save"
-            :title="$t('general.save')">
-          </atom-button>
-        </div>
-      </form>
-    </Dialog>
-
     <!-- Delete Confirmation Dialog -->
     <SimpleAlertDialog
       :open="selectedDeleteItem !== null"
@@ -228,6 +230,30 @@
       @submit="onDelete"
       @cancel="selectedDeleteItem = null"
       @update:open="!$event && (selectedDeleteItem = null)"/>
+
+    <!-- User Search Dialog -->
+    <DialogEntitySearch
+      :open="openUserSearchDialog"
+      :title="$t('task.selectUser')"
+      :search-fn="searchUsers"
+      @select="(id) => { taskForm.userId = id; openUserSearchDialog = false; }"
+      @close="openUserSearchDialog = false"/>
+
+    <!-- Company Search Dialog -->
+    <DialogEntitySearch
+      :open="openCompanySearchDialog"
+      :title="$t('task.selectCompany')"
+      :search-fn="searchCompanies"
+      @select="(id) => { taskForm.companyId = id; openCompanySearchDialog = false; }"
+      @close="openCompanySearchDialog = false"/>
+
+    <!-- Person Search Dialog -->
+    <DialogEntitySearch
+      :open="openPersonSearchDialog"
+      :title="$t('task.selectPerson')"
+      :search-fn="searchPersons"
+      @select="(id) => { taskForm.personId = id; openPersonSearchDialog = false; }"
+      @close="openPersonSearchDialog = false"/>
 
   </Page>
 
@@ -310,11 +336,19 @@ const personsCache = ref<Map<string, { firstName: string; lastName: string }>>(n
 const getUserName = (userId: string): string => {
   if (userId === user?.id) return $t('task.currentUser');
   const cachedUser = usersCache.value.get(userId);
-  if (cachedUser) return `${cachedUser.firstName} ${cachedUser.lastName}`;
+  if (cachedUser) {
+    const firstName = cachedUser.firstName || '';
+    const lastName = cachedUser.lastName || '';
+    const fullName = `${firstName} ${lastName}`.trim();
+    return fullName || userId;
+  }
 
   // Fetch user data asynchronously
   $fetch(`/api/user/${userId}`).then((userData: any) => {
-    usersCache.value.set(userId, { firstName: userData.firstName, lastName: userData.lastName });
+    usersCache.value.set(userId, {
+      firstName: userData.firstName || '',
+      lastName: userData.lastName || ''
+    });
   }).catch(() => {});
 
   return $t('general.loading');
@@ -338,11 +372,19 @@ const getCompanyName = (companyId: string | null): string => {
 const getPersonName = (personId: string | null): string => {
   if (!personId) return '-';
   const cachedPerson = personsCache.value.get(personId);
-  if (cachedPerson) return `${cachedPerson.firstName} ${cachedPerson.lastName}`;
+  if (cachedPerson) {
+    const firstName = cachedPerson.firstName || '';
+    const lastName = cachedPerson.lastName || '';
+    const fullName = `${firstName} ${lastName}`.trim();
+    return fullName || personId;
+  }
 
   // Fetch person data asynchronously
   $fetch(`/api/person/${personId}`).then((personData: any) => {
-    personsCache.value.set(personId, { firstName: personData.firstName, lastName: personData.lastName });
+    personsCache.value.set(personId, {
+      firstName: personData.firstname || '',
+      lastName: personData.familyname || ''
+    });
   }).catch(() => {});
 
   return $t('general.loading');
@@ -372,43 +414,76 @@ const parseDateTimeLocal = (localString: string): string | null => {
   return new Date(localString).toISOString();
 };
 
-// Create dialog state
-const openCreateDialog = ref(false);
-const defaultCreateForm = {
+// Task form dialog state (combined create/edit)
+const openTaskFormDialog = ref(false);
+const taskFormMode = ref<'create' | 'edit'>('create');
+const selectedEditItem = ref<TaskViewModel | null>(null);
+const defaultTaskForm = {
   type: 'ACTION' as const,
   name: '',
   content: '',
   startAt: '',
   dueDateAt: '',
   isDone: 'open',
+  userId: user?.id ?? null,
+  companyId: null as string | null,
+  personId: null as string | null,
 };
-const createForm = reactive({ ...defaultCreateForm });
+const taskForm = reactive({ ...defaultTaskForm });
 
 // View dialog state
 const openViewDialog = ref(false);
 const selectedViewItem = ref<TaskViewModel | null>(null);
 
-// Edit dialog state
-const openEditDialog = ref(false);
-const selectedEditItem = ref<TaskViewModel | null>(null);
-const editForm = reactive({
-  type: 'ACTION',
-  name: '',
-  content: '',
-  startAt: '',
-  dueDateAt: '',
-  isDone: 'open',
-});
-
 // Delete state
 const selectedDeleteItem = ref<TaskViewModel | null>(null);
+
+// Search dialog states (unified for both create and edit)
+const openUserSearchDialog = ref(false);
+const openCompanySearchDialog = ref(false);
+const openPersonSearchDialog = ref(false);
+
+// Search functions
+const searchUsers = async (query: string) => {
+  const results = await $fetch<any[]>(`/api/user?search=${query}&take=20`);
+  return results.map(u => {
+    const firstName = u.firstName || '';
+    const lastName = u.lastName || '';
+    const fullName = `${firstName} ${lastName}`.trim() || u.email || u.id;
+    return {
+      id: u.id,
+      title: fullName,
+      subtitle: u.email
+    };
+  }).sort((a, b) => a.title.localeCompare(b.title));
+};
+
+const searchCompanies = async (query: string) => {
+  const results = await $fetch<any[]>(`/api/company?search=${query}&take=20`);
+  return results.map(c => ({
+    id: c.id,
+    title: companyDisplayName(c),
+    subtitle: c.customerId ?? null
+  })).sort((a, b) => a.title.localeCompare(b.title));
+};
+
+const searchPersons = async (query: string) => {
+  const results = await $fetch<any[]>(`/api/person?search=${query}&take=20`);
+  return results.map(p => ({
+    id: p.id,
+    title: personDisplayName(p),
+    subtitle: p.externalId ?? null
+  })).sort((a, b) => a.title.localeCompare(b.title));
+};
 
 // Action handlers
 const actionHandler = async (key: string, item?: TaskViewModel | null) => {
   switch (key) {
     case 'openAdd':
-      Object.assign(createForm, defaultCreateForm);
-      openCreateDialog.value = true;
+      taskFormMode.value = 'create';
+      Object.assign(taskForm, defaultTaskForm);
+      selectedEditItem.value = null;
+      openTaskFormDialog.value = true;
       break;
     case 'openView':
       if (!item) return;
@@ -417,14 +492,18 @@ const actionHandler = async (key: string, item?: TaskViewModel | null) => {
       break;
     case 'openEdit':
       if (!item) return;
+      taskFormMode.value = 'edit';
       selectedEditItem.value = item;
-      editForm.type = item.type;
-      editForm.name = item.name;
-      editForm.content = item.content ?? '';
-      editForm.startAt = formatDateTimeLocal(item.startAt);
-      editForm.dueDateAt = formatDateTimeLocal(item.dueDateAt);
-      editForm.isDone = item.doneAt ? 'done' : 'open';
-      openEditDialog.value = true;
+      taskForm.type = item.type;
+      taskForm.name = item.name;
+      taskForm.content = item.content ?? '';
+      taskForm.startAt = formatDateTimeLocal(item.startAt);
+      taskForm.dueDateAt = formatDateTimeLocal(item.dueDateAt);
+      taskForm.isDone = item.doneAt ? 'done' : 'open';
+      taskForm.userId = item.userId;
+      taskForm.companyId = item.companyId;
+      taskForm.personId = item.personId;
+      openTaskFormDialog.value = true;
       break;
     case 'requestDelete':
       selectedDeleteItem.value = item ?? null;
@@ -436,27 +515,57 @@ const actionHandler = async (key: string, item?: TaskViewModel | null) => {
   }
 };
 
-const onCreate = async () => {
-  try {
-    const createdItem = await create({
-      type: createForm.type,
-      name: createForm.name,
-      content: createForm.content || null,
-      startAt: parseDateTimeLocal(createForm.startAt),
-      dueDateAt: parseDateTimeLocal(createForm.dueDateAt),
-      doneAt: createForm.isDone === 'done' ? new Date().toISOString() : null,
-    } as any);
+const onSubmitTaskForm = async () => {
+  if (taskFormMode.value === 'create') {
+    try {
+      const createdItem = await create({
+        type: taskForm.type,
+        name: taskForm.name,
+        content: taskForm.content || null,
+        startAt: parseDateTimeLocal(taskForm.startAt),
+        dueDateAt: parseDateTimeLocal(taskForm.dueDateAt),
+        doneAt: taskForm.isDone === 'done' ? new Date().toISOString() : null,
+        userId: taskForm.userId ?? user?.id,
+        companyId: taskForm.companyId,
+        personId: taskForm.personId,
+      } as any);
 
-    if (createdItem === null) {
-      return toast.add({ type: 'error', title: $t('task.createError', { name: createForm.name }) });
+      if (createdItem === null) {
+        return toast.add({ type: 'error', title: $t('task.createError', { name: taskForm.name }) });
+      }
+
+      toast.add({ type: 'success', title: $t('task.createSuccess', { name: createdItem.name }) });
+      Object.assign(taskForm, defaultTaskForm);
+      openTaskFormDialog.value = false;
+      await loadItems();
+    } catch (e) {
+      toast.add({ type: 'error', title: $t('task.createError', { name: taskForm.name }) });
     }
+  } else {
+    // Edit mode
+    try {
+      if (!selectedEditItem.value) return;
 
-    toast.add({ type: 'success', title: $t('task.createSuccess', { name: createdItem.name }) });
-    Object.assign(createForm, defaultCreateForm);
-    openCreateDialog.value = false;
-    await loadItems();
-  } catch (e) {
-    toast.add({ type: 'error', title: $t('task.createError', { name: createForm.name }) });
+      await upsert({
+        ...selectedEditItem.value,
+        type: taskForm.type,
+        name: taskForm.name,
+        content: taskForm.content || null,
+        startAt: parseDateTimeLocal(taskForm.startAt),
+        dueDateAt: parseDateTimeLocal(taskForm.dueDateAt),
+        doneAt: taskForm.isDone === 'done' ? (selectedEditItem.value.doneAt || new Date().toISOString()) : null,
+        userId: taskForm.userId ?? selectedEditItem.value.userId,
+        companyId: taskForm.companyId,
+        personId: taskForm.personId,
+      });
+
+      toast.add({ type: 'success', title: $t('task.edit.toast.success') });
+      openTaskFormDialog.value = false;
+      selectedEditItem.value = null;
+      await loadItems();
+    } catch (e) {
+      toast.add({ type: 'error', title: $t('task.edit.toast.error') });
+    }
   }
 };
 
@@ -464,6 +573,14 @@ const openEditFromView = () => {
   if (!selectedViewItem.value) return;
   openViewDialog.value = false;
   actionHandler('openEdit', selectedViewItem.value);
+};
+
+const onCancelEdit = () => {
+  openTaskFormDialog.value = false;
+  if (selectedEditItem.value) {
+    selectedViewItem.value = selectedEditItem.value;
+    openViewDialog.value = true;
+  }
 };
 
 const requestDeleteFromView = () => {
@@ -491,29 +608,6 @@ const toggleTaskDone = async (item: TaskViewModel) => {
     await loadItems();
   } catch (e) {
     toast.add({ type: 'error', title: $t('task.toggleDone.error') });
-  }
-};
-
-const onUpdate = async () => {
-  try {
-    if (!selectedEditItem.value) return;
-
-    await upsert({
-      ...selectedEditItem.value,
-      type: editForm.type,
-      name: editForm.name,
-      content: editForm.content || null,
-      startAt: parseDateTimeLocal(editForm.startAt),
-      dueDateAt: parseDateTimeLocal(editForm.dueDateAt),
-      doneAt: editForm.isDone === 'done' ? (selectedEditItem.value.doneAt || new Date().toISOString()) : null,
-    });
-
-    toast.add({ type: 'success', title: $t('task.edit.toast.success') });
-    openEditDialog.value = false;
-    selectedEditItem.value = null;
-    await loadItems();
-  } catch (e) {
-    toast.add({ type: 'error', title: $t('task.edit.toast.error') });
   }
 };
 

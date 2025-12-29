@@ -116,9 +116,9 @@ const onClickItem = (item: IMenuItem) => {
 
 const mainMenuItems = computed<IMenuItem[]>(() => ([
   { title: $t('layout.aside.dashboard'), icon: 'gauge', to: '/dashboard' },
+  { title: $t('layout.aside.tasks'), icon: 'list-checks', to: '/task', hide: !(user?.rights.includes('task.all.view') || user?.rights.includes('task.own.view')) },
   { title: $t('layout.aside.companies'), icon: 'building', to: '/company', hide: !user?.rights.includes('contact.all.view') },
   { title: $t('layout.aside.persons'), icon: 'users-round', to: '/person', hide: !user?.rights.includes('contact.all.view') },
-  { title: $t('layout.aside.tasks'), icon: 'list-checks', to: '/task', hide: !(user?.rights.includes('task.all.view') || user?.rights.includes('task.own.view')) },
   // { title: $t('layout.aside.timeTrackings'), icon: 'timer', to: '/time-tracking', hide: !(user?.rights.includes('timetracking.all.view') || user?.rights.includes('timetracking.own.view')) },
 ]));
 

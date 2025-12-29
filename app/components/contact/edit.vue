@@ -213,15 +213,16 @@
     </div>
   </page-section-box>
 
-  <contact-person-company-relation-search-dialog
+  <DialogEntitySearch
     :open="openSearchPersonCompanyRelationDialog"
-    :contact-type="(contactType === 'company') ? 'person' : 'company'"
-    @select="(() => {
-      updatePersonCompanyRelationItems({ id: $event, role: null });
+    :title="$t(`contactEdit.personCompanyRelations.searchDialog.${(contactType === 'company') ? 'person' : 'company'}.title`)"
+    :search-fn="searchPersonCompanyRelation"
+    @select="(id) => {
+      updatePersonCompanyRelationItems({ id, role: null });
       openSearchPersonCompanyRelationDialog = false;
-    })()"
+    }"
     @close="openSearchPersonCompanyRelationDialog = false">
-  </contact-person-company-relation-search-dialog>
+  </DialogEntitySearch>
 
 </template>
 
@@ -295,6 +296,22 @@ const updatePersonCompanyRelationItems = (value: { id: string, role: string | nu
   } else {
     personCompanyRelationItems.value.push(value);
   }
+};
+
+// Search function for person/company relations
+const searchPersonCompanyRelation = async (query: string) => {
+  const searchType = (contactType.value === 'company') ? 'person' : 'company';
+  const results = await $fetch<any[]>(`/api/${searchType}?search=${query}&take=20`);
+
+  return results
+    .map(o => ({
+      id: o.id,
+      title: (searchType === 'company')
+        ? companyDisplayName(o)
+        : personDisplayName(o),
+      subtitle: o.customerId ?? null,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
 };
 const deletePersonCompanyRelationItem = (id: string) => {
   personCompanyRelationItems.value = personCompanyRelationItems.value.filter(o => (o.id !== id));

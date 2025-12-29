@@ -18,12 +18,9 @@
         v-if="!hasRole">
       </span>
     </div>
-    <NuxtLink
-      class="group flex items-center justify-center gap-1 text-sm text-primary-950 p-2 rounded-lg transition-colors overflow-hidden hover:bg-secondary-100"
-      :to="to">
-      <span v-html="name"></span>
-      <atom-icon icon="arrow-right" class="-mr-6 group-hover:mr-0 opacity-80 !text-sm transition-all"></atom-icon>
-    </NuxtLink>
+    <molecule-link-button
+      :to="to"
+      :title="name" />
   </div>
 
 </template>

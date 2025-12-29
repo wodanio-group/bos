@@ -231,6 +231,9 @@ task:
     toast:
       success: "Task updated successfully."
       error: "Error while update task."
+  selectUser: "Select User"
+  selectCompany: "Select Company"
+  selectPerson: "Select Person"
   toggleDone:
     title: "Toggle Done/Open"
     setDone: "Set done"
