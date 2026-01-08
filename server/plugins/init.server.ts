@@ -6,7 +6,9 @@ export default defineNitroPlugin(async (nitroApp) => {
 
   const options: { key: OptionKey, value: OptionValue }[] = [
     { key: 'CUSTOMER_ID_COUNTER', value: { counter: 100001 } },
-    { key: 'CUSTOMER_ID_SCHEMA', value: { schema: 'C%YYYY%COUNTER' } }
+    { key: 'CUSTOMER_ID_SCHEMA', value: { schema: 'C%YYYY%COUNTER' } },
+    { key: 'QUOTE_ID_COUNTER', value: { counter: 10001 } },
+    { key: 'QUOTE_ID_SCHEMA', value: { schema: 'Q%YYYY%MM%COUNTER' } },
   ];
 
   const countries: CountryViewModel[] = [

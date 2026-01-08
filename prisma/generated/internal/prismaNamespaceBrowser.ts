@@ -67,7 +67,9 @@ export const ModelName = {
   LeadStatus: 'LeadStatus',
   Lead: 'Lead',
   OpportunityStage: 'OpportunityStage',
-  Opportunity: 'Opportunity'
+  Opportunity: 'Opportunity',
+  Quote: 'Quote',
+  QuoteItem: 'QuoteItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -334,6 +336,46 @@ export const OpportunityScalarFieldEnum = {
 } as const
 
 export type OpportunityScalarFieldEnum = (typeof OpportunityScalarFieldEnum)[keyof typeof OpportunityScalarFieldEnum]
+
+
+export const QuoteScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  quoteId: 'quoteId',
+  quoteDate: 'quoteDate',
+  quoteValidUntil: 'quoteValidUntil',
+  title: 'title',
+  introText: 'introText',
+  outroText: 'outroText',
+  subtotal: 'subtotal',
+  tax: 'tax',
+  total: 'total',
+  companyId: 'companyId',
+  ownerId: 'ownerId'
+} as const
+
+export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
+
+
+export const QuoteItemScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  quotePosition: 'quotePosition',
+  title: 'title',
+  description: 'description',
+  quantity: 'quantity',
+  unit: 'unit',
+  price: 'price',
+  taxRate: 'taxRate',
+  subtotal: 'subtotal',
+  tax: 'tax',
+  total: 'total',
+  quoteId: 'quoteId'
+} as const
+
+export type QuoteItemScalarFieldEnum = (typeof QuoteItemScalarFieldEnum)[keyof typeof QuoteItemScalarFieldEnum]
 
 
 export const SortOrder = {

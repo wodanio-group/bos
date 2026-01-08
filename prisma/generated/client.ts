@@ -124,3 +124,13 @@ export type OpportunityStage = Prisma.OpportunityStageModel
  * 
  */
 export type Opportunity = Prisma.OpportunityModel
+/**
+ * Model Quote
+ * 
+ */
+export type Quote = Prisma.QuoteModel
+/**
+ * Model QuoteItem
+ * 
+ */
+export type QuoteItem = Prisma.QuoteItemModel

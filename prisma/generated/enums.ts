@@ -20,7 +20,9 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 export const OptionKey = {
   CUSTOMER_ID_COUNTER: 'CUSTOMER_ID_COUNTER',
-  CUSTOMER_ID_SCHEMA: 'CUSTOMER_ID_SCHEMA'
+  CUSTOMER_ID_SCHEMA: 'CUSTOMER_ID_SCHEMA',
+  QUOTE_ID_COUNTER: 'QUOTE_ID_COUNTER',
+  QUOTE_ID_SCHEMA: 'QUOTE_ID_SCHEMA'
 } as const
 
 export type OptionKey = (typeof OptionKey)[keyof typeof OptionKey]
