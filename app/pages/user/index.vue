@@ -27,10 +27,12 @@
     <Dialog
       :open="selectedEditItem !== undefined"
       @update:open="actionHandler($event ? '' : 'closeEdit')">
+      <template #headerLeft>
+        <p class="text-lg text-secondary-600">{{ $t((selectedEditItem === null) ? 'user.editTitleAdd' : 'user.editTitleEdit', { name: selectedEditItem?.displayName ?? selectedEditItem?.email ?? '?' }) }}</p>
+      </template>
       <form
         class="flex flex-col gap-2"
         @submit.prevent="actionHandler('edit')">
-        <p class="text-lg text-secondary-600">{{ $t((selectedEditItem === null) ? 'user.editTitleAdd' : 'user.editTitleEdit', { name: selectedEditItem?.displayName ?? selectedEditItem?.email ?? '?' }) }}</p>
         <atom-input 
           :required="true"
           type="email"

@@ -26,12 +26,14 @@ export type AggregateOption = {
 
 export type OptionMinAggregateOutputType = {
   key: $Enums.OptionKey | null
+  public: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type OptionMaxAggregateOutputType = {
   key: $Enums.OptionKey | null
+  public: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -39,6 +41,7 @@ export type OptionMaxAggregateOutputType = {
 export type OptionCountAggregateOutputType = {
   key: number
   value: number
+  public: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -47,12 +50,14 @@ export type OptionCountAggregateOutputType = {
 
 export type OptionMinAggregateInputType = {
   key?: true
+  public?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type OptionMaxAggregateInputType = {
   key?: true
+  public?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -60,6 +65,7 @@ export type OptionMaxAggregateInputType = {
 export type OptionCountAggregateInputType = {
   key?: true
   value?: true
+  public?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -140,6 +146,7 @@ export type OptionGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type OptionGroupByOutputType = {
   key: $Enums.OptionKey
   value: runtime.JsonValue
+  public: boolean
   createdAt: Date
   updatedAt: Date
   _count: OptionCountAggregateOutputType | null
@@ -168,6 +175,7 @@ export type OptionWhereInput = {
   NOT?: Prisma.OptionWhereInput | Prisma.OptionWhereInput[]
   key?: Prisma.EnumOptionKeyFilter<"Option"> | $Enums.OptionKey
   value?: Prisma.JsonFilter<"Option">
+  public?: Prisma.BoolFilter<"Option"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Option"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Option"> | Date | string
 }
@@ -175,6 +183,7 @@ export type OptionWhereInput = {
 export type OptionOrderByWithRelationInput = {
   key?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  public?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -185,6 +194,7 @@ export type OptionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.OptionWhereInput[]
   NOT?: Prisma.OptionWhereInput | Prisma.OptionWhereInput[]
   value?: Prisma.JsonFilter<"Option">
+  public?: Prisma.BoolFilter<"Option"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Option"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Option"> | Date | string
 }, "key">
@@ -192,6 +202,7 @@ export type OptionWhereUniqueInput = Prisma.AtLeast<{
 export type OptionOrderByWithAggregationInput = {
   key?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  public?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.OptionCountOrderByAggregateInput
@@ -205,6 +216,7 @@ export type OptionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.OptionScalarWhereWithAggregatesInput | Prisma.OptionScalarWhereWithAggregatesInput[]
   key?: Prisma.EnumOptionKeyWithAggregatesFilter<"Option"> | $Enums.OptionKey
   value?: Prisma.JsonWithAggregatesFilter<"Option">
+  public?: Prisma.BoolWithAggregatesFilter<"Option"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Option"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Option"> | Date | string
 }
@@ -212,6 +224,7 @@ export type OptionScalarWhereWithAggregatesInput = {
 export type OptionCreateInput = {
   key: $Enums.OptionKey
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  public?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -219,6 +232,7 @@ export type OptionCreateInput = {
 export type OptionUncheckedCreateInput = {
   key: $Enums.OptionKey
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  public?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -226,6 +240,7 @@ export type OptionUncheckedCreateInput = {
 export type OptionUpdateInput = {
   key?: Prisma.EnumOptionKeyFieldUpdateOperationsInput | $Enums.OptionKey
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  public?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -233,6 +248,7 @@ export type OptionUpdateInput = {
 export type OptionUncheckedUpdateInput = {
   key?: Prisma.EnumOptionKeyFieldUpdateOperationsInput | $Enums.OptionKey
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  public?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -240,6 +256,7 @@ export type OptionUncheckedUpdateInput = {
 export type OptionCreateManyInput = {
   key: $Enums.OptionKey
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  public?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -247,6 +264,7 @@ export type OptionCreateManyInput = {
 export type OptionUpdateManyMutationInput = {
   key?: Prisma.EnumOptionKeyFieldUpdateOperationsInput | $Enums.OptionKey
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  public?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -254,6 +272,7 @@ export type OptionUpdateManyMutationInput = {
 export type OptionUncheckedUpdateManyInput = {
   key?: Prisma.EnumOptionKeyFieldUpdateOperationsInput | $Enums.OptionKey
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  public?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -261,18 +280,21 @@ export type OptionUncheckedUpdateManyInput = {
 export type OptionCountOrderByAggregateInput = {
   key?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  public?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type OptionMaxOrderByAggregateInput = {
   key?: Prisma.SortOrder
+  public?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type OptionMinOrderByAggregateInput = {
   key?: Prisma.SortOrder
+  public?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -281,11 +303,16 @@ export type EnumOptionKeyFieldUpdateOperationsInput = {
   set?: $Enums.OptionKey
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 
 
 export type OptionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   key?: boolean
   value?: boolean
+  public?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["option"]>
@@ -293,6 +320,7 @@ export type OptionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type OptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   key?: boolean
   value?: boolean
+  public?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["option"]>
@@ -300,6 +328,7 @@ export type OptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type OptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   key?: boolean
   value?: boolean
+  public?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["option"]>
@@ -307,11 +336,12 @@ export type OptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type OptionSelectScalar = {
   key?: boolean
   value?: boolean
+  public?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"key" | "value" | "createdAt" | "updatedAt", ExtArgs["result"]["option"]>
+export type OptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"key" | "value" | "public" | "createdAt" | "updatedAt", ExtArgs["result"]["option"]>
 
 export type $OptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Option"
@@ -319,6 +349,7 @@ export type $OptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     key: $Enums.OptionKey
     value: runtime.JsonValue
+    public: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["option"]>
@@ -746,6 +777,7 @@ export interface Prisma__OptionClient<T, Null = never, ExtArgs extends runtime.T
 export interface OptionFieldRefs {
   readonly key: Prisma.FieldRef<"Option", 'OptionKey'>
   readonly value: Prisma.FieldRef<"Option", 'Json'>
+  readonly public: Prisma.FieldRef<"Option", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Option", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Option", 'DateTime'>
 }

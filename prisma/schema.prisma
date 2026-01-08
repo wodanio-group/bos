@@ -55,11 +55,18 @@ enum OptionKey {
   CUSTOMER_ID_SCHEMA
   QUOTE_ID_COUNTER
   QUOTE_ID_SCHEMA
+  QUOTE_DEFAULT_TITLE
+  QUOTE_DEFAULT_INTRO_TEXT
+  QUOTE_DEFAULT_OUTRO_TEXT
+  SYSTEM_CURRENCY
+  SYSTEM_UNITS
+  SYSTEM_TAX_RATES
 }
 
 model Option {
   key         OptionKey   @id
   value       Json        @default("{}")
+  public      Boolean     @default(false)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -372,10 +379,18 @@ model Opportunity {
 
 // --- Quote 
 
+enum QuoteStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+}
+
 model Quote {
   id                      String                      @id @default(uuid())
   createdAt               DateTime                    @default(now())
   updatedAt               DateTime                    @updatedAt
+  status                  QuoteStatus                 @default(DRAFT)
   quoteId                 String                      @unique
   quoteDate               DateTime
   quoteValidUntil         DateTime?

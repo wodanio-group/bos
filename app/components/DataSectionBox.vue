@@ -43,7 +43,7 @@
         icon="plus"
         :title="$t('user.add')"
         @click="emit('action', addActionKey ?? 'add')"
-        v-if="hideAddButto !== true">
+        v-if="hideAddButton !== true">
       </atom-button>
     </template>
 
@@ -103,6 +103,7 @@
           <p class="text-center text-secondary-700 text-sm">{{ $t('general.noItemsFound') }}</p>
         </div>
         <div
+          v-if="hidePagination !== true"
           class="px-4 py-2">
           <Pagination
             :isFirst="paginationIsFirst"
@@ -155,8 +156,9 @@ const props = defineProps<{
   paginationIsFirst?: boolean,
   paginationIsLast?: boolean,
   paginationState?: { take: number, page: number },
+  hidePagination?: boolean,
   hideSearch?: boolean,
-  hideAddButto?: boolean,
+  hideAddButton?: boolean,
 }>();
 
 const emit = defineEmits<{

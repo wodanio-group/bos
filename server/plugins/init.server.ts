@@ -9,6 +9,18 @@ export default defineNitroPlugin(async (nitroApp) => {
     { key: 'CUSTOMER_ID_SCHEMA', value: { schema: 'C%YYYY%COUNTER' } },
     { key: 'QUOTE_ID_COUNTER', value: { counter: 10001 } },
     { key: 'QUOTE_ID_SCHEMA', value: { schema: 'Q%YYYY%MM%COUNTER' } },
+    { key: 'QUOTE_DEFAULT_TITLE', value: { value: 'Quote <%= quote.quoteId %>' } },
+    { key: 'QUOTE_DEFAULT_INTRO_TEXT', value: { value: 'Dear Sir or Madam,<br><br>We would like to submit the following non-binding offer to you:' } },
+    { key: 'QUOTE_DEFAULT_OUTRO_TEXT', value: { value: 'Best regards' } },
+    { key: 'SYSTEM_CURRENCY', value: { value: 'EUR' } },
+    { key: 'SYSTEM_UNITS', value: {
+      units: [ 'pcs', 'hour', 'monthly', 'annually' ],
+      default: 'pcs'
+    } },
+    { key: 'SYSTEM_TAX_RATES', value: {
+      rates: [ 0, 7, 19 ],
+      default: 19
+    } },
   ];
 
   const countries: CountryViewModel[] = [

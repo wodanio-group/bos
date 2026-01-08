@@ -25,10 +25,12 @@
     <Dialog
       :open="openCreateForm === true"
       @update:open="actionHandler($event ? 'openAdd' : 'closeAdd')">
+      <template #headerLeft>
+        <p class="text-lg text-secondary-600">{{ $t('userToken.createDialogTitle') }}</p>
+      </template>
       <form
         class="flex flex-col gap-2"
         @submit.prevent="actionHandler('create')">
-        <p class="text-lg text-secondary-600">{{ $t('userToken.createDialogTitle') }}</p>
         <atom-input
           :required="false"
           type="text"

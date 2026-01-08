@@ -28,10 +28,12 @@
     <Dialog
       :open="openCreateForm === true"
       @update:open="actionHandler($event ? 'openAdd' : 'closeAdd')">
+      <template #headerLeft>
+        <p class="text-lg text-secondary-600">{{ $t('company.createDialogTitle') }}</p>
+      </template>
       <form
         class="flex flex-col gap-2"
         @submit.prevent="actionHandler('create')">
-        <p class="text-lg text-secondary-600">{{ $t('company.createDialogTitle') }}</p>
         <atom-input 
           :required="true"
           type="text"

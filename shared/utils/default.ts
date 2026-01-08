@@ -35,3 +35,24 @@ export const filterStringExtended = (str: string | string[] | null | undefined):
   return (str.length > 0) ? str : null;
 };
 
+/**
+ * Formats a number as currency in the format "EUR 10.000,00"
+ * @param value - The numeric value to format
+ * @param currency - The currency code (default: EUR from runtime config)
+ * @returns Formatted currency string
+ */
+export const formatCurrency = (value: number | null | undefined, currency?: string): string => {
+  if (value === null || value === undefined) return '-';
+
+  // Use provided currency or default to EUR
+  const currencyCode = currency || 'EUR';
+
+  // Format the number with German locale (thousands separator: ., decimal separator: ,)
+  const formatted = new Intl.NumberFormat('de-DE', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+
+  return `${currencyCode} ${formatted}`;
+};
+

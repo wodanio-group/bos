@@ -42,6 +42,7 @@ export type QuoteMinAggregateOutputType = {
   id: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: $Enums.QuoteStatus | null
   quoteId: string | null
   quoteDate: Date | null
   quoteValidUntil: Date | null
@@ -59,6 +60,7 @@ export type QuoteMaxAggregateOutputType = {
   id: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: $Enums.QuoteStatus | null
   quoteId: string | null
   quoteDate: Date | null
   quoteValidUntil: Date | null
@@ -76,6 +78,7 @@ export type QuoteCountAggregateOutputType = {
   id: number
   createdAt: number
   updatedAt: number
+  status: number
   quoteId: number
   quoteDate: number
   quoteValidUntil: number
@@ -107,6 +110,7 @@ export type QuoteMinAggregateInputType = {
   id?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
   quoteId?: true
   quoteDate?: true
   quoteValidUntil?: true
@@ -124,6 +128,7 @@ export type QuoteMaxAggregateInputType = {
   id?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
   quoteId?: true
   quoteDate?: true
   quoteValidUntil?: true
@@ -141,6 +146,7 @@ export type QuoteCountAggregateInputType = {
   id?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
   quoteId?: true
   quoteDate?: true
   quoteValidUntil?: true
@@ -245,6 +251,7 @@ export type QuoteGroupByOutputType = {
   id: string
   createdAt: Date
   updatedAt: Date
+  status: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date
   quoteValidUntil: Date | null
@@ -285,6 +292,7 @@ export type QuoteWhereInput = {
   id?: Prisma.StringFilter<"Quote"> | string
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
+  status?: Prisma.EnumQuoteStatusFilter<"Quote"> | $Enums.QuoteStatus
   quoteId?: Prisma.StringFilter<"Quote"> | string
   quoteDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
   quoteValidUntil?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -305,6 +313,7 @@ export type QuoteOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -329,6 +338,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.QuoteWhereInput | Prisma.QuoteWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
+  status?: Prisma.EnumQuoteStatusFilter<"Quote"> | $Enums.QuoteStatus
   quoteDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
   quoteValidUntil?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   title?: Prisma.StringNullableFilter<"Quote"> | string | null
@@ -348,6 +358,7 @@ export type QuoteOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -373,6 +384,7 @@ export type QuoteScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Quote"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
+  status?: Prisma.EnumQuoteStatusWithAggregatesFilter<"Quote"> | $Enums.QuoteStatus
   quoteId?: Prisma.StringWithAggregatesFilter<"Quote"> | string
   quoteDate?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   quoteValidUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
@@ -390,6 +402,7 @@ export type QuoteCreateInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -408,6 +421,7 @@ export type QuoteUncheckedCreateInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -426,6 +440,7 @@ export type QuoteUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -444,6 +459,7 @@ export type QuoteUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -462,6 +478,7 @@ export type QuoteCreateManyInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -479,6 +496,7 @@ export type QuoteUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -494,6 +512,7 @@ export type QuoteUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -521,6 +540,7 @@ export type QuoteCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrder
@@ -544,6 +564,7 @@ export type QuoteMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrder
@@ -561,6 +582,7 @@ export type QuoteMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrder
@@ -669,6 +691,10 @@ export type QuoteUncheckedUpdateManyWithoutCompanyNestedInput = {
   deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
 }
 
+export type EnumQuoteStatusFieldUpdateOperationsInput = {
+  set?: $Enums.QuoteStatus
+}
+
 export type QuoteCreateNestedOneWithoutQuoteItemsInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutQuoteItemsInput, Prisma.QuoteUncheckedCreateWithoutQuoteItemsInput>
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutQuoteItemsInput
@@ -687,6 +713,7 @@ export type QuoteCreateWithoutOwnerInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -704,6 +731,7 @@ export type QuoteUncheckedCreateWithoutOwnerInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -750,6 +778,7 @@ export type QuoteScalarWhereInput = {
   id?: Prisma.StringFilter<"Quote"> | string
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
+  status?: Prisma.EnumQuoteStatusFilter<"Quote"> | $Enums.QuoteStatus
   quoteId?: Prisma.StringFilter<"Quote"> | string
   quoteDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
   quoteValidUntil?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -767,6 +796,7 @@ export type QuoteCreateWithoutCompanyInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -784,6 +814,7 @@ export type QuoteUncheckedCreateWithoutCompanyInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -827,6 +858,7 @@ export type QuoteCreateWithoutQuoteItemsInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -844,6 +876,7 @@ export type QuoteUncheckedCreateWithoutQuoteItemsInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -877,6 +910,7 @@ export type QuoteUpdateWithoutQuoteItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -894,6 +928,7 @@ export type QuoteUncheckedUpdateWithoutQuoteItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -911,6 +946,7 @@ export type QuoteCreateManyOwnerInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -927,6 +963,7 @@ export type QuoteUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -944,6 +981,7 @@ export type QuoteUncheckedUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -961,6 +999,7 @@ export type QuoteUncheckedUpdateManyWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -977,6 +1016,7 @@ export type QuoteCreateManyCompanyInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.QuoteStatus
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
@@ -993,6 +1033,7 @@ export type QuoteUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1010,6 +1051,7 @@ export type QuoteUncheckedUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1027,6 +1069,7 @@ export type QuoteUncheckedUpdateManyWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1074,6 +1117,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   quoteId?: boolean
   quoteDate?: boolean
   quoteValidUntil?: boolean
@@ -1095,6 +1139,7 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   quoteId?: boolean
   quoteDate?: boolean
   quoteValidUntil?: boolean
@@ -1114,6 +1159,7 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   quoteId?: boolean
   quoteDate?: boolean
   quoteValidUntil?: boolean
@@ -1133,6 +1179,7 @@ export type QuoteSelectScalar = {
   id?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   quoteId?: boolean
   quoteDate?: boolean
   quoteValidUntil?: boolean
@@ -1146,7 +1193,7 @@ export type QuoteSelectScalar = {
   ownerId?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "quoteId" | "quoteDate" | "quoteValidUntil" | "title" | "introText" | "outroText" | "subtotal" | "tax" | "total" | "companyId" | "ownerId", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "status" | "quoteId" | "quoteDate" | "quoteValidUntil" | "title" | "introText" | "outroText" | "subtotal" | "tax" | "total" | "companyId" | "ownerId", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   owner?: boolean | Prisma.Quote$ownerArgs<ExtArgs>
@@ -1173,6 +1220,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     createdAt: Date
     updatedAt: Date
+    status: $Enums.QuoteStatus
     quoteId: string
     quoteDate: Date
     quoteValidUntil: Date | null
@@ -1613,6 +1661,7 @@ export interface QuoteFieldRefs {
   readonly id: Prisma.FieldRef<"Quote", 'String'>
   readonly createdAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Quote", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Quote", 'QuoteStatus'>
   readonly quoteId: Prisma.FieldRef<"Quote", 'String'>
   readonly quoteDate: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly quoteValidUntil: Prisma.FieldRef<"Quote", 'DateTime'>

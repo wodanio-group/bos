@@ -116,6 +116,7 @@ export type UserTokenScalarFieldEnum = (typeof UserTokenScalarFieldEnum)[keyof t
 export const OptionScalarFieldEnum = {
   key: 'key',
   value: 'value',
+  public: 'public',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -342,6 +343,7 @@ export const QuoteScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  status: 'status',
   quoteId: 'quoteId',
   quoteDate: 'quoteDate',
   quoteValidUntil: 'quoteValidUntil',

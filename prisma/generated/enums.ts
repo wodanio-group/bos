@@ -22,7 +22,13 @@ export const OptionKey = {
   CUSTOMER_ID_COUNTER: 'CUSTOMER_ID_COUNTER',
   CUSTOMER_ID_SCHEMA: 'CUSTOMER_ID_SCHEMA',
   QUOTE_ID_COUNTER: 'QUOTE_ID_COUNTER',
-  QUOTE_ID_SCHEMA: 'QUOTE_ID_SCHEMA'
+  QUOTE_ID_SCHEMA: 'QUOTE_ID_SCHEMA',
+  QUOTE_DEFAULT_TITLE: 'QUOTE_DEFAULT_TITLE',
+  QUOTE_DEFAULT_INTRO_TEXT: 'QUOTE_DEFAULT_INTRO_TEXT',
+  QUOTE_DEFAULT_OUTRO_TEXT: 'QUOTE_DEFAULT_OUTRO_TEXT',
+  SYSTEM_CURRENCY: 'SYSTEM_CURRENCY',
+  SYSTEM_UNITS: 'SYSTEM_UNITS',
+  SYSTEM_TAX_RATES: 'SYSTEM_TAX_RATES'
 } as const
 
 export type OptionKey = (typeof OptionKey)[keyof typeof OptionKey]
@@ -113,3 +119,13 @@ export const OpportunityRecurringUnit = {
 } as const
 
 export type OpportunityRecurringUnit = (typeof OpportunityRecurringUnit)[keyof typeof OpportunityRecurringUnit]
+
+
+export const QuoteStatus = {
+  DRAFT: 'DRAFT',
+  SENT: 'SENT',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type QuoteStatus = (typeof QuoteStatus)[keyof typeof QuoteStatus]

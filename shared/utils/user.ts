@@ -16,6 +16,7 @@ export const UserRoleRights: {
     'lead.all.view', 'lead.all.create', 'lead.all.edit', 'lead.all.delete',
     'opportunitystage.all.view', 'opportunitystage.all.create', 'opportunitystage.all.edit', 'opportunitystage.all.delete',
     'opportunity.all.view', 'opportunity.all.create', 'opportunity.all.edit', 'opportunity.all.delete',
+    'quote.all.view', 'quote.all.create', 'quote.all.edit', 'quote.all.delete',
     'pes.read', 'pes.interact', 'pes.delete',
     'timetracking.all.view', 'timetracking.all.edit', 'timetracking.all.delete',
     'contact.all.view', 'contact.all.create', 'contact.all.edit', 'contact.all.delete',
@@ -59,5 +60,9 @@ export const userTokenToViewModel = (userToken: UserToken & { user?: User }, tok
       displayName: userToken.user.displayName,
     } : undefined,
   };
+}
+
+export const userDisplayName = (user: User | UserViewModel | { displayName?: string | null; email?: string | null }): string => {
+  return user.displayName || user.email || '-';
 }
 

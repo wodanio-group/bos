@@ -1895,6 +1895,7 @@ export type UserTokenScalarFieldEnum = (typeof UserTokenScalarFieldEnum)[keyof t
 export const OptionScalarFieldEnum = {
   key: 'key',
   value: 'value',
+  public: 'public',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2121,6 +2122,7 @@ export const QuoteScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  status: 'status',
   quoteId: 'quoteId',
   quoteDate: 'quoteDate',
   quoteValidUntil: 'quoteValidUntil',
@@ -2274,6 +2276,13 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'ContactGender'
  */
 export type EnumContactGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContactGender'>
@@ -2284,13 +2293,6 @@ export type EnumContactGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'ContactGender[]'
  */
 export type ListEnumContactGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContactGender[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -2417,6 +2419,20 @@ export type EnumOpportunityStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'OpportunityStatus[]'
  */
 export type ListEnumOpportunityStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OpportunityStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteStatus'
+ */
+export type EnumQuoteStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteStatus[]'
+ */
+export type ListEnumQuoteStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteStatus[]'>
     
 
 /**

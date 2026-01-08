@@ -74,10 +74,14 @@ export type UserRole = OrmUserRole;
  *         - opportunity.all.create
  *         - opportunity.all.edit
  *         - opportunity.all.delete
+ *         - quote.all.view
+ *         - quote.all.create
+ *         - quote.all.edit
+ *         - quote.all.delete
  *       description: |
  *         Granular permission rights for role-based access control.
  *         Format: {resource}.{scope}.{action}
- *         - resource: option, user, user.token, pes, timetracking, contact, task, campaign, leadstatus, lead, opportunitystage, opportunity
+ *         - resource: option, user, user.token, pes, timetracking, contact, task, campaign, leadstatus, lead, opportunitystage, opportunity, quote
  *         - scope: all (all records), own (user's own records)
  *         - action: view, create, edit, delete, read, interact, editnoneexported
  */
@@ -93,6 +97,7 @@ export type UserRoleRight =
   | 'lead.all.view' | 'lead.all.create' | 'lead.all.edit' | 'lead.all.delete'
   | 'opportunitystage.all.view' | 'opportunitystage.all.create' | 'opportunitystage.all.edit' | 'opportunitystage.all.delete'
   | 'opportunity.all.view' | 'opportunity.all.create' | 'opportunity.all.edit' | 'opportunity.all.delete'
+  | 'quote.all.view' | 'quote.all.create' | 'quote.all.edit' | 'quote.all.delete'
   | 'pes.read' | 'pes.interact' | 'pes.delete'
   | 'timetracking.all.view' | 'timetracking.all.edit' | 'timetracking.all.delete' | 'timetracking.own.view' | 'timetracking.own.create' | 'timetracking.own.editnoneexported'
   | 'contact.all.view' | 'contact.all.create' | 'contact.all.edit' | 'contact.all.delete';

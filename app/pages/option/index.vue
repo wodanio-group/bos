@@ -6,7 +6,7 @@
       class="col-span-12"
       :items="items"
       itemClickActionKey="openEdit"
-      :showAddAction="false"
+      :hideAddButton="true"
       :fields="[
         { title: $t('general.id'), fieldName: 'key' },
         { title: $t('general.value'), fieldName: 'value', transform: (v: any) => JSON.stringify(v) },
@@ -15,17 +15,19 @@
       :actions="[
         { title: $t('general.edit'), icon: 'edit', key: 'openEdit' },
       ]"
-      :showPagination="false"
+      :hidePagination="true"
       @action="actionHandler">
     </DataSectionBox>
 
     <Dialog
       :open="selectedEditItem !== undefined"
       @update:open="actionHandler($event ? '' : 'closeEdit')">
+      <template #headerLeft>
+        <p class="text-lg text-secondary-600">{{ $t('option.editTitle', { key: selectedEditItem?.key ?? '?' }) }}</p>
+      </template>
       <form
         class="flex flex-col gap-2"
         @submit.prevent="actionHandler('edit')">
-        <p class="text-lg text-secondary-600">{{ $t('option.editTitle', { key: selectedEditItem?.key ?? '?' }) }}</p>
 
         <div class="flex flex-col gap-1">
           <label class="text-sm text-secondary-600">{{ $t('general.id') }}</label>

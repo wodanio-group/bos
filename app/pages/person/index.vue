@@ -27,10 +27,12 @@
     <Dialog
       :open="openCreateForm === true"
       @update:open="actionHandler($event ? 'openAdd' : 'closeAdd')">
+      <template #headerLeft>
+        <p class="text-lg text-secondary-600 col-span-2">{{ $t('person.createDialogTitle') }}</p>
+      </template>
       <form
         class="grid grid-cols-2 gap-2"
         @submit.prevent="actionHandler('create')">
-        <p class="text-lg text-secondary-600 col-span-2">{{ $t('person.createDialogTitle') }}</p>
         <atom-select 
           class="col-span-2"
           :title="$t('general.gender')"

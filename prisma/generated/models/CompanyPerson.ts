@@ -409,10 +409,6 @@ export type CompanyPersonUncheckedUpdateManyWithoutCompanyNestedInput = {
   deleteMany?: Prisma.CompanyPersonScalarWhereInput | Prisma.CompanyPersonScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type CompanyPersonCreateWithoutPersonInput = {
   createdAt?: Date | string
   main?: boolean
