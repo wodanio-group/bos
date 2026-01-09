@@ -1,0 +1,133 @@
+<main class="main-content">
+  <div class="content-box">
+
+    <section class="details-section">
+      <div class="billed-to">
+        <span class="address-span">
+          {{sender.addressLine}}
+        </span>
+
+        <div class="recipient-address">
+          {{#if customer.displayName}}
+            <span>{{customer.displayName}}</span>
+          {{/if}}
+          {{#if customer.address.address}}
+            <span>{{customer.address.address}}</span>
+          {{/if}}
+          {{#if customer.address.address2}}
+            <span>{{customer.address.address2}}</span>
+          {{/if}}
+          {{#if customer.address.address3}}
+            <span>{{customer.address.address3}}</span>
+          {{/if}}
+          {{#if customer.address.address4}}
+            <span>{{customer.address.address4}}</span>
+          {{/if}}
+          {{#if (or customer.address.zipCode customer.address.city)}}
+            <span>{{customer.address.zipCode}} {{customer.address.city}}</span>
+          {{/if}}
+          {{#if customer.address.countryDisplayName}}
+            <span>{{customer.address.countryDisplayName}}</span>
+          {{/if}}
+        </div>
+      </div>
+      <div class="invoice-details-table">
+        <div class="detail-item main-detail">
+          <span class="detail-label">Angebots-Nr.</span>
+          <span class="detail-value">{{quote.quoteId}}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Angebotsdatum</span>
+          <span class="detail-value">{{formatDate quote.quoteDate}}</span>
+        </div>
+
+        {{#if quote.quoteValidUntil}}
+        <div class="detail-item detail-item-bottom-margin">
+          <span class="detail-label">Gültig bis</span>
+          <span class="detail-value">{{formatDate quote.quoteValidUntil}}</span>
+        </div>
+        {{/if}}
+
+        {{#if customer.customerId}}
+        <div class="detail-item">
+          <span class="detail-label">Kundennummer</span>
+          <span class="detail-value">{{customer.customerId}}</span>
+        </div>
+        {{/if}}
+
+        {{#if owner}}
+        <div class="detail-item">
+          <span class="detail-label">Ihr Ansprechpartner</span>
+          <span class="detail-value">{{owner.displayName}}</span>
+        </div>
+        {{/if}}
+      </div>
+    </section>
+
+    {{#if quote.title}}
+    <p class="invoice-heading">
+      {{quote.title}}
+    </p>
+    {{/if}}
+    {{#if quote.introText}}
+    <div class="intro">
+      {{{markdownToHtml quote.introText}}}
+    </div>
+    {{/if}}
+
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>Pos.</th>
+          <th>Beschreibung</th>
+          <th>Einzelpreis</th>
+          <th>Menge</th>
+          <th>Steuersatz</th>
+          <th>Netto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each quote.quoteItems}}
+        <tr>
+          <td class="pos-col">{{inc @index}}.</td>
+          <td class="desc-col">
+            <strong>{{this.title}}</strong><br>
+            {{#if this.description}}
+              <div>
+              {{{markdownToHtml this.description}}}
+              </div>
+            {{/if}}
+          </td>
+          <td class="item-with-unit">{{../companyInfo.companyCurrency}} {{formatNumber this.price}}</td>
+          <td class="item-with-unit">{{formatNumber this.quantity}} {{this.unit}}</td>
+          <td>{{formatPercent this.taxRate}} %</td>
+          <td class="item-with-unit">{{../companyInfo.companyCurrency}} {{formatNumber this.subtotal}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class="invoice-totals">
+      <div class="total-row">
+        <span class="total-label">Summe Positionen</span>
+        <span class="total-value">{{companyInfo.companyCurrency}} {{formatNumber quote.subtotal}}</span>
+      </div>
+      <div class="total-row">
+        <span class="total-label">zzgl. MwSt.</span>
+        <span class="total-value">{{companyInfo.companyCurrency}} {{formatNumber quote.tax}}</span>
+      </div>
+      <div class="total-row">
+        <span class="total-label grand-total">Gesamtbetrag brutto</span>
+        <span class="total-value grand-total">{{companyInfo.companyCurrency}} {{formatNumber quote.total}}</span>
+      </div>
+    </div>
+
+    {{#if quote.outroText}}
+    <div class="outro">
+      {{{markdownToHtml quote.outroText}}}
+    </div>
+    {{/if}}
+
+  </div>
+</main>

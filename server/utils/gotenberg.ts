@@ -1,3 +1,56 @@
+
+export enum GotenborgPaperFormat {
+  Letter = 'Letter',
+  Legal = 'Legal',
+  Tabloid = 'Tabloid',
+  Ledger = 'Ledger',
+  A0 = 'A0',
+  A1 = 'A1',
+  A2 = 'A2',
+  A3 = 'A3',
+  A4 = 'A4',
+  A5 = 'A5',
+  A6 = 'A6',
+}
+
+export interface GotenborgPaperDimensions {
+  paperWidth: number;
+  paperHeight: number;
+}
+
+export const GotenborgPaperFormatDimensions: Record<GotenborgPaperFormat, GotenborgPaperDimensions> = {
+  [GotenborgPaperFormat.Letter]: { paperWidth: 8.5, paperHeight: 11 },
+  [GotenborgPaperFormat.Legal]: { paperWidth: 8.5, paperHeight: 14 },
+  [GotenborgPaperFormat.Tabloid]: { paperWidth: 11, paperHeight: 17 },
+  [GotenborgPaperFormat.Ledger]: { paperWidth: 17, paperHeight: 11 },
+  [GotenborgPaperFormat.A0]: { paperWidth: 33.1102, paperHeight: 46.811 },
+  [GotenborgPaperFormat.A1]: { paperWidth: 23.3858, paperHeight: 33.1102 },
+  [GotenborgPaperFormat.A2]: { paperWidth: 16.5354, paperHeight: 23.3858 },
+  [GotenborgPaperFormat.A3]: { paperWidth: 11.6929, paperHeight: 16.5354 },
+  [GotenborgPaperFormat.A4]: { paperWidth: 8.2677, paperHeight: 11.6929 },
+  [GotenborgPaperFormat.A5]: { paperWidth: 5.8268, paperHeight: 8.2677 },
+  [GotenborgPaperFormat.A6]: { paperWidth: 4.1339, paperHeight: 5.8268 },
+};
+
+export interface GotenbergRenderedHtml {
+  html: string;
+  header?: string;
+  footer?: string;
+}
+
+export interface GotenbergGenerationOptions {
+  format: GotenborgPaperFormat;
+  marginTop?: string | number;
+  marginBottom?: string | number;
+  marginLeft?: string | number;
+  marginRight?: string | number;
+  preferCSSPageSize?: boolean;
+  printBackground?: boolean;
+  displayHeaderFooter?: boolean;
+  landscape?: boolean;
+  scale?: number;
+}
+
 export const getGotenbergCredentials = (): ({ url: string, username?: string, password?: string } | null) => {
   const runtimeConfig = useRuntimeConfig();
   const url = filterString(runtimeConfig.gotenberg.url),
@@ -8,124 +61,50 @@ export const getGotenbergCredentials = (): ({ url: string, username?: string, pa
     : null;
 };
 
-export const generatePdfFromHtml = async (html: string, opts?: {
-  filename?: string,
-  paperWidth?: number,
-  paperHeight?: number,
-  marginTop?: number,
-  marginBottom?: number,
-  marginLeft?: number,
-  marginRight?: number,
-  preferCssPageSize?: boolean,
-  printBackground?: boolean,
-  landscape?: boolean,
-  scale?: number,
-  nativePageRanges?: string,
-}): Promise<Uint8Array> => {
+export const generatePdfFromHtml = async (
+  html: GotenbergRenderedHtml,
+  options?: GotenbergGenerationOptions,
+): Promise<Uint8Array> => {
   const credentials = getGotenbergCredentials();
   if (!credentials)
     throw new Error('No Gotenberg credentials given!');
 
+  const paperFormat     = options?.format ?? GotenborgPaperFormat.A4,
+        paperDimensions = GotenborgPaperFormatDimensions[paperFormat];
+  const finalOptions    = {
+    ...options,
+    ...paperDimensions,
+  };
+
   try {
-    // Erstelle FormData für Gotenberg
     const formData = new FormData();
 
-    // HTML als index.html hinzufügen (Gotenberg erwartet diesen Namen)
-    const htmlBlob = new Blob([html], { type: 'text/html' });
-    formData.append('files', htmlBlob, 'index.html');
+    formData.append('files', new Blob([html.html], { type: 'text/html' }), 'index.html');
+    if (html.header && options?.displayHeaderFooter)
+      formData.append('files', new Blob([html.header], { type: 'text/html' }), 'header.html');
+    if (html.footer && options?.displayHeaderFooter)
+      formData.append('files', new Blob([html.footer], { type: 'text/html' }), 'footer.html');
 
-    // Optionale Chromium-Optionen hinzufügen
-    if (opts?.paperWidth) formData.append('paperWidth', opts.paperWidth.toString());
-    if (opts?.paperHeight) formData.append('paperHeight', opts.paperHeight.toString());
-    if (opts?.marginTop) formData.append('marginTop', opts.marginTop.toString());
-    if (opts?.marginBottom) formData.append('marginBottom', opts.marginBottom.toString());
-    if (opts?.marginLeft) formData.append('marginLeft', opts.marginLeft.toString());
-    if (opts?.marginRight) formData.append('marginRight', opts.marginRight.toString());
-    if (opts?.preferCssPageSize !== undefined) formData.append('preferCssPageSize', opts.preferCssPageSize.toString());
-    if (opts?.printBackground !== undefined) formData.append('printBackground', opts.printBackground.toString());
-    if (opts?.landscape !== undefined) formData.append('landscape', opts.landscape.toString());
-    if (opts?.scale) formData.append('scale', opts.scale.toString());
-    if (opts?.nativePageRanges) formData.append('nativePageRanges', opts.nativePageRanges);
+    const internalOptionKeys = [
+      'format',
+      'displayHeaderFooter',
+      'headerTemplate',
+      'footerTemplate',
+    ];
+    for (const [key, value] of Object.entries(finalOptions)) {
+      if (!internalOptionKeys.includes(key) && value !== undefined) {
+        formData.append(key, String(value));
+      }
+    }
 
-    // Request-Header vorbereiten
     const headers: Record<string, string> = {};
 
-    // Basic Auth wenn Credentials vorhanden
     if (credentials.username && credentials.password) {
       const auth = Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64');
       headers['Authorization'] = `Basic ${auth}`;
     }
 
-    // PDF generieren via Gotenberg Chromium API
     const response = await $fetch<ArrayBuffer>('/forms/chromium/convert/html', {
-      baseURL: credentials.url,
-      method: 'POST',
-      headers,
-      body: formData,
-      responseType: 'arrayBuffer',
-    });
-
-    return new Uint8Array(response);
-  } catch (e: any) {
-    throw createError({
-      statusCode: e.statusCode || 500,
-      statusMessage: `PDF generation failed: ${e.message}`,
-    });
-  }
-};
-
-export const generatePdfFromUrl = async (url: string, opts?: {
-  filename?: string,
-  paperWidth?: number,
-  paperHeight?: number,
-  marginTop?: number,
-  marginBottom?: number,
-  marginLeft?: number,
-  marginRight?: number,
-  preferCssPageSize?: boolean,
-  printBackground?: boolean,
-  landscape?: boolean,
-  scale?: number,
-  nativePageRanges?: string,
-  waitDelay?: string,
-  waitForExpression?: string,
-}): Promise<Uint8Array> => {
-  const credentials = getGotenbergCredentials();
-  if (!credentials)
-    throw new Error('No Gotenberg credentials given!');
-
-  try {
-    const formData = new FormData();
-
-    // URL hinzufügen
-    formData.append('url', url);
-
-    // Optionale Chromium-Optionen hinzufügen
-    if (opts?.paperWidth) formData.append('paperWidth', opts.paperWidth.toString());
-    if (opts?.paperHeight) formData.append('paperHeight', opts.paperHeight.toString());
-    if (opts?.marginTop) formData.append('marginTop', opts.marginTop.toString());
-    if (opts?.marginBottom) formData.append('marginBottom', opts.marginBottom.toString());
-    if (opts?.marginLeft) formData.append('marginLeft', opts.marginLeft.toString());
-    if (opts?.marginRight) formData.append('marginRight', opts.marginRight.toString());
-    if (opts?.preferCssPageSize !== undefined) formData.append('preferCssPageSize', opts.preferCssPageSize.toString());
-    if (opts?.printBackground !== undefined) formData.append('printBackground', opts.printBackground.toString());
-    if (opts?.landscape !== undefined) formData.append('landscape', opts.landscape.toString());
-    if (opts?.scale) formData.append('scale', opts.scale.toString());
-    if (opts?.nativePageRanges) formData.append('nativePageRanges', opts.nativePageRanges);
-    if (opts?.waitDelay) formData.append('waitDelay', opts.waitDelay);
-    if (opts?.waitForExpression) formData.append('waitForExpression', opts.waitForExpression);
-
-    // Request-Header vorbereiten
-    const headers: Record<string, string> = {};
-
-    // Basic Auth wenn Credentials vorhanden
-    if (credentials.username && credentials.password) {
-      const auth = Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64');
-      headers['Authorization'] = `Basic ${auth}`;
-    }
-
-    // PDF generieren via Gotenberg Chromium API
-    const response = await $fetch<ArrayBuffer>('/forms/chromium/convert/url', {
       baseURL: credentials.url,
       method: 'POST',
       headers,

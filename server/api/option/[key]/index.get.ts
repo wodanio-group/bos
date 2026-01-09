@@ -38,9 +38,8 @@ import { z } from "zod";
  *         $ref: '#/components/responses/NotFound'
  */
 export default defineEventHandler(async (event) => {
-  await authMiddleware(event, {
-    rights: ['option.all.view']
-  });
+  const user = await authMiddleware(event);
+  const hasAllViewRight = hasRoleRights(user.role, ['option.all.view']);
 
   const params = z.object({
     key: optionKeyValidator
@@ -60,6 +59,11 @@ export default defineEventHandler(async (event) => {
   if (!findOption)
     throw createError({
       statusCode: 404
+    });
+
+  if (!hasAllViewRight && findOption.public !== true)
+    throw createError({
+      statusCode: 401
     });
 
   return optionToViewModel(findOption);

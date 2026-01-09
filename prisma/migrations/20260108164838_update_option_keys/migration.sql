@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "OptionKey" ADD VALUE 'COMPANY_INFO';

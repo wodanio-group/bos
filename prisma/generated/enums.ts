@@ -28,7 +28,8 @@ export const OptionKey = {
   QUOTE_DEFAULT_OUTRO_TEXT: 'QUOTE_DEFAULT_OUTRO_TEXT',
   SYSTEM_CURRENCY: 'SYSTEM_CURRENCY',
   SYSTEM_UNITS: 'SYSTEM_UNITS',
-  SYSTEM_TAX_RATES: 'SYSTEM_TAX_RATES'
+  SYSTEM_TAX_RATES: 'SYSTEM_TAX_RATES',
+  COMPANY_INFO: 'COMPANY_INFO'
 } as const
 
 export type OptionKey = (typeof OptionKey)[keyof typeof OptionKey]

@@ -1,0 +1,55 @@
+
+<footer class="footer">
+  <div class="page-number">
+    Seite <span class="pageNumber"></span>/<span class="totalPages"></span>
+  </div>
+  <div class="footer-content">
+    <div class="footer-column">
+      {{companyInfo.companyName}}<br>
+      {{companyInfo.companyAddress}}<br>
+      {{companyInfo.companyZipCode}} {{companyInfo.companyCity}}<br>
+      {{companyInfo.companyCountry}}
+    </div>
+    {{#if (or companyInfo.companyPhoneNumber companyInfo.companyFax companyInfo.companyEmail companyInfo.companyWebsite)}}
+      <div class="footer-column">
+        {{#if companyInfo.companyPhoneNumber}}
+          Tel.: {{companyInfo.companyPhoneNumber}}<br>
+        {{/if}}
+        {{#if companyInfo.companyFax}}
+          Fax.: {{companyInfo.companyFax}}<br>
+        {{/if}}
+        {{#if companyInfo.companyEmail}}
+          E-Mail: {{companyInfo.companyEmail}}<br>
+        {{/if}}
+        {{#if companyInfo.companyWebsite}}
+          Web: {{companyInfo.companyWebsite}}
+        {{/if}}
+      </div>
+    {{/if}}
+    <div class="footer-column">
+      {{#if companyInfo.registryCourt}}
+        {{companyInfo.registryCourt}}<br>
+      {{/if}}
+      {{#if companyInfo.registerNumber}}
+        HR-Nr.: {{companyInfo.registerNumber}}<br>
+      {{/if}}
+      {{#if companyInfo.vatId}}
+        USt-ID: {{companyInfo.vatId}}<br>
+      {{/if}}
+      {{#if companyInfo.management}}
+        Geschäftsführung: {{companyInfo.management}}
+      {{/if}}
+    </div>
+    <div class="footer-column">
+      {{#if companyInfo.bankName}}
+        {{companyInfo.bankName}}<br>
+      {{/if}}
+      {{#if companyInfo.iban}}
+        IBAN: {{companyInfo.iban}}<br>
+      {{/if}}
+      {{#if companyInfo.bic}}
+        BIC: {{companyInfo.bic}}
+      {{/if}}
+    </div>
+  </div>
+</footer>

@@ -27,11 +27,13 @@ import { authMiddleware } from "~~/server/utils/auth";
  *         $ref: '#/components/responses/Forbidden'
  */
 export default defineEventHandler(async (event) => {
-  await authMiddleware(event, {
-    rights: ['option.all.view']
-  });
+  const user = await authMiddleware(event);
+  const hasAllViewRight = hasRoleRights(user.role, ['option.all.view']);
 
   return (await prisma.option.findMany({
+    where: {
+      ...(hasAllViewRight ? {} : { public: true }),
+    },
     orderBy: {
       key: 'asc'
     }

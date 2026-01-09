@@ -46,7 +46,6 @@ export default defineNuxtConfig({
       siteUrl: 'http://localhost:3000',
       siteTitle: 'Wodanio Business Operation System',
       logoUrl: 'https://de-zlg1.s3.wodanio.net/cdn/wodanio/logo/bos-logo.svg',
-      currency: 'EUR',
     },
   },
   app: {

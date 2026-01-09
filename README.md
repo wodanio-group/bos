@@ -66,6 +66,9 @@ docker compose up -d
 | `NUXT_LISTMONK_IMPORT_LIST_IDS` | | | Comma or semicolon-separated list of Listmonk list UUIDs for contact imports (optional) |
 | `NUXT_PES_URL` | | | PES (Product Engineering System) API base URL (optional) |
 | `NUXT_PES_API_TOKEN` | | | PES API authentication token (optional) |
+| `NUXT_GOTENBERG_URL` | | | Gotenberg service URL for PDF generation (optional) |
+| `NUXT_GOTENBERG_USERNAME` | | | Gotenberg basic auth username (optional) |
+| `NUXT_GOTENBERG_PASSWORD` | | | Gotenberg basic auth password (optional) |
 
 ## API Documentation
 

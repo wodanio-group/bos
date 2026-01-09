@@ -61,6 +61,7 @@ enum OptionKey {
   SYSTEM_CURRENCY
   SYSTEM_UNITS
   SYSTEM_TAX_RATES
+  COMPANY_INFO
 }
 
 model Option {

@@ -71,21 +71,6 @@
           </div>
         </div>
       </PageSectionBox>
-
-      <PageSectionBox
-        :title="$t('quote.item.texts')"
-        v-if="item.introText || item.outroText">
-        <div class="px-4 py-3 space-y-4">
-          <div v-if="item.introText">
-            <p class="text-xs font-semibold text-secondary-700 mb-1">{{ $t('quote.item.introText') }}</p>
-            <p class="text-sm text-primary-950 whitespace-pre-wrap">{{ item.introText }}</p>
-          </div>
-          <div v-if="item.outroText">
-            <p class="text-xs font-semibold text-secondary-700 mb-1">{{ $t('quote.item.outroText') }}</p>
-            <p class="text-sm text-primary-950 whitespace-pre-wrap">{{ item.outroText }}</p>
-          </div>
-        </div>
-      </PageSectionBox>
     </div>
 
     <div class="col-span-4">
@@ -107,21 +92,15 @@
             <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.fields.validUntil') }}</span>
             <span class="text-sm text-right">{{ formatDate(item.quoteValidUntil) }}</span>
           </div>
-          <div 
-            class="-my-2"
-            v-if="(ownerName && item.ownerId) || (companyName && item.companyId)">
-            <div v-if="companyName && item.companyId" class="w-full flex items-center justify-between gap-2 px-4">
-              <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.fields.company') }}</span>
-              <molecule-link-button
-                :to="`/company/${item.companyId}`"
-                :title="companyName" />
-            </div>
-            <div v-if="ownerName && item.ownerId" class="w-full flex items-center justify-between gap-2 px-4">
-              <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.fields.owner') }}</span>
-              <molecule-link-button
-                :to="`/user/${item.ownerId}`"
-                :title="ownerName" />
-            </div>
+          <div v-if="companyName && item.companyId" class="w-full flex items-center justify-between gap-2 px-4 -my-2">
+            <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.fields.company') }}</span>
+            <molecule-link-button
+              :to="`/company/${item.companyId}`"
+              :title="companyName" />
+          </div>
+          <div v-if="ownerName && item.ownerId" class="w-full flex items-center justify-between gap-2 px-4">
+            <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.fields.owner') }}</span>
+            <span class="text-sm text-right">{{ ownerName }}</span>
           </div>
           <div class="w-full h-0 border-t border-t-secondary-200"></div>
           <div class="w-full flex items-center justify-between gap-2 px-4">
