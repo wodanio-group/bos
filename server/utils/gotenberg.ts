@@ -49,6 +49,7 @@ export interface GotenbergGenerationOptions {
   displayHeaderFooter?: boolean;
   landscape?: boolean;
   scale?: number;
+  metadata?: Record<string, string>;
 }
 
 export const getGotenbergCredentials = (): ({ url: string, username?: string, password?: string } | null) => {
@@ -93,7 +94,11 @@ export const generatePdfFromHtml = async (
     ];
     for (const [key, value] of Object.entries(finalOptions)) {
       if (!internalOptionKeys.includes(key) && value !== undefined) {
-        formData.append(key, String(value));
+        if (key === 'metadata') {
+          formData.append(key, JSON.stringify(value));
+        } else {
+          formData.append(key, String(value));
+        }
       }
     }
 

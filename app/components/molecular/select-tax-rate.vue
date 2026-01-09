@@ -38,7 +38,7 @@ const loadTaxRates = async () => {
     const sortedRates = [...optionValue.rates].sort((a, b) => a - b);
 
     taxRateItems.value = sortedRates.map(rate => ({
-      title: `${rate}%`,
+      title: `${(rate * 100).toFixed(0)} %`,
       value: rate
     }));
 

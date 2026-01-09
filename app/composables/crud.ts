@@ -209,9 +209,14 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     });
   }
 
+  const clearItem = () => {
+    itemState.value = null;
+  }
+
   return {
     item,
     loadItem,
+    clearItem,
     items,
     pagination,
     paginationIsFirst,

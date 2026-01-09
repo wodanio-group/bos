@@ -98,7 +98,6 @@ export default defineEventHandler(async (event) => {
 
       ...(query.data.search ? [{ OR: [
         { quoteId: { contains: query.data.search } },
-        { title: { contains: query.data.search } },
         { company: { name: { contains: query.data.search } } },
         { company: { customerId: { contains: query.data.search } } },
       ] }] : []),

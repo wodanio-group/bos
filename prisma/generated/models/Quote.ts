@@ -46,7 +46,6 @@ export type QuoteMinAggregateOutputType = {
   quoteId: string | null
   quoteDate: Date | null
   quoteValidUntil: Date | null
-  title: string | null
   introText: string | null
   outroText: string | null
   subtotal: number | null
@@ -64,7 +63,6 @@ export type QuoteMaxAggregateOutputType = {
   quoteId: string | null
   quoteDate: Date | null
   quoteValidUntil: Date | null
-  title: string | null
   introText: string | null
   outroText: string | null
   subtotal: number | null
@@ -82,7 +80,6 @@ export type QuoteCountAggregateOutputType = {
   quoteId: number
   quoteDate: number
   quoteValidUntil: number
-  title: number
   introText: number
   outroText: number
   subtotal: number
@@ -114,7 +111,6 @@ export type QuoteMinAggregateInputType = {
   quoteId?: true
   quoteDate?: true
   quoteValidUntil?: true
-  title?: true
   introText?: true
   outroText?: true
   subtotal?: true
@@ -132,7 +128,6 @@ export type QuoteMaxAggregateInputType = {
   quoteId?: true
   quoteDate?: true
   quoteValidUntil?: true
-  title?: true
   introText?: true
   outroText?: true
   subtotal?: true
@@ -150,7 +145,6 @@ export type QuoteCountAggregateInputType = {
   quoteId?: true
   quoteDate?: true
   quoteValidUntil?: true
-  title?: true
   introText?: true
   outroText?: true
   subtotal?: true
@@ -255,7 +249,6 @@ export type QuoteGroupByOutputType = {
   quoteId: string
   quoteDate: Date
   quoteValidUntil: Date | null
-  title: string | null
   introText: string | null
   outroText: string | null
   subtotal: number
@@ -296,7 +289,6 @@ export type QuoteWhereInput = {
   quoteId?: Prisma.StringFilter<"Quote"> | string
   quoteDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
   quoteValidUntil?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
-  title?: Prisma.StringNullableFilter<"Quote"> | string | null
   introText?: Prisma.StringNullableFilter<"Quote"> | string | null
   outroText?: Prisma.StringNullableFilter<"Quote"> | string | null
   subtotal?: Prisma.FloatFilter<"Quote"> | number
@@ -317,7 +309,6 @@ export type QuoteOrderByWithRelationInput = {
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrderInput | Prisma.SortOrder
-  title?: Prisma.SortOrderInput | Prisma.SortOrder
   introText?: Prisma.SortOrderInput | Prisma.SortOrder
   outroText?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -341,7 +332,6 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumQuoteStatusFilter<"Quote"> | $Enums.QuoteStatus
   quoteDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
   quoteValidUntil?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
-  title?: Prisma.StringNullableFilter<"Quote"> | string | null
   introText?: Prisma.StringNullableFilter<"Quote"> | string | null
   outroText?: Prisma.StringNullableFilter<"Quote"> | string | null
   subtotal?: Prisma.FloatFilter<"Quote"> | number
@@ -362,7 +352,6 @@ export type QuoteOrderByWithAggregationInput = {
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrderInput | Prisma.SortOrder
-  title?: Prisma.SortOrderInput | Prisma.SortOrder
   introText?: Prisma.SortOrderInput | Prisma.SortOrder
   outroText?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -388,7 +377,6 @@ export type QuoteScalarWhereWithAggregatesInput = {
   quoteId?: Prisma.StringWithAggregatesFilter<"Quote"> | string
   quoteDate?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   quoteValidUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
-  title?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   introText?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   outroText?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   subtotal?: Prisma.FloatWithAggregatesFilter<"Quote"> | number
@@ -406,7 +394,6 @@ export type QuoteCreateInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -425,7 +412,6 @@ export type QuoteUncheckedCreateInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -444,7 +430,6 @@ export type QuoteUpdateInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -463,7 +448,6 @@ export type QuoteUncheckedUpdateInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -482,7 +466,6 @@ export type QuoteCreateManyInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -500,7 +483,6 @@ export type QuoteUpdateManyMutationInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -516,7 +498,6 @@ export type QuoteUncheckedUpdateManyInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -544,7 +525,6 @@ export type QuoteCountOrderByAggregateInput = {
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   introText?: Prisma.SortOrder
   outroText?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -568,7 +548,6 @@ export type QuoteMaxOrderByAggregateInput = {
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   introText?: Prisma.SortOrder
   outroText?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -586,7 +565,6 @@ export type QuoteMinOrderByAggregateInput = {
   quoteId?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   quoteValidUntil?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   introText?: Prisma.SortOrder
   outroText?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -717,7 +695,6 @@ export type QuoteCreateWithoutOwnerInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -735,7 +712,6 @@ export type QuoteUncheckedCreateWithoutOwnerInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -782,7 +758,6 @@ export type QuoteScalarWhereInput = {
   quoteId?: Prisma.StringFilter<"Quote"> | string
   quoteDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
   quoteValidUntil?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
-  title?: Prisma.StringNullableFilter<"Quote"> | string | null
   introText?: Prisma.StringNullableFilter<"Quote"> | string | null
   outroText?: Prisma.StringNullableFilter<"Quote"> | string | null
   subtotal?: Prisma.FloatFilter<"Quote"> | number
@@ -800,7 +775,6 @@ export type QuoteCreateWithoutCompanyInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -818,7 +792,6 @@ export type QuoteUncheckedCreateWithoutCompanyInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -862,7 +835,6 @@ export type QuoteCreateWithoutQuoteItemsInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -880,7 +852,6 @@ export type QuoteUncheckedCreateWithoutQuoteItemsInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -914,7 +885,6 @@ export type QuoteUpdateWithoutQuoteItemsInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -932,7 +902,6 @@ export type QuoteUncheckedUpdateWithoutQuoteItemsInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -950,7 +919,6 @@ export type QuoteCreateManyOwnerInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -967,7 +935,6 @@ export type QuoteUpdateWithoutOwnerInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -985,7 +952,6 @@ export type QuoteUncheckedUpdateWithoutOwnerInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1003,7 +969,6 @@ export type QuoteUncheckedUpdateManyWithoutOwnerInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1020,7 +985,6 @@ export type QuoteCreateManyCompanyInput = {
   quoteId: string
   quoteDate: Date | string
   quoteValidUntil?: Date | string | null
-  title?: string | null
   introText?: string | null
   outroText?: string | null
   subtotal: number
@@ -1037,7 +1001,6 @@ export type QuoteUpdateWithoutCompanyInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1055,7 +1018,6 @@ export type QuoteUncheckedUpdateWithoutCompanyInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1073,7 +1035,6 @@ export type QuoteUncheckedUpdateManyWithoutCompanyInput = {
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   introText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   outroText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1121,7 +1082,6 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   quoteId?: boolean
   quoteDate?: boolean
   quoteValidUntil?: boolean
-  title?: boolean
   introText?: boolean
   outroText?: boolean
   subtotal?: boolean
@@ -1143,7 +1103,6 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   quoteId?: boolean
   quoteDate?: boolean
   quoteValidUntil?: boolean
-  title?: boolean
   introText?: boolean
   outroText?: boolean
   subtotal?: boolean
@@ -1163,7 +1122,6 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   quoteId?: boolean
   quoteDate?: boolean
   quoteValidUntil?: boolean
-  title?: boolean
   introText?: boolean
   outroText?: boolean
   subtotal?: boolean
@@ -1183,7 +1141,6 @@ export type QuoteSelectScalar = {
   quoteId?: boolean
   quoteDate?: boolean
   quoteValidUntil?: boolean
-  title?: boolean
   introText?: boolean
   outroText?: boolean
   subtotal?: boolean
@@ -1193,7 +1150,7 @@ export type QuoteSelectScalar = {
   ownerId?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "status" | "quoteId" | "quoteDate" | "quoteValidUntil" | "title" | "introText" | "outroText" | "subtotal" | "tax" | "total" | "companyId" | "ownerId", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "status" | "quoteId" | "quoteDate" | "quoteValidUntil" | "introText" | "outroText" | "subtotal" | "tax" | "total" | "companyId" | "ownerId", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   owner?: boolean | Prisma.Quote$ownerArgs<ExtArgs>
@@ -1224,7 +1181,6 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     quoteId: string
     quoteDate: Date
     quoteValidUntil: Date | null
-    title: string | null
     introText: string | null
     outroText: string | null
     subtotal: number
@@ -1665,7 +1621,6 @@ export interface QuoteFieldRefs {
   readonly quoteId: Prisma.FieldRef<"Quote", 'String'>
   readonly quoteDate: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly quoteValidUntil: Prisma.FieldRef<"Quote", 'DateTime'>
-  readonly title: Prisma.FieldRef<"Quote", 'String'>
   readonly introText: Prisma.FieldRef<"Quote", 'String'>
   readonly outroText: Prisma.FieldRef<"Quote", 'String'>
   readonly subtotal: Prisma.FieldRef<"Quote", 'Float'>

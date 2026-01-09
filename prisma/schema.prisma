@@ -395,7 +395,6 @@ model Quote {
   quoteId                 String                      @unique
   quoteDate               DateTime
   quoteValidUntil         DateTime?
-  title                   String?
   introText               String?
   outroText               String?
   subtotal                Float

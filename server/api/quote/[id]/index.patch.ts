@@ -40,10 +40,6 @@ import { z } from "zod";
  *                 format: date
  *                 nullable: true
  *                 description: Date until which the quote is valid
- *               title:
- *                 type: string
- *                 nullable: true
- *                 description: Quote title
  *               introText:
  *                 type: string
  *                 nullable: true
@@ -125,7 +121,6 @@ export default defineEventHandler(async (event) => {
     status: quoteStatusValidator.optional(),
     quoteDate: z.iso.date().optional(),
     quoteValidUntil: z.iso.date().optional().nullable(),
-    title: z.string().trim().optional().nullable(),
     introText: z.string().trim().optional().nullable(),
     outroText: z.string().trim().optional().nullable(),
     companyId: z.string().uuid().optional(),
@@ -206,7 +201,6 @@ export default defineEventHandler(async (event) => {
       quoteValidUntil: body.data.quoteValidUntil !== undefined
         ? (body.data.quoteValidUntil ? new Date(body.data.quoteValidUntil) : null)
         : undefined,
-      title: body.data.title,
       introText: body.data.introText,
       outroText: body.data.outroText,
       companyId: body.data.companyId,

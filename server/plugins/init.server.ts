@@ -9,17 +9,16 @@ export default defineNitroPlugin(async (nitroApp) => {
     { key: 'CUSTOMER_ID_SCHEMA', value: { schema: 'C%YYYY%COUNTER' } },
     { key: 'QUOTE_ID_COUNTER', value: { counter: 10001 } },
     { key: 'QUOTE_ID_SCHEMA', value: { schema: 'Q%YYYY%MM%COUNTER' } },
-    { key: 'QUOTE_DEFAULT_TITLE', value: { value: 'Quote {{quote.quoteId}}' } },
-    { key: 'QUOTE_DEFAULT_INTRO_TEXT', value: { value: 'Dear Sir or Madam,\n\nWe would like to submit the following non-binding offer to you:' } },
-    { key: 'QUOTE_DEFAULT_OUTRO_TEXT', value: { value: 'Best regards\n{{owner.displayName}}\n{{companyInfo.companyName}}' } },
+    { key: 'QUOTE_DEFAULT_INTRO_TEXT', value: { value: 'Sehr geehrte Damen und Herren,\n\nwir möchten Ihnen das folgende freibleibende Angebot unterbreiten:' } },
+    { key: 'QUOTE_DEFAULT_OUTRO_TEXT', value: { value: 'Beste Grüße\n{{owner.displayName}}\n{{companyInfo.companyName}}' } },
     { key: 'SYSTEM_CURRENCY', value: { value: 'EUR' } },
     { key: 'SYSTEM_UNITS', value: {
-      units: [ 'pcs', 'hour', 'monthly', 'annually' ],
-      default: 'pcs'
+      units: [ 'Stk.', 'Std.', 'monatlich', 'jährlich' ],
+      default: 'Stk.'
     } },
     { key: 'SYSTEM_TAX_RATES', value: {
-      rates: [ 0, 7, 19 ],
-      default: 19
+      rates: [ 0, 0.07, 0.19 ],
+      default: 0.19
     } },
     { key: 'COMPANY_INFO', value: {
       companyName: 'Example Inc.',

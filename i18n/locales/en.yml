@@ -188,6 +188,7 @@ person:
 
 quote:
   title: "Quotes"
+  openPdf: "Open PDF"
   deleteTitle: "Delete \"{quoteId}\""
   deleteDescription: "Do you want to permanently delete the quote?"
   deleteSuccessToast: "Quote \"{quoteId}\" deleted"
@@ -212,6 +213,8 @@ quote:
   item:
     title: "Quote {quoteId}"
     details: "Details"
+    pdfPreview: "PDF Preview"
+    downloadPdf: "Download PDF"
     items: "Quote Items"
     texts: "Texts"
     introText: "Introduction"
@@ -239,8 +242,8 @@ quote:
     quantity: "Quantity"
     unit: "Unit"
     price: "Unit Price"
-    taxRate: "Tax Rate (0.19 = 19%)"
-    itemTotal: "Item Total"
+    taxRate: "Tax Rate"
+    itemSubtotal: "Item Subtotal"
     addItem: "Add Item"
     company: "Company"
     companyReadonly: "Company cannot be changed after creation"

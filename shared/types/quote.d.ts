@@ -134,10 +134,6 @@ export interface QuoteItemViewModel extends BaseViewModel {
  *               format: date
  *               nullable: true
  *               description: Date until which the quote is valid
- *             title:
- *               type: string
- *               nullable: true
- *               description: Title of the quote
  *             introText:
  *               type: string
  *               nullable: true
@@ -180,7 +176,6 @@ export interface QuoteItemViewModel extends BaseViewModel {
  *             - quoteId
  *             - quoteDate
  *             - quoteValidUntil
- *             - title
  *             - introText
  *             - outroText
  *             - subtotal
@@ -199,8 +194,6 @@ export interface QuoteViewModel extends BaseViewModel {
   quoteDate: string;
   /** Date until which the quote is valid */
   quoteValidUntil: string | null;
-  /** Title of the quote */
-  title: string | null;
   /** Introduction text for the quote */
   introText: string | null;
   /** Closing text for the quote */

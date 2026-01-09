@@ -24,51 +24,23 @@
 
     <div class="col-span-8">
       <PageSectionBox
-        :title="$t('quote.item.items')"
+        :title="$t('quote.item.pdfPreview')"
         class="mb-4">
-        <div class="divide-y divide-secondary-100">
-          <div
-            v-for="quoteItem in item.quoteItems"
-            :key="quoteItem.id"
-            class="px-4 py-3 hover:bg-secondary-50 transition-colors">
-            <div class="flex justify-between items-start mb-1">
-              <div class="flex-1">
-                <p class="text-sm font-semibold text-primary-950">
-                  {{ quoteItem.quotePosition }}. {{ quoteItem.title }}
-                </p>
-                <p class="text-xs text-secondary-600 mt-1" v-if="quoteItem.description">
-                  {{ quoteItem.description }}
-                </p>
-              </div>
-              <div class="text-right ml-4">
-                <p class="text-sm font-semibold text-primary-950">
-                  {{ formatCurrency(quoteItem.total) }}
-                </p>
-              </div>
-            </div>
-            <div class="flex justify-between items-center text-xs text-secondary-600 mt-2">
-              <span>
-                {{ quoteItem.quantity }} {{ quoteItem.unit || $t('quote.item.pieces') }} × {{ formatCurrency(quoteItem.price) }}
-              </span>
-              <span>
-                {{ $t('quote.item.taxRate') }}: {{ (quoteItem.taxRate * 100).toFixed(0) }}%
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="border-t-2 border-t-secondary-300 bg-secondary-50 px-4 py-3">
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-sm text-secondary-700">{{ $t('quote.item.subtotal') }}</span>
-            <span class="text-sm font-medium text-primary-950">{{ formatCurrency(item.subtotal) }}</span>
-          </div>
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-sm text-secondary-700">{{ $t('quote.item.tax') }}</span>
-            <span class="text-sm font-medium text-primary-950">{{ formatCurrency(item.tax) }}</span>
-          </div>
-          <div class="flex justify-between items-center pt-2 border-t border-t-secondary-200">
-            <span class="text-base font-semibold text-primary-950">{{ $t('quote.item.total') }}</span>
-            <span class="text-base font-bold text-primary-600">{{ formatCurrency(item.total) }}</span>
-          </div>
+        <template #headerRight>
+          <atom-button
+            type="button"
+            icon="download"
+            :title="$t('quote.item.downloadPdf')"
+            :outline="true"
+            @click="downloadPdf">
+          </atom-button>
+        </template>
+        <div class="relative w-full h-[600px]">
+          <iframe
+            :src="`/api/quote/${item.id}/pdf#toolbar=0&navpanes=0&scrollbar=0`"
+            class="w-full h-full border-0"
+            title="Quote PDF Preview">
+          </iframe>
         </div>
       </PageSectionBox>
     </div>
@@ -101,6 +73,19 @@
           <div v-if="ownerName && item.ownerId" class="w-full flex items-center justify-between gap-2 px-4">
             <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.fields.owner') }}</span>
             <span class="text-sm text-right">{{ ownerName }}</span>
+          </div>
+          <div class="w-full h-0 border-t border-t-secondary-200"></div>
+          <div class="w-full flex items-center justify-between gap-2 px-4">
+            <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.item.subtotal') }}</span>
+            <span class="text-sm text-right">{{ formatCurrency(item.subtotal) }}</span>
+          </div>
+          <div class="w-full flex items-center justify-between gap-2 px-4">
+            <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.item.tax') }}</span>
+            <span class="text-sm text-right">{{ formatCurrency(item.tax) }}</span>
+          </div>
+          <div class="w-full flex items-center justify-between gap-2 px-4">
+            <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.item.total') }}</span>
+            <span class="text-sm text-right">{{ formatCurrency(item.total) }}</span>
           </div>
           <div class="w-full h-0 border-t border-t-secondary-200"></div>
           <div class="w-full flex items-center justify-between gap-2 px-4">
@@ -144,6 +129,7 @@ definePageMeta({
 const auth = useAuth();
 const user = await auth.getUser();
 const toast = useToast();
+const { downloadFile } = useFileDownload();
 const { item, loadItem, deleteById } = useCrud<QuoteViewModel>({
   apiPath: '/api/quote'
 });
@@ -209,6 +195,11 @@ const onDelete = async () => {
   } catch (e) {
     toast.add({ type: 'error', title: $t('quote.item.delete.error') });
   }
+};
+
+const downloadPdf = async () => {
+  if (!item.value) return;
+  await downloadFile(`/api/quote/${item.value.id}/pdf`, `${item.value.quoteId}.pdf`);
 };
 
 </script>

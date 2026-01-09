@@ -158,8 +158,8 @@ export const generatePdfHtml = async (key: PdfTemplateKey, data?: any): Promise<
   };
 };
 
-export const generatePdf = async (key: PdfTemplateKey, data?: any) => {
+export const generatePdf = async (key: PdfTemplateKey, data?: any, metadata?: Record<string, string>) => {
   const template = PdfTemplates[key];
   const html = await generatePdfHtml(key, data);
-  return (await generatePdfFromHtml(html, template.options));
+  return (await generatePdfFromHtml(html, { ...template.options!, metadata }));
 };

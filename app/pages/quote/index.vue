@@ -16,6 +16,7 @@
       ]"
       :actions="[
         { title: $t('general.view'), icon: 'external-link', key: 'view' },
+        { title: $t('quote.item.downloadPdf'), icon: 'download', key: 'download-pdf' },
         ...((hasRightQuoteAllEdit === true) ? [{ title: $t('general.edit'), icon: 'square-pen', key: 'view-edit' }] : []),
         ...((hasRightQuoteAllDelete === true) ? [{ title: $t('general.delete'), icon: 'trash-2', key: 'requestDelete' }] : []),
       ]"
@@ -55,6 +56,7 @@ definePageMeta({
 const auth = useAuth();
 const user = await auth.getUser();
 const toast = useToast();
+const { downloadFile } = useFileDownload();
 
 const {
   items,
@@ -128,6 +130,10 @@ const actionHandler = async (key: string, item?: QuoteViewModel | null) => { swi
   case 'view':
     if (!item) return;
     navigateTo(`/quote/${item.id}`);
+    break;
+  case 'download-pdf':
+    if (!item) return;
+    await downloadFile(`/api/quote/${item.id}/pdf`, `${item.quoteId}.pdf`);
     break;
   case 'view-edit':
     if (!item) return;

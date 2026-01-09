@@ -39,7 +39,7 @@ export const generateQuotePdf = async (quote: Quote & {
     companyCurrency: filterString(opts.find(o => o.key === 'SYSTEM_CURRENCY')?.value?.value),
   };
 
-  return (await generatePdf(PdfTemplateKey.QUOTE, {
+  const data = {
     companyInfo,
     sender: {
       addressLine: [
@@ -62,5 +62,11 @@ export const generateQuotePdf = async (quote: Quote & {
       displayName: quote.owner ? userDisplayName(quote.owner) : null,
     },
     quote,
+  };
+  return (await generatePdf(PdfTemplateKey.QUOTE, data, {
+    ...(data.owner.displayName ? { Author: data.owner.displayName } : {}),
+    ...(data.companyInfo.companyName ? { Copyright: data.companyInfo.companyName } : {}),
+    Subject: data.quote.quoteId,
+    Title: data.quote.quoteId,
   }));
 }

@@ -50,7 +50,6 @@ export const quoteToViewModel = (item: Quote): QuoteViewModel => {
     quoteId: item.quoteId,
     quoteDate: DateTime.fromJSDate(item.quoteDate).toFormat('yyyy-LL-dd'),
     quoteValidUntil: item.quoteValidUntil ? DateTime.fromJSDate(item.quoteValidUntil).toFormat('yyyy-LL-dd') : null,
-    title: item.title,
     introText: item.introText,
     outroText: item.outroText,
     subtotal: item.subtotal,

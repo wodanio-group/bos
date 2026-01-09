@@ -60,12 +60,6 @@
             :title="$t('quote.fields.validUntil')"
             v-model="editForm.quoteValidUntil"/>
 
-          <atom-input
-            type="text"
-            :title="$t('quote.fields.title')"
-            v-model="editForm.title"
-            class="col-span-2"/>
-
           <atom-textarea
             :title="$t('quote.fields.introText')"
             :rows="4"
@@ -139,14 +133,14 @@
                   <molecular-select-tax-rate
                     :title="$t('quote.edit.taxRate')"
                     :required="true"
-                    v-model="quoteItem.taxRatePercent"/>
+                    v-model="quoteItem.taxRate"/>
                 </div>
 
                 <div class="col-span-3">
                   <label class="w-full flex flex-col gap-1">
-                    <span class="text-xs text-gray-600 font-semibold">{{ $t('quote.edit.itemTotal') }}</span>
+                    <span class="text-xs text-gray-600 font-semibold">{{ $t('quote.edit.itemSubtotal') }}</span>
                     <div class="w-full px-4 py-1.5 text-sm text-primary-950 bg-secondary-50 border border-secondary-200 rounded-lg">
-                      {{ formatCurrency(calculateItemTotal(quoteItem)) }}
+                      {{ formatCurrency(calculateItemSubtotal(quoteItem)) }}
                     </div>
                   </label>
                 </div>
@@ -226,7 +220,7 @@ const statusItems = QuoteStatuses.map(status => ({
   value: status
 }));
 
-const { item, upsert, loadItem } = useCrud<QuoteViewModel>({
+const { item, upsert, loadItem, clearItem } = useCrud<QuoteViewModel>({
   apiPath: '/api/quote'
 });
 
@@ -249,8 +243,7 @@ interface EditQuoteItem {
   quantity: number;
   unit: string;
   price: number;
-  taxRate: number;
-  taxRatePercent: number;
+  taxRate: number | undefined;
 }
 
 // Company search for create mode
@@ -286,13 +279,11 @@ const loadUser = async (id: string) => {
 };
 
 // Load default values from options for create mode
-const { item: defaultTitleOption, loadItem: loadDefaultTitle } = useOption('QUOTE_DEFAULT_TITLE');
 const { item: defaultIntroOption, loadItem: loadDefaultIntro } = useOption('QUOTE_DEFAULT_INTRO_TEXT');
 const { item: defaultOutroOption, loadItem: loadDefaultOutro } = useOption('QUOTE_DEFAULT_OUTRO_TEXT');
 
 if (isCreateMode.value) {
   await Promise.all([
-    loadDefaultTitle(),
     loadDefaultIntro(),
     loadDefaultOutro()
   ]);
@@ -302,7 +293,6 @@ const editForm = ref({
   status: item.value?.status || 'DRAFT',
   companyId: item.value?.companyId || '',
   ownerId: item.value?.ownerId || user?.id,
-  title: item.value?.title || defaultTitleOption.value?.value?.value as string || '',
   quoteDate: item.value?.quoteDate || DateTime.now().toFormat('yyyy-LL-dd'),
   quoteValidUntil: item.value?.quoteValidUntil || '',
   introText: item.value?.introText || defaultIntroOption.value?.value?.value as string || '',
@@ -314,8 +304,7 @@ const editForm = ref({
     quantity: 1,
     unit: '',
     price: 0,
-    taxRate: 0.19,
-    taxRatePercent: 19,
+    taxRate: undefined,
   }]).map(qi => ({
     quotePosition: qi.quotePosition,
     title: qi.title,
@@ -324,13 +313,12 @@ const editForm = ref({
     unit: qi.unit || '',
     price: qi.price,
     taxRate: qi.taxRate,
-    taxRatePercent: Math.round(qi.taxRate * 100),
   })) as EditQuoteItem[]
 });
 
-const calculateItemTotal = (item: EditQuoteItem) => {
+const calculateItemSubtotal = (item: EditQuoteItem) => {
   const totals = calculateQuoteItemTotals(item.quantity || 0, item.price || 0, item.taxRate || 0);
-  return totals.total;
+  return totals.subtotal;
 };
 
 const calculatedTotals = computed(() => {
@@ -354,8 +342,7 @@ const addItem = () => {
     quantity: 1,
     unit: '',
     price: 0,
-    taxRate: 0.19,
-    taxRatePercent: 19,
+    taxRate: undefined,
   });
 
   // Scroll to the newly added item
@@ -400,24 +387,6 @@ const updatePositions = () => {
   });
 };
 
-// Watch for taxRatePercent changes and convert to taxRate
-watch(() => editForm.value.quoteItems, (items) => {
-  items.forEach(item => {
-    // Convert percent to rate (e.g., 19% -> 0.19)
-    item.taxRate = (item.taxRatePercent || 0) / 100;
-  });
-}, { deep: true });
-
-const formatDate = (dateStr: string) => {
-  if (!dateStr) return '-';
-  return DateTime.fromISO(dateStr).toFormat('dd. LLL yyyy');
-};
-
-const formatDateTime = (dateStr: string) => {
-  if (!dateStr) return '-';
-  return DateTime.fromISO(dateStr).toFormat('dd. LLL yyyy, HH:mm');
-};
-
 const onSave = async () => {
   try {
     if (editForm.value.quoteItems.length === 0) {
@@ -440,7 +409,6 @@ const onSave = async () => {
       status: editForm.value.status,
       companyId: filterString(editForm.value.companyId),
       ownerId: filterString(editForm.value.ownerId),
-      title: filterString(editForm.value.title),
       quoteDate: editForm.value.quoteDate,
       quoteValidUntil: filterString(editForm.value.quoteValidUntil),
       introText: filterString(editForm.value.introText),
@@ -463,5 +431,10 @@ const onSave = async () => {
     toast.add({ type: 'error', title: $t(errorKey) });
   }
 };
+
+onMounted(() => {
+  if (isCreateMode)
+    clearItem();
+});
 
 </script>

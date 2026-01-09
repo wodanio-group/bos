@@ -4,7 +4,9 @@
  *   schemas:
  *     StatsKey:
  *       type: string
- *       enum: [TOTAL_COMPANY_COUNT, TOTAL_PERSON_COUNT]
+ *       enum:
+ *         - TOTAL_COMPANY_COUNT
+ *         - TOTAL_PERSON_COUNT
  *       description: Available statistics keys
  *     StatsItem:
  *       type: object
@@ -14,6 +16,7 @@
  *           $ref: '#/components/schemas/StatsKey'
  *         value:
  *           type: number
+ *           nullable: true
  *           description: The numerical value of the statistic
  *       required:
  *         - key
@@ -23,5 +26,5 @@ export type StatsKey = 'TOTAL_COMPANY_COUNT' | 'TOTAL_PERSON_COUNT';
 
 export interface StatsItem {
   key: StatsKey;
-  value: number;
+  value: number | null;
 }

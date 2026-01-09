@@ -1,7 +1,7 @@
 import { prisma } from "~~/lib/prisma.server";
 import { z } from "zod";
 import { authMiddleware } from "~~/server/utils/auth";
-import type { StatsItem, StatsKey } from "~~/shared/types/stats";
+import type { StatsItem } from "~~/shared/types/stats";
 
 /**
  * @swagger
@@ -51,9 +51,7 @@ import type { StatsItem, StatsKey } from "~~/shared/types/stats";
  *         $ref: '#/components/responses/Forbidden'
  */
 export default defineEventHandler(async (event) => {
-  await authMiddleware(event, {
-    rights: ['contact.all.view']
-  });
+  const user = await authMiddleware(event);
 
   const body = z.object({
     keys: z.array(z.enum(['TOTAL_COMPANY_COUNT', 'TOTAL_PERSON_COUNT'])),
@@ -70,17 +68,19 @@ export default defineEventHandler(async (event) => {
 
   // Process each requested stat key
   for (const key of body.data.keys) {
-    let value = 0;
-
+    let value: number | null = null;
     switch (key) {
       case 'TOTAL_COMPANY_COUNT':
-        value = await prisma.company.count();
+        value = hasRoleRights(user.role, ['contact.all.view'])
+          ? (await prisma.company.count())
+          : null;
         break;
       case 'TOTAL_PERSON_COUNT':
-        value = await prisma.person.count();
+        value = hasRoleRights(user.role, ['contact.all.view'])
+          ? (await prisma.person.count())
+          : null;
         break;
     }
-
     results.push({ key, value });
   }
 

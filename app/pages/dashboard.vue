@@ -5,7 +5,9 @@
     <div class="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
       <!-- Companies Stats -->
-      <PageSectionBox :title="$t('dashboard.stats.companies')">
+      <PageSectionBox 
+        v-if="companiesCount !== null"
+        :title="$t('dashboard.stats.companies')">
         <div class="p-6">
           <div class="text-3xl font-bold text-gray-900 dark:text-white">
             {{ companiesCount }}
@@ -17,7 +19,9 @@
       </PageSectionBox>
 
       <!-- Persons Stats -->
-      <PageSectionBox :title="$t('dashboard.stats.persons')">
+      <PageSectionBox 
+        v-if="personsCount !== null"
+        :title="$t('dashboard.stats.persons')">
         <div class="p-6">
           <div class="text-3xl font-bold text-gray-900 dark:text-white">
             {{ personsCount }}
@@ -53,8 +57,8 @@ const hasRightTimetrackingOwn = computed(() => user
     || (user.rights.includes('timetracking.own.view') && user.rights.includes('timetracking.own.create')) ));
 
 // Fetch dashboard statistics
-const companiesCount = ref(0);
-const personsCount = ref(0);
+const companiesCount = ref<number | null>(null);
+const personsCount = ref<number | null>(null);
 
 // Load stats from the new stats endpoint
 const { data: stats } = await useFetch<StatsItem[]>('/api/stats', {
@@ -68,8 +72,8 @@ if (stats.value) {
   const companyStats = stats.value.find(s => s.key === 'TOTAL_COMPANY_COUNT');
   const personStats = stats.value.find(s => s.key === 'TOTAL_PERSON_COUNT');
 
-  companiesCount.value = companyStats?.value ?? 0;
-  personsCount.value = personStats?.value ?? 0;
+  companiesCount.value = companyStats?.value ?? null;
+  personsCount.value = personStats?.value ?? null;
 }
 
 </script>

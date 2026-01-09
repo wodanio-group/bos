@@ -2126,7 +2126,6 @@ export const QuoteScalarFieldEnum = {
   quoteId: 'quoteId',
   quoteDate: 'quoteDate',
   quoteValidUntil: 'quoteValidUntil',
-  title: 'title',
   introText: 'introText',
   outroText: 'outroText',
   subtotal: 'subtotal',

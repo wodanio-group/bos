@@ -65,11 +65,9 @@
       </div>
     </section>
 
-    {{#if quote.title}}
     <p class="invoice-heading">
-      {{quote.title}}
+      Angebot {{quote.quoteId}}
     </p>
-    {{/if}}
     {{#if quote.introText}}
     <div class="intro">
       {{{markdownToHtml quote.introText}}}
