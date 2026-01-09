@@ -131,10 +131,9 @@ const actionHandler = async (key: string, item?: PersonViewModel | null) => { sw
   case 'create':
     const createdItem = await create(createForm.value as any);
     if (createdItem === null)
-      return toast.add({ type: 'error', title: $t('person.createSuccess', { name: personDisplayName(createForm as any) }) });
-    toast.add({ type: 'success', title: $t('person.createError', { name: personDisplayName(createdItem) }) });
+      return toast.add({ type: 'error', title: $t('person.createError', { name: personDisplayName(createForm as any) }) });
+    toast.add({ type: 'success', title: $t('person.createSuccess', { name: personDisplayName(createdItem) }) });
     createForm.value = defaultCreateForm;
-    openCreateForm.value = true;
     actionHandler('view-edit', createdItem);
     break;
   case 'view':
@@ -162,7 +161,7 @@ const actionHandler = async (key: string, item?: PersonViewModel | null) => { sw
     break;
 } };
 
-onUnmounted(() => {
+onMounted(() => {
   createForm.value = defaultCreateForm;
 });
 

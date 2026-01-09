@@ -1,8 +1,8 @@
 import { Queue } from 'bullmq';
 import { useRuntimeConfig } from '#imports';
-import { redisConnection } from './redis';
+import { redisConnectionOptions } from './redis';
 
 export const queue = new Queue(useRuntimeConfig().bullmq.sysname, {
-  connection: redisConnection(),
+  connection: redisConnectionOptions(),
 });
 

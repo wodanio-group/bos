@@ -114,10 +114,9 @@ const actionHandler = async (key: string, item?: CompanyViewModel | null) => { s
   case 'create':
     const createdItem = await create(createForm.value as any);
     if (createdItem === null)
-      return toast.add({ type: 'error', title: $t('company.createSuccess', { name: companyDisplayName(createForm as any) }) });
-    toast.add({ type: 'success', title: $t('company.createError', { name: companyDisplayName(createdItem) }) });
+      return toast.add({ type: 'error', title: $t('company.createError', { name: companyDisplayName(createForm as any) }) });
+    toast.add({ type: 'success', title: $t('company.createSuccess', { name: companyDisplayName(createdItem) }) });
     createForm.value = defaultCreateForm;
-    openCreateForm.value = true;
     actionHandler('view-edit', createdItem);
     break;
   case 'view':
@@ -145,7 +144,7 @@ const actionHandler = async (key: string, item?: CompanyViewModel | null) => { s
     break;
 } };
 
-onUnmounted(() => {
+onMounted(() => {
   createForm.value = defaultCreateForm;
 });
 
