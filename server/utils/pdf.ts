@@ -76,6 +76,10 @@ Handlebars.registerHelper('markdownToHtml', (html: any) => {
   });
 });
 
+Handlebars.registerHelper('concat', function() {
+  return Array.prototype.slice.call(arguments, 0, -1).join('');
+});
+
 Handlebars.registerHelper('t', (key: string, data?: Record<string, string>) => {
   const t = getTranslation();
   return t(key, data);

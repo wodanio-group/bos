@@ -88,10 +88,6 @@ export const countryToViewModel = (item: Country): CountryViewModel => {
   };
 }
 
-export const countryDisplayNameByCode = (code: string, lang?: string): string => {
-  return code;
-}
-
 export const contactCommunicationWayToViewModel = (item: ContactCommunicationWay): ContactCommunicationWayViewModel => {
   return {
     createdAt: (new Date(item.createdAt)).toISOString(),

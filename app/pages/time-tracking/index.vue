@@ -83,15 +83,12 @@ const actionHandler = async (key: string, item?: TimeTrackingActivityViewModel |
 
 const actionFilter = async (key: string, value: string) => { switch (key) {
   case 'from':
-    console.log(value);
     await loadItems();
     break;
   case 'to':
-    console.log(value);
     await loadItems();
     break;
   case 'user':
-    console.log(value);
     await loadItems();
     break;
 } };

@@ -85,6 +85,8 @@ contactAddressCategories:
 roles:
   ADMIN: "Administrator"
   USER: "Benutzer"
+  SALES: "Vertrieb"
+  EMPLOYEE: "Mitarbeiter"
   NONE: "Keine"
 
 genders:

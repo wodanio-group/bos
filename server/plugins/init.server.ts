@@ -4,22 +4,22 @@ import { OptionKey, OptionValue } from "~~/shared/types/option";
 
 export default defineNitroPlugin(async (nitroApp) => {
 
-  const options: { key: OptionKey, value: OptionValue }[] = [
+  const options: { key: OptionKey, value: OptionValue, public?: boolean }[] = [
     { key: 'CUSTOMER_ID_COUNTER', value: { counter: 100001 } },
     { key: 'CUSTOMER_ID_SCHEMA', value: { schema: 'C%YYYY%COUNTER' } },
     { key: 'QUOTE_ID_COUNTER', value: { counter: 10001 } },
     { key: 'QUOTE_ID_SCHEMA', value: { schema: 'Q%YYYY%MM%COUNTER' } },
-    { key: 'QUOTE_DEFAULT_INTRO_TEXT', value: { value: 'Sehr geehrte Damen und Herren,\n\nwir möchten Ihnen das folgende freibleibende Angebot unterbreiten:' } },
-    { key: 'QUOTE_DEFAULT_OUTRO_TEXT', value: { value: 'Beste Grüße\n{{owner.displayName}}\n{{companyInfo.companyName}}' } },
-    { key: 'SYSTEM_CURRENCY', value: { value: 'EUR' } },
+    { key: 'QUOTE_DEFAULT_INTRO_TEXT', value: { value: 'Sehr geehrte Damen und Herren,\n\nwir möchten Ihnen das folgende freibleibende Angebot unterbreiten:' }, public: true },
+    { key: 'QUOTE_DEFAULT_OUTRO_TEXT', value: { value: 'Beste Grüße\n{{owner.displayName}}\n{{companyInfo.companyName}}' }, public: true },
+    { key: 'SYSTEM_CURRENCY', value: { value: 'EUR' }, public: true },
     { key: 'SYSTEM_UNITS', value: {
       units: [ 'Stk.', 'Std.', 'monatlich', 'jährlich' ],
       default: 'Stk.'
-    } },
+    }, public: true },
     { key: 'SYSTEM_TAX_RATES', value: {
       rates: [ 0, 0.07, 0.19 ],
       default: 0.19
-    } },
+    }, public: true },
     { key: 'COMPANY_INFO', value: {
       companyName: 'Example Inc.',
       companyAddress: 'Sample Street 1',
@@ -38,7 +38,7 @@ export default defineNitroPlugin(async (nitroApp) => {
       bankName: 'Sample Bank',
       iban: 'DE00 0000 0000 0000 0000 00',
       bic: 'XXXXXXXXXXX',
-    } },
+    }, public: true },
   ];
 
   const countries: CountryViewModel[] = [
@@ -50,10 +50,13 @@ export default defineNitroPlugin(async (nitroApp) => {
   for (const option of options) {
     await prisma.option.upsert({
       where: { key: option.key },
-      update: {},
+      update: {
+        public: option.public === true,
+      },
       create: {
         key: option.key,
-        value: option.value
+        value: option.value,
+        public: option.public === true,
       }
     });
   }

@@ -194,7 +194,6 @@ const getItemFieldIcon = (field: Field, item: any): { name?: string, classes?: s
   const icon = field.transformIcon
     ? field.transformIcon(getItemFieldValue(field, item), item)
     : field.icon;
-  console.log(icon)
   return {
     name: icon?.name,
     classes: icon?.classes,

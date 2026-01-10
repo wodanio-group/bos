@@ -21,15 +21,26 @@ export const UserRoleRights: {
     'timetracking.all.view', 'timetracking.all.edit', 'timetracking.all.delete',
     'contact.all.view', 'contact.all.create', 'contact.all.edit', 'contact.all.delete',
   ] },
-  { role: 'USER', rights: [
+  { role: 'SALES', rights: [
+    'task.all.view', 'task.all.create', 'task.all.edit', 'task.all.delete',
+    'campaign.all.view',
+    'lead.all.view', 'lead.all.create', 'lead.all.edit', 'lead.all.delete',
+    'leadstatus.all.view',
+    'opportunity.all.view', 'opportunity.all.create', 'opportunity.all.edit', 'opportunity.all.delete',
+    'opportunitystage.all.view',
+    'quote.all.view', 'quote.all.create', 'quote.all.edit', 'quote.all.delete',
+    'contact.all.view', 'contact.all.create', 'contact.all.edit', 'contact.all.delete',
+    'timetracking.own.view', 'timetracking.own.create', 'timetracking.own.editnoneexported',
+  ] },
+  { role: 'EMPLOYEE', rights: [
     'task.own.view', 'task.own.create', 'task.own.edit', 'task.own.delete',
     'timetracking.own.view', 'timetracking.own.create', 'timetracking.own.editnoneexported',
-    'contact.all.view',
   ] },
+  { role: 'USER', rights: [] },
   { role: 'NONE', rights: [] },
 ];
 
-export const userRoleValidator = z.enum(['ADMIN', 'USER', 'NONE']).default('NONE');
+export const userRoleValidator = z.enum(['ADMIN', 'USER', 'SALES', 'EMPLOYEE', 'NONE']).default('NONE');
 
 export const getRightsByUserRole = (role: UserRole): UserRoleRight[] => UserRoleRights.find(o => o.role === role)?.rights ?? [];
 

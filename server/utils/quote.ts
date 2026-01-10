@@ -2,7 +2,6 @@ import { DateTime } from "luxon";
 import { getOptions, setOptions } from "./option";
 import type { Company, ContactAddress, Country, Quote, QuoteItem, User } from "~~/lib/prisma.server";
 import { generatePdf, PdfTemplateKey } from "./pdf";
-import { countryDisplayNameByCode } from "~~/shared/utils/contact";
 
 export const getNextAvailableQuoteId = async (): Promise<string> => {
   const opts = await getOptions(['QUOTE_ID_COUNTER', 'QUOTE_ID_SCHEMA']),
@@ -52,10 +51,7 @@ export const generateQuotePdf = async (quote: Quote & {
     customer: {
       ...quote.company,
       displayName: companyDisplayName(quote.company),
-      address: {
-        ...quote.company.contactAddresses.at(0),
-        countryDisplayName: quote.company.contactAddresses[0] ? countryDisplayNameByCode(quote.company.contactAddresses[0].countryId) : null,
-      },
+      address: quote.company.contactAddresses.at(0),
     },
     owner: {
       ...quote.owner,

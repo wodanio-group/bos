@@ -26,8 +26,8 @@
           {{#if (or customer.address.zipCode customer.address.city)}}
             <span>{{customer.address.zipCode}} {{customer.address.city}}</span>
           {{/if}}
-          {{#if customer.address.countryDisplayName}}
-            <span>{{customer.address.countryDisplayName}}</span>
+          {{#if customer.address.countryId}}
+            <span>{{t (concat 'countries.' customer.address.countryId)}}</span>
           {{/if}}
         </div>
       </div>

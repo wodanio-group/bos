@@ -7,8 +7,8 @@ import type { BaseViewModel } from "./base";
  *   schemas:
  *     UserRole:
  *       type: string
- *       enum: [ADMINISTRATOR, USER]
- *       description: User role determining base permissions (ADMINISTRATOR has full access, USER has limited access based on rights)
+ *       enum: [ADMIN, USER, SALES, EMPLOYEE, NONE]
+ *       description: User role determining base permissions (ADMIN has full access, SALES has sales-related access, EMPLOYEE has time tracking only, USER has limited access, NONE has no access)
  */
 export type UserRole = OrmUserRole;
 
@@ -122,8 +122,8 @@ export type UserRoleRight =
  *               description: Display name for the user
  *             role:
  *               type: string
- *               enum: [ADMINISTRATOR, USER]
- *               description: User role (ADMINISTRATOR or USER)
+ *               enum: [ADMIN, USER, SALES, EMPLOYEE, NONE]
+ *               description: User role (ADMIN, USER, SALES, EMPLOYEE, or NONE)
  *             rights:
  *               type: array
  *               items:
