@@ -8,7 +8,12 @@
       addActionKey="openAdd"
       itemClickActionKey="openView"
       :fields="[
-        { title: $t('task.fields.status'), fieldName: 'doneAt', transform: (v: any) => v ? $t('task.status.done') : $t('task.status.open') },
+        { 
+          title: $t('task.fields.status'), 
+          fieldName: 'doneAt', 
+          transform: (v: any) => v ? $t('task.status.done') : $t('task.status.open'), 
+          transformIcon: (v: string, i: TaskViewModel) => (i.doneAt !== null ? ({ name: 'circle-check-big', classes: 'text-green-600' }) : undefined)
+        },
         { title: $t('task.fields.name'), fieldName: 'name' },
         { title: $t('task.fields.type'), fieldName: 'type', transform: (v: any) => $t(`task.types.${v}`) },
         ...(hasRightUserAllView ? [{ title: $t('task.fields.user'), fieldName: 'userId', transform: (v: any, item: any) => getUserName(item.userId) }] : []),

@@ -8,18 +8,24 @@
       addActionKey="openAdd"
       itemClickActionKey="view"
       :fields="[
-        { title: $t('quote.fields.status'), fieldName: 'status', transform: (v: any) => $t(`quote.status.${v}`) },
+        { title: $t('quote.fields.status'), fieldName: 'status', transform: (v: any) => $t(`quote.status.${v}`), transformIcon: (v: string, i: QuoteViewModel) => { switch(i.status) {
+          case 'DRAFT':
+            return { name: 'notebook-pen', classes: 'text-gray-600' };
+          case 'SENT':
+            return { name: 'send', classes: 'text-primary-600' };
+          case 'ACCEPTED':
+            return { name: 'circle-check-big', classes: 'text-green-600' };
+          case 'REJECTED':
+            return { name: 'circle-x', classes: 'text-red-600' };
+          default:
+            return undefined;
+        } } },
         { title: $t('quote.fields.quoteId'), fieldName: 'quoteId' },
         { title: $t('quote.fields.quoteDate'), fieldName: 'quoteDate', transform: (v: any) => formatDate(v) },
         { title: $t('quote.fields.company'), fieldName: 'companyDisplayName', transform: (v: any) => v || '-' },
         { title: $t('quote.fields.subtotal'), fieldName: 'subtotal', transform: (v: any) => formatCurrency(v) },
       ]"
-      :actions="[
-        { title: $t('general.view'), icon: 'external-link', key: 'view' },
-        { title: $t('quote.item.downloadPdf'), icon: 'download', key: 'download-pdf' },
-        ...((hasRightQuoteAllEdit === true) ? [{ title: $t('general.edit'), icon: 'square-pen', key: 'view-edit' }] : []),
-        ...((hasRightQuoteAllDelete === true) ? [{ title: $t('general.delete'), icon: 'trash-2', key: 'requestDelete' }] : []),
-      ]"
+      :actions="getActionsForItem"
       :paginationState="pagination"
       :paginationIsFirst="paginationIsFirst"
       :paginationIsLast="paginationIsLast"
@@ -121,6 +127,26 @@ watch(items, async () => {
 const formatDate = (dateStr: string) => {
   if (!dateStr) return '-';
   return DateTime.fromISO(dateStr).toFormat('dd. LLL yyyy');
+};
+
+// Generate actions based on quote status
+const getActionsForItem = (item: QuoteViewModel) => {
+  const actions = [
+    { title: $t('general.view'), icon: 'external-link', key: 'view' },
+    { title: $t('quote.item.downloadPdf'), icon: 'download', key: 'download-pdf' },
+  ];
+
+  // Edit button: hide for ACCEPTED or REJECTED quotes
+  if (hasRightQuoteAllEdit.value && item.status !== 'ACCEPTED' && item.status !== 'REJECTED') {
+    actions.push({ title: $t('general.edit'), icon: 'square-pen', key: 'view-edit' });
+  }
+
+  // Delete button: only show for DRAFT quotes
+  if (hasRightQuoteAllDelete.value && item.status === 'DRAFT') {
+    actions.push({ title: $t('general.delete'), icon: 'trash-2', key: 'requestDelete' });
+  }
+
+  return actions;
 };
 
 const actionHandler = async (key: string, item?: QuoteViewModel | null) => { switch (key) {

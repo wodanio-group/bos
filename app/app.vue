@@ -39,8 +39,12 @@
 
 <script setup lang="ts">
 
+const runtimeConfig = useRuntimeConfig();
 const { progress } = useLoadingIndicator();
-const { toasts, getIconForToast, add } = useToast();
+const { toasts, getIconForToast } = useToast();
+const { setLocale } = useI18n();
+
+setLocale(runtimeConfig.public.local as any);
 
 const loadingBarWidth = computed<string | null>(() => {
   if (progress.value <= 0 || progress.value >= 100)

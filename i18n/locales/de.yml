@@ -1,0 +1,451 @@
+---
+
+general:
+  name: "Name"
+  name2: "Namenszusatz"
+  user: "Benutzer"
+  from: "Von"
+  to: "Bis"
+  duration: "Dauer"
+  email: "E-Mail"
+  web: "Web"
+  phone: "Telefon"
+  role: "Rolle"
+  roleAt: "{role} bei"
+  createdAt: "Erstellt am"
+  updatedAt: "Aktualisiert am"
+  address: "Adresse"
+  address2: "Adresszusatz"
+  firstname: "Vorname"
+  surname: "Nachname"
+  familyname: "Nachname"
+  gender: "Geschlecht"
+  vatId: "USt-IdNr."
+  taxId: "Steuernummer"
+  birthday: "Geburtstag"
+  category: "Kategorie"
+  zipCode: "PLZ"
+  city: "Stadt"
+  country: "Land"
+  type: "Typ"
+  id: "ID"
+  value: "Wert"
+  externalId: "Externe ID"
+  customerId: "Kundennummer"
+  person: "Person"
+  company: "Unternehmen"
+  edit: "Bearbeiten"
+  add: "Hinzufügen"
+  delete: "Löschen"
+  cancel: "Abbrechen"
+  submit: "Absenden"
+  view: "Ansehen"
+  save: "Speichern"
+  moveUp: "Nach oben"
+  moveDown: "Nach unten"
+  noItemsFound: "Keine Einträge gefunden"
+  searchPlaceholder: "Suchen ..."
+
+format:
+  datetime: "dd. LLL yyyy, HH:mm"
+  date: "dd. LLL yyyy"
+  time: "HH:mm"
+  duration: "hh:mm"
+
+contactCommunicationWayTypes:
+  PHONE: "Telefon"
+  WEB: "Web"
+  EMAIL: "E-Mail"
+
+contactNoteTypes:
+  NOTE: "Notiz"
+  CALL: "Anruf"
+  MEETING: "Meeting"
+  OTHER: "Sonstiges"
+
+contactCommunicationWayCategories:
+  INVOICING: "Rechnung"
+  WORK: "Arbeit"
+  FAX: "Fax"
+  MOBILE: "Mobil"
+  AUTOBOX: "Anrufbeantworter"
+  NEWSLETTER: "Newsletter"
+  PRIVAT: "Privat"
+  NONE: "Keine"
+
+contactAddressCategories:
+  HEADQUARTER: "Hauptsitz"
+  INVOICE: "Rechnung"
+  WORK: "Arbeit"
+  DELIVERY: "Lieferung"
+  PICKUP: "Abholung"
+  PRIVAT: "Privat"
+  NONE: "Keine"
+
+roles:
+  ADMIN: "Administrator"
+  USER: "Benutzer"
+  NONE: "Keine"
+
+genders:
+  MALE: "Männlich"
+  FEMALE: "Weiblich"
+  DIVERSE: "Divers"
+  NONE: "Keine Angabe"
+
+countries:
+  DE: "Deutschland"
+  AT: "Österreich"
+  CH: "Schweiz"
+
+registrationError:
+  title: "Fehler"
+  text: "Die Anmeldung oder Registrierung konnte nicht erfolgreich abgeschlossen werden. Möglicherweise wurde die automatische Registrierung deaktiviert. Bitte wenden Sie sich an den Administrator."
+  retry: "Erneut versuchen"
+
+layout:
+  aside:
+    dashboard: "Dashboard"
+    companies: "Unternehmen"
+    persons: "Personen"
+    tasks: "Aufgaben"
+    quotes: "Angebote"
+    options: "Optionen"
+    users: "Benutzerverwaltung"
+    userTokens: "API-Tokens"
+    timeTrackings: "Zeiterfassung"
+    profile: "Profil"
+    search: "Suchen ..."
+    logout: "Abmelden"
+  dialogSearch:
+    searchPlaceholder: "Suchen ..."
+    noResults: "Keine Ergebnisse"
+
+dashboard:
+  title: "Dashboard"
+  stats:
+    companies: "Unternehmen"
+    totalCompanies: "Unternehmen gesamt"
+    persons: "Personen"
+    totalPersons: "Personen gesamt"
+
+company:
+  title: "Unternehmen"
+  deleteTitle: "\"{name}\" löschen"
+  deleteDescription: "Möchten Sie das Unternehmen dauerhaft löschen?"
+  deleteSuccessToast: "Unternehmen \"{name}\" gelöscht"
+  deleteErrorToast: "Fehler beim Löschen"
+  createDialogTitle: "Unternehmen erstellen"
+  createSuccess: "Unternehmen \"{name}\" erstellt!"
+  createError: "Fehler beim Erstellen"
+  notes:
+    toast:
+      success: "Unternehmensnotizen erfolgreich aktualisiert."
+      error: "Fehler beim Aktualisieren der Unternehmensnotizen."
+  item:
+    title: "{name}"
+    subtitle: "Unternehmen"
+    delete:
+      title: "\"{name}\" löschen"
+      description: "Möchten Sie das Unternehmen dauerhaft löschen?"
+      success: "Unternehmen \"{name}\" gelöscht"
+      error: "Fehler beim Löschen"
+  edit:
+    title: "{name}"
+    subtitle: "Unternehmen bearbeiten"
+    save: "Speichern"
+    toast:
+      success: "Unternehmen erfolgreich aktualisiert."
+      error: "Fehler beim Aktualisieren des Unternehmens."
+
+person:
+  title: "Personen"
+  deleteTitle: "\"{name}\" löschen"
+  deleteDescription: "Möchten Sie die Person dauerhaft löschen?"
+  deleteSuccessToast: "Person \"{name}\" gelöscht"
+  deleteErrorToast: "Fehler beim Löschen"
+  createDialogTitle: "Person erstellen"
+  createSuccess: "Person \"{name}\" erstellt!"
+  createError: "Fehler beim Erstellen"
+  notes:
+    toast:
+      success: "Personennotizen erfolgreich aktualisiert."
+      error: "Fehler beim Aktualisieren der Personennotizen."
+  item:
+    title: "{name}"
+    subtitle: "Person"
+    delete:
+      title: "\"{name}\" löschen"
+      description: "Möchten Sie die Person dauerhaft löschen?"
+      success: "Person \"{name}\" gelöscht"
+      error: "Fehler beim Löschen"
+  edit:
+    title: "{name}"
+    subtitle: "Person bearbeiten"
+    save: "Speichern"
+    toast:
+      success: "Person erfolgreich aktualisiert."
+      error: "Fehler beim Aktualisieren der Person."
+
+quote:
+  title: "Angebote"
+  openPdf: "PDF öffnen"
+  deleteTitle: "\"{quoteId}\" löschen"
+  deleteDescription: "Möchten Sie das Angebot dauerhaft löschen?"
+  deleteSuccessToast: "Angebot \"{quoteId}\" gelöscht"
+  deleteErrorToast: "Fehler beim Löschen"
+  status:
+    DRAFT: "Entwurf"
+    SENT: "Versendet"
+    ACCEPTED: "Angenommen"
+    REJECTED: "Abgelehnt"
+  fields:
+    status: "Status"
+    quoteId: "Angebots-Nr."
+    quoteDate: "Angebotsdatum"
+    company: "Unternehmen"
+    owner: "Verantwortlicher"
+    subtotal: "Zwischensumme"
+    total: "Gesamt"
+    validUntil: "Gültig bis"
+    title: "Titel"
+    introText: "Einleitungstext"
+    outroText: "Schlusstext"
+  item:
+    title: "Angebot {quoteId}"
+    details: "Details"
+    pdfPreview: "PDF-Vorschau"
+    downloadPdf: "PDF herunterladen"
+    items: "Angebotspositionen"
+    texts: "Texte"
+    introText: "Einleitung"
+    outroText: "Schluss"
+    subtotal: "Zwischensumme"
+    tax: "MwSt."
+    total: "Gesamt"
+    pieces: "Stk."
+    taxRate: "MwSt.-Satz"
+    viewCompany: "Unternehmen ansehen"
+    delete:
+      title: "\"{quoteId}\" löschen"
+      description: "Möchten Sie das Angebot dauerhaft löschen?"
+      success: "Angebot \"{quoteId}\" gelöscht"
+      error: "Fehler beim Löschen"
+  edit:
+    title: "{quoteId} bearbeiten"
+    save: "Speichern"
+    basicInfo: "Grundinformationen"
+    items: "Angebotspositionen"
+    item: "Position"
+    position: "Pos."
+    itemTitle: "Titel"
+    itemDescription: "Beschreibung"
+    quantity: "Menge"
+    unit: "Einheit"
+    price: "Einzelpreis"
+    taxRate: "MwSt.-Satz"
+    itemSubtotal: "Zwischensumme Position"
+    addItem: "Position hinzufügen"
+    company: "Unternehmen"
+    companyReadonly: "Unternehmen kann nach Erstellung nicht geändert werden"
+    viewCompany: "Unternehmen ansehen"
+    metadata: "Metadaten"
+    toast:
+      success: "Angebot erfolgreich aktualisiert"
+      error: "Fehler beim Aktualisieren des Angebots"
+    error:
+      noItems: "Mindestens eine Position ist erforderlich"
+  create:
+    title: "Angebot erstellen"
+    save: "Angebot erstellen"
+    basicInfo: "Grundinformationen"
+    items: "Angebotspositionen"
+    help: "Hilfe"
+    helpText1: "Füllen Sie das Unternehmen, das Datum und mindestens eine Position aus, um ein Angebot zu erstellen."
+    helpText2: "Die Angebots-ID wird automatisch generiert."
+    searchCompany: "Unternehmen suchen"
+    selectCompany: "Unternehmen auswählen"
+    searchOwner: "Benutzer suchen"
+    selectOwner: "Verantwortlichen auswählen"
+    titleTemplate: "Angebot {quoteId}"
+    toast:
+      success: "Angebot erfolgreich erstellt"
+      error: "Fehler beim Erstellen des Angebots"
+    error:
+      noCompany: "Bitte wählen Sie ein Unternehmen aus"
+      noDate: "Bitte geben Sie ein Angebotsdatum ein"
+      noItems: "Mindestens eine Position ist erforderlich"
+
+task:
+  title: "Aufgaben"
+  deleteTitle: "\"{name}\" löschen"
+  deleteDescription: "Möchten Sie die Aufgabe dauerhaft löschen?"
+  deleteSuccessToast: "Aufgabe \"{name}\" gelöscht"
+  deleteErrorToast: "Fehler beim Löschen"
+  createDialogTitle: "Aufgabe erstellen"
+  createSuccess: "Aufgabe \"{name}\" erstellt!"
+  createError: "Fehler beim Erstellen"
+  currentUser: "Sie"
+  types:
+    CALL: "Anruf"
+    MAIL: "E-Mail"
+    ACTION: "Aktion"
+    OTHER: "Sonstiges"
+  status:
+    open: "Offen"
+    done: "Erledigt"
+  fields:
+    type: "Typ"
+    name: "Name"
+    content: "Inhalt"
+    startDate: "Startdatum"
+    dueDate: "Fälligkeitsdatum"
+    doneDate: "Erledigungsdatum"
+    status: "Status"
+    isDone: "Als erledigt markieren"
+    user: "Benutzer"
+    company: "Unternehmen"
+    person: "Person"
+  item:
+    title: "{name}"
+    subtitle: "Aufgabe"
+    details: "Details"
+    metadata: "Metadaten"
+    delete:
+      title: "\"{name}\" löschen"
+      description: "Möchten Sie die Aufgabe dauerhaft löschen?"
+      success: "Aufgabe \"{name}\" gelöscht"
+      error: "Fehler beim Löschen"
+  edit:
+    title: "{name}"
+    subtitle: "Aufgabe bearbeiten"
+    details: "Aufgabendetails"
+    save: "Speichern"
+    toast:
+      success: "Aufgabe erfolgreich aktualisiert."
+      error: "Fehler beim Aktualisieren der Aufgabe."
+  selectUser: "Benutzer auswählen"
+  selectCompany: "Unternehmen auswählen"
+  selectPerson: "Person auswählen"
+  toggleDone:
+    title: "Erledigt/Offen umschalten"
+    setDone: "Als erledigt markieren"
+    setOpen: "Als offen markieren"
+    markedDone: "Aufgabe \"{name}\" als erledigt markiert"
+    markedOpen: "Aufgabe \"{name}\" als offen markiert"
+    error: "Fehler beim Aktualisieren des Aufgabenstatus"
+
+option:
+  title: "Optionen"
+  editTitle: "Option \"{key}\" bearbeiten"
+  valuePlaceholder: "JSON-Wert eingeben..."
+  valueHint: "Wert muss gültiges JSON sein (Objekt, Array, String, Zahl oder Boolean)"
+  success:
+    upsert: "Option gespeichert"
+  error:
+    upsert: "Fehler beim Speichern"
+    invalidJson: "Ungültiges JSON-Format"
+
+user:
+  title: "Benutzerverwaltung"
+  add: "Hinzufügen"
+  editTitleAdd: "Benutzer hinzufügen"
+  editTitleEdit: "\"{name}\" bearbeiten"
+  deleteTitle: "\"{name}\" löschen"
+  deleteDescription: "Möchten Sie den Benutzer dauerhaft löschen?"
+  success:
+    upsert: "Benutzer gespeichert"
+    delete: "Benutzer gelöscht"
+  error:
+    upsert: "Fehler beim Speichern"
+    delete: "Fehler beim Löschen"
+
+userToken:
+  title: "API-Tokens"
+  unnamedToken: "Unbenanntes Token"
+  createDialogTitle: "API-Token erstellen"
+  createSuccess: "Token erfolgreich erstellt"
+  createError: "Fehler beim Erstellen des Tokens"
+  deleteTitle: "\"{name}\" löschen"
+  deleteDescription: "Möchten Sie dieses Token dauerhaft löschen? Diese Aktion kann nicht rückgängig gemacht werden und wird das Token ungültig machen."
+  deleteSuccessToast: "Token gelöscht"
+  deleteErrorToast: "Fehler beim Löschen"
+  tokenCreatedTitle: "Token erstellt"
+  tokenCreatedDescription: "Speichern Sie dieses Token jetzt. Sie werden es nicht mehr sehen können!"
+  copyToken: "Token kopieren"
+  tokenCopied: "Token in Zwischenablage kopiert"
+
+profile:
+  hello: "Hallo, {name}!"
+  user: "Benutzer"
+  userinfo: "Benutzerinfo"
+
+timeTracking:
+  title: "Zeiterfassung"
+  start: "Start"
+  stop: "Stopp"
+  csvExport: "CSV-Export"
+
+contactInfoSectionBox:
+  title: "Infos"
+
+contactNoteSectionBox:
+  title: "Notizen"
+  input:
+    content: "Inhalt"
+    type: "Typ"
+    timestamp: "Zeitstempel"
+    submit:
+      input: "Speichern"
+      create: "Erstellen"
+    edit: "Bearbeiten"
+    delete: "Löschen"
+    from: "von"
+  delete:
+    title: "Notiz löschen"
+    description: "Möchten Sie die Notiz dauerhaft löschen?"
+
+contactEdit:
+  baseInfo:
+    title: "Informationen"
+  communicationWays:
+    title: "Kommunikationswege"
+  addresses:
+    title: "Adressen"
+  personCompanyRelations:
+    companiesTitle: "Unternehmen"
+    personsTitle: "Personen"
+    searchDialog:
+      company:
+        title: "Unternehmen suchen und auswählen..."
+      person:
+        title: "Person suchen und auswählen..."
+
+template:
+  quote:
+    quote: "Angebot"
+    quoteNumber: "Angebots-Nr."
+    quoteDate: "Angebotsdatum"
+    customerNumber: "Kunden-Nr."
+    quoteValidUntil: "Gültig bis"
+    contactPerson: "Ansprechpartner"
+    pos: "Pos."
+    description: "Beschreibung"
+    unitPrice: "Einzelpreis"
+    quantity: "Menge"
+    taxRate: "MwSt.-Satz"
+    net: "Netto"
+    subtotal: "Zwischensumme netto"
+    plusVat: "zzgl. MwSt."
+    total: "Gesamt brutto"
+  footer:
+    page: "Seite"
+    fax: "Fax"
+    phone: "Telefon"
+    email: "E-Mail"
+    web: "Web"
+    iban: "IBAN"
+    bic: "BIC"
+    vatId: "USt-IdNr."
+    registerNumber: "Handelsregisternummer"
+    management: "Geschäftsführung"

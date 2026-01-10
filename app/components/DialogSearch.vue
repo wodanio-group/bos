@@ -30,7 +30,7 @@
                 :value="item"
                 class="cursor-pointer px-4 py-2 rounded-md data-[highlighted]:bg-secondary-100 inline-flex w-full items-center gap-4"
                 @select="onSelect(item)">
-                <atom-icon :icon="item.type === 'person' ? 'user-round' : 'building'" />
+                <atom-icon :icon="(item.type === 'person') ? 'user-round' : (item.type === 'company') ? 'building' : 'file-text'" />
                 <span>{{ item.title }}</span>
               </ComboboxItem>
             </ComboboxGroup>
@@ -76,7 +76,8 @@ const onUpdate = async (value: string) => {
   }
   try {
     const persons = await $fetch(`/api/person?search=${value}&take=10`),
-          companies = await $fetch(`/api/company?search=${value}&take=10`);
+          companies = await $fetch(`/api/company?search=${value}&take=10`),
+          quotes = await $fetch(`/api/quote?search=${value}&take=10`);
     findings.value = ([
       ...persons.map(o => ({
         type: 'person',
@@ -91,7 +92,14 @@ const onUpdate = async (value: string) => {
         title: companyDisplayName(o as any, { withCustomerId: true }),
         to: `/company/${o.id}`,
         updatedAt: (new Date(o.updatedAt ?? o.createdAt)).getTime()
-      }))
+      })),
+      ...quotes.map(o => ({
+        type: 'quote',
+        id: o.id,
+        title: o.quoteId,
+        to: `/quote/${o.id}`,
+        updatedAt: (new Date(o.updatedAt ?? o.createdAt)).getTime()
+      })),
     ] as IFinding[]).sort((a, b) => a.updatedAt - b.updatedAt);
   } catch (e) { }
 };

@@ -47,31 +47,39 @@
       </atom-button>
     </template>
 
-    <div class="block relative w-full">
-      <div class="block relative w-full">
-        <table class="w-full">
+    <div class="block relative w-full overflow-x-auto">
+      <div class="block relative w-full min-w-full">
+        <table class="w-full table-fixed">
           <thead>
             <tr
               class="border-b border-b-secondary-200 bg-secondary-50 text-sm text-secondary-700">
               <th
-                class="text-left px-4 py-2"
+                class="text-left px-4 py-2 truncate"
                 v-for="field in fields">
                 {{ field.title }}
               </th>
-              <th class="px-4 py-2"></th>
+              <th class="px-4 py-2 w-12"></th>
             </tr>
           </thead>
           <tbody v-if="items.length > 0">
             <tr
               class="text-sm text-primary-950 border-b border-b-secondary-200 transition-color hover:bg-secondary-50"
               v-for="item in items">
-              <td 
-                class="text-left px-4 py-3 cursor-pointer"
+              <td
+                class="text-left px-4 py-3 cursor-pointer overflow-hidden"
                 v-for="field in fields"
                 @click.prevent="emit('action', itemClickActionKey ?? 'itemClick', item )">
-                {{ (field.transform ? field.transform(item[field.fieldName], item) : item[field.fieldName]) ?? '-' }}
+                <div class="flex items-center justify-start gap-1.5 overflow-hidden">
+                  <atom-icon
+                    v-if="getItemFieldIcon(field, item).name"
+                    :icon="getItemFieldIcon(field, item).name!"
+                    class="!text-base flex-shrink-0"
+                    :class="getItemFieldIcon(field, item).classes">
+                  </atom-icon>
+                  <span class="truncate" v-html="getItemFieldValue(field, item)"></span>
+                </div>
               </td>
-              <td class="px-4 py-3">
+              <td class="px-4 py-3 w-12">
                 <div class="flex justify-end items-center">
                   <DropdownMenuRoot>
                     <DropdownMenuTrigger
@@ -81,13 +89,13 @@
                     <DropdownMenuPortal>
                       <DropdownMenuContent
                         :align="'end'"
-                        class="bg-white border border-secondary-200 rounded-lg shadow-lg py-1 shadow-secondary-100">
+                        class="bg-white border border-secondary-200 rounded-lg shadow-lg py-1 shadow-secondary-100 min-w-[150px]">
                         <DropdownMenuItem
-                          class="flex justify-start items-center gap-2 px-3 py-1 cursor-pointer text-sm text-left rounded-lg transition-colors hover:bg-secondary-100"
+                          class="flex justify-start items-center gap-2 px-3 py-1 cursor-pointer text-sm text-left rounded-lg transition-colors hover:bg-secondary-100 whitespace-nowrap"
                           v-for="action in (typeof actions === 'function' ? actions(item) : (actions ?? []))"
                           @select="emit('action', action.key, item )">
-                          <atom-icon v-if="action.icon" :icon="action.icon"/>
-                          <span>{{ action.title }}</span>
+                          <atom-icon v-if="action.icon" :icon="action.icon" class="flex-shrink-0"/>
+                          <span class="truncate">{{ action.title }}</span>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenuPortal>
@@ -122,16 +130,25 @@
 </template>
 
 <script setup lang="ts">
+import { values } from 'lodash';
+
+
+interface Field {
+  icon?: {
+    name: string,
+    classes?: string,
+  },
+  title: string,
+  fieldName: string,
+  transform?: ((value: any, item?: any) => (string | null)),
+  transformIcon?: ((value: any, item?: any) => ({ name?: string, classes?: string } | undefined)),
+};
 
 const props = defineProps<{
   items: { [key: string]: any }[],
   addActionKey?: string,
   itemClickActionKey?: string,
-  fields: {
-    title: string,
-    fieldName: string,
-    transform?: ((value: any, item?: any) => (string | null)),
-  }[],
+  fields: Field[],
   filters?: {
     title: string,
     icon?: string,
@@ -169,6 +186,20 @@ const emit = defineEmits<{
   (event: 'update:paginationIsLast', value: boolean): void,
   (event: 'update:paginationState', value: { take: number, page: number }): void,
 }>();
+
+const getItemFieldValue = (field: Field, item: any): string | null => 
+  filterString(String(field.transform ? field.transform(item[field.fieldName], item) : item[field.fieldName]));
+
+const getItemFieldIcon = (field: Field, item: any): { name?: string, classes?: string } => {
+  const icon = field.transformIcon
+    ? field.transformIcon(getItemFieldValue(field, item), item)
+    : field.icon;
+  console.log(icon)
+  return {
+    name: icon?.name,
+    classes: icon?.classes,
+  };
+};
 
 const onUpdateSearch = (value?: string) => 
   emit('updateSearch', (!value || value.length <= 2) ? null : value);

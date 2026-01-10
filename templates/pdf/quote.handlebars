@@ -33,32 +33,32 @@
       </div>
       <div class="invoice-details-table">
         <div class="detail-item main-detail">
-          <span class="detail-label">Angebots-Nr.</span>
+          <span class="detail-label">{{t 'template.quote.quoteNumber'}}</span>
           <span class="detail-value">{{quote.quoteId}}</span>
         </div>
 
         <div class="detail-item">
-          <span class="detail-label">Angebotsdatum</span>
+          <span class="detail-label">{{t 'template.quote.quoteDate'}}</span>
           <span class="detail-value">{{formatDate quote.quoteDate}}</span>
         </div>
 
         {{#if quote.quoteValidUntil}}
         <div class="detail-item detail-item-bottom-margin">
-          <span class="detail-label">Gültig bis</span>
+          <span class="detail-label">{{t 'template.quote.quoteValidUntil'}}</span>
           <span class="detail-value">{{formatDate quote.quoteValidUntil}}</span>
         </div>
         {{/if}}
 
         {{#if customer.customerId}}
         <div class="detail-item">
-          <span class="detail-label">Kundennummer</span>
+          <span class="detail-label">{{t 'template.quote.customerNumber'}}</span>
           <span class="detail-value">{{customer.customerId}}</span>
         </div>
         {{/if}}
 
         {{#if owner}}
         <div class="detail-item">
-          <span class="detail-label">Ihr Ansprechpartner</span>
+          <span class="detail-label">{{t 'template.quote.contactPerson'}}</span>
           <span class="detail-value">{{owner.displayName}}</span>
         </div>
         {{/if}}
@@ -66,7 +66,7 @@
     </section>
 
     <p class="invoice-heading">
-      Angebot {{quote.quoteId}}
+      {{t 'template.quote.quote'}} {{quote.quoteId}}
     </p>
     {{#if quote.introText}}
     <div class="intro">
@@ -77,12 +77,12 @@
     <table class="items-table">
       <thead>
         <tr>
-          <th>Pos.</th>
-          <th>Beschreibung</th>
-          <th>Einzelpreis</th>
-          <th>Menge</th>
-          <th>Steuersatz</th>
-          <th>Netto</th>
+          <th>{{t 'template.quote.pos'}}</th>
+          <th>{{t 'template.quote.description'}}</th>
+          <th>{{t 'template.quote.unitPrice'}}</th>
+          <th>{{t 'template.quote.quantity'}}</th>
+          <th>{{t 'template.quote.taxRate'}}</th>
+          <th>{{t 'template.quote.net'}}</th>
         </tr>
       </thead>
       <tbody>
@@ -108,15 +108,15 @@
 
     <div class="invoice-totals">
       <div class="total-row">
-        <span class="total-label">Summe Positionen</span>
+        <span class="total-label">{{t 'template.quote.subtotal'}}</span>
         <span class="total-value">{{companyInfo.companyCurrency}} {{formatNumber quote.subtotal}}</span>
       </div>
       <div class="total-row">
-        <span class="total-label">zzgl. MwSt.</span>
+        <span class="total-label">{{t 'template.quote.plusVat'}}</span>
         <span class="total-value">{{companyInfo.companyCurrency}} {{formatNumber quote.tax}}</span>
       </div>
       <div class="total-row">
-        <span class="total-label grand-total">Gesamtbetrag brutto</span>
+        <span class="total-label grand-total">{{t 'template.quote.total'}}</span>
         <span class="total-value grand-total">{{companyInfo.companyCurrency}} {{formatNumber quote.total}}</span>
       </div>
     </div>

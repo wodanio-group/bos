@@ -6,6 +6,7 @@ import { DateTime } from "luxon";
 import Handlebars from "handlebars";
 import juice from 'juice';
 import { marked } from 'marked';
+import { getTranslation } from "./i18n";
 
 export enum PdfTemplateKey {
   QUOTE
@@ -41,8 +42,10 @@ export const PdfTemplates: Record<PdfTemplateKey, PdfTemplate> = {
 };
 
 Handlebars.registerHelper('formatDate', function(date: string | Date) {
-  if (!date) return '';
-  return DateTime.fromJSDate(new Date(date)).toFormat('dd.MM.yyyy');
+  if (!date)
+    return '';
+  const t = getTranslation();
+  return DateTime.fromJSDate(new Date(date)).toFormat(t('format.date'));
 });
 
 Handlebars.registerHelper('formatNumber', function(num: number) {
@@ -71,6 +74,11 @@ Handlebars.registerHelper('markdownToHtml', (html: any) => {
   return marked.parse(String(html), {
     breaks: true
   });
+});
+
+Handlebars.registerHelper('t', (key: string, data?: Record<string, string>) => {
+  const t = getTranslation();
+  return t(key, data);
 });
 
 const convertImageUrlToDataUrl = async (url: string): Promise<string> => {

@@ -46,6 +46,7 @@ export default defineNuxtConfig({
       siteUrl: 'http://localhost:3000',
       siteTitle: 'Wodanio Business Operation System',
       logoUrl: 'https://de-zlg1.s3.wodanio.net/cdn/wodanio/logo/bos-logo.svg',
+      local: 'en',
     },
   },
   app: {
@@ -72,8 +73,10 @@ export default defineNuxtConfig({
   i18n: {
     locales: [
       { code: 'en', language: 'en-US', file: 'en.yml' },
+      { code: 'de', language: 'de-DE', file: 'de.yml' },
     ],
     defaultLocale: 'en',
+    strategy: 'no_prefix',
   },
   tailwindcss: {
     exposeConfig: true,

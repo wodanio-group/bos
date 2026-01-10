@@ -1,7 +1,7 @@
 
 <footer class="footer">
   <div class="page-number">
-    Seite <span class="pageNumber"></span>/<span class="totalPages"></span>
+    {{t 'template.footer.page'}} <span class="pageNumber"></span>/<span class="totalPages"></span>
   </div>
   <div class="footer-content">
     <div class="footer-column">
@@ -13,16 +13,16 @@
     {{#if (or companyInfo.companyPhoneNumber companyInfo.companyFax companyInfo.companyEmail companyInfo.companyWebsite)}}
       <div class="footer-column">
         {{#if companyInfo.companyPhoneNumber}}
-          Tel.: {{companyInfo.companyPhoneNumber}}<br>
+          {{t 'template.footer.phone'}}: {{companyInfo.companyPhoneNumber}}<br>
         {{/if}}
         {{#if companyInfo.companyFax}}
-          Fax.: {{companyInfo.companyFax}}<br>
+          {{t 'template.footer.fax'}}: {{companyInfo.companyFax}}<br>
         {{/if}}
         {{#if companyInfo.companyEmail}}
-          E-Mail: {{companyInfo.companyEmail}}<br>
+          {{t 'template.footer.email'}}: {{companyInfo.companyEmail}}<br>
         {{/if}}
         {{#if companyInfo.companyWebsite}}
-          Web: {{companyInfo.companyWebsite}}
+          {{t 'template.footer.web'}}: {{companyInfo.companyWebsite}}
         {{/if}}
       </div>
     {{/if}}
@@ -31,13 +31,13 @@
         {{companyInfo.registryCourt}}<br>
       {{/if}}
       {{#if companyInfo.registerNumber}}
-        HR-Nr.: {{companyInfo.registerNumber}}<br>
+        {{t 'template.footer.registerNumber'}}: {{companyInfo.registerNumber}}<br>
       {{/if}}
       {{#if companyInfo.vatId}}
-        USt-ID: {{companyInfo.vatId}}<br>
+        {{t 'template.footer.vatId'}}: {{companyInfo.vatId}}<br>
       {{/if}}
       {{#if companyInfo.management}}
-        Geschäftsführung: {{companyInfo.management}}
+        {{t 'template.footer.management'}}: {{companyInfo.management}}
       {{/if}}
     </div>
     <div class="footer-column">
@@ -45,10 +45,10 @@
         {{companyInfo.bankName}}<br>
       {{/if}}
       {{#if companyInfo.iban}}
-        IBAN: {{companyInfo.iban}}<br>
+        {{t 'template.footer.iban'}}: {{companyInfo.iban}}<br>
       {{/if}}
       {{#if companyInfo.bic}}
-        BIC: {{companyInfo.bic}}
+        {{t 'template.footer.bic'}}: {{companyInfo.bic}}
       {{/if}}
     </div>
   </div>

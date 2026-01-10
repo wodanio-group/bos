@@ -1,3 +1,4 @@
+---
 
 general:
   name: "Name"
@@ -419,3 +420,32 @@ contactEdit:
         title: "Search and select company..."
       person:
         title: "Search and select person..."
+
+template:
+  quote: 
+    quote: "Quote"
+    quoteNumber: "Quote No."
+    quoteDate: "Quote date"
+    customerNumber: "Customer No."
+    quoteValidUntil: "Valid until"
+    contactPerson: "Contact person"
+    pos: "Pos."
+    description: "Description"
+    unitPrice: "Unit price"
+    quantity: "Quantity"
+    taxRate: "Tax Rate"
+    net: "Net"
+    subtotal: "Subtotal net"
+    plusVat: "Plus VAT"
+    total: "Total gross"
+  footer:
+    page: "Page"
+    fax: "Fax"
+    phone: "Phone"
+    email: "Email"
+    web: "Web"
+    iban: "IBAN"
+    bic: "BIC"
+    vatId: "VAT ID"
+    registerNumber: "Reg. No."
+    management: "Management"

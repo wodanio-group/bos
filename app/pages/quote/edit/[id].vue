@@ -433,7 +433,7 @@ const onSave = async () => {
 };
 
 onMounted(() => {
-  if (isCreateMode)
+  if (isCreateMode.value)
     clearItem();
 });
 

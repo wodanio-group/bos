@@ -10,7 +10,7 @@
         :title="$t('general.edit')"
         :outline="true"
         @click="navigateTo(`/quote/edit/${item.id}`)"
-        v-if="hasRightQuoteAllEdit">
+        v-if="hasRightQuoteAllEdit && canEdit">
       </atom-button>
       <atom-button
         type="button"
@@ -18,7 +18,7 @@
         :title="$t('general.delete')"
         :outline="true"
         @click="showDeletePopover = true"
-        v-if="hasRightQuoteAllDelete">
+        v-if="hasRightQuoteAllDelete && canDelete">
       </atom-button>
     </template>
 
@@ -137,6 +137,18 @@ await loadItem();
 
 const hasRightQuoteAllEdit = computed(() => user && user.rights.includes('quote.all.edit')),
       hasRightQuoteAllDelete = computed(() => user && user.rights.includes('quote.all.delete'));
+
+// Edit button: hide for ACCEPTED or REJECTED quotes
+const canEdit = computed(() => {
+  if (!item.value) return false;
+  return item.value.status !== 'ACCEPTED' && item.value.status !== 'REJECTED';
+});
+
+// Delete button: hide for SENT, ACCEPTED or REJECTED quotes
+const canDelete = computed(() => {
+  if (!item.value) return false;
+  return item.value.status === 'DRAFT';
+});
 
 // Load owner name if ownerId is set
 const ownerName = ref<string>('');
