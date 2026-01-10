@@ -4,7 +4,7 @@
     :open="open === true"
     @update:open="onUpdateOpen">
     <template #headerLeft>
-      <p class="text-sm text-secondary-600 mb-2" v-if="title" v-html="title"></p>
+      <p class="text-sm text-secondary-600 mb-2">{{ $t('layout.dialogSearch.searchPlaceholder') }}</p>
     </template>
     <div class="flex flex-col">
       <InputSearch
@@ -28,12 +28,26 @@
                 ? 'bg-secondary-100 border-secondary-200'
                 : 'border-transparent hover:bg-secondary-100 focus:bg-secondary-100 focus:border-secondary-200'
             ]"
-            @click="selectResult(result.id)"
+            @click="onSelect(result)"
             @mouseenter="selectedIndex = index">
-            <span class="text-xs text-primary-950/60 font-semibold" v-html="result.subtitle" v-if="result.subtitle"></span>
-            <span class="text-sm text-primary-950" v-html="result.title"></span>
+            <div class="flex items-center gap-2">
+              <atom-icon
+                :icon="getIconForType(result.type)"
+                class="flex-shrink-0"
+                :class="getIconClassForType(result.type)">
+              </atom-icon>
+              <div class="flex-1 overflow-hidden">
+                <span class="text-sm text-primary-950 truncate block">{{ result.title }}</span>
+                <span class="text-xs text-primary-950/60 font-semibold truncate block" v-if="result.subtitle">{{ result.subtitle }}</span>
+              </div>
+            </div>
           </button>
         </template>
+      </div>
+      <div
+        class="flex items-center justify-center py-8"
+        v-if="shownNoFindings">
+        <p class="text-center text-sm text-secondary-700">{{ $t('layout.dialogSearch.noResults') }}</p>
       </div>
     </div>
   </Dialog>
@@ -42,90 +56,113 @@
 
 <script setup lang="ts">
 
-/**
- * Abstract search dialog component for searching entities
- *
- * @example Usage for searching companies:
- * <organism-dialog-entity-search
- *   :open="openDialog"
- *   title="Search for a company"
- *   :search-fn="async (query) => {
- *     const results = await $fetch(`/api/company?search=${query}&take=20`);
- *     return results.map(c => ({
- *       id: c.id,
- *       title: companyDisplayName(c),
- *       subtitle: c.customerId
- *     }));
- *   }"
- *   @select="(id) => handleSelect(id)"
- *   @close="openDialog = false"
- * />
- */
+import { companyDisplayName, personDisplayName } from '#imports';
 
-export interface SearchResult {
+interface IFinding {
+  type: 'person' | 'company' | 'quote';
   id: string;
   title: string;
   subtitle?: string | null;
+  to: string;
+  updatedAt: number;
 }
 
-const props = defineProps<{
-  /** Whether the dialog is open */
-  open: boolean;
-  /** Title text shown above the search input */
-  title?: string;
-  /**
-   * Search function that takes a query string and returns search results
-   * @param query - The search query entered by the user
-   * @returns Array of search results with id, title, and optional subtitle
-   */
-  searchFn: (query: string) => Promise<SearchResult[]>;
-  /** Minimum search query length before triggering search (default: 3) */
-  minSearchLength?: number;
-  /** Maximum number of results to show (handled by searchFn) */
-  maxResults?: number;
-}>();
+const layoutMenu = useLayoutMenu();
 
-const open = computed(() => props.open ?? false);
-const minSearchLength = computed(() => props.minSearchLength ?? 3);
-
-const emits = defineEmits<{
-  'select': [string],
-  'close': [void],
-}>();
-
-const onUpdateOpen = (open: boolean) => {
-  if (!open)
-    emits('close');
-  searchResults.value = [];
-}
+const open = defineModel<boolean>('open');
 
 const searchInputRef = ref<any>(null);
 const resultsContainerRef = ref<HTMLElement | null>(null);
 const resultRefs = ref<(HTMLElement | null)[]>([]);
-const searchResults = ref<SearchResult[]>([]);
+const searchResults = ref<IFinding[]>([]);
 const selectedIndex = ref<number>(-1);
+const input = ref<string>('');
+const shownNoFindings = computed(() => input.value.length > 2 && searchResults.value.length <= 0);
+
+const onUpdateOpen = (isOpen: boolean) => {
+  if (!isOpen) {
+    open.value = false;
+    searchResults.value = [];
+    input.value = '';
+    selectedIndex.value = -1;
+  }
+};
+
+const onSelect = (item: IFinding) => {
+  open.value = false;
+  layoutMenu.setOpen(false);
+  return navigateTo(item.to);
+};
 
 const onUpdateSearch = async (value: string | null | undefined) => {
   const search = filterString(value);
-  if (!search || search.length < minSearchLength.value) {
+  input.value = search || '';
+
+  if (!search || search.length < 3) {
     searchResults.value = [];
     selectedIndex.value = -1;
-  } else {
-    try {
-      const results = await props.searchFn(search);
-      searchResults.value = results;
-      selectedIndex.value = -1;
-    } catch (e) {
-      console.error('DialogEntitySearch: Search failed', e);
-      searchResults.value = [];
-      selectedIndex.value = -1;
-    }
+    return;
   }
-}
 
-const selectResult = (id: string) => {
-  emits('select', id);
-}
+  try {
+    const [persons, companies, quotes] = await Promise.all([
+      $fetch(`/api/person?search=${search}&take=10`),
+      $fetch(`/api/company?search=${search}&take=10`),
+      $fetch(`/api/quote?search=${search}&take=10`)
+    ]);
+
+    searchResults.value = ([
+      ...persons.map((o: any) => ({
+        type: 'person' as const,
+        id: o.id,
+        title: personDisplayName(o),
+        subtitle: null,
+        to: `/person/${o.id}`,
+        updatedAt: (new Date(o.updatedAt ?? o.createdAt)).getTime()
+      })),
+      ...companies.map((o: any) => ({
+        type: 'company' as const,
+        id: o.id,
+        title: companyDisplayName(o),
+        subtitle: o.customerId,
+        to: `/company/${o.id}`,
+        updatedAt: (new Date(o.updatedAt ?? o.createdAt)).getTime()
+      })),
+      ...quotes.map((o: any) => ({
+        type: 'quote' as const,
+        id: o.id,
+        title: o.quoteId,
+        subtitle: null,
+        to: `/quote/${o.id}`,
+        updatedAt: (new Date(o.updatedAt ?? o.createdAt)).getTime()
+      })),
+    ] as IFinding[]).sort((a, b) => b.updatedAt - a.updatedAt);
+
+    selectedIndex.value = -1;
+  } catch (e) {
+    console.error('Global search failed', e);
+    searchResults.value = [];
+    selectedIndex.value = -1;
+  }
+};
+
+const getIconForType = (type: IFinding['type']) => {
+  switch (type) {
+    case 'person': return 'user-round';
+    case 'company': return 'building';
+    case 'quote': return 'file-text';
+    default: return 'file-text';
+  }
+};
+
+const getIconClassForType = (type: IFinding['type']) => {
+  switch (type) {
+    case 'person': return 'text-blue-600';
+    case 'company': return 'text-green-600';
+    case 'quote': return 'text-purple-600';
+    default: return 'text-gray-600';
+  }
+};
 
 const scrollToSelected = () => {
   if (selectedIndex.value >= 0 && resultRefs.value[selectedIndex.value] && resultsContainerRef.value) {
@@ -145,14 +182,12 @@ const scrollToSelected = () => {
       }
     }
   }
-}
+};
 
 // Auto-focus input when dialog opens
-watch(() => props.open, (newValue) => {
+watch(() => open.value, (newValue) => {
   if (newValue) {
-    // Use a longer delay to ensure the dialog is fully rendered
     setTimeout(() => {
-      // Try multiple approaches to find and focus the input
       const input = searchInputRef.value?.$el?.querySelector('input')
         || searchInputRef.value?.querySelector?.('input')
         || document.activeElement?.closest('[role="dialog"]')?.querySelector('input')
@@ -170,11 +205,11 @@ let handler: any;
 onMounted(() => {
   handler = (e: KeyboardEvent) => {
     // Only handle keyboard events when dialog is open
-    if (!props.open) return;
+    if (!open.value) return;
 
     if (e.code === 'Escape') {
       e.preventDefault();
-      emits('close');
+      open.value = false;
       return;
     }
 
@@ -193,12 +228,13 @@ onMounted(() => {
       e.preventDefault();
       const selected = searchResults.value[selectedIndex.value];
       if (selected) {
-        selectResult(selected.id);
+        onSelect(selected);
       }
     }
   };
   window.addEventListener('keydown', handler);
 });
+
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handler);
   searchResults.value = [];

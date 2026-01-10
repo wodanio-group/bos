@@ -19,13 +19,13 @@
       </button>
     </label>
 
-    <organism-dialog-entity-search
+    <molecule-dialog-entity-search
       :open="dialogOpen"
       :title="searchTitle"
       :search-fn="searchFn"
       @select="onSelect"
       @close="dialogOpen = false">
-    </organism-dialog-entity-search>
+    </molecule-dialog-entity-search>
 
   </div>
 

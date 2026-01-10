@@ -237,7 +237,7 @@
       @update:open="!$event && (selectedDeleteItem = null)"/>
 
     <!-- User Search Dialog -->
-    <organism-dialog-entity-search
+    <molecule-dialog-entity-search
       :open="openUserSearchDialog"
       :title="$t('task.selectUser')"
       :search-fn="searchUsers"
@@ -245,7 +245,7 @@
       @close="openUserSearchDialog = false"/>
 
     <!-- Company Search Dialog -->
-    <organism-dialog-entity-search
+    <molecule-dialog-entity-search
       :open="openCompanySearchDialog"
       :title="$t('task.selectCompany')"
       :search-fn="searchCompanies"
@@ -253,7 +253,7 @@
       @close="openCompanySearchDialog = false"/>
 
     <!-- Person Search Dialog -->
-    <organism-dialog-entity-search
+    <molecule-dialog-entity-search
       :open="openPersonSearchDialog"
       :title="$t('task.selectPerson')"
       :search-fn="searchPersons"
@@ -266,7 +266,9 @@
 
 <script setup lang="ts">
 
+import type { CompanyViewModel, PersonViewModel } from '~~/shared/types/contact';
 import type { TaskViewModel } from '~~/shared/types/task';
+import type { UserViewModel } from '~~/shared/types/user';
 import { TaskTypes } from '~~/shared/utils/task';
 
 definePageMeta({
@@ -333,27 +335,19 @@ const getTaskActions = (item: TaskViewModel) => {
 };
 
 // User data cache
-const usersCache = ref<Map<string, { firstName: string; lastName: string }>>(new Map());
-const companiesCache = ref<Map<string, { name: string }>>(new Map());
-const personsCache = ref<Map<string, { firstName: string; lastName: string }>>(new Map());
+const usersCache = ref<Map<string, UserViewModel>>(new Map());
+const companiesCache = ref<Map<string, CompanyViewModel>>(new Map());
+const personsCache = ref<Map<string, PersonViewModel>>(new Map());
 
 // Helper function to get user name
 const getUserName = (userId: string): string => {
-  if (userId === user?.id) return $t('task.currentUser');
   const cachedUser = usersCache.value.get(userId);
-  if (cachedUser) {
-    const firstName = cachedUser.firstName || '';
-    const lastName = cachedUser.lastName || '';
-    const fullName = `${firstName} ${lastName}`.trim();
-    return fullName || userId;
-  }
+  if (cachedUser)
+    return userDisplayName(cachedUser);
 
   // Fetch user data asynchronously
   $fetch(`/api/user/${userId}`).then((userData: any) => {
-    usersCache.value.set(userId, {
-      firstName: userData.firstName || '',
-      lastName: userData.lastName || ''
-    });
+    usersCache.value.set(userId, userData);
   }).catch(() => {});
 
   return $t('general.loading');
@@ -363,11 +357,11 @@ const getUserName = (userId: string): string => {
 const getCompanyName = (companyId: string | null): string => {
   if (!companyId) return '-';
   const cachedCompany = companiesCache.value.get(companyId);
-  if (cachedCompany) return cachedCompany.name;
+  if (cachedCompany) return companyDisplayName(cachedCompany);
 
   // Fetch company data asynchronously
   $fetch(`/api/company/${companyId}`).then((companyData: any) => {
-    companiesCache.value.set(companyId, { name: companyData.name });
+    companiesCache.value.set(companyId, companyData);
   }).catch(() => {});
 
   return $t('general.loading');
@@ -377,19 +371,12 @@ const getCompanyName = (companyId: string | null): string => {
 const getPersonName = (personId: string | null): string => {
   if (!personId) return '-';
   const cachedPerson = personsCache.value.get(personId);
-  if (cachedPerson) {
-    const firstName = cachedPerson.firstName || '';
-    const lastName = cachedPerson.lastName || '';
-    const fullName = `${firstName} ${lastName}`.trim();
-    return fullName || personId;
-  }
+  if (cachedPerson) 
+    return personDisplayName(cachedPerson);
 
   // Fetch person data asynchronously
   $fetch(`/api/person/${personId}`).then((personData: any) => {
-    personsCache.value.set(personId, {
-      firstName: personData.firstname || '',
-      lastName: personData.familyname || ''
-    });
+    personsCache.value.set(personId, personData);
   }).catch(() => {});
 
   return $t('general.loading');

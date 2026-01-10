@@ -76,9 +76,9 @@
     <slot></slot>
   </main>
 
-  <DialogSearch
+  <molecule-dialog-global-search
     v-model:open="searchOpen">
-  </DialogSearch>
+  </molecule-dialog-global-search>
 
   <div
     class="flex justify-center items-center fixed top-0 left-0 w-screen h-screen backdrop-blur-2xl z-[9999]"
