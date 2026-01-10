@@ -4,8 +4,9 @@ import { z } from "zod";
 
 export const optionKeyValidator = z.enum([
   'CUSTOMER_ID_COUNTER', 'CUSTOMER_ID_SCHEMA', 
-  'QUOTE_ID_COUNTER', 'QUOTE_ID_SCHEMA', 'QUOTE_DEFAULT_TITLE', 'QUOTE_DEFAULT_INTRO_TEXT', 'QUOTE_DEFAULT_OUTRO_TEXT',
+  'QUOTE_ID_COUNTER', 'QUOTE_ID_SCHEMA', 'QUOTE_DEFAULT_INTRO_TEXT', 'QUOTE_DEFAULT_OUTRO_TEXT',
   'SYSTEM_CURRENCY', 'SYSTEM_UNITS', 'SYSTEM_TAX_RATES',
+  'COMPANY_INFO',
 ]);
 
 export const optionToViewModel = (item: Option): OptionViewModel => {
