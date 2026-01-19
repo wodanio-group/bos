@@ -33,6 +33,7 @@ export const pesBaseRequest = async <T = any>(path: string, method: HTTPMethod =
         e.statusCode ?? e.status,
         e.statusMessage ?? e.statusText,
         e.response,
+        e.data,
       );
     } else {
       console.error(e);
