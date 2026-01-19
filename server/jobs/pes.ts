@@ -35,7 +35,6 @@ export const customerUpsert = async (job: Job<{ companyId: string }>) => {
     vatId: filterString(company.vatId),
     taxId: filterString(company.taxId),
     companyName: company.name,
-    phoneNumber: filterString(contactGetPrimaryCommunicationWay(companyVm, 'PHONE', 'INVOICING')?.value),
     email: filterString(contactGetPrimaryCommunicationWay(companyVm, 'EMAIL', 'INVOICING')?.value),
     address: filterString(contactGetPrimaryAddress(companyVm, 'INVOICE')?.address),
     address2: filterString(contactGetPrimaryAddress(companyVm, 'INVOICE')?.address2),
