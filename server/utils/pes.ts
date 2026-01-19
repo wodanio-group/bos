@@ -1,4 +1,5 @@
 import type { HTTPMethod } from 'h3';
+import { FetchError } from 'ofetch';
 
 export const getPesCredentials = (): ({ url: string, apiToken: string } | null) => {
   const runtimeConfig = useRuntimeConfig();
@@ -26,7 +27,16 @@ export const pesBaseRequest = async <T = any>(path: string, method: HTTPMethod =
       query: opts?.query ?? undefined,
       body: opts?.body ?? undefined,
     }));
-  } catch (e: any) {
+  } catch (e) {
+    if (e instanceof FetchError) {
+      console.error(
+        e.statusCode ?? e.status,
+        e.statusMessage ?? e.statusText,
+        e.response,
+      );
+    } else {
+      console.error(e);
+    }
     throw e;
   }
 };
