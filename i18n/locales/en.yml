@@ -45,6 +45,12 @@ general:
   moveDown: "Move Down"
   noItemsFound: "No items found"
   searchPlaceholder: "Search ..."
+  iban: "IBAN"
+  bic: "BIC"
+  bankName: "Bank Name"
+  noDunnings: "No Dunning"
+  yes: "Yes"
+  no: "No"
 
 format:
   datetime: "dd. LLL yyyy, HH:mm"
@@ -159,6 +165,8 @@ company:
     toast:
       success: "Company updated successfully."
       error: "Error while update company."
+    pesSection:
+      title: "PES Settings"
 
 person:
   title: "Persons"

@@ -45,6 +45,12 @@ general:
   moveDown: "Nach unten"
   noItemsFound: "Keine Einträge gefunden"
   searchPlaceholder: "Suchen ..."
+  iban: "IBAN"
+  bic: "BIC"
+  bankName: "Bank"
+  noDunnings: "Kein Mahnwesen"
+  yes: "Ja"
+  no: "Nein"
 
 format:
   datetime: "dd. LLL yyyy, HH:mm"
@@ -159,6 +165,8 @@ company:
     toast:
       success: "Unternehmen erfolgreich aktualisiert."
       error: "Fehler beim Aktualisieren des Unternehmens."
+    pesSection:
+      title: "PES-Einstellungen"
 
 person:
   title: "Personen"
