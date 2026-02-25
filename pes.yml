@@ -1,0 +1,4131 @@
+openapi: 3.0.0
+paths:
+  /health:
+    get:
+      operationId: MiscController_getHealth
+      summary: Health check
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+      tags: &a1
+        - Misc
+  /info:
+    get:
+      operationId: MiscController_getInfo
+      summary: Get server info
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerInfoResponse"
+      tags: *a1
+  /status:
+    get:
+      operationId: MiscController_getStatus
+      summary: Get current server status
+      parameters: []
+      responses:
+        "200":
+          description: Server status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerStatusResponse"
+      tags: *a1
+      security:
+        - bearer: []
+  /metrics:
+    get:
+      operationId: PrometheusController_index
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      security:
+        - basic-auth: []
+      tags:
+        - Metrics
+  /customer:
+    get:
+      operationId: CustomerController_list
+      summary: Get all Customers
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: externalId
+          required: false
+          in: query
+          description: externalId
+          schema:
+            nullable: true
+            type: string
+        - name: debitorId
+          required: false
+          in: query
+          description: debitorId
+          schema:
+            nullable: true
+            type: number
+      responses:
+        "200":
+          description: List of customers retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfCustomerResponseDto"
+      tags: &a2
+        - Customer
+      security: &a3
+        - bearer: []
+    post:
+      operationId: CustomerController_create
+      summary: Create a Customer
+      description: Creates a new customer. If `bic` and `bankName` are not provided,
+        they will be automatically derived from the `iban`. You can also provide
+        them explicitly to override the automatic derivation.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCustomerDto"
+      responses:
+        "201":
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerResponseDto"
+      tags: *a2
+      security: *a3
+  /customer/{id}:
+    get:
+      operationId: CustomerController_read
+      summary: Get Customer by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Customer retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerResponseDto"
+        "404":
+          description: Customer not found
+      tags: *a2
+      security: *a3
+    patch:
+      operationId: CustomerController_update
+      summary: Update Customer by ID
+      description: Updates an existing customer. If a new `iban` is provided, and
+        `bic` or `bankName` are not explicitly included in the request, they
+        will be automatically derived from the new `iban`, overwriting any
+        previously stored values. Explicitly provided `bic` or `bankName` will
+        always take precedence.
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCustomerDto"
+      responses:
+        "200":
+          description: Customer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerResponseDto"
+        "404":
+          description: Customer not found
+      tags: *a2
+      security: *a3
+    delete:
+      operationId: CustomerController_delete
+      summary: Delete Customer by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Customer deleted successfully
+        "404":
+          description: Customer not found
+      tags: *a2
+      security: *a3
+  /direct-debit-mandate:
+    get:
+      operationId: DirectDebitMandateController_list
+      summary: Get all DirectDebitMandates
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: externalId
+          required: false
+          in: query
+          description: externalId
+          schema:
+            nullable: true
+            type: string
+        - name: referenceID
+          required: false
+          in: query
+          description: referenceID
+          schema:
+            nullable: true
+            type: string
+        - name: customerId
+          required: false
+          in: query
+          description: customerId
+          schema:
+            nullable: true
+            type: string
+      responses:
+        "200":
+          description: List of directDebitMandates retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfDirectDebitMandateResponseDto"
+      tags: &a4
+        - DirectDebitMandate
+      security: &a5
+        - bearer: []
+    post:
+      operationId: DirectDebitMandateController_create
+      summary: Create a DirectDebitMandate
+      description: Creates a new direct debit mandate. If `bic` and `bankName` are not
+        provided, they will be automatically derived from the `iban`. You can
+        also provide them explicitly to override the automatic derivation.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDirectDebitMandateDto"
+      responses:
+        "201":
+          description: DirectDebitMandate created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DirectDebitMandateResponseDto"
+      tags: *a4
+      security: *a5
+  /direct-debit-mandate/{id}:
+    get:
+      operationId: DirectDebitMandateController_read
+      summary: Get DirectDebitMandate by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: DirectDebitMandate retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DirectDebitMandateResponseDto"
+        "404":
+          description: DirectDebitMandate not found
+      tags: *a4
+      security: *a5
+  /direct-debit-mandate/{id}/revoke:
+    post:
+      operationId: DirectDebitMandateController_revokeDirectDebitMandate
+      summary: Revoke DirectDebitMandate by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RevokeDirectDebitMandateDto"
+      responses:
+        "200":
+          description: DirectDebitMandate revoked successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DirectDebitMandateResponseDto"
+        "404":
+          description: DirectDebitMandate not found
+      tags: *a4
+      security: *a5
+  /recurring-charge-item:
+    get:
+      operationId: RecurringChargeItemController_list
+      summary: Get all RecurringChargeItems
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: externalId
+          required: false
+          in: query
+          description: externalId
+          schema:
+            nullable: true
+            type: string
+        - name: customerId
+          required: false
+          in: query
+          description: customerId
+          schema:
+            nullable: true
+            type: string
+        - name: search
+          required: false
+          in: query
+          description: "Search for term contained inside: id, externalId, customerId,
+            title, and description"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of recurringChargeItems retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfRecurringChargeItemResponseDto"
+      tags: &a6
+        - RecurringChargeItem
+      security: &a7
+        - bearer: []
+    post:
+      operationId: RecurringChargeItemController_create
+      summary: Create a RecurringChargeItem
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRecurringChargeItemDto"
+      responses:
+        "201":
+          description: RecurringChargeItem created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecurringChargeItemResponseDto"
+      tags: *a6
+      security: *a7
+  /recurring-charge-item/{id}:
+    get:
+      operationId: RecurringChargeItemController_read
+      summary: Get RecurringChargeItem by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: RecurringChargeItem retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecurringChargeItemResponseDto"
+        "404":
+          description: RecurringChargeItem not found
+      tags: *a6
+      security: *a7
+    patch:
+      operationId: RecurringChargeItemController_update
+      summary: Update RecurringChargeItem by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRecurringChargeItemDto"
+      responses:
+        "200":
+          description: RecurringChargeItem updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecurringChargeItemResponseDto"
+        "404":
+          description: RecurringChargeItem not found
+      tags: *a6
+      security: *a7
+  /recurring-charge-item/{id}/end:
+    post:
+      operationId: RecurringChargeItemController_setEndDate
+      summary: Set end date for RecurringChargeItem by ID. Set to null to remove the
+        end date.
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EndRecurringChargeItemDto"
+      responses:
+        "200":
+          description: RecurringChargeItem end date set successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecurringChargeItemResponseDto"
+        "404":
+          description: RecurringChargeItem not found
+      tags: *a6
+      security: *a7
+  /charge-item:
+    get:
+      operationId: ChargeItemController_list
+      summary: Get all ChargeItems
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: externalId
+          required: false
+          in: query
+          description: externalId
+          schema:
+            nullable: true
+            type: string
+        - name: customerId
+          required: false
+          in: query
+          description: customerId
+          schema:
+            nullable: true
+            type: string
+        - name: chargeId
+          required: false
+          in: query
+          description: chargeId
+          schema:
+            nullable: true
+            type: string
+        - name: recurringChargeItemId
+          required: false
+          in: query
+          description: recurringChargeItemId
+          schema:
+            nullable: true
+            type: string
+      responses:
+        "200":
+          description: List of chargeItems retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfChargeItemEntity"
+      tags: &a8
+        - ChargeItem
+      security: &a9
+        - bearer: []
+    post:
+      operationId: ChargeItemController_create
+      summary: Create a ChargeItem
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateChargeItemDto"
+      responses:
+        "201":
+          description: ChargeItem created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChargeItemEntity"
+      tags: *a8
+      security: *a9
+  /charge-item/{id}:
+    get:
+      operationId: ChargeItemController_read
+      summary: Get ChargeItem by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ChargeItem retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChargeItemEntity"
+        "404":
+          description: ChargeItem not found
+      tags: *a8
+      security: *a9
+    patch:
+      operationId: ChargeItemController_update
+      summary: Update ChargeItem by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateChargeItemDto"
+      responses:
+        "200":
+          description: ChargeItem updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChargeItemEntity"
+        "404":
+          description: ChargeItem not found
+      tags: *a8
+      security: *a9
+    delete:
+      operationId: ChargeItemController_delete
+      summary: Delete ChargeItem by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ChargeItem deleted successfully
+        "404":
+          description: ChargeItem not found
+      tags: *a8
+      security: *a9
+  /charge:
+    get:
+      operationId: ChargeController_list
+      summary: Get all Charges
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: customerId
+          required: false
+          in: query
+          description: customerId
+          schema:
+            nullable: true
+            type: string
+        - name: chargeNumber
+          required: false
+          in: query
+          description: chargeNumber
+          schema:
+            nullable: true
+            example: RE20250510001
+            type: string
+        - name: paymentMethod
+          required: false
+          in: query
+          description: Filter by payment method
+          schema:
+            example: bank-direct-debit
+            enum:
+              - bank-direct-debit
+              - bank-transfer
+              - manual
+            type: string
+        - name: paymentStatus
+          required: false
+          in: query
+          description: Filter by payment status
+          schema:
+            example: paid
+            enum:
+              - paid
+              - unpaid
+            type: string
+      responses:
+        "200":
+          description: List of charges retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfChargeResponseDto"
+      tags: &a10
+        - Charge
+      security: &a11
+        - bearer: []
+    post:
+      operationId: ChargeController_create
+      summary: Create a Charge
+      description: Creates a new charge (`invoice` if total > 0, `credit note` if
+        total < 0). The `total amount` is derived from the sum of individual
+        `charge items`.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateChargeDto"
+      responses:
+        "201":
+          description: Charge created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChargeResponseDto"
+      tags: *a10
+      security: *a11
+  /charge/{id}:
+    get:
+      operationId: ChargeController_read
+      summary: Get Charge by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Charge retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChargeResponseDto"
+        "404":
+          description: Charge not found
+      tags: *a10
+      security: *a11
+    patch:
+      operationId: ChargeController_update
+      summary: Update Charge by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateChargeDto"
+      responses:
+        "200":
+          description: Charge updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChargeResponseDto"
+        "404":
+          description: Charge not found
+      tags: *a10
+      security: *a11
+  /bank-direct-debit:
+    get:
+      operationId: BankDirectDebitController_list
+      summary: Get all BankDirectDebits
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: customerId
+          required: false
+          in: query
+          description: customerId
+          schema:
+            nullable: true
+            type: string
+        - name: chargeId
+          required: false
+          in: query
+          description: chargeId
+          schema:
+            nullable: true
+            type: string
+        - name: directDebitMandateId
+          required: false
+          in: query
+          description: directDebitMandateId
+          schema:
+            nullable: true
+            type: string
+        - name: bankDirectDebitBulkId
+          required: false
+          in: query
+          description: bankDirectDebitBulkId
+          schema:
+            nullable: true
+            type: string
+      responses:
+        "200":
+          description: List of bankDirectDebits retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfBankDirectDebitEntity"
+      tags: &a12
+        - BankDirectDebit
+      security: &a13
+        - bearer: []
+    post:
+      operationId: BankDirectDebitController_create
+      summary: Create a BankDirectDebit
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBankDirectDebitDto"
+      responses:
+        "201":
+          description: BankDirectDebit created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankDirectDebitEntity"
+      tags: *a12
+      security: *a13
+  /bank-direct-debit/{id}:
+    get:
+      operationId: BankDirectDebitController_read
+      summary: Get BankDirectDebit by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: BankDirectDebit retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankDirectDebitEntity"
+        "404":
+          description: BankDirectDebit not found
+      tags: *a12
+      security: *a13
+    patch:
+      operationId: BankDirectDebitController_update
+      summary: Update BankDirectDebit by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBankDirectDebitDto"
+      responses:
+        "200":
+          description: BankDirectDebit updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankDirectDebitEntity"
+        "404":
+          description: BankDirectDebit not found
+      tags: *a12
+      security: *a13
+  /bank-transfer:
+    get:
+      operationId: BankTransferController_list
+      summary: Get all BankTransfers
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: customerId
+          required: false
+          in: query
+          description: customerId
+          schema:
+            nullable: true
+            type: string
+        - name: chargeId
+          required: false
+          in: query
+          description: chargeId
+          schema:
+            nullable: true
+            type: string
+        - name: bankTransferBulkId
+          required: false
+          in: query
+          description: bankTransferBulkId
+          schema:
+            nullable: true
+            type: string
+      responses:
+        "200":
+          description: List of bankTransfers retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfBankTransferEntity"
+      tags: &a14
+        - BankTransfer
+      security: &a15
+        - bearer: []
+    post:
+      operationId: BankTransferController_create
+      summary: Create a BankTransfer
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBankTransferDto"
+      responses:
+        "201":
+          description: BankTransfer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankTransferEntity"
+      tags: *a14
+      security: *a15
+  /bank-transfer/{id}:
+    get:
+      operationId: BankTransferController_read
+      summary: Get BankTransfer by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: BankTransfer retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankTransferEntity"
+        "404":
+          description: BankTransfer not found
+      tags: *a14
+      security: *a15
+    patch:
+      operationId: BankTransferController_update
+      summary: Update BankTransfer by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBankTransferDto"
+      responses:
+        "200":
+          description: BankTransfer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankTransferEntity"
+        "404":
+          description: BankTransfer not found
+      tags: *a14
+      security: *a15
+  /dunning:
+    get:
+      operationId: DunningController_list
+      summary: Get all Dunnings
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: customerId
+          required: false
+          in: query
+          description: customerId
+          schema:
+            nullable: true
+            type: string
+        - name: dunningNumber
+          required: false
+          in: query
+          description: dunningNumber
+          schema:
+            nullable: true
+            example: DU20250510001
+            type: string
+        - name: chargeId
+          required: false
+          in: query
+          description: chargeId
+          schema:
+            nullable: true
+            type: string
+      responses:
+        "200":
+          description: List of dunnings retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfDunningEntity"
+      tags: &a16
+        - Dunning
+      security: &a17
+        - bearer: []
+    post:
+      operationId: DunningController_create
+      summary: Create a Dunning
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDunningDto"
+      responses:
+        "201":
+          description: Dunning created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DunningEntity"
+      tags: *a16
+      security: *a17
+  /dunning/{id}:
+    get:
+      operationId: DunningController_read
+      summary: Get Dunning by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dunning retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DunningEntity"
+        "404":
+          description: Dunning not found
+      tags: *a16
+      security: *a17
+    delete:
+      operationId: DunningController_delete
+      summary: Delete Dunning by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Dunning deleted successfully
+        "404":
+          description: Dunning not found
+      tags: *a16
+      security: *a17
+  /bank-direct-debit-bulk:
+    get:
+      operationId: BankDirectDebitBulkController_list
+      summary: Get all BankDirectDebitBulks
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+      responses:
+        "200":
+          description: List of bankDirectDebitBulks retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfBankDirectDebitBulkResponseDto"
+      tags: &a18
+        - BankDirectDebitBulk
+      security: &a19
+        - bearer: []
+    post:
+      operationId: BankDirectDebitBulkController_create
+      summary: Create a BankDirectDebitBulk
+      parameters: []
+      responses:
+        "201":
+          description: BankDirectDebitBulk created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankDirectDebitBulkResponseDto"
+      tags: *a18
+      security: *a19
+  /bank-direct-debit-bulk/{id}:
+    get:
+      operationId: BankDirectDebitBulkController_read
+      summary: Get BankDirectDebitBulk by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: BankDirectDebitBulk retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankDirectDebitBulkResponseDto"
+        "404":
+          description: BankDirectDebitBulk not found
+      tags: *a18
+      security: *a19
+    patch:
+      operationId: BankDirectDebitBulkController_update
+      summary: Update BankDirectDebitBulk by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBankDirectDebitBulkDto"
+      responses:
+        "200":
+          description: BankDirectDebitBulk updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankDirectDebitBulkResponseDto"
+        "404":
+          description: BankDirectDebitBulk not found
+      tags: *a18
+      security: *a19
+  /bank-direct-debit-bulk/{id}/xml:
+    get:
+      operationId: BankDirectDebitBulkController_getXmlCode
+      summary: Download the SEPA XML for a BankDirectDebitBulk
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The SEPA XML file is returned successfully.
+          content:
+            application/xml: {}
+        "404":
+          description: BankDirectDebitBulk not found or XML not generated
+      tags: *a18
+      security: *a19
+    patch:
+      operationId: BankDirectDebitBulkController_updateXmlExecutionDate
+      summary: Update XML execution date to Today + 6 days for a BankDirectDebitBulk
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: BankDirectDebitBulk XML execution date updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankDirectDebitBulkResponseDto"
+        "404":
+          description: BankDirectDebitBulk not found or XML not generated
+      tags: *a18
+      security: *a19
+  /bank-transfer-bulk:
+    get:
+      operationId: BankTransferBulkController_list
+      summary: Get all BankTransferBulks
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+      responses:
+        "200":
+          description: List of bankTransferBulks retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfBankTransferBulkResponseDto"
+      tags: &a20
+        - BankTransferBulk
+      security: &a21
+        - bearer: []
+    post:
+      operationId: BankTransferBulkController_create
+      summary: Create a BankTransferBulk
+      parameters: []
+      responses:
+        "201":
+          description: BankTransferBulk created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankTransferBulkResponseDto"
+      tags: *a20
+      security: *a21
+  /bank-transfer-bulk/{id}:
+    get:
+      operationId: BankTransferBulkController_read
+      summary: Get BankTransferBulk by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: BankTransferBulk retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankTransferBulkResponseDto"
+        "404":
+          description: BankTransferBulk not found
+      tags: *a20
+      security: *a21
+    patch:
+      operationId: BankTransferBulkController_update
+      summary: Update BankTransferBulk by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBankTransferBulkDto"
+      responses:
+        "200":
+          description: BankTransferBulk updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankTransferBulkResponseDto"
+        "404":
+          description: BankTransferBulk not found
+      tags: *a20
+      security: *a21
+  /bank-transfer-bulk/{id}/xml:
+    get:
+      operationId: BankTransferBulkController_getXmlCode
+      summary: Download the SEPA XML for a BankTransferBulk
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The SEPA XML file is returned successfully.
+          content:
+            application/xml: {}
+        "404":
+          description: BankTransferBulk not found or XML not generated
+      tags: *a20
+      security: *a21
+    patch:
+      operationId: BankTransferBulkController_updateXmlExecutionDate
+      summary: Update XML execution date to Today + 6 days for a BankTransferBulk
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: BankTransferBulk XML execution date updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankTransferBulkResponseDto"
+        "404":
+          description: BankTransferBulk not found or XML not generated
+      tags: *a20
+      security: *a21
+  /mail/send:
+    post:
+      operationId: MailController_send
+      parameters: []
+      responses:
+        "201":
+          description: ""
+      tags:
+        - Temporary (only for development)
+info:
+  title: PaymentEnforcementService
+  description: API documentation
+  version: v1.0.0
+  contact:
+    name: Wodanio Webtechnologies GmbH
+    url: https://www.wodanio.com
+    email: support@wodanio.com
+tags: []
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+    basic-auth:
+      type: http
+      scheme: basic
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+        data:
+          type: object
+      required:
+        - status
+        - data
+    ServerInfoResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+        data:
+          type: object
+      required:
+        - status
+        - data
+    ServerStatusResponse:
+      type: object
+      properties: {}
+    CustomerEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        debitorId:
+          type: number
+          description: debitorId
+          example: 10001
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        vatId:
+          type: string
+          description: Umsatzsteuernummer
+          nullable: true
+          example: example string
+        taxId:
+          type: string
+          description: taxId
+          nullable: true
+          example: example string
+        bankName:
+          type: string
+          description: bankName
+          nullable: true
+          example: example string
+        iban:
+          type: string
+          description: iban
+          nullable: true
+          example: example string
+        bic:
+          type: string
+          description: bic
+          nullable: true
+          example: example string
+        firstname:
+          type: string
+          description: firstname
+          nullable: true
+          example: example string
+        surname:
+          type: string
+          description: surname
+          nullable: true
+          example: example string
+        companyName:
+          type: string
+          description: companyName
+          nullable: true
+          example: example string
+        phoneNumber:
+          type: string
+          description: phoneNumber
+          nullable: true
+          example: example string
+        mobileNumber:
+          type: string
+          description: mobileNumber
+          nullable: true
+          example: example string
+        email:
+          type: string
+          description: email
+          nullable: true
+          example: example string
+        address:
+          type: string
+          description: address
+          nullable: true
+          example: example string
+        address2:
+          type: string
+          description: address2
+          nullable: true
+          example: example string
+        zipCode:
+          type: string
+          description: zipCode
+          nullable: true
+          example: example string
+        city:
+          type: string
+          description: city
+          nullable: true
+          example: example string
+        state:
+          type: string
+          description: state
+          nullable: true
+          example: example string
+        country:
+          type: string
+          description: country as ISO 3166-1 alpha-2
+          nullable: true
+          example: de
+        noDunnings:
+          type: boolean
+          description: noDunnings
+          default: false
+          example: true
+        directDebitMandates:
+          description: directDebitMandates
+          type: array
+          items:
+            type: string
+            format: uuid
+        recurringChargeItems:
+          description: recurringChargeItems
+          type: array
+          items:
+            type: string
+            format: uuid
+        charges:
+          description: charges
+          type: array
+          items:
+            type: string
+            format: uuid
+        chargeItems:
+          description: chargeItems
+          type: array
+          items:
+            type: string
+            format: uuid
+        bankTransfers:
+          description: bankTransfers
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - debitorId
+        - externalId
+        - vatId
+        - taxId
+        - bankName
+        - iban
+        - bic
+        - firstname
+        - surname
+        - companyName
+        - phoneNumber
+        - mobileNumber
+        - email
+        - address
+        - address2
+        - zipCode
+        - city
+        - state
+        - country
+        - noDunnings
+    ListReturnOfCustomerEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CustomerResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        debitorId:
+          type: number
+          description: debitorId
+          example: 10001
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        vatId:
+          type: string
+          description: Umsatzsteuernummer
+          nullable: true
+          example: example string
+        taxId:
+          type: string
+          description: taxId
+          nullable: true
+          example: example string
+        bankName:
+          type: string
+          description: bankName
+          nullable: true
+          example: example string
+        iban:
+          type: string
+          description: iban
+          nullable: true
+          example: example string
+        bic:
+          type: string
+          description: bic
+          nullable: true
+          example: example string
+        firstname:
+          type: string
+          description: firstname
+          nullable: true
+          example: example string
+        surname:
+          type: string
+          description: surname
+          nullable: true
+          example: example string
+        companyName:
+          type: string
+          description: companyName
+          nullable: true
+          example: example string
+        phoneNumber:
+          type: string
+          description: phoneNumber
+          nullable: true
+          example: example string
+        mobileNumber:
+          type: string
+          description: mobileNumber
+          nullable: true
+          example: example string
+        email:
+          type: string
+          description: email
+          nullable: true
+          example: example string
+        address:
+          type: string
+          description: address
+          nullable: true
+          example: example string
+        address2:
+          type: string
+          description: address2
+          nullable: true
+          example: example string
+        zipCode:
+          type: string
+          description: zipCode
+          nullable: true
+          example: example string
+        city:
+          type: string
+          description: city
+          nullable: true
+          example: example string
+        state:
+          type: string
+          description: state
+          nullable: true
+          example: example string
+        country:
+          type: string
+          description: country as ISO 3166-1 alpha-2
+          nullable: true
+          example: de
+        noDunnings:
+          type: boolean
+          description: noDunnings
+          default: false
+          example: true
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - debitorId
+        - externalId
+        - vatId
+        - taxId
+        - bankName
+        - iban
+        - bic
+        - firstname
+        - surname
+        - companyName
+        - phoneNumber
+        - mobileNumber
+        - email
+        - address
+        - address2
+        - zipCode
+        - city
+        - state
+        - country
+        - noDunnings
+    ListReturnOfCustomerResponseDto:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerResponseDto"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CreateCustomerDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        vatId:
+          type: string
+          description: Umsatzsteuernummer
+          nullable: true
+          example: example string
+        taxId:
+          type: string
+          description: taxId
+          nullable: true
+          example: example string
+        bankName:
+          type: string
+          description: bankName
+          nullable: true
+          default: null
+        iban:
+          type: string
+          description: iban
+          nullable: true
+          example: example string
+        bic:
+          type: string
+          description: bic
+          nullable: true
+          default: null
+        firstname:
+          type: string
+          description: firstname
+          nullable: true
+          example: example string
+        surname:
+          type: string
+          description: surname
+          nullable: true
+          example: example string
+        companyName:
+          type: string
+          description: companyName
+          nullable: true
+          example: example string
+        phoneNumber:
+          type: string
+          description: phoneNumber
+          nullable: true
+          example: example string
+        mobileNumber:
+          type: string
+          description: mobileNumber
+          nullable: true
+          example: example string
+        email:
+          type: string
+          description: email
+          nullable: true
+          example: example string
+        address:
+          type: string
+          description: address
+          nullable: true
+          example: example string
+        address2:
+          type: string
+          description: address2
+          nullable: true
+          example: example string
+        zipCode:
+          type: string
+          description: zipCode
+          nullable: true
+          example: example string
+        city:
+          type: string
+          description: city
+          nullable: true
+          example: example string
+        state:
+          type: string
+          description: state
+          nullable: true
+          example: example string
+        country:
+          type: string
+          description: country as ISO 3166-1 alpha-2
+          nullable: true
+          example: DE
+        noDunnings:
+          type: boolean
+          description: noDunnings
+          default: false
+          example: true
+    UpdateCustomerDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        vatId:
+          type: string
+          description: Umsatzsteuernummer
+          nullable: true
+          example: example string
+        taxId:
+          type: string
+          description: taxId
+          nullable: true
+          example: example string
+        bankName:
+          type: string
+          description: bankName
+          nullable: true
+          example: example string
+        iban:
+          type: string
+          description: iban
+          nullable: true
+          example: example string
+        bic:
+          type: string
+          description: bic
+          nullable: true
+          example: example string
+        firstname:
+          type: string
+          description: firstname
+          nullable: true
+          example: example string
+        surname:
+          type: string
+          description: surname
+          nullable: true
+          example: example string
+        companyName:
+          type: string
+          description: companyName
+          nullable: true
+          example: example string
+        phoneNumber:
+          type: string
+          description: phoneNumber
+          nullable: true
+          example: example string
+        mobileNumber:
+          type: string
+          description: mobileNumber
+          nullable: true
+          example: example string
+        email:
+          type: string
+          description: email
+          nullable: true
+          example: example string
+        address:
+          type: string
+          description: address
+          nullable: true
+          example: example string
+        address2:
+          type: string
+          description: address2
+          nullable: true
+          example: example string
+        zipCode:
+          type: string
+          description: zipCode
+          nullable: true
+          example: example string
+        city:
+          type: string
+          description: city
+          nullable: true
+          example: example string
+        state:
+          type: string
+          description: state
+          nullable: true
+          example: example string
+        country:
+          type: string
+          description: country
+          nullable: true
+          example: ex
+        noDunnings:
+          type: boolean
+          description: noDunnings
+          nullable: true
+          default: false
+          example: true
+    DirectDebitMandateEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        type:
+          type: string
+          description: type
+          enum: &a22
+            - BASIC
+          default: BASIC
+          example: BASIC
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        referenceID:
+          type: string
+          description: referenceID
+          example: example string
+        payer:
+          type: string
+          description: payer
+          example: example string
+        bankName:
+          type: string
+          description: bankName
+          example: example string
+        iban:
+          type: string
+          description: iban
+          example: example string
+        bic:
+          type: string
+          description: bic
+          example: example string
+        agreement:
+          type: string
+          description: agreement
+          nullable: true
+          example: example string
+        grantedAt:
+          type: string
+          description: grantedAt
+          format: date-time
+          example: 2025-01-01T00:00:00.000Z
+        grantedByIp:
+          type: string
+          description: grantedByIp
+          nullable: true
+          example: example string
+        revokedAt:
+          type: string
+          description: revokedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        revokedByIp:
+          type: string
+          description: revokedByIp
+          nullable: true
+          example: example string
+        customerId:
+          type: string
+          description: customer
+          format: uuid
+        bankDirectDebits:
+          description: bankDirectDebits
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - type
+        - externalId
+        - referenceID
+        - payer
+        - bankName
+        - iban
+        - bic
+        - agreement
+        - grantedAt
+        - grantedByIp
+        - revokedAt
+        - revokedByIp
+        - customerId
+    ListReturnOfDirectDebitMandateEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/DirectDebitMandateEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    DirectDebitMandateResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        type:
+          type: string
+          description: type
+          enum: *a22
+          default: BASIC
+          example: BASIC
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        referenceID:
+          type: string
+          description: referenceID
+          example: example string
+        payer:
+          type: string
+          description: payer
+          example: example string
+        bankName:
+          type: string
+          description: bankName
+          example: example string
+        iban:
+          type: string
+          description: iban
+          example: example string
+        bic:
+          type: string
+          description: bic
+          example: example string
+        agreement:
+          type: string
+          description: agreement
+          nullable: true
+          example: example string
+        grantedAt:
+          type: string
+          description: grantedAt
+          format: date-time
+          example: 2025-01-01T00:00:00.000Z
+        grantedByIp:
+          type: string
+          description: grantedByIp
+          nullable: true
+          example: example string
+        revokedAt:
+          type: string
+          description: revokedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        revokedByIp:
+          type: string
+          description: revokedByIp
+          nullable: true
+          example: example string
+        customerId:
+          type: string
+          description: customer
+          format: uuid
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - type
+        - externalId
+        - referenceID
+        - payer
+        - bankName
+        - iban
+        - bic
+        - agreement
+        - grantedAt
+        - grantedByIp
+        - revokedAt
+        - revokedByIp
+        - customerId
+    ListReturnOfDirectDebitMandateResponseDto:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/DirectDebitMandateResponseDto"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CreateDirectDebitMandateDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: customerId
+          example: b8ef6837-17c1-4b31-a8ee-1ec795edaad5
+        referenceID:
+          type: string
+          description: referenceID
+          nullable: true
+          default: null
+        type:
+          type: string
+          description: type
+          enum:
+            - BASIC
+          default: BASIC
+          example: BASIC
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        payer:
+          type: string
+          description: payer
+          example: example string
+        bankName:
+          type: string
+          description: bankName
+          nullable: true
+          default: null
+        iban:
+          type: string
+          description: iban
+          example: DE75512108001245126199
+        bic:
+          type: string
+          description: bic
+          nullable: true
+          default: null
+        agreement:
+          type: string
+          description: agreement
+          nullable: true
+          example: example string
+        grantedAt:
+          type: string
+          description: grantedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        grantedByIp:
+          type: string
+          description: The Ip, which granted the mandate
+          nullable: true
+          example: 0.0 0.0
+      required:
+        - customerId
+        - type
+        - payer
+        - iban
+    RevokeDirectDebitMandateDto:
+      type: object
+      properties:
+        revokedAt:
+          type: string
+          description: revokedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        revokedByIp:
+          type: string
+          description: revokedByIp
+          nullable: true
+          example: 0.0 0.0
+    RecurringChargeItemEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        startAt:
+          type: string
+          description: startAt
+          format: date-time
+          example: 2025-01-01T00:00:00.000Z
+        endAt:
+          type: string
+          description: endAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        lastGeneratedAt:
+          type: string
+          description: lastGeneratedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        nextAt:
+          type: string
+          description: nextAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        periodQuantity:
+          type: number
+          description: The amount of units a period consists of
+          default: 1
+          example: 5
+        periodUnit:
+          type: string
+          description: Period unit of the recurring charge
+          enum: &a23
+            - HOUR
+            - DAY
+            - WEEK
+            - MONTH
+            - YEAR
+          example: MONTH
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        title:
+          type: string
+          description: title
+          example: example string
+        description:
+          type: string
+          description: description
+          nullable: true
+          example: example string
+        quantity:
+          type: number
+          description: quantity
+          default: 1
+          example: 5
+        price:
+          type: number
+          description: price
+          example: 100
+        unit:
+          type: string
+          description: unit
+          example: Std
+          nullable: true
+        taxRate:
+          type: number
+          description: taxRate
+          example: 0.19
+        customerId:
+          type: string
+          description: customer
+          format: uuid
+        chargeItems:
+          description: chargeItems
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - startAt
+        - endAt
+        - lastGeneratedAt
+        - nextAt
+        - periodQuantity
+        - periodUnit
+        - externalId
+        - title
+        - description
+        - quantity
+        - price
+        - unit
+        - taxRate
+        - customerId
+    ListReturnOfRecurringChargeItemEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/RecurringChargeItemEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    RecurringChargeItemResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        startAt:
+          type: string
+          description: startAt
+          format: date-time
+          example: 2025-01-01T00:00:00.000Z
+        endAt:
+          type: string
+          description: endAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        lastGeneratedAt:
+          type: string
+          description: lastGeneratedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        nextAt:
+          type: string
+          description: nextAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        periodQuantity:
+          type: number
+          description: The amount of units a period consists of
+          default: 1
+          example: 5
+        periodUnit:
+          type: string
+          description: Period unit of the recurring charge
+          enum: *a23
+          example: MONTH
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        title:
+          type: string
+          description: title
+          example: example string
+        description:
+          type: string
+          description: description
+          nullable: true
+          example: example string
+        quantity:
+          type: number
+          description: quantity
+          default: 1
+          example: 5
+        price:
+          type: number
+          description: price
+          example: 100
+        unit:
+          type: string
+          description: unit
+          example: Std
+          nullable: true
+        taxRate:
+          type: number
+          description: taxRate
+          example: 0.19
+        customerId:
+          type: string
+          description: customer
+          format: uuid
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - startAt
+        - endAt
+        - lastGeneratedAt
+        - nextAt
+        - periodQuantity
+        - periodUnit
+        - externalId
+        - title
+        - description
+        - quantity
+        - price
+        - unit
+        - taxRate
+        - customerId
+    ListReturnOfRecurringChargeItemResponseDto:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/RecurringChargeItemResponseDto"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CreateRecurringChargeItemDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: customerId
+          example: 18544427-fc09-47ad-ac43-2f1d11ce5599
+        startAt:
+          type: string
+          description: startAt
+          format: date-time
+          example: 2025-01-01T00:00:00.000Z
+        endAt:
+          type: string
+          description: endAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        periodQuantity:
+          type: number
+          description: The amount of units a period consists of
+          default: 1
+          example: 5
+        periodUnit:
+          type: string
+          description: Period unit
+          enum:
+            - HOUR
+            - DAY
+            - WEEK
+            - MONTH
+            - YEAR
+          example: MONTH
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        title:
+          type: string
+          description: title
+          example: example string
+        description:
+          type: string
+          description: description
+          nullable: true
+          example: example string
+        quantity:
+          type: number
+          description: quantity
+          default: 1
+          example: 5
+        price:
+          type: number
+          description: price
+          example: 100
+        unit:
+          type: string
+          description: unit
+          example: Std
+        taxRate:
+          type: number
+          description: taxRate
+          example: 0.19
+      required:
+        - customerId
+        - startAt
+        - periodQuantity
+        - periodUnit
+        - title
+        - quantity
+        - price
+        - taxRate
+    UpdateRecurringChargeItemDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        title:
+          type: string
+          description: title
+          nullable: true
+          example: example string
+        description:
+          type: string
+          description: description
+          nullable: true
+          example: example string
+        quantity:
+          type: number
+          description: quantity
+          nullable: true
+          default: 1
+          example: 5
+        price:
+          type: number
+          description: price
+          nullable: true
+          example: 100
+        unit:
+          type: string
+          description: unit
+          nullable: true
+          example: Std
+        taxRate:
+          type: number
+          description: taxRate
+          nullable: true
+          example: 0.19
+    EndRecurringChargeItemDto:
+      type: object
+      properties:
+        endAt:
+          type: string
+          description: End date for the recurring charge item. Set to null to remove the
+            end date.
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+      required:
+        - endAt
+    ChargeItemEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        serviceDate:
+          type: string
+          description: serviceDate
+          format: date-time
+          example: 2025-01-01T00:00:00.000Z
+        serviceDateTo:
+          type: string
+          description: serviceDateTo
+          format: date-time
+          nullable: true
+          example: 2025-01-31T23:59:59.999Z
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        title:
+          type: string
+          description: title
+          example: example string
+        description:
+          type: string
+          description: description
+          nullable: true
+          example: example string
+        quantity:
+          type: number
+          description: quantity
+          default: 1
+          example: 5
+        price:
+          type: number
+          description: price
+          example: 100
+        unit:
+          type: string
+          description: unit
+          example: Std
+          nullable: true
+        taxRate:
+          type: number
+          description: taxRate
+          example: 0.19
+        subtotal:
+          type: number
+          description: Subtotal amount of the charge (excluding taxes)
+          example: 129.99
+        tax:
+          type: number
+          description: Total tax of the charge
+          example: 129.99
+        total:
+          type: number
+          description: Total amount of the charge (including taxes)
+          example: 129.99
+        customerId:
+          type: string
+          description: customer
+          format: uuid
+        chargeId:
+          type: string
+          description: charge
+          format: uuid
+          nullable: true
+        recurringChargeItemId:
+          type: string
+          description: recurringChargeItem
+          format: uuid
+          nullable: true
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - serviceDate
+        - serviceDateTo
+        - externalId
+        - title
+        - description
+        - quantity
+        - price
+        - unit
+        - taxRate
+        - subtotal
+        - tax
+        - total
+        - customerId
+    ListReturnOfChargeItemEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/ChargeItemEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CreateChargeItemDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: customerId
+          example: fe4f1619-954e-41bf-8397-b43197daba18
+        recurringChargeItemId:
+          type: string
+          description: recurringChargeItemId
+          nullable: true
+          example: 3c930c6d-3a07-4c34-9fa9-c56823824a1c
+        serviceDate:
+          type: string
+          description: serviceDate
+          format: date-time
+          example: 2025-01-01T00:00:00.000Z
+        serviceDateTo:
+          type: string
+          description: serviceDateTo
+          format: date-time
+          nullable: true
+          example: 2025-01-31T23:59:59.999Z
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        title:
+          type: string
+          description: title
+          example: example string
+        description:
+          type: string
+          description: description
+          nullable: true
+          example: example string
+        quantity:
+          type: number
+          description: quantity
+          default: 1
+          example: 5
+        price:
+          type: number
+          description: price
+          example: 100
+        unit:
+          type: string
+          description: unit
+          example: Std
+          nullable: true
+        taxRate:
+          type: number
+          description: taxRate
+          example: 0.19
+      required:
+        - customerId
+        - serviceDate
+        - title
+        - quantity
+        - price
+        - taxRate
+    UpdateChargeItemDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: customerId
+          nullable: true
+          example: b1542497-294a-4e3c-8fe0-ee3313fa26fc
+        recurringChargeItemId:
+          type: string
+          description: recurringChargeItemId
+          nullable: true
+          example: 67bf7da1-389c-4146-872d-82ff8b018148
+        serviceDate:
+          type: string
+          description: serviceDate
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        externalId:
+          type: string
+          description: externalId
+          nullable: true
+          example: example string
+        title:
+          type: string
+          description: title
+          nullable: true
+          example: example string
+        description:
+          type: string
+          description: description
+          nullable: true
+          example: example string
+        quantity:
+          type: number
+          description: quantity
+          nullable: true
+          default: 1
+          example: 5
+        price:
+          type: number
+          description: price
+          nullable: true
+          example: 100
+        unit:
+          type: string
+          description: unit
+          nullable: true
+          example: Std
+        taxRate:
+          type: number
+          description: taxRate
+          nullable: true
+          example: 0.19
+    ChargeEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        chargeId:
+          type: number
+          description: chargeId
+          example: 123
+        chargeNumber:
+          type: string
+          description: Full charge number
+          example: RE20250510001
+        type:
+          type: string
+          description: type
+          enum: &a24
+            - INVOICE
+            - CREDIT_NOTE
+          example: INVOICE
+        serviceDate:
+          type: string
+          description: serviceDate - Start of service period
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        serviceDateTo:
+          type: string
+          description: serviceDateTo - End of service period
+          format: date-time
+          nullable: true
+          example: 2025-01-31T23:59:59.999Z
+        subtotal:
+          type: number
+          description: Subtotal amount of the charge (excluding taxes)
+          example: 129.99
+        tax:
+          type: number
+          description: Total tax of the charge
+          example: 129.99
+        total:
+          type: number
+          description: Total amount of the charge (including taxes)
+          example: 129.99
+        pdfPath:
+          type: string
+          description: Stored path to the PDF document in S3 storage (relative to
+            bucket/subfolder)
+          nullable: true
+          example: f0f1276c-afbf-4381-8e75-7bbc55228c4e/f0f1276c-afbf-4381-8e75-7bbc55228c4e/RE20250510001.pdf
+        url:
+          type: string
+          description: URL to access the PDF document of the charge
+          nullable: true
+          example: https://example.com/invoices/f0f1276c-afbf-4381-8e75-7bbc55228c4e/f0f1276c-afbf-4381-8e75-7bbc55228c4e/RE20250510001.pdf
+        manuallyPaidAt:
+          type: string
+          description: manuallyPaidAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        documentGeneratedAt:
+          type: string
+          description: documentGeneratedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        mailSentAt:
+          type: string
+          description: mailSentAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        customerId:
+          type: string
+          description: customer
+          format: uuid
+        chargeItems:
+          description: chargeItems
+          type: array
+          items:
+            type: string
+            format: uuid
+        dunnings:
+          description: dunnings
+          type: array
+          items:
+            type: string
+            format: uuid
+        bankDirectDebits:
+          description: bankDirectDebits
+          type: array
+          items:
+            type: string
+            format: uuid
+        bankTransfers:
+          description: bankTransfers
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - chargeId
+        - chargeNumber
+        - type
+        - serviceDate
+        - serviceDateTo
+        - subtotal
+        - tax
+        - total
+        - pdfPath
+        - url
+        - manuallyPaidAt
+        - documentGeneratedAt
+        - mailSentAt
+        - customerId
+    ListReturnOfChargeEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/ChargeEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    ChargeResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        chargeId:
+          type: number
+          description: chargeId
+          example: 123
+        chargeNumber:
+          type: string
+          description: Full charge number
+          example: RE20250510001
+        type:
+          type: string
+          description: type
+          enum: *a24
+          example: INVOICE
+        serviceDate:
+          type: string
+          description: serviceDate - Start of service period
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        serviceDateTo:
+          type: string
+          description: serviceDateTo - End of service period
+          format: date-time
+          nullable: true
+          example: 2025-01-31T23:59:59.999Z
+        subtotal:
+          type: number
+          description: Subtotal amount of the charge (excluding taxes)
+          example: 129.99
+        tax:
+          type: number
+          description: Total tax of the charge
+          example: 129.99
+        total:
+          type: number
+          description: Total amount of the charge (including taxes)
+          example: 129.99
+        pdfPath:
+          type: string
+          description: Stored path to the PDF document in S3 storage (relative to
+            bucket/subfolder)
+          nullable: true
+          example: f0f1276c-afbf-4381-8e75-7bbc55228c4e/f0f1276c-afbf-4381-8e75-7bbc55228c4e/RE20250510001.pdf
+        url:
+          type: string
+          description: URL to access the PDF document of the charge
+          nullable: true
+          example: https://example.com/invoices/f0f1276c-afbf-4381-8e75-7bbc55228c4e/f0f1276c-afbf-4381-8e75-7bbc55228c4e/RE20250510001.pdf
+        manuallyPaidAt:
+          type: string
+          description: manuallyPaidAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        documentGeneratedAt:
+          type: string
+          description: documentGeneratedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        mailSentAt:
+          type: string
+          description: mailSentAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        customerId:
+          type: string
+          description: customer
+          format: uuid
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - chargeId
+        - chargeNumber
+        - type
+        - serviceDate
+        - serviceDateTo
+        - subtotal
+        - tax
+        - total
+        - pdfPath
+        - url
+        - manuallyPaidAt
+        - documentGeneratedAt
+        - mailSentAt
+        - customerId
+    ListReturnOfChargeResponseDto:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/ChargeResponseDto"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CreateChargeDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: customerId
+          example: 1acf0105-511c-49de-9c0a-d409acce9b4d
+        chargeItemIds:
+          description: Array of charge item UUIDs to assign to this charge. Can be empty
+            or null.
+          example:
+            - d1f99db3-58c7-4d2b-90d4-3775e7e6e9a9
+            - e7c00e2c-6f25-4c2a-a63b-d6e46c8b32ad
+          nullable: true
+          type: array
+          items:
+            type: string
+        assignUnassignedItems:
+          type: boolean
+          description: Whether to assign all unassigned charge items of this customer to
+            the charge
+          default: false
+      required:
+        - customerId
+        - assignUnassignedItems
+    UpdateChargeDto:
+      type: object
+      properties:
+        manuallyPaidAt:
+          type: string
+          description: Charge was manually paid
+          format: date-time
+          nullable: false
+          example: 2025-01-01T00:00:00.000Z
+      required:
+        - manuallyPaidAt
+    BankDirectDebitEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        amount:
+          type: number
+          description: amount
+          example: 123.45
+        endToEndId:
+          type: string
+          description: The unique end-to-end transaction identifier as per the SEPA standard
+          example: example string
+        mailSentAt:
+          type: string
+          description: mailSentAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        failedAt:
+          type: string
+          description: failedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        failedMessage:
+          type: string
+          description: failedMessage
+          nullable: true
+          example: Insufficient funds
+        failedMailSentAt:
+          type: string
+          description: failedMailSentAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        chargeId:
+          type: string
+          description: charge
+          format: uuid
+        directDebitMandateId:
+          type: string
+          description: directDebitMandate
+          format: uuid
+        bankDirectDebitBulkId:
+          type: string
+          description: bankDirectDebitBulk
+          format: uuid
+          nullable: true
+        isRetryOfId:
+          type: string
+          description: Is a retry of failed direct debit
+          format: uuid
+          example: e5acf29c-fd4c-4342-ba97-d56805f0674d
+          nullable: true
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - amount
+        - endToEndId
+        - mailSentAt
+        - failedAt
+        - failedMessage
+        - failedMailSentAt
+        - chargeId
+        - directDebitMandateId
+    ListReturnOfBankDirectDebitEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/BankDirectDebitEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CreateBankDirectDebitDto:
+      type: object
+      properties:
+        chargeId:
+          type: string
+          description: chargeId
+          example: ba44c750-b4fd-46f5-995f-afa7dd6d6182
+        directDebitMandateId:
+          type: string
+          description: directDebitMandateId
+          example: 94ceb1c0-681d-4177-806a-297f0aa3af6a
+        amount:
+          type: number
+          description: amount
+          example: 123.45
+        isRetryOfId:
+          type: string
+          description: isRetryOfId
+          example: d291f1c3-4f8b-4e2e-9c5a-2b8f4e6d7c9e
+          format: uuid
+      required:
+        - chargeId
+        - directDebitMandateId
+        - amount
+    UpdateBankDirectDebitDto:
+      type: object
+      properties:
+        failedAt:
+          type: string
+          description: failedAt
+          format: date-time
+          nullable: false
+          example: 2025-01-01T00:00:00.000Z
+        failedMessage:
+          type: string
+          description: failedMessage
+          nullable: true
+          example: Invalid IBAN or BIC
+      required:
+        - failedAt
+    BankTransferEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        amount:
+          type: number
+          description: amount
+          example: 123.45
+        endToEndId:
+          type: string
+          description: The unique end-to-end transaction identifier as per the SEPA standard
+          example: example string
+        mailSentAt:
+          type: string
+          description: mailSentAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        failedAt:
+          type: string
+          description: failedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        failedMessage:
+          type: string
+          description: failedMessage
+          nullable: true
+          example: Insufficient funds
+        failedMailSentAt:
+          type: string
+          description: failedMailSentAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        chargeId:
+          type: string
+          description: charge
+          format: uuid
+        customerId:
+          type: string
+          description: customer
+          format: uuid
+        bankTransferBulkId:
+          type: string
+          description: bankTransferBulk
+          format: uuid
+          nullable: true
+        isRetryOfId:
+          type: string
+          description: Is a retry of failed bank transfer
+          format: uuid
+          example: e5acf29c-fd4c-4342-ba97-d56805f0674d
+          nullable: true
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - amount
+        - endToEndId
+        - mailSentAt
+        - failedAt
+        - failedMessage
+        - failedMailSentAt
+        - chargeId
+        - customerId
+    ListReturnOfBankTransferEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/BankTransferEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CreateBankTransferDto:
+      type: object
+      properties:
+        chargeId:
+          type: string
+          description: chargeId
+          example: e6cfca16-9ee6-4fc3-a614-c18d0d8c9268
+        customerId:
+          type: string
+          description: customerId
+          example: 55c6461d-56a3-4737-a462-a048bf2781d9
+        amount:
+          type: number
+          description: amount
+          example: 123.45
+        isRetryOfId:
+          type: string
+          description: isRetryOfId
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+      required:
+        - chargeId
+        - customerId
+        - amount
+    UpdateBankTransferDto:
+      type: object
+      properties:
+        failedAt:
+          type: string
+          description: failedAt
+          format: date-time
+          nullable: false
+          example: 2025-01-01T00:00:00.000Z
+        failedMessage:
+          type: string
+          description: failedMessage
+          nullable: true
+          example: Invalid IBAN or BIC
+      required:
+        - failedAt
+    DunningEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        dunningId:
+          type: number
+          description: dunningId
+          example: 10001
+        dunningNumber:
+          type: string
+          description: Full dunning number
+          example: M20250510001
+        pdfPath:
+          type: string
+          description: Stored path to the PDF document in S3 storage (relative to
+            bucket/subfolder)
+          nullable: true
+          example: f0f1276c-afbf-4381-8e75-7bbc55228c4e/f0f1276c-afbf-4381-8e75-7bbc55228c4e/M20250510001.pdf
+        url:
+          type: string
+          description: URL to access the PDF document of the dunning (computed from
+            pdfPath or generated)
+          nullable: true
+          example: https://example.com/dunning/f0f1276c-afbf-4381-8e75-7bbc55228c4e/f0f1276c-afbf-4381-8e75-7bbc55228c4e/M20250510001.pdf
+        documentGeneratedAt:
+          type: string
+          description: documentGeneratedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        mailSentAt:
+          type: string
+          description: mailSentAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        chargeId:
+          type: string
+          description: charge
+          format: uuid
+        dunningLevel:
+          type: number
+          description: dunningLevel 1, 2, 3
+          example: 1
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - dunningId
+        - dunningNumber
+        - pdfPath
+        - url
+        - documentGeneratedAt
+        - mailSentAt
+        - chargeId
+        - dunningLevel
+    ListReturnOfDunningEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/DunningEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CreateDunningDto:
+      type: object
+      properties:
+        chargeId:
+          type: string
+          description: chargeId
+          example: 737bc4c7-517d-4245-a176-ffbad284ae94
+        dunningLevel:
+          type: number
+          description: dunningLevel 1, 2, 3
+          example: 1
+      required:
+        - chargeId
+        - dunningLevel
+    BankDirectDebitBulkEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        uploadedAt:
+          type: string
+          description: uploadedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        bankDirectDebits:
+          description: bankDirectDebits
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - uploadedAt
+    ListReturnOfBankDirectDebitBulkEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/BankDirectDebitBulkEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    BankDirectDebitBulkResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        uploadedAt:
+          type: string
+          description: uploadedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - uploadedAt
+    ListReturnOfBankDirectDebitBulkResponseDto:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/BankDirectDebitBulkResponseDto"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    UpdateBankDirectDebitBulkDto:
+      type: object
+      properties:
+        uploadedAt:
+          type: string
+          description: uploadedAt
+          format: date-time
+          nullable: false
+          example: 2025-01-01T00:00:00.000Z
+      required:
+        - uploadedAt
+    BankTransferBulkEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        uploadedAt:
+          type: string
+          description: uploadedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+        bankTransfers:
+          description: bankTransfers
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - uploadedAt
+    ListReturnOfBankTransferBulkEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/BankTransferBulkEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    BankTransferBulkResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        uploadedAt:
+          type: string
+          description: uploadedAt
+          format: date-time
+          nullable: true
+          example: 2025-01-01T00:00:00.000Z
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - uploadedAt
+    ListReturnOfBankTransferBulkResponseDto:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/BankTransferBulkResponseDto"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    UpdateBankTransferBulkDto:
+      type: object
+      properties:
+        uploadedAt:
+          type: string
+          description: uploadedAt
+          format: date-time
+          nullable: false
+          example: 2025-01-01T00:00:00.000Z
+      required:
+        - uploadedAt

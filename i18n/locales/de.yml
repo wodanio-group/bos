@@ -45,6 +45,16 @@ general:
   moveDown: "Nach unten"
   noItemsFound: "Keine Einträge gefunden"
   searchPlaceholder: "Suchen ..."
+  validation:
+    required: "Pflichtfeld"
+    invalidNumber: "Ungültige Zahl"
+    mustBePositive: "Muss größer als 0 sein"
+  iban: "IBAN"
+  bic: "BIC"
+  bankName: "Bank"
+  noDunnings: "Kein Mahnwesen"
+  yes: "Ja"
+  no: "Nein"
 
 format:
   datetime: "dd. LLL yyyy, HH:mm"
@@ -159,6 +169,136 @@ company:
     toast:
       success: "Unternehmen erfolgreich aktualisiert."
       error: "Fehler beim Aktualisieren des Unternehmens."
+    pesSection:
+      title: "PES-Einstellungen"
+  pes:
+    title: "PES"
+    mandates:
+      tabTitle: "Lastschriftmandate"
+      referenceID: "Referenz-ID"
+      payer: "Zahlungspflichtiger"
+      grantedAt: "Erteilt am"
+      status: "Status"
+      active: "Aktiv"
+      revoke: "Widerrufen"
+      revokedAt: "Widerrufen am"
+      create: "Mandat anlegen"
+      agreement: "Vereinbarungstext"
+      grantedByIp: "Erteilt von IP"
+      revokeDialog:
+        title: "Lastschriftmandat widerrufen"
+        description: "Möchten Sie das Lastschriftmandat widerrufen? Diese Aktion kann nicht rückgängig gemacht werden."
+      createDialog:
+        title: "Neues Lastschriftmandat"
+        submit: "Anlegen"
+      toast:
+        revokeSuccess: "Lastschriftmandat widerrufen."
+        revokeError: "Fehler beim Widerrufen."
+        createSuccess: "Lastschriftmandat angelegt."
+        createError: "Fehler beim Anlegen."
+    recurringChargeItems:
+      tabTitle: "Dauerposten"
+      title: "Titel"
+      description: "Beschreibung"
+      period: "Periode"
+      periodUnits:
+        HOUR: "stündlich"
+        DAY: "täglich"
+        WEEK: "wöchentlich"
+        MONTH: "monatlich"
+        YEAR: "jährlich"
+      price: "Preis"
+      quantity: "Menge"
+      unit: "Einheit"
+      taxRate: "Steuersatz"
+      startAt: "Start"
+      endAt: "Ende"
+      nextAt: "Nächste Ausführung"
+      active: "Aktiv"
+      create: "Dauerposten anlegen"
+      edit: "Bearbeiten"
+      end: "Beenden"
+      endDialog:
+        title: "Dauerposten beenden"
+        description: "Geben Sie ein Enddatum ein (leer lassen zum Entfernen des Enddatums)."
+        endAt: "Enddatum"
+        submit: "Speichern"
+      createDialog:
+        title: "Neuer Dauerposten"
+        submit: "Anlegen"
+      editDialog:
+        title: "Dauerposten bearbeiten"
+        submit: "Speichern"
+      toast:
+        createSuccess: "Dauerposten angelegt."
+        createError: "Fehler beim Anlegen."
+        editSuccess: "Dauerposten aktualisiert."
+        editError: "Fehler beim Aktualisieren."
+        endSuccess: "Dauerposten beendet."
+        endError: "Fehler beim Beenden."
+    chargeItems:
+      tabTitle: "Buchungsposten"
+      title: "Titel"
+      description: "Beschreibung"
+      serviceDate: "Leistungsdatum"
+      serviceDateTo: "Leistungsdatum bis"
+      quantity: "Menge"
+      price: "Preis"
+      unit: "Einheit"
+      taxRate: "Steuersatz"
+      total: "Gesamt"
+      assigned: "In Rechnung"
+      unassigned: "Offen"
+      create: "Buchungsposten anlegen"
+      edit: "Bearbeiten"
+      deleteDialog:
+        title: "Buchungsposten löschen"
+        description: "Möchten Sie diesen Buchungsposten wirklich löschen?"
+      createDialog:
+        title: "Neuer Buchungsposten"
+        submit: "Anlegen"
+      editDialog:
+        title: "Buchungsposten bearbeiten"
+        submit: "Speichern"
+      toast:
+        createSuccess: "Buchungsposten angelegt."
+        createError: "Fehler beim Anlegen."
+        editSuccess: "Buchungsposten aktualisiert."
+        editError: "Fehler beim Aktualisieren."
+        deleteSuccess: "Buchungsposten gelöscht."
+        deleteError: "Fehler beim Löschen."
+    charges:
+      tabTitle: "Rechnungen"
+      chargeNumber: "Rechnungsnummer"
+      type: "Typ"
+      typeInvoice: "Rechnung"
+      typeCreditNote: "Gutschrift"
+      serviceDate: "Leistungszeitraum"
+      subtotal: "Netto"
+      tax: "Steuer"
+      total: "Brutto"
+      pdf: "PDF"
+      paid: "Bezahlt"
+      unpaid: "Offen"
+      manuallyPaidAt: "Manuell bezahlt am"
+      create: "Rechnung erstellen"
+      createDialog:
+        title: "Rechnung erstellen"
+        description: "Erstellt eine neue Rechnung aus allen offenen Buchungsposten."
+        submit: "Erstellen"
+      setPaidDialog:
+        title: "Als bezahlt markieren"
+        description: "Geben Sie das Zahlungsdatum ein."
+        paidAt: "Bezahlt am"
+        submit: "Speichern"
+      toast:
+        createSuccess: "Rechnung erstellt."
+        createError: "Fehler beim Erstellen."
+        setPaidSuccess: "Rechnung als bezahlt markiert."
+        setPaidError: "Fehler beim Markieren."
+    preview:
+      subtotal: "Gesamt Netto"
+      total: "Gesamt Brutto"
 
 person:
   title: "Personen"

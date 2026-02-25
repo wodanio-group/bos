@@ -103,4 +103,31 @@ const lines: {
     })
 ];
 
+if (contactType.value === 'company' && 'customerId' in props.contact && props.contact.customerId) {
+  const auth = useAuth();
+  const user = await auth.getUser();
+  if (user?.rights.includes('pes.read')) {
+    try {
+      const { enabled } = await $fetch<{ enabled: boolean }>('/api/pes/enabled');
+      if (enabled) {
+        const result = await $fetch<{ items: { iban: string | null; bic: string | null; bankName: string | null; noDunnings: boolean }[] }>('/api/pes/customer', {
+          query: { externalId: props.contact.customerId },
+        });
+        const customer = result.items.at(0) ?? null;
+        if (customer) {
+          lines.push(
+            { type: 'div' },
+            { title: $t('general.noDunnings'), value: customer.noDunnings ? $t('general.yes') : $t('general.no') },
+            { title: $t('general.bankName'), value: customer.bankName },
+            { title: $t('general.iban'), value: customer.iban ? customer.iban.replace(/\s/g, '').replace(/(.{4})/g, '$1 ').trim() : null },
+            { title: $t('general.bic'), value: customer.bic },
+          );
+        }
+      }
+    } catch (e) {
+      console.error('PES customer lookup failed:', e);
+    }
+  }
+}
+
 </script>

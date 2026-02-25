@@ -45,6 +45,16 @@ general:
   moveDown: "Move Down"
   noItemsFound: "No items found"
   searchPlaceholder: "Search ..."
+  validation:
+    required: "Required"
+    invalidNumber: "Invalid number"
+    mustBePositive: "Must be greater than 0"
+  iban: "IBAN"
+  bic: "BIC"
+  bankName: "Bank Name"
+  noDunnings: "No Dunning"
+  yes: "Yes"
+  no: "No"
 
 format:
   datetime: "dd. LLL yyyy, HH:mm"
@@ -159,6 +169,136 @@ company:
     toast:
       success: "Company updated successfully."
       error: "Error while update company."
+    pesSection:
+      title: "PES Settings"
+  pes:
+    title: "PES"
+    mandates:
+      tabTitle: "Direct Debit Mandates"
+      referenceID: "Reference ID"
+      payer: "Payer"
+      grantedAt: "Granted at"
+      status: "Status"
+      active: "Active"
+      revoke: "Revoke"
+      revokedAt: "Revoked at"
+      create: "Add Mandate"
+      agreement: "Agreement Text"
+      grantedByIp: "Granted by IP"
+      revokeDialog:
+        title: "Revoke Direct Debit Mandate"
+        description: "Do you want to revoke this direct debit mandate? This action cannot be undone."
+      createDialog:
+        title: "New Direct Debit Mandate"
+        submit: "Create"
+      toast:
+        revokeSuccess: "Direct debit mandate revoked."
+        revokeError: "Error while revoking."
+        createSuccess: "Direct debit mandate created."
+        createError: "Error while creating."
+    recurringChargeItems:
+      tabTitle: "Recurring Items"
+      title: "Title"
+      description: "Description"
+      period: "Period"
+      periodUnits:
+        HOUR: "hourly"
+        DAY: "daily"
+        WEEK: "weekly"
+        MONTH: "monthly"
+        YEAR: "yearly"
+      price: "Price"
+      quantity: "Quantity"
+      unit: "Unit"
+      taxRate: "Tax Rate"
+      startAt: "Start"
+      endAt: "End"
+      nextAt: "Next Run"
+      active: "Active"
+      create: "Add Recurring Item"
+      edit: "Edit"
+      end: "End"
+      endDialog:
+        title: "End Recurring Item"
+        description: "Enter an end date (leave empty to remove end date)."
+        endAt: "End Date"
+        submit: "Save"
+      createDialog:
+        title: "New Recurring Item"
+        submit: "Create"
+      editDialog:
+        title: "Edit Recurring Item"
+        submit: "Save"
+      toast:
+        createSuccess: "Recurring item created."
+        createError: "Error while creating."
+        editSuccess: "Recurring item updated."
+        editError: "Error while updating."
+        endSuccess: "Recurring item ended."
+        endError: "Error while ending."
+    chargeItems:
+      tabTitle: "Charge Items"
+      title: "Title"
+      description: "Description"
+      serviceDate: "Service Date"
+      serviceDateTo: "Service Date To"
+      quantity: "Quantity"
+      price: "Price"
+      unit: "Unit"
+      taxRate: "Tax Rate"
+      total: "Total"
+      assigned: "In Invoice"
+      unassigned: "Open"
+      create: "Add Charge Item"
+      edit: "Edit"
+      deleteDialog:
+        title: "Delete Charge Item"
+        description: "Do you want to permanently delete this charge item?"
+      createDialog:
+        title: "New Charge Item"
+        submit: "Create"
+      editDialog:
+        title: "Edit Charge Item"
+        submit: "Save"
+      toast:
+        createSuccess: "Charge item created."
+        createError: "Error while creating."
+        editSuccess: "Charge item updated."
+        editError: "Error while updating."
+        deleteSuccess: "Charge item deleted."
+        deleteError: "Error while deleting."
+    charges:
+      tabTitle: "Invoices"
+      chargeNumber: "Invoice Number"
+      type: "Type"
+      typeInvoice: "Invoice"
+      typeCreditNote: "Credit Note"
+      serviceDate: "Service Period"
+      subtotal: "Subtotal"
+      tax: "Tax"
+      total: "Total"
+      pdf: "PDF"
+      paid: "Paid"
+      unpaid: "Open"
+      manuallyPaidAt: "Manually Paid At"
+      create: "Create Invoice"
+      createDialog:
+        title: "Create Invoice"
+        description: "Creates a new invoice from all open charge items."
+        submit: "Create"
+      setPaidDialog:
+        title: "Mark as Paid"
+        description: "Enter the payment date."
+        paidAt: "Paid At"
+        submit: "Save"
+      toast:
+        createSuccess: "Invoice created."
+        createError: "Error while creating."
+        setPaidSuccess: "Invoice marked as paid."
+        setPaidError: "Error while marking."
+    preview:
+      subtotal: "Subtotal (net)"
+      total: "Total (gross)"
 
 person:
   title: "Persons"
