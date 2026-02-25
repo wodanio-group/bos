@@ -167,6 +167,31 @@ company:
       error: "Fehler beim Aktualisieren des Unternehmens."
     pesSection:
       title: "PES-Einstellungen"
+  pes:
+    title: "PES"
+    mandates:
+      tabTitle: "Lastschriftmandate"
+      referenceID: "Referenz-ID"
+      payer: "Zahlungspflichtiger"
+      grantedAt: "Erteilt am"
+      status: "Status"
+      active: "Aktiv"
+      revoke: "Widerrufen"
+      revokedAt: "Widerrufen am"
+      create: "Mandat anlegen"
+      agreement: "Vereinbarungstext"
+      grantedByIp: "Erteilt von IP"
+      revokeDialog:
+        title: "Lastschriftmandat widerrufen"
+        description: "Möchten Sie das Lastschriftmandat widerrufen? Diese Aktion kann nicht rückgängig gemacht werden."
+      createDialog:
+        title: "Neues Lastschriftmandat"
+        submit: "Anlegen"
+      toast:
+        revokeSuccess: "Lastschriftmandat widerrufen."
+        revokeError: "Fehler beim Widerrufen."
+        createSuccess: "Lastschriftmandat angelegt."
+        createError: "Fehler beim Anlegen."
 
 person:
   title: "Personen"

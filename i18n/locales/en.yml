@@ -167,6 +167,31 @@ company:
       error: "Error while update company."
     pesSection:
       title: "PES Settings"
+  pes:
+    title: "PES"
+    mandates:
+      tabTitle: "Direct Debit Mandates"
+      referenceID: "Reference ID"
+      payer: "Payer"
+      grantedAt: "Granted at"
+      status: "Status"
+      active: "Active"
+      revoke: "Revoke"
+      revokedAt: "Revoked at"
+      create: "Add Mandate"
+      agreement: "Agreement Text"
+      grantedByIp: "Granted by IP"
+      revokeDialog:
+        title: "Revoke Direct Debit Mandate"
+        description: "Do you want to revoke this direct debit mandate? This action cannot be undone."
+      createDialog:
+        title: "New Direct Debit Mandate"
+        submit: "Create"
+      toast:
+        revokeSuccess: "Direct debit mandate revoked."
+        revokeError: "Error while revoking."
+        createSuccess: "Direct debit mandate created."
+        createError: "Error while creating."
 
 person:
   title: "Persons"

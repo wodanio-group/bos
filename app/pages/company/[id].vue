@@ -31,6 +31,11 @@
       </contact-info-section-box>
     </div>
 
+    <contact-pes-section-box
+      :customer-id="item.customerId ?? null"
+      class="col-span-1 lg:col-span-12">
+    </contact-pes-section-box>
+
     <SimpleAlertDialog
       :open="showDeletePopover === true"
       :title="$t('company.item.delete.title', { name: item ? companyDisplayName(item) : '?' })"
