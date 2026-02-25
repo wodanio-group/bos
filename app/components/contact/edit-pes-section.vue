@@ -38,17 +38,21 @@ const iban = ref<string | undefined>(undefined);
 const noDunningsStr = ref<string>('false');
 
 if (hasPesRights && props.customerId) {
-  const { enabled } = await $fetch<{ enabled: boolean }>('/api/pes/enabled');
-  if (enabled) {
-    const result = await $fetch<{ items: PesCustomer[] }>('/api/pes/customer', {
-      query: { externalId: props.customerId },
-    });
-    pesCustomer.value = result.items.at(0) ?? null;
-    if (pesCustomer.value) {
-      iban.value = pesCustomer.value.iban ?? undefined;
-      noDunningsStr.value = pesCustomer.value.noDunnings ? 'true' : 'false';
-      emits('change', { id: pesCustomer.value.id, iban: iban.value, noDunnings: pesCustomer.value.noDunnings });
+  try {
+    const { enabled } = await $fetch<{ enabled: boolean }>('/api/pes/enabled');
+    if (enabled) {
+      const result = await $fetch<{ items: PesCustomer[] }>('/api/pes/customer', {
+        query: { externalId: props.customerId },
+      });
+      pesCustomer.value = result.items.at(0) ?? null;
+      if (pesCustomer.value) {
+        iban.value = pesCustomer.value.iban ?? undefined;
+        noDunningsStr.value = pesCustomer.value.noDunnings ? 'true' : 'false';
+        emits('change', { id: pesCustomer.value.id, iban: iban.value, noDunnings: pesCustomer.value.noDunnings });
+      }
     }
+  } catch (e) {
+    console.error('PES customer lookup failed:', e);
   }
 }
 
