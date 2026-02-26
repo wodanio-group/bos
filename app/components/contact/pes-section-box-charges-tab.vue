@@ -15,7 +15,7 @@
         <div class="flex items-center justify-between gap-2">
           <div class="flex items-center gap-2">
             <span
-              v-if="charge.manuallyPaidAt"
+              v-if="isChargePaid(charge)"
               class="text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
               {{ $t('company.pes.charges.paid') }}
             </span>
@@ -35,7 +35,7 @@
               {{ $t('company.pes.charges.pdf') }}
             </a>
             <atom-button
-              v-if="hasPesInteractRight && !charge.manuallyPaidAt"
+              v-if="hasPesInteractRight && !isChargePaid(charge)"
               type="button"
               icon="circle-check"
               :title="$t('company.pes.charges.setPaidDialog.title')"
@@ -118,6 +118,12 @@
 import { DateTime } from 'luxon';
 import { formatCurrency } from '~~/shared/utils/default';
 
+type BankDirectDebit = {
+  id: string;
+  chargeId: string;
+  failedAt: string | null;
+};
+
 type Charge = {
   id: string;
   chargeNumber: string;
@@ -144,6 +150,7 @@ const emit = defineEmits<{
 
 const toast = useToast();
 const charges = ref<Charge[]>([]);
+const bankDirectDebits = ref<BankDirectDebit[]>([]);
 const showCreateChargeDialog = ref(false);
 const chargeToSetPaid = ref<Charge | null>(null);
 const newChargeManuallyPaidAt = ref(new Date().toISOString().split('T')[0]);
@@ -152,14 +159,34 @@ const formatDate = (isoStr: string) =>
   DateTime.fromISO(isoStr).toFormat($t('format.date'));
 
 const loadCharges = async () => {
-  const result = await $fetch<{ items: Charge[] }>('/api/pes/charge', {
-    query: { customerId: props.pesCustomer.id, take: 999999 },
-  });
-  charges.value = result.items;
+  const [chargesResult, debitsResult] = await Promise.all([
+    $fetch<{ items: Charge[] }>('/api/pes/charge', {
+      query: { customerId: props.pesCustomer.id, take: 999999 },
+    }),
+    $fetch<{ items: BankDirectDebit[] }>('/api/pes/bank-direct-debit', {
+      query: { customerId: props.pesCustomer.id, take: 999999 },
+    }),
+  ]);
+  charges.value = chargesResult.items;
+  bankDirectDebits.value = debitsResult.items;
 };
+
+const isChargePaid = (charge: Charge) => {
+  if (charge.manuallyPaidAt) return true;
+  return bankDirectDebits.value
+    .filter(d => d.chargeId === charge.id)
+    .some(d => d.failedAt === null);
+};
+
+let pollInterval: ReturnType<typeof setInterval> | null = null;
 
 onMounted(() => {
   loadCharges();
+  pollInterval = setInterval(loadCharges, 10_000);
+});
+
+onUnmounted(() => {
+  if (pollInterval !== null) clearInterval(pollInterval);
 });
 
 const openSetPaid = (charge: Charge) => {
