@@ -31,12 +31,28 @@
 
       <nav class="w-full  flex flex-col">
         <template v-for="item in mainMenuItems" :key="item.to ?? item.href ?? item.title">
+          <template v-if="item.children && item.children.length > 0 && item.hide !== true">
+            <span class="px-3 pt-3 pb-1 text-xs font-semibold text-secondary-400 uppercase tracking-wider">
+              {{ item.title }}
+            </span>
+            <template v-for="child in item.children" :key="child.to ?? child.href ?? child.title">
+              <NuxtLink
+                v-if="child.hide !== true"
+                class="flex justify-start items-center gap-2 text-sm text-primary-950 px-3 py-1.5 pl-6 rounded-lg transition-colors hover:bg-secondary-100 cursor-pointer"
+                :to="child.to"
+                :href="child.href"
+                @click="onClickItem(child)">
+                <atom-icon :icon="child.icon" class="!text-base"/>
+                <span>{{ child.title }}</span>
+              </NuxtLink>
+            </template>
+          </template>
           <NuxtLink
+            v-else-if="item.hide !== true"
             class="flex justify-start items-center gap-2 text-sm text-primary-950 px-3 py-2 rounded-lg transition-colors hover:bg-secondary-100 cursor-pointer"
             :to="item.to"
             :href="item.href"
-            @click="onClickItem(item)"
-            v-if="item.hide !== true">
+            @click="onClickItem(item)">
             <atom-icon :icon="item.icon" class="!text-lg"/>
             <span>{{ item.title }}</span>
           </NuxtLink>
@@ -96,7 +112,8 @@ interface IMenuItem {
   to?: string;
   href?: string;
   hide?: boolean;
-  onClick?: (() => (any | Promise<any>))
+  onClick?: (() => (any | Promise<any>));
+  children?: IMenuItem[];
 }
 
 const globalLayout = useGlobalLayout(),
@@ -121,6 +138,7 @@ const mainMenuItems = computed<IMenuItem[]>(() => ([
   { title: $t('layout.aside.persons'), icon: 'users-round', to: '/person', hide: !user?.rights.includes('contact.all.view') },
   { title: $t('layout.aside.quotes'), icon: 'file-text', to: '/quote', hide: !user?.rights.includes('quote.all.view') },
   // { title: $t('layout.aside.timeTrackings'), icon: 'timer', to: '/time-tracking', hide: !(user?.rights.includes('timetracking.all.view') || user?.rights.includes('timetracking.own.view')) },
+  { title: $t('layout.aside.pes'), icon: 'landmark', to: '/pes/charge', hide: !user?.rights.includes('pes.read') },
 ]));
 
 const secondMenuItems = computed<IMenuItem[]>(() => ([

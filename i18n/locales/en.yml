@@ -44,6 +44,7 @@ general:
   moveUp: "Move Up"
   moveDown: "Move Down"
   noItemsFound: "No items found"
+  loadError: "Error loading data"
   searchPlaceholder: "Search ..."
   validation:
     required: "Required"
@@ -129,6 +130,11 @@ layout:
     profile: "Profile"
     search: "Search ..."
     logout: "Logout"
+    pes: "Payment"
+    pesCharges: "Charges"
+    pesDunnings: "Dunnings"
+    pesDirectDebitBulk: "Direct Debit Bulk"
+    pesTransferBulk: "Transfer Bulk"
   dialogSearch:
     searchPlaceholder: "Search ..."
     noResults: "No results"
@@ -591,3 +597,102 @@ template:
     vatId: "VAT ID"
     registerNumber: "Reg. No."
     management: "Management"
+
+pes:
+  title: "Payment"
+  charges:
+    title: "Charges"
+    searchPlaceholder: "Search charge number ..."
+    filter:
+      all: "All"
+      paid: "Paid"
+      unpaid: "Unpaid"
+    fields:
+      chargeNumber: "Charge Number"
+      type: "Type"
+      serviceDate: "Service Date"
+      total: "Total"
+      status: "Status"
+    types:
+      INVOICE: "Invoice"
+      CREDIT_NOTE: "Credit Note"
+    status:
+      paid: "Paid"
+      unpaid: "Unpaid"
+    pdf: "PDF"
+    setPaid:
+      button: "Mark as paid"
+      dialogTitle: "Record Payment"
+      dialogDescription: "When was the charge paid?"
+      paidAt: "Paid at"
+      submit: "Confirm"
+    toast:
+      setPaidSuccess: "Charge marked as paid"
+      setPaidError: "Error marking as paid"
+  dunnings:
+    title: "Dunnings"
+    searchPlaceholder: "Search dunning number ..."
+    fields:
+      dunningNumber: "Dunning Number"
+      level: "Dunning Level"
+      generatedAt: "Generated at"
+      mailSentAt: "Sent at"
+    pdf: "PDF"
+  directDebitBulk:
+    title: "Direct Debit Bulk"
+    filter:
+      all: "All"
+      pending: "Pending"
+      uploaded: "Uploaded"
+    fields:
+      id: "ID"
+      createdAt: "Created at"
+      uploadedAt: "Uploaded at"
+      status: "Status"
+    status:
+      uploaded: "Uploaded"
+      pending: "Pending"
+    createButton: "Create New Bulk"
+    createDialog:
+      title: "Create new direct debit bulk?"
+      description: "A new bulk will be created with all pending direct debits."
+      submit: "Create"
+    downloadXml: "Download XML"
+    markUploaded: "Mark as uploaded"
+    updateXmlDate: "Update XML date"
+    toast:
+      createSuccess: "Direct debit bulk created"
+      createError: "Error creating bulk"
+      markUploadedSuccess: "Marked as uploaded"
+      markUploadedError: "Error marking as uploaded"
+      updateXmlDateSuccess: "XML date updated"
+      updateXmlDateError: "Error updating XML date"
+  transferBulk:
+    title: "Transfer Bulk"
+    filter:
+      all: "All"
+      pending: "Pending"
+      uploaded: "Uploaded"
+    fields:
+      id: "ID"
+      createdAt: "Created at"
+      uploadedAt: "Uploaded at"
+      status: "Status"
+    status:
+      uploaded: "Uploaded"
+      pending: "Pending"
+    createButton: "Create New Bulk"
+    createDialog:
+      title: "Create new transfer bulk?"
+      description: "A new bulk will be created with all pending transfers."
+      submit: "Create"
+    downloadXml: "Download XML"
+    markUploaded: "Mark as uploaded"
+    updateXmlDate: "Update XML date"
+    toast:
+      createSuccess: "Transfer bulk created"
+      createError: "Error creating bulk"
+      markUploadedSuccess: "Marked as uploaded"
+      markUploadedError: "Error marking as uploaded"
+      updateXmlDateSuccess: "XML date updated"
+      updateXmlDateError: "Error updating XML date"
