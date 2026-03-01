@@ -4,12 +4,12 @@
 
     <div class="flex flex-col py-2">
       <div
-        v-if="chargeItems.length === 0"
+        v-if="filteredAndSortedCis.length === 0"
         class="w-full flex items-center justify-center h-20">
         <p class="text-center text-secondary-700 text-sm">{{ $t('general.noItemsFound') }}</p>
       </div>
       <div
-        v-for="ci in chargeItems"
+        v-for="ci in filteredAndSortedCis"
         :key="ci.id"
         class="flex flex-col gap-2 px-4 py-3 border-b border-b-secondary-200 last:border-b-0">
         <div class="flex items-center justify-between gap-2">
@@ -264,6 +264,7 @@ import { formatCurrency } from '~~/shared/utils/default';
 
 type ChargeItem = {
   id: string;
+  createdAt: string;
   title: string;
   description: string | null;
   serviceDate: string;
@@ -283,6 +284,8 @@ const props = defineProps<{
   pesCustomer: { id: string };
   hasPesInteractRight: boolean;
   hasPesDeleteRight: boolean;
+  search: string;
+  statusFilter: 'all' | 'unassigned' | 'assigned';
 }>();
 
 const toast = useToast();
@@ -290,6 +293,19 @@ const { item: taxRatesOptionItem, loadItem: loadTaxRatesOption } = useOption('SY
 const { item: unitsOptionItem, loadItem: loadUnitsOption } = useOption('SYSTEM_UNITS');
 
 const chargeItems = ref<ChargeItem[]>([]);
+
+const filteredAndSortedCis = computed(() => {
+  const q = props.search.trim().toLowerCase();
+  return chargeItems.value
+    .filter(ci => {
+      if (q && !ci.title.toLowerCase().includes(q) && !(ci.description ?? '').toLowerCase().includes(q)) return false;
+      if (props.statusFilter === 'unassigned') return !ci.chargeId;
+      if (props.statusFilter === 'assigned') return !!ci.chargeId;
+      return true;
+    })
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+});
+
 const showCreateCiDialog = ref(false);
 const ciToEdit = ref<ChargeItem | null>(null);
 const ciToDelete = ref<ChargeItem | null>(null);

@@ -4,12 +4,12 @@
 
     <div class="flex flex-col py-2">
       <div
-        v-if="mandates.length === 0"
+        v-if="filteredMandates.length === 0"
         class="w-full flex items-center justify-center h-20">
         <p class="text-center text-secondary-700 text-sm">{{ $t('general.noItemsFound') }}</p>
       </div>
       <div
-        v-for="mandate in mandates"
+        v-for="mandate in filteredMandates"
         :key="mandate.id"
         class="flex flex-col gap-2 px-4 py-3 border-b border-b-secondary-200 last:border-b-0">
         <div class="flex items-center justify-between gap-2">
@@ -139,10 +139,21 @@ type DirectDebitMandate = {
 const props = defineProps<{
   pesCustomer: { id: string };
   hasPesInteractRight: boolean;
+  search: string;
 }>();
 
 const toast = useToast();
 const mandates = ref<DirectDebitMandate[]>([]);
+
+const filteredMandates = computed(() => {
+  const q = props.search.trim().toLowerCase();
+  if (!q) return mandates.value;
+  return mandates.value.filter(m =>
+    m.payer.toLowerCase().includes(q) ||
+    m.iban.toLowerCase().includes(q) ||
+    (m.referenceID ?? '').toLowerCase().includes(q)
+  );
+});
 const mandateToRevoke = ref<DirectDebitMandate | null>(null);
 const showCreateDialog = ref(false);
 const newReferenceID = ref('');

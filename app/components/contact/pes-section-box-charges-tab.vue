@@ -4,12 +4,12 @@
 
     <div class="flex flex-col py-2">
       <div
-        v-if="charges.length === 0"
+        v-if="filteredAndSortedCharges.length === 0"
         class="w-full flex items-center justify-center h-20">
         <p class="text-center text-secondary-700 text-sm">{{ $t('general.noItemsFound') }}</p>
       </div>
       <div
-        v-for="charge in charges"
+        v-for="charge in filteredAndSortedCharges"
         :key="charge.id"
         class="flex flex-col gap-2 px-4 py-3 border-b border-b-secondary-200 last:border-b-0">
         <div class="flex items-center justify-between gap-2">
@@ -126,6 +126,7 @@ type BankDirectDebit = {
 
 type Charge = {
   id: string;
+  createdAt: string;
   chargeNumber: string;
   type: 'INVOICE' | 'CREDIT_NOTE';
   serviceDate: string | null;
@@ -142,6 +143,7 @@ type Charge = {
 const props = defineProps<{
   pesCustomer: { id: string };
   hasPesInteractRight: boolean;
+  search: string;
 }>();
 
 const emit = defineEmits<{
@@ -151,6 +153,13 @@ const emit = defineEmits<{
 const toast = useToast();
 const charges = ref<Charge[]>([]);
 const bankDirectDebits = ref<BankDirectDebit[]>([]);
+
+const filteredAndSortedCharges = computed(() => {
+  const q = props.search.trim().toLowerCase();
+  return charges.value
+    .filter(c => !q || c.chargeNumber.toLowerCase().includes(q))
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+});
 const showCreateChargeDialog = ref(false);
 const chargeToSetPaid = ref<Charge | null>(null);
 const newChargeManuallyPaidAt = ref(new Date().toISOString().split('T')[0]);
