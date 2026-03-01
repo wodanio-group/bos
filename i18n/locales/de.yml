@@ -44,6 +44,7 @@ general:
   moveUp: "Nach oben"
   moveDown: "Nach unten"
   noItemsFound: "Keine Einträge gefunden"
+  loadError: "Fehler beim Laden der Daten"
   searchPlaceholder: "Suchen ..."
   validation:
     required: "Pflichtfeld"
@@ -129,6 +130,11 @@ layout:
     profile: "Profil"
     search: "Suchen ..."
     logout: "Abmelden"
+    pes: "Zahlung"
+    pesCharges: "Rechnungen"
+    pesDunnings: "Mahnungen"
+    pesDirectDebitBulk: "Lastschrift Bulk"
+    pesTransferBulk: "Überweisung Bulk"
   dialogSearch:
     searchPlaceholder: "Suchen ..."
     noResults: "Keine Ergebnisse"
@@ -591,3 +597,102 @@ template:
     vatId: "USt-IdNr."
     registerNumber: "Handelsregisternummer"
     management: "Geschäftsführung"
+
+pes:
+  title: "Zahlung"
+  charges:
+    title: "Rechnungen"
+    searchPlaceholder: "Rechnungsnummer suchen ..."
+    filter:
+      all: "Alle"
+      paid: "Bezahlt"
+      unpaid: "Offen"
+    fields:
+      chargeNumber: "Rechnungsnummer"
+      type: "Typ"
+      serviceDate: "Leistungsdatum"
+      total: "Gesamt"
+      status: "Status"
+    types:
+      INVOICE: "Rechnung"
+      CREDIT_NOTE: "Gutschrift"
+    status:
+      paid: "Bezahlt"
+      unpaid: "Offen"
+    pdf: "PDF"
+    setPaid:
+      button: "Als bezahlt markieren"
+      dialogTitle: "Zahlung erfassen"
+      dialogDescription: "Wann wurde die Rechnung bezahlt?"
+      paidAt: "Bezahlt am"
+      submit: "Bestätigen"
+    toast:
+      setPaidSuccess: "Rechnung als bezahlt markiert"
+      setPaidError: "Fehler beim Markieren als bezahlt"
+  dunnings:
+    title: "Mahnungen"
+    searchPlaceholder: "Mahnungsnummer suchen ..."
+    fields:
+      dunningNumber: "Mahnungsnummer"
+      level: "Mahnstufe"
+      generatedAt: "Erstellt am"
+      mailSentAt: "Versendet am"
+    pdf: "PDF"
+  directDebitBulk:
+    title: "Lastschrift Bulk"
+    filter:
+      all: "Alle"
+      pending: "Ausstehend"
+      uploaded: "Hochgeladen"
+    fields:
+      id: "ID"
+      createdAt: "Erstellt am"
+      uploadedAt: "Hochgeladen am"
+      status: "Status"
+    status:
+      uploaded: "Hochgeladen"
+      pending: "Ausstehend"
+    createButton: "Neuen Bulk erstellen"
+    createDialog:
+      title: "Neuen Lastschrift-Bulk erstellen?"
+      description: "Es wird ein neuer Bulk mit allen ausstehenden Lastschriften erstellt."
+      submit: "Erstellen"
+    downloadXml: "XML herunterladen"
+    markUploaded: "Als hochgeladen markieren"
+    updateXmlDate: "XML-Datum aktualisieren"
+    toast:
+      createSuccess: "Lastschrift-Bulk erstellt"
+      createError: "Fehler beim Erstellen"
+      markUploadedSuccess: "Als hochgeladen markiert"
+      markUploadedError: "Fehler beim Markieren"
+      updateXmlDateSuccess: "XML-Datum aktualisiert"
+      updateXmlDateError: "Fehler beim Aktualisieren des XML-Datums"
+  transferBulk:
+    title: "Überweisung Bulk"
+    filter:
+      all: "Alle"
+      pending: "Ausstehend"
+      uploaded: "Hochgeladen"
+    fields:
+      id: "ID"
+      createdAt: "Erstellt am"
+      uploadedAt: "Hochgeladen am"
+      status: "Status"
+    status:
+      uploaded: "Hochgeladen"
+      pending: "Ausstehend"
+    createButton: "Neuen Bulk erstellen"
+    createDialog:
+      title: "Neuen Überweisungs-Bulk erstellen?"
+      description: "Es wird ein neuer Bulk mit allen ausstehenden Überweisungen erstellt."
+      submit: "Erstellen"
+    downloadXml: "XML herunterladen"
+    markUploaded: "Als hochgeladen markieren"
+    updateXmlDate: "XML-Datum aktualisieren"
+    toast:
+      createSuccess: "Überweisungs-Bulk erstellt"
+      createError: "Fehler beim Erstellen"
+      markUploadedSuccess: "Als hochgeladen markiert"
+      markUploadedError: "Fehler beim Markieren"
+      updateXmlDateSuccess: "XML-Datum aktualisiert"
+      updateXmlDateError: "Fehler beim Aktualisieren des XML-Datums"
