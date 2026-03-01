@@ -179,6 +179,7 @@ company:
       title: "PES Settings"
   pes:
     title: "PES"
+    search: "Search..."
     mandates:
       tabTitle: "Direct Debit Mandates"
       referenceID: "Reference ID"
@@ -221,6 +222,10 @@ company:
       endAt: "End"
       nextAt: "Next Run"
       active: "Active"
+      ending: "Cancellation planned"
+      ended: "Ended"
+      statusAll: "All"
+      statusFilter: "Status"
       create: "Add Recurring Item"
       edit: "Edit"
       end: "End"
@@ -255,6 +260,8 @@ company:
       total: "Total"
       assigned: "In Invoice"
       unassigned: "Open"
+      statusAll: "All"
+      statusFilter: "Status"
       create: "Add Charge Item"
       edit: "Edit"
       deleteDialog:

@@ -179,6 +179,7 @@ company:
       title: "PES-Einstellungen"
   pes:
     title: "PES"
+    search: "Suchen..."
     mandates:
       tabTitle: "Lastschriftmandate"
       referenceID: "Referenz-ID"
@@ -221,6 +222,10 @@ company:
       endAt: "Ende"
       nextAt: "Nächste Ausführung"
       active: "Aktiv"
+      ending: "Kündigung geplant"
+      ended: "Beendet"
+      statusAll: "Alle"
+      statusFilter: "Status"
       create: "Dauerposten anlegen"
       edit: "Bearbeiten"
       end: "Beenden"
@@ -255,6 +260,8 @@ company:
       total: "Gesamt"
       assigned: "In Rechnung"
       unassigned: "Offen"
+      statusAll: "Alle"
+      statusFilter: "Status"
       create: "Buchungsposten anlegen"
       edit: "Bearbeiten"
       deleteDialog:

@@ -72,18 +72,46 @@
       </atom-button>
     </template>
 
+    <div class="flex items-center gap-2 px-4 py-2 border-b border-secondary-100">
+      <input
+        type="text"
+        v-model="search"
+        :placeholder="$t('company.pes.search')"
+        class="flex-1 px-3 py-1.5 text-sm border border-secondary-200 rounded focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 bg-white">
+      <select
+        v-if="activeTab === 'recurringChargeItems'"
+        v-model="rciStatusFilter"
+        class="text-sm border border-secondary-200 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 bg-white">
+        <option value="all">{{ $t('company.pes.recurringChargeItems.statusAll') }}</option>
+        <option value="active">{{ $t('company.pes.recurringChargeItems.active') }}</option>
+        <option value="ending">{{ $t('company.pes.recurringChargeItems.ending') }}</option>
+        <option value="ended">{{ $t('company.pes.recurringChargeItems.ended') }}</option>
+      </select>
+      <select
+        v-if="activeTab === 'chargeItems'"
+        v-model="ciStatusFilter"
+        class="text-sm border border-secondary-200 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 bg-white">
+        <option value="all">{{ $t('company.pes.chargeItems.statusAll') }}</option>
+        <option value="unassigned">{{ $t('company.pes.chargeItems.unassigned') }}</option>
+        <option value="assigned">{{ $t('company.pes.chargeItems.assigned') }}</option>
+      </select>
+    </div>
+
     <contact-pes-section-box-mandates-tab
       v-show="activeTab === 'mandates'"
       ref="mandatesTabRef"
       :pesCustomer="pesCustomer"
-      :hasPesInteractRight="hasPesInteractRight">
+      :hasPesInteractRight="hasPesInteractRight"
+      :search="search">
     </contact-pes-section-box-mandates-tab>
 
     <contact-pes-section-box-recurring-charge-items-tab
       v-show="activeTab === 'recurringChargeItems'"
       ref="rciTabRef"
       :pesCustomer="pesCustomer"
-      :hasPesInteractRight="hasPesInteractRight">
+      :hasPesInteractRight="hasPesInteractRight"
+      :search="search"
+      :statusFilter="rciStatusFilter">
     </contact-pes-section-box-recurring-charge-items-tab>
 
     <contact-pes-section-box-charge-items-tab
@@ -91,7 +119,9 @@
       ref="ciTabRef"
       :pesCustomer="pesCustomer"
       :hasPesInteractRight="hasPesInteractRight"
-      :hasPesDeleteRight="hasPesDeleteRight">
+      :hasPesDeleteRight="hasPesDeleteRight"
+      :search="search"
+      :statusFilter="ciStatusFilter">
     </contact-pes-section-box-charge-items-tab>
 
     <contact-pes-section-box-charges-tab
@@ -99,6 +129,7 @@
       ref="chargesTabRef"
       :pesCustomer="pesCustomer"
       :hasPesInteractRight="hasPesInteractRight"
+      :search="search"
       @charge-created="ciTabRef?.reload()">
     </contact-pes-section-box-charges-tab>
 
@@ -118,6 +149,9 @@ const hasPesDeleteRight = user?.rights.includes('pes.delete') ?? false;
 
 const pesCustomer = ref<PesCustomer | null>(null);
 const activeTab = ref<'mandates' | 'recurringChargeItems' | 'chargeItems' | 'charges'>('mandates');
+const search = ref('');
+const rciStatusFilter = ref<'all' | 'active' | 'ending' | 'ended'>('all');
+const ciStatusFilter = ref<'all' | 'unassigned' | 'assigned'>('all');
 
 const mandatesTabRef = ref<{ reload: () => void; triggerCreate: () => void } | null>(null);
 const rciTabRef = ref<{ reload: () => void; triggerCreate: () => void } | null>(null);

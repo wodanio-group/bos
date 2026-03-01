@@ -4,22 +4,27 @@
 
     <div class="flex flex-col py-2">
       <div
-        v-if="recurringChargeItems.length === 0"
+        v-if="filteredAndSortedRcis.length === 0"
         class="w-full flex items-center justify-center h-20">
         <p class="text-center text-secondary-700 text-sm">{{ $t('general.noItemsFound') }}</p>
       </div>
       <div
-        v-for="rci in recurringChargeItems"
+        v-for="rci in filteredAndSortedRcis"
         :key="rci.id"
         class="flex flex-col gap-2 px-4 py-3 border-b border-b-secondary-200 last:border-b-0">
         <div class="flex items-center justify-between gap-2">
           <span
-            v-if="!rci.endAt || new Date(rci.endAt) > new Date()"
+            v-if="!rci.endAt"
             class="text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
             {{ $t('company.pes.recurringChargeItems.active') }}
           </span>
-          <span v-else class="text-xs text-secondary-500">
-            {{ $t('company.pes.recurringChargeItems.endAt') }}: {{ formatDate(rci.endAt!) }}
+          <span
+            v-else-if="new Date(rci.endAt) > new Date()"
+            class="text-xs font-medium text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
+            {{ $t('company.pes.recurringChargeItems.ending') }}: {{ formatDate(rci.endAt) }}
+          </span>
+          <span v-else class="text-xs font-medium text-secondary-500 bg-secondary-100 px-2 py-0.5 rounded-full">
+            {{ $t('company.pes.recurringChargeItems.ended') }}: {{ formatDate(rci.endAt) }}
           </span>
           <div v-if="hasPesInteractRight" class="flex gap-1">
             <atom-button
@@ -297,6 +302,8 @@ type RecurringChargeItem = {
 const props = defineProps<{
   pesCustomer: { id: string };
   hasPesInteractRight: boolean;
+  search: string;
+  statusFilter: 'all' | 'active' | 'ending' | 'ended';
 }>();
 
 const toast = useToast();
@@ -304,6 +311,26 @@ const { item: taxRatesOptionItem, loadItem: loadTaxRatesOption } = useOption('SY
 const { item: unitsOptionItem, loadItem: loadUnitsOption } = useOption('SYSTEM_UNITS');
 
 const recurringChargeItems = ref<RecurringChargeItem[]>([]);
+
+const filteredAndSortedRcis = computed(() => {
+  const q = props.search.trim().toLowerCase();
+  const now = new Date();
+  return recurringChargeItems.value
+    .filter(rci => {
+      if (q && !rci.title.toLowerCase().includes(q) && !(rci.description ?? '').toLowerCase().includes(q)) return false;
+      if (props.statusFilter === 'active') return !rci.endAt;
+      if (props.statusFilter === 'ending') return !!rci.endAt && new Date(rci.endAt) > now;
+      if (props.statusFilter === 'ended') return !!rci.endAt && new Date(rci.endAt) <= now;
+      return true;
+    })
+    .sort((a, b) => {
+      if (!a.nextAt && !b.nextAt) return 0;
+      if (!a.nextAt) return 1;
+      if (!b.nextAt) return -1;
+      return new Date(a.nextAt).getTime() - new Date(b.nextAt).getTime();
+    });
+});
+
 const showCreateRciDialog = ref(false);
 const rciToEdit = ref<RecurringChargeItem | null>(null);
 const rciToEnd = ref<RecurringChargeItem | null>(null);
