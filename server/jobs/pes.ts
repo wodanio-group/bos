@@ -20,12 +20,21 @@ export const customerUpsert = async (job: Job<{ companyId: string }>) => {
   const company = await prisma.company.findUnique({
     where: { id: companyId },
     include: {
+      companyPersons: {
+        include: {
+          person: true,
+        },
+        where: {
+          invoiceRecipient: { equals: true },
+        },
+      },
       contactAddresses: true,
       contactCommunicationWays: true,
     },
   });
   if (!company)
     throw new Error(`[JOB:pes-customer-upsert] Company with ID ${companyId} not found`);
+  const invoiceRecipient = company.companyPersons.at(0)?.person ?? null;
   const companyVm = companyToViewModel(company);
   const customer = (await pesBaseRequest('/customer', 'GET', { query: { externalId: company.customerId } }))
     .items.at(0) ?? null;
@@ -35,6 +44,8 @@ export const customerUpsert = async (job: Job<{ companyId: string }>) => {
     vatId: filterString(company.vatId),
     taxId: filterString(company.taxId),
     companyName: company.name,
+    firstname: invoiceRecipient?.firstname ?? null,
+    surname: invoiceRecipient?.familyname ?? invoiceRecipient?.surename ?? null,
     email: filterString(contactGetPrimaryCommunicationWay(companyVm, 'EMAIL', 'INVOICING')?.value),
     address: filterString(contactGetPrimaryAddress(companyVm, 'INVOICE')?.address),
     address2: filterString(contactGetPrimaryAddress(companyVm, 'INVOICE')?.address2),

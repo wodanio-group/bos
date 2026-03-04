@@ -11,9 +11,16 @@
       <atom-input
         type="text"
         :title="$t('general.role')"
-        class="col-span-1 lg:col-span-4"
+        class="col-span-1 lg:col-span-3"
         v-model="role">
       </atom-input>
+
+      <atom-select
+        :title="$t('contactEdit.personCompanyRelations.invoiceRecipient')"
+        class="col-span-1"
+        :items="[{ title: $t('general.yes'), value: 'true' }, { title: $t('general.no'), value: 'false' }]"
+        v-model="invoiceRecipientSelect">
+      </atom-select>
 
     </div>
     <atom-button
@@ -31,11 +38,11 @@
 
 const props = defineProps<{
   contactType: 'company' | 'person',
-  item: { id: string, role: string | null },
+  item: { id: string, role: string | null, invoiceRecipient: boolean },
 }>();
 
 const emits = defineEmits<{
-  change: [{ id: string, role: string | null }],
+  change: [{ id: string, role: string | null, invoiceRecipient: boolean }],
   delete: [void],
 }>();
 
@@ -53,11 +60,13 @@ const name = computed(() => (item.value && props.contactType === 'company')
     : '?');
 
 const role = ref(props.item.role ?? '');
+const invoiceRecipientSelect = ref<string>(props.item.invoiceRecipient ? 'true' : 'false');
 
-watch(role, (value: string) => {
+watch([role, invoiceRecipientSelect], ([roleVal, invoiceRecipientVal]: [string, string]) => {
   emits('change', {
     ...props.item,
-    role: filterString(value),
+    role: filterString(roleVal),
+    invoiceRecipient: invoiceRecipientVal === 'true',
   });
 }, { immediate: true });
 

@@ -136,6 +136,7 @@ export default defineEventHandler(async (event) => {
       id: z.string().uuid(),
       main: z.boolean().default(false),
       role: z.string().optional().nullable(),
+      invoiceRecipient: z.boolean().default(false),
     })).optional().nullable(),
     communicationWays: z.array(contactCommunicationWayValidator).optional().nullable(),
     addresses: z.array(contactAddressValidator).optional().nullable(),
@@ -179,13 +180,11 @@ export default defineEventHandler(async (event) => {
       gender: body.data.gender ?? undefined,
       birthdayAt: body.data.birthdayAt,
       companyPersons: !body.data.companies ? {} : {
-        create: body.data.companies
-          .filter(o => !findItem.companyPersons.find(oo => o.id === oo.companyId))
-          .map(o => ({
-            companyId: o.id,
-            main: (o.main === true),
-            role: o.role,
-          })),
+        upsert: body.data.companies.map(o => ({
+          where: { personId_companyId: { personId: id, companyId: o.id } },
+          create: { companyId: o.id, main: (o.main === true), role: o.role, invoiceRecipient: o.invoiceRecipient },
+          update: { main: (o.main === true), role: o.role, invoiceRecipient: o.invoiceRecipient },
+        })),
         deleteMany: findItem.companyPersons
           .filter(o => !body.data.companies?.find(oo => o.companyId === oo.id))
       },
@@ -248,6 +247,20 @@ export default defineEventHandler(async (event) => {
       contactNotes: true
     },
   });
+
+  const invoiceRecipientCompanyIds = body.data.companies
+    ?.filter(o => o.invoiceRecipient)
+    .map(o => o.id) ?? [];
+  if (invoiceRecipientCompanyIds.length > 0) {
+    await prisma.companyPerson.updateMany({
+      where: {
+        companyId: { in: invoiceRecipientCompanyIds },
+        personId: { not: id },
+        invoiceRecipient: true,
+      },
+      data: { invoiceRecipient: false },
+    });
+  }
 
   for (const email of item.contactCommunicationWays
     .filter(o => o.type === 'EMAIL' && !['INVOICING', 'PRIVAT'].includes(o.category) && o.value !== null && o.value.length > 0).map(o => o.value)) {

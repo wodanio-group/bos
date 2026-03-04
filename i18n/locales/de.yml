@@ -570,6 +570,7 @@ contactEdit:
   personCompanyRelations:
     companiesTitle: "Unternehmen"
     personsTitle: "Personen"
+    invoiceRecipient: "Rechnungsempfänger"
     searchDialog:
       company:
         title: "Unternehmen suchen und auswählen..."

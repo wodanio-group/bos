@@ -218,7 +218,7 @@
     :title="$t(`contactEdit.personCompanyRelations.searchDialog.${(contactType === 'company') ? 'person' : 'company'}.title`)"
     :search-fn="searchPersonCompanyRelation"
     @select="(id) => {
-      updatePersonCompanyRelationItems({ id, role: null });
+      updatePersonCompanyRelationItems({ id, role: null, invoiceRecipient: false });
       openSearchPersonCompanyRelationDialog = false;
     }"
     @close="openSearchPersonCompanyRelationDialog = false">
@@ -285,12 +285,12 @@ const updateCommunicationWays = (value: Partial<(ContactCommunicationWayViewMode
 
 const openSearchPersonCompanyRelationDialog = ref<boolean>(false);
 const personCompanyRelationFieldName = computed(() => (contactType.value === 'company') ? 'persons' : 'companies');
-const personCompanyRelationItems = ref<{ id: string, role: string | null }[]>((props.contact && 'persons' in props.contact)
+const personCompanyRelationItems = ref<{ id: string, role: string | null, invoiceRecipient: boolean }[]>((props.contact && 'persons' in props.contact)
   ? props.contact.persons
   : (props.contact && 'companies' in props.contact)
     ? props.contact.companies
     : []);
-const updatePersonCompanyRelationItems = (value: { id: string, role: string | null }) => {
+const updatePersonCompanyRelationItems = (value: { id: string, role: string | null, invoiceRecipient: boolean }) => {
   if (personCompanyRelationItems.value.find(o => o.id === value.id)) {
     personCompanyRelationItems.value = personCompanyRelationItems.value.map(o => (o.id === value.id) ? value : o);
   } else {

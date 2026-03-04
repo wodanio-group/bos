@@ -147,6 +147,7 @@ export const personToViewModel = (item: Person): PersonViewModel => {
     companies: (((item as any)?.companyPersons ?? []) as CompanyPerson[]).map(o => ({
       id: o.companyId,
       role: o.role,
+      invoiceRecipient: o.invoiceRecipient,
     })),
     communicationWays: ((item as any)?.contactCommunicationWays ?? []).map((o: any) => contactCommunicationWayToViewModel(o)),
     addresses: ((item as any)?.contactAddresses ?? []).map((o: any) => contactAddressViewModel(o)),
@@ -176,6 +177,7 @@ export const companyToViewModel = (item: Company): CompanyViewModel => {
     persons: (((item as any)?.companyPersons ?? []) as CompanyPerson[]).map(o => ({
       id: o.personId,
       role: o.role,
+      invoiceRecipient: o.invoiceRecipient,
     })),
     communicationWays: ((item as any)?.contactCommunicationWays ?? []).map((o: any) => contactCommunicationWayToViewModel(o)),
     addresses: ((item as any)?.contactAddresses ?? []).map((o: any) => contactAddressViewModel(o)),

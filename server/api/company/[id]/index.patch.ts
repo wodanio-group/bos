@@ -122,6 +122,7 @@ export default defineEventHandler(async (event) => {
       id: z.string().uuid(),
       main: z.boolean().default(false),
       role: z.string().optional().nullable(),
+      invoiceRecipient: z.boolean().default(false),
     })).optional().nullable(),
     communicationWays: z.array(contactCommunicationWayValidator).optional().nullable(),
     addresses: z.array(contactAddressValidator).optional().nullable(),
@@ -164,13 +165,11 @@ export default defineEventHandler(async (event) => {
       taxId: body.data.taxId,
       vatId: body.data.vatId,
       companyPersons: !body.data.persons ? {} : {
-        create: body.data.persons
-          .filter(o => !findItem.companyPersons.find(oo => o.id === oo.personId))
-          .map(o => ({
-            personId: o.id,
-            main: o.main,
-            role: o.role,
-          })),
+        upsert: body.data.persons.map(o => ({
+          where: { personId_companyId: { personId: o.id, companyId: id } },
+          create: { personId: o.id, main: o.main, role: o.role, invoiceRecipient: o.invoiceRecipient },
+          update: { main: o.main, role: o.role, invoiceRecipient: o.invoiceRecipient },
+        })),
         deleteMany: findItem.companyPersons
           .filter(o => !body.data.persons?.find(oo => o.personId === oo.id))
       },
@@ -233,6 +232,16 @@ export default defineEventHandler(async (event) => {
       contactNotes: true
     },
   });
+  const invoiceRecipientPersonId = body.data.persons?.find(o => o.invoiceRecipient)?.id ?? null;
+  await prisma.companyPerson.updateMany({
+    where: {
+      companyId: id,
+      ...(invoiceRecipientPersonId ? { personId: { not: invoiceRecipientPersonId } } : {}),
+      invoiceRecipient: true,
+    },
+    data: { invoiceRecipient: false },
+  });
+
   await queue.add('pes.customer.upsert', { companyId: item.id });
   
   for (const email of item.contactCommunicationWays

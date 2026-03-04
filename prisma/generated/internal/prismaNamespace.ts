@@ -1937,6 +1937,7 @@ export const CompanyPersonScalarFieldEnum = {
   createdAt: 'createdAt',
   main: 'main',
   role: 'role',
+  invoiceRecipient: 'invoiceRecipient',
   personId: 'personId',
   companyId: 'companyId'
 } as const
