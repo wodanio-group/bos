@@ -125,13 +125,14 @@ model Company {
 }
 
 model CompanyPerson {
-  createdAt     DateTime      @default(now())
-  main          Boolean       @default(false)
-  role          String?
-  personId      String
-  person        Person        @relation(fields: [personId], references: [id], onDelete: Cascade)
-  companyId     String
-  company       Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdAt          DateTime      @default(now())
+  main               Boolean       @default(false)
+  role               String?
+  invoiceRecipient   Boolean       @default(false)
+  personId           String
+  person             Person        @relation(fields: [personId], references: [id], onDelete: Cascade)
+  companyId          String
+  company            Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
   @@id([personId, companyId])
 }
 
