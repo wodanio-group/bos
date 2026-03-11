@@ -38,6 +38,15 @@ export const customerUpsert = async (job: Job<{ companyId: string }>) => {
   const companyVm = companyToViewModel(company);
   const customer = (await pesBaseRequest('/customer', 'GET', { query: { externalId: company.customerId } }))
     .items.at(0) ?? null;
+  const email = companyVm.communicationWays.find(o => o.type === 'EMAIL' && o.category === 'INVOICING')
+    ?? companyVm.communicationWays.find(o => o.type === 'EMAIL' && o.category === 'WORK')
+    ?? companyVm.communicationWays.find(o => o.type === 'EMAIL')
+    ?? null;
+  const address = companyVm.addresses.find(o => o.category === 'INVOICE')
+    ?? companyVm.addresses.find(o => o.category === 'HEADQUARTER')
+    ?? companyVm.addresses.find(o => o.category === 'WORK')
+    ?? companyVm.addresses.at(0)
+    ?? null;
   await pesBaseRequest(`/customer/${customer?.id ?? ''}`, (customer !== null) ? 'PATCH' : 'POST', { body: {
     ...(customer ?? {}),
     externalId: company.customerId,
@@ -46,13 +55,13 @@ export const customerUpsert = async (job: Job<{ companyId: string }>) => {
     companyName: company.name,
     firstname: invoiceRecipient?.firstname ?? null,
     surname: invoiceRecipient?.familyname ?? invoiceRecipient?.surename ?? null,
-    email: filterString(contactGetPrimaryCommunicationWay(companyVm, 'EMAIL', 'INVOICING')?.value),
-    address: filterString(contactGetPrimaryAddress(companyVm, 'INVOICE')?.address),
-    address2: filterString(contactGetPrimaryAddress(companyVm, 'INVOICE')?.address2),
-    zipCode: filterString(contactGetPrimaryAddress(companyVm, 'INVOICE')?.zipCode),
-    city: filterString(contactGetPrimaryAddress(companyVm, 'INVOICE')?.city),
-    // TODO: state: contactGetPrimaryAddress(companyVm, 'INVOICE')?.state ?? null,
-    country: filterString(contactGetPrimaryAddress(companyVm, 'INVOICE')?.country),
+    email: filterString(email?.value),
+    address: filterString(address?.address),
+    address2: filterString(address?.address2),
+    zipCode: filterString(address?.zipCode),
+    city: filterString(address?.city),
+    // TODO: state: address?.state ?? null,
+    country: filterString(address?.country),
   } });
 };
 
