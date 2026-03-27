@@ -29,6 +29,7 @@
     :disabled="disabled === true"
     :to="to"
     :href="href"
+    :target="target"
     @click="onClick"
     class="relative flex justify-center items-center gap-1 text-sm px-4 py-1.5 rounded-lg border border-primary-950 transition-colors hover:text-secondary-100 hover:bg-primary-950/80 disabled:cursor-not-allowed disabled:opacity-60"
     :class="{
@@ -57,6 +58,7 @@ const props = defineProps<{
   type: 'button' | 'submit' | 'reset' | 'link',
   to?: string,
   href?: string,
+  target?: string,
   eventName?: string,
   icon?: string,
   title?: string,

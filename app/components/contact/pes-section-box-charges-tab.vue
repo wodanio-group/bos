@@ -27,13 +27,15 @@
             </span>
           </div>
           <div class="flex gap-1">
-            <a
+            <atom-button
               v-if="charge.url"
+              type="link"
               :href="charge.url"
               target="_blank"
-              class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium border border-secondary-300 rounded text-secondary-600 hover:text-secondary-900 hover:border-secondary-400 transition-colors">
-              {{ $t('company.pes.charges.pdf') }}
-            </a>
+              :title="$t('company.pes.charges.pdf')"
+              icon="file-text"
+              :outline="true">
+            </atom-button>
             <atom-button
               v-if="hasPesInteractRight && !isChargePaid(charge)"
               type="button"
@@ -121,7 +123,25 @@ import { formatCurrency } from '~~/shared/utils/default';
 type BankDirectDebit = {
   id: string;
   chargeId: string;
+  bankDirectDebitBulkId: string | null;
   failedAt: string | null;
+};
+
+type BankTransfer = {
+  id: string;
+  chargeId: string;
+  bankTransferBulkId: string | null;
+  failedAt: string | null;
+};
+
+type BankDirectDebitBulk = {
+  id: string;
+  uploadedAt: string | null;
+};
+
+type BankTransferBulk = {
+  id: string;
+  uploadedAt: string | null;
 };
 
 type Charge = {
@@ -153,6 +173,9 @@ const emit = defineEmits<{
 const toast = useToast();
 const charges = ref<Charge[]>([]);
 const bankDirectDebits = ref<BankDirectDebit[]>([]);
+const bankTransfers = ref<BankTransfer[]>([]);
+const bankDirectDebitBulks = ref<BankDirectDebitBulk[]>([]);
+const bankTransferBulks = ref<BankTransferBulk[]>([]);
 
 const filteredAndSortedCharges = computed(() => {
   const q = props.search.trim().toLowerCase();
@@ -168,23 +191,42 @@ const formatDate = (isoStr: string) =>
   DateTime.fromISO(isoStr).toFormat($t('format.date'));
 
 const loadCharges = async () => {
-  const [chargesResult, debitsResult] = await Promise.all([
-    $fetch<{ items: Charge[] }>('/api/pes/charge', {
-      query: { customerId: props.pesCustomer.id, take: 999999 },
-    }),
+  const chargesResult = await $fetch<{ items: Charge[] }>('/api/pes/charge', {
+    query: { customerId: props.pesCustomer.id, take: 999999 },
+  });
+  charges.value = chargesResult.items;
+
+  const [debitsResult, transfersResult, debitBulksResult, transferBulksResult] = await Promise.allSettled([
     $fetch<{ items: BankDirectDebit[] }>('/api/pes/bank-direct-debit', {
       query: { customerId: props.pesCustomer.id, take: 999999 },
     }),
+    $fetch<{ items: BankTransfer[] }>('/api/pes/bank-transfer', {
+      query: { customerId: props.pesCustomer.id, take: 999999 },
+    }),
+    $fetch<{ items: BankDirectDebitBulk[] }>('/api/pes/bank-direct-debit-bulk', { query: { take: 999999 } }),
+    $fetch<{ items: BankTransferBulk[] }>('/api/pes/bank-transfer-bulk', { query: { take: 999999 } }),
   ]);
-  charges.value = chargesResult.items;
-  bankDirectDebits.value = debitsResult.items;
+  if (debitsResult.status === 'fulfilled') bankDirectDebits.value = debitsResult.value.items;
+  if (transfersResult.status === 'fulfilled') bankTransfers.value = transfersResult.value.items;
+  if (debitBulksResult.status === 'fulfilled') bankDirectDebitBulks.value = debitBulksResult.value.items;
+  if (transferBulksResult.status === 'fulfilled') bankTransferBulks.value = transferBulksResult.value.items;
 };
 
 const isChargePaid = (charge: Charge) => {
   if (charge.manuallyPaidAt) return true;
-  return bankDirectDebits.value
-    .filter(d => d.chargeId === charge.id)
-    .some(d => d.failedAt === null);
+  if (bankDirectDebits.value.some(d =>
+    d.chargeId === charge.id &&
+    d.failedAt === null &&
+    d.bankDirectDebitBulkId !== null &&
+    bankDirectDebitBulks.value.some(b => b.id === d.bankDirectDebitBulkId && b.uploadedAt !== null)
+  )) return true;
+  if (bankTransfers.value.some(t =>
+    t.chargeId === charge.id &&
+    t.failedAt === null &&
+    t.bankTransferBulkId !== null &&
+    bankTransferBulks.value.some(b => b.id === t.bankTransferBulkId && b.uploadedAt !== null)
+  )) return true;
+  return false;
 };
 
 let pollInterval: ReturnType<typeof setInterval> | null = null;
