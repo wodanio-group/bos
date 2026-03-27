@@ -609,7 +609,7 @@ template:
 pes:
   title: "Zahlung"
   charges:
-    title: "Rechnungen"
+    title: "Abrechnungen"
     searchPlaceholder: "Rechnungsnummer suchen ..."
     filter:
       all: "Alle"
@@ -619,6 +619,7 @@ pes:
       chargeNumber: "Rechnungsnummer"
       type: "Typ"
       serviceDate: "Leistungsdatum"
+      documentDate: "Abrechnungsdatum"
       total: "Gesamt"
       status: "Status"
     types:

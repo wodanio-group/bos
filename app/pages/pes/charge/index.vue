@@ -33,7 +33,8 @@
             <th class="px-4 py-2 text-left text-xs font-semibold text-secondary-500">{{ $t('pes.charges.fields.chargeNumber') }}</th>
             <th class="px-4 py-2 text-left text-xs font-semibold text-secondary-500">{{ $t('pes.charges.fields.type') }}</th>
             <th class="px-4 py-2 text-left text-xs font-semibold text-secondary-500">{{ $t('pes.charges.fields.serviceDate') }}</th>
-            <th class="px-4 py-2 text-right text-xs font-semibold text-secondary-500">{{ $t('pes.charges.fields.total') }}</th>
+            <th class="px-4 py-2 text-left text-xs font-semibold text-secondary-500">{{ $t('pes.charges.fields.documentDate') }}</th>
+            <th class="px-4 py-2 text-left text-xs font-semibold text-secondary-500">{{ $t('pes.charges.fields.total') }}</th>
             <th class="px-4 py-2 text-left text-xs font-semibold text-secondary-500">{{ $t('pes.charges.fields.status') }}</th>
             <th class="px-4 py-2"></th>
           </tr>
@@ -53,7 +54,8 @@
               {{ charge.serviceDate ? formatDate(charge.serviceDate) : '-' }}
               <span v-if="charge.serviceDateTo"> – {{ formatDate(charge.serviceDateTo) }}</span>
             </td>
-            <td class="px-4 py-2 text-right font-medium">{{ formatCurrency(charge.total) }}</td>
+            <td class="px-4 py-2 text-secondary-600">{{ charge.documentGeneratedAt ? formatDate(charge.documentGeneratedAt) : '-' }}</td>
+            <td class="px-4 py-2 font-medium">{{ formatCurrency(charge.total) }}</td>
             <td class="px-4 py-2">
               <span
                 v-if="isChargePaid(charge)"
@@ -66,13 +68,6 @@
             </td>
             <td class="px-4 py-2">
               <div class="flex items-center justify-end gap-1">
-                <a
-                  v-if="charge.url"
-                  :href="charge.url"
-                  target="_blank"
-                  class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium border border-secondary-300 rounded text-secondary-600 hover:text-secondary-900 hover:border-secondary-400 transition-colors">
-                  {{ $t('pes.charges.pdf') }}
-                </a>
                 <atom-button
                   v-if="hasPesInteractRight && !isChargePaid(charge)"
                   type="button"
@@ -80,6 +75,15 @@
                   :title="$t('pes.charges.setPaid.button')"
                   :outline="true"
                   @click="openSetPaid(charge)">
+                </atom-button>
+                <atom-button
+                  v-if="charge.url"
+                  type="link"
+                  :href="charge.url"
+                  target="_blank"
+                  :title="$t('pes.charges.pdf')"
+                  icon="file-text"
+                  :outline="true">
                 </atom-button>
               </div>
             </td>
@@ -89,23 +93,11 @@
 
       <div class="flex items-center justify-between px-4 py-3 border-t border-secondary-100">
         <span class="text-xs text-secondary-500">{{ totalItems }} {{ $t('pes.charges.title') }}</span>
-        <div class="flex items-center gap-2">
-          <atom-button
-            type="button"
-            icon="chevron-left"
-            :outline="true"
-            :disabled="page <= 1"
-            @click="prevPage">
-          </atom-button>
-          <span class="text-sm text-secondary-600">{{ page }}</span>
-          <atom-button
-            type="button"
-            icon="chevron-right"
-            :outline="true"
-            :disabled="items.length < take"
-            @click="nextPage">
-          </atom-button>
-        </div>
+        <Pagination
+          :isFirst="page <= 1"
+          :isLast="items.length < take"
+          :state="{ take, page }"
+          @update:state="s => { page = s.page; loadItems(); }"/>
       </div>
     </PageSectionBox>
 
@@ -155,6 +147,30 @@ type Charge = {
   customerId: string;
 };
 
+type BankDirectDebit = {
+  id: string;
+  chargeId: string;
+  bankDirectDebitBulkId: string | null;
+  failedAt: string | null;
+};
+
+type BankTransfer = {
+  id: string;
+  chargeId: string;
+  bankTransferBulkId: string | null;
+  failedAt: string | null;
+};
+
+type BankDirectDebitBulk = {
+  id: string;
+  uploadedAt: string | null;
+};
+
+type BankTransferBulk = {
+  id: string;
+  uploadedAt: string | null;
+};
+
 const auth = useAuth();
 const user = await auth.getUser();
 const toast = useToast();
@@ -168,6 +184,10 @@ const take = 20;
 const loading = ref(true);
 const chargeNumberSearch = ref('');
 const paymentStatusFilter = ref<'paid' | 'unpaid' | ''>('');
+const bankDirectDebits = ref<BankDirectDebit[]>([]);
+const bankTransfers = ref<BankTransfer[]>([]);
+const bankDirectDebitBulks = ref<BankDirectDebitBulk[]>([]);
+const bankTransferBulks = ref<BankTransferBulk[]>([]);
 
 let searchDebounce: ReturnType<typeof setTimeout> | null = null;
 
@@ -177,7 +197,7 @@ const formatDate = (isoStr: string) =>
 const loadItems = async () => {
   loading.value = true;
   try {
-    const result = await $fetch<{ items: Charge[]; totalItems: number }>('/api/pes/charge', {
+    const chargesResult = await $fetch<{ items: Charge[]; totalItems: number }>('/api/pes/charge', {
       query: {
         take,
         page: page.value,
@@ -186,17 +206,43 @@ const loadItems = async () => {
         ...(paymentStatusFilter.value ? { paymentStatus: paymentStatusFilter.value } : {}),
       },
     });
-    items.value = result.items;
-    totalItems.value = result.totalItems;
+    items.value = chargesResult.items;
+    totalItems.value = chargesResult.totalItems;
   } catch (e) {
     console.error('Failed to load charges', e);
     toast.add({ type: 'error', title: $t('general.loadError') });
   } finally {
     loading.value = false;
   }
+
+  const [debitsResult, transfersResult, debitBulksResult, transferBulksResult] = await Promise.allSettled([
+    $fetch<{ items: BankDirectDebit[] }>('/api/pes/bank-direct-debit', { query: { take: 999999 } }),
+    $fetch<{ items: BankTransfer[] }>('/api/pes/bank-transfer', { query: { take: 999999 } }),
+    $fetch<{ items: BankDirectDebitBulk[] }>('/api/pes/bank-direct-debit-bulk', { query: { take: 999999 } }),
+    $fetch<{ items: BankTransferBulk[] }>('/api/pes/bank-transfer-bulk', { query: { take: 999999 } }),
+  ]);
+  if (debitsResult.status === 'fulfilled') bankDirectDebits.value = debitsResult.value.items;
+  if (transfersResult.status === 'fulfilled') bankTransfers.value = transfersResult.value.items;
+  if (debitBulksResult.status === 'fulfilled') bankDirectDebitBulks.value = debitBulksResult.value.items;
+  if (transferBulksResult.status === 'fulfilled') bankTransferBulks.value = transferBulksResult.value.items;
 };
 
-const isChargePaid = (charge: Charge) => charge.manuallyPaidAt !== null;
+const isChargePaid = (charge: Charge) => {
+  if (charge.manuallyPaidAt) return true;
+  if (bankDirectDebits.value.some(d =>
+    d.chargeId === charge.id &&
+    d.failedAt === null &&
+    d.bankDirectDebitBulkId !== null &&
+    bankDirectDebitBulks.value.some(b => b.id === d.bankDirectDebitBulkId && b.uploadedAt !== null)
+  )) return true;
+  if (bankTransfers.value.some(t =>
+    t.chargeId === charge.id &&
+    t.failedAt === null &&
+    t.bankTransferBulkId !== null &&
+    bankTransferBulks.value.some(b => b.id === t.bankTransferBulkId && b.uploadedAt !== null)
+  )) return true;
+  return false;
+};
 
 const onSearch = () => {
   if (searchDebounce) clearTimeout(searchDebounce);
@@ -208,18 +254,6 @@ const onSearch = () => {
 
 const onFilterChange = () => {
   page.value = 1;
-  loadItems();
-};
-
-const prevPage = () => {
-  if (page.value > 1) {
-    page.value--;
-    loadItems();
-  }
-};
-
-const nextPage = () => {
-  page.value++;
   loadItems();
 };
 

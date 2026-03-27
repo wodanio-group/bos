@@ -61,23 +61,11 @@
 
       <div class="flex items-center justify-between px-4 py-3 border-t border-secondary-100">
         <span class="text-xs text-secondary-500">{{ totalItems }} {{ $t('pes.dunnings.title') }}</span>
-        <div class="flex items-center gap-2">
-          <atom-button
-            type="button"
-            icon="chevron-left"
-            :outline="true"
-            :disabled="page <= 1"
-            @click="prevPage">
-          </atom-button>
-          <span class="text-sm text-secondary-600">{{ page }}</span>
-          <atom-button
-            type="button"
-            icon="chevron-right"
-            :outline="true"
-            :disabled="items.length < take"
-            @click="nextPage">
-          </atom-button>
-        </div>
+        <Pagination
+          :isFirst="page <= 1"
+          :isLast="items.length < take"
+          :state="{ take, page }"
+          @update:state="s => { page = s.page; loadItems(); }"/>
       </div>
     </PageSectionBox>
 
@@ -138,18 +126,6 @@ const onSearch = () => {
     page.value = 1;
     loadItems();
   }, 400);
-};
-
-const prevPage = () => {
-  if (page.value > 1) {
-    page.value--;
-    loadItems();
-  }
-};
-
-const nextPage = () => {
-  page.value++;
-  loadItems();
 };
 
 onMounted(() => { loadItems(); });

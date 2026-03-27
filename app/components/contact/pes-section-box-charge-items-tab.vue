@@ -63,12 +63,12 @@
           <span class="text-sm text-right">{{ formatCurrency(ci.price) }}</span>
         </div>
         <div class="w-full flex items-center justify-between gap-2">
-          <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.chargeItems.taxRate') }}</span>
-          <span class="text-sm text-right">{{ (ci.taxRate * 100).toFixed(0) }} %</span>
+          <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.chargeItems.total') }}</span>
+          <span class="text-sm text-right font-medium">{{ formatCurrency(ci.subtotal) }}</span>
         </div>
         <div class="w-full flex items-center justify-between gap-2">
-          <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.chargeItems.total') }}</span>
-          <span class="text-sm text-right font-medium">{{ formatCurrency(ci.total) }}</span>
+          <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.chargeItems.taxRate') }}</span>
+          <span class="text-sm text-right">{{ (ci.taxRate * 100).toFixed(0) }} %</span>
         </div>
       </div>
     </div>
