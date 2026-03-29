@@ -1875,7 +1875,8 @@ export const UserScalarFieldEnum = {
   displayName: 'displayName',
   role: 'role',
   publicKey: 'publicKey',
-  publicSecret: 'publicSecret'
+  publicSecret: 'publicSecret',
+  davPasswordHash: 'davPasswordHash'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
