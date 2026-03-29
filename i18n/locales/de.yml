@@ -1,6 +1,7 @@
 ---
 
 general:
+  copied: "In Zwischenablage kopiert"
   name: "Name"
   name2: "Namenszusatz"
   user: "Benutzer"
@@ -534,6 +535,26 @@ profile:
   hello: "Hallo, {name}!"
   user: "Benutzer"
   userinfo: "Benutzerinfo"
+  davPassword:
+    title: "CardDAV-Zugang"
+    davUrl: "CardDAV-URL"
+    isSet: "Passwort gesetzt"
+    isNotSet: "Kein Passwort gesetzt"
+    setPassword: "Passwort setzen"
+    changePassword: "Passwort ändern"
+    removePassword: "Passwort entfernen"
+    passwordLabel: "Neues Passwort"
+    passwordConfirmLabel: "Passwort bestätigen"
+    passwordMismatch: "Passwörter stimmen nicht überein"
+    setSuccess: "DAV-Passwort erfolgreich gesetzt"
+    setError: "Fehler beim Setzen des DAV-Passworts"
+    removeSuccess: "DAV-Passwort entfernt"
+    removeError: "Fehler beim Entfernen des DAV-Passworts"
+    removeConfirmTitle: "DAV-Passwort entfernen?"
+    removeConfirmDescription: "Die CardDAV-Synchronisierung wird deaktiviert, bis ein neues Passwort gesetzt wird."
+    downloadConfig: "Apple Config"
+    downloadConfigSuccess: "Konfigurationsprofil heruntergeladen — ein neues DAV-Passwort wurde generiert"
+    downloadConfigError: "Fehler beim Herunterladen des Konfigurationsprofils"
 
 timeTracking:
   title: "Zeiterfassung"

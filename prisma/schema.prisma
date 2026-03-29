@@ -31,6 +31,7 @@ model User {
   role                      UserRole                  @default(ADMIN)
   publicKey                 String                    @default(uuid())
   publicSecret              String                    @default(uuid())
+  davPasswordHash           String?
   timeTrackingActivities    TimeTrackingActivity[]
   userTokens                UserToken[]
   tasks                     Task[]

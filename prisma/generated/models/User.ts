@@ -33,6 +33,7 @@ export type UserMinAggregateOutputType = {
   role: $Enums.UserRole | null
   publicKey: string | null
   publicSecret: string | null
+  davPasswordHash: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -44,6 +45,7 @@ export type UserMaxAggregateOutputType = {
   role: $Enums.UserRole | null
   publicKey: string | null
   publicSecret: string | null
+  davPasswordHash: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -55,6 +57,7 @@ export type UserCountAggregateOutputType = {
   role: number
   publicKey: number
   publicSecret: number
+  davPasswordHash: number
   _all: number
 }
 
@@ -68,6 +71,7 @@ export type UserMinAggregateInputType = {
   role?: true
   publicKey?: true
   publicSecret?: true
+  davPasswordHash?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -79,6 +83,7 @@ export type UserMaxAggregateInputType = {
   role?: true
   publicKey?: true
   publicSecret?: true
+  davPasswordHash?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -90,6 +95,7 @@ export type UserCountAggregateInputType = {
   role?: true
   publicKey?: true
   publicSecret?: true
+  davPasswordHash?: true
   _all?: true
 }
 
@@ -174,6 +180,7 @@ export type UserGroupByOutputType = {
   role: $Enums.UserRole
   publicKey: string
   publicSecret: string
+  davPasswordHash: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -206,6 +213,7 @@ export type UserWhereInput = {
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   publicKey?: Prisma.StringFilter<"User"> | string
   publicSecret?: Prisma.StringFilter<"User"> | string
+  davPasswordHash?: Prisma.StringNullableFilter<"User"> | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityListRelationFilter
   userTokens?: Prisma.UserTokenListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
@@ -223,6 +231,7 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   publicSecret?: Prisma.SortOrder
+  davPasswordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   timeTrackingActivities?: Prisma.TimeTrackingActivityOrderByRelationAggregateInput
   userTokens?: Prisma.UserTokenOrderByRelationAggregateInput
   tasks?: Prisma.TaskOrderByRelationAggregateInput
@@ -243,6 +252,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   publicKey?: Prisma.StringFilter<"User"> | string
   publicSecret?: Prisma.StringFilter<"User"> | string
+  davPasswordHash?: Prisma.StringNullableFilter<"User"> | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityListRelationFilter
   userTokens?: Prisma.UserTokenListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
@@ -260,6 +270,7 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   publicSecret?: Prisma.SortOrder
+  davPasswordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -277,6 +288,7 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   publicKey?: Prisma.StringWithAggregatesFilter<"User"> | string
   publicSecret?: Prisma.StringWithAggregatesFilter<"User"> | string
+  davPasswordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -288,6 +300,7 @@ export type UserCreateInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
@@ -305,6 +318,7 @@ export type UserUncheckedCreateInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
@@ -322,6 +336,7 @@ export type UserUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
@@ -339,6 +354,7 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
@@ -356,6 +372,7 @@ export type UserCreateManyInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -367,6 +384,7 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -378,6 +396,7 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -389,6 +408,7 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   publicSecret?: Prisma.SortOrder
+  davPasswordHash?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -400,6 +420,7 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   publicSecret?: Prisma.SortOrder
+  davPasswordHash?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -411,6 +432,7 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   publicSecret?: Prisma.SortOrder
+  davPasswordHash?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -538,6 +560,7 @@ export type UserCreateWithoutUserTokensInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
@@ -554,6 +577,7 @@ export type UserUncheckedCreateWithoutUserTokensInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
@@ -586,6 +610,7 @@ export type UserUpdateWithoutUserTokensInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
@@ -602,6 +627,7 @@ export type UserUncheckedUpdateWithoutUserTokensInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
@@ -618,6 +644,7 @@ export type UserCreateWithoutTimeTrackingActivitiesInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
@@ -634,6 +661,7 @@ export type UserUncheckedCreateWithoutTimeTrackingActivitiesInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
@@ -666,6 +694,7 @@ export type UserUpdateWithoutTimeTrackingActivitiesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
@@ -682,6 +711,7 @@ export type UserUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
@@ -698,6 +728,7 @@ export type UserCreateWithoutTasksInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
@@ -714,6 +745,7 @@ export type UserUncheckedCreateWithoutTasksInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
@@ -746,6 +778,7 @@ export type UserUpdateWithoutTasksInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
@@ -762,6 +795,7 @@ export type UserUncheckedUpdateWithoutTasksInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
@@ -778,6 +812,7 @@ export type UserCreateWithoutLeadOwnersInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
@@ -794,6 +829,7 @@ export type UserUncheckedCreateWithoutLeadOwnersInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
@@ -826,6 +862,7 @@ export type UserUpdateWithoutLeadOwnersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
@@ -842,6 +879,7 @@ export type UserUncheckedUpdateWithoutLeadOwnersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
@@ -858,6 +896,7 @@ export type UserCreateWithoutOpportunityOwnersInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
@@ -874,6 +913,7 @@ export type UserUncheckedCreateWithoutOpportunityOwnersInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
@@ -906,6 +946,7 @@ export type UserUpdateWithoutOpportunityOwnersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
@@ -922,6 +963,7 @@ export type UserUncheckedUpdateWithoutOpportunityOwnersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
@@ -938,6 +980,7 @@ export type UserCreateWithoutQuoteOwnersInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
@@ -954,6 +997,7 @@ export type UserUncheckedCreateWithoutQuoteOwnersInput = {
   role?: $Enums.UserRole
   publicKey?: string
   publicSecret?: string
+  davPasswordHash?: string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
   userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
@@ -986,6 +1030,7 @@ export type UserUpdateWithoutQuoteOwnersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
@@ -1002,6 +1047,7 @@ export type UserUncheckedUpdateWithoutQuoteOwnersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
   userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
@@ -1094,6 +1140,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   publicKey?: boolean
   publicSecret?: boolean
+  davPasswordHash?: boolean
   timeTrackingActivities?: boolean | Prisma.User$timeTrackingActivitiesArgs<ExtArgs>
   userTokens?: boolean | Prisma.User$userTokensArgs<ExtArgs>
   tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
@@ -1112,6 +1159,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   publicKey?: boolean
   publicSecret?: boolean
+  davPasswordHash?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1123,6 +1171,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   publicKey?: boolean
   publicSecret?: boolean
+  davPasswordHash?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -1134,9 +1183,10 @@ export type UserSelectScalar = {
   role?: boolean
   publicKey?: boolean
   publicSecret?: boolean
+  davPasswordHash?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "email" | "displayName" | "role" | "publicKey" | "publicSecret", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "email" | "displayName" | "role" | "publicKey" | "publicSecret" | "davPasswordHash", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   timeTrackingActivities?: boolean | Prisma.User$timeTrackingActivitiesArgs<ExtArgs>
   userTokens?: boolean | Prisma.User$userTokensArgs<ExtArgs>
@@ -1168,6 +1218,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: $Enums.UserRole
     publicKey: string
     publicSecret: string
+    davPasswordHash: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1605,6 +1656,7 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly publicKey: Prisma.FieldRef<"User", 'String'>
   readonly publicSecret: Prisma.FieldRef<"User", 'String'>
+  readonly davPasswordHash: Prisma.FieldRef<"User", 'String'>
 }
     
 

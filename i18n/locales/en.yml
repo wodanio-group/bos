@@ -1,6 +1,7 @@
 ---
 
 general:
+  copied: "Copied to clipboard"
   name: "Name"
   name2: "Name suffix"
   user: "User"
@@ -534,6 +535,26 @@ profile:
   hello: "Hello, {name}!"
   user: "User"
   userinfo: "Userinfo"
+  davPassword:
+    title: "CardDAV Access"
+    davUrl: "CardDAV URL"
+    isSet: "Password set"
+    isNotSet: "No password set"
+    setPassword: "Set password"
+    changePassword: "Change password"
+    removePassword: "Remove password"
+    passwordLabel: "New password"
+    passwordConfirmLabel: "Confirm password"
+    passwordMismatch: "Passwords do not match"
+    setSuccess: "DAV password set successfully"
+    setError: "Error setting DAV password"
+    removeSuccess: "DAV password removed"
+    removeError: "Error removing DAV password"
+    removeConfirmTitle: "Remove DAV password?"
+    removeConfirmDescription: "This will disable CardDAV sync until a new password is set."
+    downloadConfig: "Apple Config"
+    downloadConfigSuccess: "Config profile downloaded — a new DAV password was generated"
+    downloadConfigError: "Error downloading config profile"
 
 timeTracking:
   title: "Time Tracking"
