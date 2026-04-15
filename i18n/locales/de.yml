@@ -136,6 +136,7 @@ layout:
     pesDunnings: "Mahnungen"
     pesDirectDebitBulk: "Lastschrift Bulk"
     pesTransferBulk: "Überweisung Bulk"
+    pesExport: "Export"
   dialogSearch:
     searchPlaceholder: "Suchen ..."
     noResults: "Keine Ergebnisse"
@@ -726,3 +727,14 @@ pes:
       markUploadedError: "Fehler beim Markieren"
       updateXmlDateSuccess: "XML-Datum aktualisiert"
       updateXmlDateError: "Fehler beim Aktualisieren des XML-Datums"
+  export:
+    title: "Exporte"
+    selectType: "Export-Typ"
+    selectTypePlaceholder: "Export-Typ auswählen ..."
+    download: "Herunterladen"
+    types:
+      customerDatev:
+        title: "Kunden (DATEV)"
+        description: "Exportiert alle Kunden als DATEV Debitoren/Kreditoren EXTF CSV (Format Version 3)."
+    toast:
+      downloadError: "Fehler beim Herunterladen des Exports"

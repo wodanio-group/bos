@@ -136,6 +136,7 @@ layout:
     pesDunnings: "Dunnings"
     pesDirectDebitBulk: "Direct Debit Bulk"
     pesTransferBulk: "Transfer Bulk"
+    pesExport: "Export"
   dialogSearch:
     searchPlaceholder: "Search ..."
     noResults: "No results"
@@ -725,3 +726,14 @@ pes:
       markUploadedError: "Error marking as uploaded"
       updateXmlDateSuccess: "XML date updated"
       updateXmlDateError: "Error updating XML date"
+  export:
+    title: "Exports"
+    selectType: "Export type"
+    selectTypePlaceholder: "Select export type ..."
+    download: "Download"
+    types:
+      customerDatev:
+        title: "Customers (DATEV)"
+        description: "Exports all customers as DATEV debtors/creditors EXTF CSV (format version 3)."
+    toast:
+      downloadError: "Error downloading export"

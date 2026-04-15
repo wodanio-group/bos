@@ -129,6 +129,27 @@ paths:
                 $ref: "#/components/schemas/CustomerResponseDto"
       tags: *a2
       security: *a3
+  /customer/export:
+    get:
+      operationId: CustomerController_export
+      summary: Export all Customers
+      description: "Exports all customers in the selected format. Supported formats:
+        DATEV (Debitoren/Kreditoren EXTF CSV, format version 3)."
+      parameters:
+        - name: format
+          required: true
+          in: query
+          description: Export format
+          schema:
+            example: datev
+            enum:
+              - datev
+            type: string
+      responses:
+        "200":
+          description: Customer export file
+      tags: *a2
+      security: *a3
   /customer/{id}:
     get:
       operationId: CustomerController_read
