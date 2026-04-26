@@ -87,6 +87,11 @@
         <option value="ending">{{ $t('company.pes.recurringChargeItems.ending') }}</option>
         <option value="ended">{{ $t('company.pes.recurringChargeItems.ended') }}</option>
       </select>
+      <pes-cost-center-select
+        v-if="activeTab === 'recurringChargeItems'"
+        v-model="rciCostCenterFilter"
+        :null-label="$t('company.pes.allCostCenters')"
+        :compact="true"/>
       <select
         v-if="activeTab === 'chargeItems'"
         v-model="ciStatusFilter"
@@ -95,6 +100,11 @@
         <option value="unassigned">{{ $t('company.pes.chargeItems.unassigned') }}</option>
         <option value="assigned">{{ $t('company.pes.chargeItems.assigned') }}</option>
       </select>
+      <pes-cost-center-select
+        v-if="activeTab === 'chargeItems'"
+        v-model="ciCostCenterFilter"
+        :null-label="$t('company.pes.allCostCenters')"
+        :compact="true"/>
     </div>
 
     <contact-pes-section-box-mandates-tab
@@ -111,7 +121,8 @@
       :pesCustomer="pesCustomer"
       :hasPesInteractRight="hasPesInteractRight"
       :search="search"
-      :statusFilter="rciStatusFilter">
+      :statusFilter="rciStatusFilter"
+      :costCenterFilter="rciCostCenterFilter">
     </contact-pes-section-box-recurring-charge-items-tab>
 
     <contact-pes-section-box-charge-items-tab
@@ -121,7 +132,8 @@
       :hasPesInteractRight="hasPesInteractRight"
       :hasPesDeleteRight="hasPesDeleteRight"
       :search="search"
-      :statusFilter="ciStatusFilter">
+      :statusFilter="ciStatusFilter"
+      :costCenterFilter="ciCostCenterFilter">
     </contact-pes-section-box-charge-items-tab>
 
     <contact-pes-section-box-charges-tab
@@ -151,7 +163,9 @@ const pesCustomer = ref<PesCustomer | null>(null);
 const activeTab = ref<'mandates' | 'recurringChargeItems' | 'chargeItems' | 'charges'>('mandates');
 const search = ref('');
 const rciStatusFilter = ref<'all' | 'active' | 'ending' | 'ended'>('all');
+const rciCostCenterFilter = ref<string | null>(null);
 const ciStatusFilter = ref<'all' | 'unassigned' | 'assigned'>('all');
+const ciCostCenterFilter = ref<string | null>(null);
 
 const mandatesTabRef = ref<{ reload: () => void; triggerCreate: () => void } | null>(null);
 const rciTabRef = ref<{ reload: () => void; triggerCreate: () => void } | null>(null);

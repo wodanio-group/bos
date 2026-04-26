@@ -136,6 +136,7 @@ layout:
     pesDunnings: "Dunnings"
     pesDirectDebitBulk: "Direct Debit Bulk"
     pesTransferBulk: "Transfer Bulk"
+    pesCostCenters: "Cost Centers"
     pesExport: "Export"
   dialogSearch:
     searchPlaceholder: "Search ..."
@@ -182,6 +183,7 @@ company:
   pes:
     title: "PES"
     search: "Search..."
+    allCostCenters: "All cost centers"
     mandates:
       tabTitle: "Direct Debit Mandates"
       referenceID: "Reference ID"
@@ -220,6 +222,7 @@ company:
       quantity: "Quantity"
       unit: "Unit"
       taxRate: "Tax Rate"
+      costCenter: "Cost Center"
       startAt: "Start"
       endAt: "End"
       nextAt: "Next Run"
@@ -259,6 +262,7 @@ company:
       price: "Price"
       unit: "Unit"
       taxRate: "Tax Rate"
+      costCenter: "Cost Center"
       total: "Total"
       assigned: "In Invoice"
       unassigned: "Open"
@@ -726,6 +730,33 @@ pes:
       markUploadedError: "Error marking as uploaded"
       updateXmlDateSuccess: "XML date updated"
       updateXmlDateError: "Error updating XML date"
+  costCenters:
+    title: "Cost Centers"
+    add: "Add cost center"
+    addChild: "Add sub-group"
+    edit: "Edit"
+    delete: "Delete"
+    noParent: "None (top level)"
+    fields:
+      id: "ID"
+      name: "Name"
+      alias: "Alias"
+      parent: "Parent cost center"
+    createDialog:
+      title: "Create cost center"
+    editDialog:
+      title: "Edit cost center"
+    deleteDialog:
+      title: "Delete cost center"
+      description: "Are you sure you want to delete \"{name}\"?"
+    toast:
+      createSuccess: "Cost center created"
+      createError: "Error creating cost center"
+      updateSuccess: "Cost center updated"
+      updateError: "Error updating cost center"
+      deleteSuccess: "Cost center deleted"
+      deleteError: "Error deleting cost center"
+      deleteHasChildren: "Cost center still has sub-groups and cannot be deleted"
   export:
     title: "Exports"
     selectFormat: "Format"

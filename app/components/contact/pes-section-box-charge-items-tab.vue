@@ -70,6 +70,10 @@
           <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.chargeItems.taxRate') }}</span>
           <span class="text-sm text-right">{{ (ci.taxRate * 100).toFixed(0) }} %</span>
         </div>
+        <div v-if="ci.costCenterId" class="w-full flex items-center justify-between gap-2">
+          <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.chargeItems.costCenter') }}</span>
+          <span class="text-sm text-right">{{ costCenterName(ci.costCenterId) ?? ci.costCenterId }}</span>
+        </div>
       </div>
     </div>
 
@@ -140,6 +144,10 @@
             v-model="newCiUnit">
           </molecular-select-unit>
         </div>
+        <pes-cost-center-select
+          :title="$t('company.pes.chargeItems.costCenter')"
+          :null-label="$t('pes.costCenters.noParent')"
+          v-model="newCiCostCenterId"/>
         <div class="border-t border-secondary-200 pt-3 flex flex-col gap-1">
           <div class="w-full flex items-center justify-between gap-2">
             <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.preview.subtotal') }}</span>
@@ -221,6 +229,10 @@
             v-model="editCiUnit">
           </molecular-select-unit>
         </div>
+        <pes-cost-center-select
+          :title="$t('company.pes.chargeItems.costCenter')"
+          :null-label="$t('pes.costCenters.noParent')"
+          v-model="editCiCostCenterId"/>
         <div class="border-t border-secondary-200 pt-3 flex flex-col gap-1">
           <div class="w-full flex items-center justify-between gap-2">
             <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.preview.subtotal') }}</span>
@@ -273,6 +285,7 @@ type ChargeItem = {
   price: number;
   unit: string | null;
   taxRate: number;
+  costCenterId: string | null;
   subtotal: number;
   tax: number;
   total: number;
@@ -286,6 +299,7 @@ const props = defineProps<{
   hasPesDeleteRight: boolean;
   search: string;
   statusFilter: 'all' | 'unassigned' | 'assigned';
+  costCenterFilter: string | null;
 }>();
 
 const toast = useToast();
@@ -293,17 +307,21 @@ const { item: taxRatesOptionItem, loadItem: loadTaxRatesOption } = useOption('SY
 const { item: unitsOptionItem, loadItem: loadUnitsOption } = useOption('SYSTEM_UNITS');
 
 const chargeItems = ref<ChargeItem[]>([]);
+const costCenters = ref<{ id: string; name: string }[]>([]);
+
+const costCenterName = (id: string | null) =>
+  id ? (costCenters.value.find(c => c.id === id)?.name ?? null) : null;
 
 const filteredAndSortedCis = computed(() => {
   const q = props.search.trim().toLowerCase();
-  return chargeItems.value
-    .filter(ci => {
-      if (q && !ci.title.toLowerCase().includes(q) && !(ci.description ?? '').toLowerCase().includes(q)) return false;
-      if (props.statusFilter === 'unassigned') return !ci.chargeId;
-      if (props.statusFilter === 'assigned') return !!ci.chargeId;
-      return true;
-    })
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const filtered = chargeItems.value.filter(ci => {
+    if (q && !ci.title.toLowerCase().includes(q) && !(ci.description ?? '').toLowerCase().includes(q)) return false;
+    if (props.statusFilter === 'unassigned') return !ci.chargeId;
+    if (props.statusFilter === 'assigned') return !!ci.chargeId;
+    if (props.costCenterFilter) return ci.costCenterId === props.costCenterFilter;
+    return true;
+  });
+  return [...filtered].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 });
 
 const showCreateCiDialog = ref(false);
@@ -318,6 +336,7 @@ const newCiQuantity = ref('1');
 const newCiPrice = ref('');
 const newCiUnit = ref<string | undefined>(undefined);
 const newCiTaxRate = ref<number | undefined>(undefined);
+const newCiCostCenterId = ref<string | null>(null);
 
 const editCiTitle = ref('');
 const editCiDescription = ref('');
@@ -326,6 +345,7 @@ const editCiQuantity = ref('');
 const editCiPrice = ref('');
 const editCiUnit = ref<string | undefined>(undefined);
 const editCiTaxRate = ref<number | undefined>(undefined);
+const editCiCostCenterId = ref<string | null>(null);
 
 const showCiCreateErrors = ref(false);
 const showCiEditErrors = ref(false);
@@ -383,10 +403,20 @@ const loadChargeItems = async () => {
   chargeItems.value = result.items;
 };
 
+const loadCostCenters = async () => {
+  try {
+    const result = await $fetch<{ items: { id: string; name: string }[] }>('/api/pes/cost-center', {
+      query: { take: 999999 },
+    });
+    costCenters.value = result.items;
+  } catch { /* non-critical */ }
+};
+
 onMounted(() => {
   loadChargeItems();
   loadTaxRatesOption();
   loadUnitsOption();
+  loadCostCenters();
 });
 
 const openEditCi = (ci: ChargeItem) => {
@@ -397,6 +427,7 @@ const openEditCi = (ci: ChargeItem) => {
   editCiPrice.value = String(ci.price);
   editCiUnit.value = ci.unit ?? undefined;
   editCiTaxRate.value = ci.taxRate;
+  editCiCostCenterId.value = ci.costCenterId;
   ciToEdit.value = ci;
 };
 
@@ -416,6 +447,7 @@ const onCreateCi = async () => {
         price: parseFloat(String(newCiPrice.value)),
         unit: newCiUnit.value || undefined,
         taxRate: newCiTaxRate.value ?? 0,
+        costCenterId: newCiCostCenterId.value || undefined,
       },
     });
     showCreateCiDialog.value = false;
@@ -427,6 +459,7 @@ const onCreateCi = async () => {
     newCiPrice.value = '';
     newCiUnit.value = defaultUnit.value;
     newCiTaxRate.value = defaultTaxRate.value;
+    newCiCostCenterId.value = null;
     await loadChargeItems();
     toast.add({ type: 'success', title: $t('company.pes.chargeItems.toast.createSuccess') });
   } catch {
@@ -448,6 +481,7 @@ const onEditCi = async () => {
         price: parseFloat(String(editCiPrice.value)),
         unit: editCiUnit.value || undefined,
         taxRate: editCiTaxRate.value ?? 0,
+        costCenterId: editCiCostCenterId.value || undefined,
       },
     });
     ciToEdit.value = null;
