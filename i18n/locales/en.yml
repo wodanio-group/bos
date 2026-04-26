@@ -728,12 +728,18 @@ pes:
       updateXmlDateError: "Error updating XML date"
   export:
     title: "Exports"
-    selectType: "Export type"
-    selectTypePlaceholder: "Select export type ..."
+    selectFormat: "Format"
+    selectFormatPlaceholder: "Select format ..."
     download: "Download"
+    sections:
+      customers: "Customers"
+      charges: "Charges"
     types:
       customerDatev:
         title: "Customers (DATEV)"
         description: "Exports all customers as DATEV debtors/creditors EXTF CSV (format version 3)."
+      chargesDatev:
+        title: "Charges (DATEV)"
+        description: "Exports all charges (invoices and credit notes) as DATEV Buchungsstapel EXTF CSV (format version 13)."
     toast:
       downloadError: "Error downloading export"

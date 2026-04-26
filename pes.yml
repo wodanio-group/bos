@@ -96,6 +96,13 @@ paths:
           schema:
             nullable: true
             type: number
+        - name: search
+          required: false
+          in: query
+          description: Search across all master data fields (LIKE %...%)
+          schema:
+            nullable: true
+            type: string
       responses:
         "200":
           description: List of customers retrieved successfully
@@ -399,6 +406,16 @@ paths:
             title, and description"
           schema:
             type: string
+        - name: costCenterIds
+          required: false
+          in: query
+          description: Filter by cost center(s) — UUID or alias, subtree-inclusive. Items
+            matching any of the given cost centers (including their children)
+            are returned.
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         "200":
           description: List of recurringChargeItems retrieved successfully
@@ -561,6 +578,44 @@ paths:
           schema:
             nullable: true
             type: string
+        - name: paymentMethod
+          required: false
+          in: query
+          description: Filter by payment method of the associated charge
+          schema:
+            example: bank-direct-debit
+            enum:
+              - bank-direct-debit
+              - bank-transfer
+              - manual
+            type: string
+        - name: paymentStatus
+          required: false
+          in: query
+          description: Filter by payment status of the associated charge
+          schema:
+            example: paid
+            enum:
+              - paid
+              - unpaid
+            type: string
+        - name: costCenterIds
+          required: false
+          in: query
+          description: Filter by cost center(s) — UUID or alias, subtree-inclusive. Items
+            matching any of the given cost centers (including their children)
+            are returned.
+          schema:
+            type: array
+            items:
+              type: string
+        - name: search
+          required: false
+          in: query
+          description: Search across externalId, title, description (LIKE %...%)
+          schema:
+            nullable: true
+            type: string
       responses:
         "200":
           description: List of chargeItems retrieved successfully
@@ -654,6 +709,137 @@ paths:
           description: ChargeItem not found
       tags: *a8
       security: *a9
+  /cost-center:
+    get:
+      operationId: CostCenterController_list
+      summary: Get all CostCenters
+      parameters:
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            example: 10
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            example: 1
+            type: number
+        - name: order
+          required: false
+          in: query
+          description: Order direction
+          schema:
+            example: ASC
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: onlyRoots
+          required: false
+          in: query
+          description: Return only root cost centers (no parent)
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListReturnOfCostCenterEntity"
+      tags: &a10
+        - CostCenter
+      security: &a11
+        - bearer: []
+    post:
+      operationId: CostCenterController_create
+      summary: Create a CostCenter
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCostCenterDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CostCenterEntity"
+      tags: *a10
+      security: *a11
+  /cost-center/{id}:
+    get:
+      operationId: CostCenterController_read
+      summary: Get CostCenter by UUID or alias
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: UUID or alias of the cost center
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CostCenterEntity"
+        "404":
+          description: CostCenter not found
+      tags: *a10
+      security: *a11
+    patch:
+      operationId: CostCenterController_update
+      summary: Update CostCenter by UUID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCostCenterDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CostCenterEntity"
+        "404":
+          description: CostCenter not found
+      tags: *a10
+      security: *a11
+    delete:
+      operationId: CostCenterController_delete
+      summary: Delete CostCenter by UUID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "204":
+          description: CostCenter deleted successfully
+        "404":
+          description: CostCenter not found
+        "409":
+          description: CostCenter has children
+      tags: *a10
+      security: *a11
   /charge:
     get:
       operationId: ChargeController_list
@@ -719,6 +905,20 @@ paths:
               - paid
               - unpaid
             type: string
+        - name: chargeId
+          required: false
+          in: query
+          description: Filter by chargeId
+          schema:
+            nullable: true
+            type: number
+        - name: search
+          required: false
+          in: query
+          description: Search across chargeId (number) and chargeNumber (LIKE %...%)
+          schema:
+            nullable: true
+            type: string
       responses:
         "200":
           description: List of charges retrieved successfully
@@ -726,9 +926,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListReturnOfChargeResponseDto"
-      tags: &a10
+      tags: &a12
         - Charge
-      security: &a11
+      security: &a13
         - bearer: []
     post:
       operationId: ChargeController_create
@@ -750,8 +950,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ChargeResponseDto"
-      tags: *a10
-      security: *a11
+      tags: *a12
+      security: *a13
+  /charge/export:
+    get:
+      operationId: ChargeController_export
+      summary: Export all Charges
+      description: "Exports all charges (invoices and credit notes) in the selected
+        format. Supported formats: DATEV (Buchungsstapel EXTF CSV, format
+        version 13)."
+      parameters:
+        - name: format
+          required: true
+          in: query
+          description: Export format
+          schema:
+            example: datev
+            enum:
+              - datev
+            type: string
+      responses:
+        "200":
+          description: Charge export file
+      tags: *a12
+      security: *a13
   /charge/{id}:
     get:
       operationId: ChargeController_read
@@ -771,8 +993,8 @@ paths:
                 $ref: "#/components/schemas/ChargeResponseDto"
         "404":
           description: Charge not found
-      tags: *a10
-      security: *a11
+      tags: *a12
+      security: *a13
     patch:
       operationId: ChargeController_update
       summary: Update Charge by ID
@@ -797,8 +1019,8 @@ paths:
                 $ref: "#/components/schemas/ChargeResponseDto"
         "404":
           description: Charge not found
-      tags: *a10
-      security: *a11
+      tags: *a12
+      security: *a13
   /bank-direct-debit:
     get:
       operationId: BankDirectDebitController_list
@@ -856,6 +1078,20 @@ paths:
           schema:
             nullable: true
             type: string
+        - name: endToEndId
+          required: false
+          in: query
+          description: endToEndId
+          schema:
+            nullable: true
+            type: string
+        - name: failed
+          required: false
+          in: query
+          description: Filter by failed status
+          schema:
+            nullable: true
+            type: boolean
       responses:
         "200":
           description: List of bankDirectDebits retrieved successfully
@@ -863,9 +1099,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListReturnOfBankDirectDebitEntity"
-      tags: &a12
+      tags: &a14
         - BankDirectDebit
-      security: &a13
+      security: &a15
         - bearer: []
     post:
       operationId: BankDirectDebitController_create
@@ -884,8 +1120,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BankDirectDebitEntity"
-      tags: *a12
-      security: *a13
+      tags: *a14
+      security: *a15
   /bank-direct-debit/{id}:
     get:
       operationId: BankDirectDebitController_read
@@ -905,8 +1141,8 @@ paths:
                 $ref: "#/components/schemas/BankDirectDebitEntity"
         "404":
           description: BankDirectDebit not found
-      tags: *a12
-      security: *a13
+      tags: *a14
+      security: *a15
     patch:
       operationId: BankDirectDebitController_update
       summary: Update BankDirectDebit by ID
@@ -931,8 +1167,8 @@ paths:
                 $ref: "#/components/schemas/BankDirectDebitEntity"
         "404":
           description: BankDirectDebit not found
-      tags: *a12
-      security: *a13
+      tags: *a14
+      security: *a15
   /bank-transfer:
     get:
       operationId: BankTransferController_list
@@ -983,6 +1219,20 @@ paths:
           schema:
             nullable: true
             type: string
+        - name: endToEndId
+          required: false
+          in: query
+          description: endToEndId
+          schema:
+            nullable: true
+            type: string
+        - name: failed
+          required: false
+          in: query
+          description: Filter by failed status
+          schema:
+            nullable: true
+            type: boolean
       responses:
         "200":
           description: List of bankTransfers retrieved successfully
@@ -990,9 +1240,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListReturnOfBankTransferEntity"
-      tags: &a14
+      tags: &a16
         - BankTransfer
-      security: &a15
+      security: &a17
         - bearer: []
     post:
       operationId: BankTransferController_create
@@ -1011,8 +1261,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BankTransferEntity"
-      tags: *a14
-      security: *a15
+      tags: *a16
+      security: *a17
   /bank-transfer/{id}:
     get:
       operationId: BankTransferController_read
@@ -1032,8 +1282,8 @@ paths:
                 $ref: "#/components/schemas/BankTransferEntity"
         "404":
           description: BankTransfer not found
-      tags: *a14
-      security: *a15
+      tags: *a16
+      security: *a17
     patch:
       operationId: BankTransferController_update
       summary: Update BankTransfer by ID
@@ -1058,8 +1308,8 @@ paths:
                 $ref: "#/components/schemas/BankTransferEntity"
         "404":
           description: BankTransfer not found
-      tags: *a14
-      security: *a15
+      tags: *a16
+      security: *a17
   /dunning:
     get:
       operationId: DunningController_list
@@ -1111,6 +1361,20 @@ paths:
           schema:
             nullable: true
             type: string
+        - name: dunningId
+          required: false
+          in: query
+          description: dunningId
+          schema:
+            nullable: true
+            type: number
+        - name: dunningLevel
+          required: false
+          in: query
+          description: dunningLevel
+          schema:
+            nullable: true
+            type: number
       responses:
         "200":
           description: List of dunnings retrieved successfully
@@ -1118,9 +1382,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListReturnOfDunningEntity"
-      tags: &a16
+      tags: &a18
         - Dunning
-      security: &a17
+      security: &a19
         - bearer: []
     post:
       operationId: DunningController_create
@@ -1139,8 +1403,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DunningEntity"
-      tags: *a16
-      security: *a17
+      tags: *a18
+      security: *a19
   /dunning/{id}:
     get:
       operationId: DunningController_read
@@ -1160,8 +1424,8 @@ paths:
                 $ref: "#/components/schemas/DunningEntity"
         "404":
           description: Dunning not found
-      tags: *a16
-      security: *a17
+      tags: *a18
+      security: *a19
     delete:
       operationId: DunningController_delete
       summary: Delete Dunning by ID
@@ -1176,8 +1440,8 @@ paths:
           description: Dunning deleted successfully
         "404":
           description: Dunning not found
-      tags: *a16
-      security: *a17
+      tags: *a18
+      security: *a19
   /bank-direct-debit-bulk:
     get:
       operationId: BankDirectDebitBulkController_list
@@ -1207,6 +1471,13 @@ paths:
               - ASC
               - DESC
             type: string
+        - name: uploaded
+          required: false
+          in: query
+          description: Filter by uploaded status
+          schema:
+            nullable: true
+            type: boolean
       responses:
         "200":
           description: List of bankDirectDebitBulks retrieved successfully
@@ -1214,9 +1485,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListReturnOfBankDirectDebitBulkResponseDto"
-      tags: &a18
+      tags: &a20
         - BankDirectDebitBulk
-      security: &a19
+      security: &a21
         - bearer: []
     post:
       operationId: BankDirectDebitBulkController_create
@@ -1229,8 +1500,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BankDirectDebitBulkResponseDto"
-      tags: *a18
-      security: *a19
+      tags: *a20
+      security: *a21
   /bank-direct-debit-bulk/{id}:
     get:
       operationId: BankDirectDebitBulkController_read
@@ -1250,8 +1521,8 @@ paths:
                 $ref: "#/components/schemas/BankDirectDebitBulkResponseDto"
         "404":
           description: BankDirectDebitBulk not found
-      tags: *a18
-      security: *a19
+      tags: *a20
+      security: *a21
     patch:
       operationId: BankDirectDebitBulkController_update
       summary: Update BankDirectDebitBulk by ID
@@ -1276,8 +1547,8 @@ paths:
                 $ref: "#/components/schemas/BankDirectDebitBulkResponseDto"
         "404":
           description: BankDirectDebitBulk not found
-      tags: *a18
-      security: *a19
+      tags: *a20
+      security: *a21
   /bank-direct-debit-bulk/{id}/xml:
     get:
       operationId: BankDirectDebitBulkController_getXmlCode
@@ -1295,8 +1566,8 @@ paths:
             application/xml: {}
         "404":
           description: BankDirectDebitBulk not found or XML not generated
-      tags: *a18
-      security: *a19
+      tags: *a20
+      security: *a21
     patch:
       operationId: BankDirectDebitBulkController_updateXmlExecutionDate
       summary: Update XML execution date to Today + 6 days for a BankDirectDebitBulk
@@ -1315,8 +1586,8 @@ paths:
                 $ref: "#/components/schemas/BankDirectDebitBulkResponseDto"
         "404":
           description: BankDirectDebitBulk not found or XML not generated
-      tags: *a18
-      security: *a19
+      tags: *a20
+      security: *a21
   /bank-transfer-bulk:
     get:
       operationId: BankTransferBulkController_list
@@ -1346,6 +1617,13 @@ paths:
               - ASC
               - DESC
             type: string
+        - name: uploaded
+          required: false
+          in: query
+          description: Filter by uploaded status
+          schema:
+            nullable: true
+            type: boolean
       responses:
         "200":
           description: List of bankTransferBulks retrieved successfully
@@ -1353,9 +1631,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListReturnOfBankTransferBulkResponseDto"
-      tags: &a20
+      tags: &a22
         - BankTransferBulk
-      security: &a21
+      security: &a23
         - bearer: []
     post:
       operationId: BankTransferBulkController_create
@@ -1368,8 +1646,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BankTransferBulkResponseDto"
-      tags: *a20
-      security: *a21
+      tags: *a22
+      security: *a23
   /bank-transfer-bulk/{id}:
     get:
       operationId: BankTransferBulkController_read
@@ -1389,8 +1667,8 @@ paths:
                 $ref: "#/components/schemas/BankTransferBulkResponseDto"
         "404":
           description: BankTransferBulk not found
-      tags: *a20
-      security: *a21
+      tags: *a22
+      security: *a23
     patch:
       operationId: BankTransferBulkController_update
       summary: Update BankTransferBulk by ID
@@ -1415,8 +1693,8 @@ paths:
                 $ref: "#/components/schemas/BankTransferBulkResponseDto"
         "404":
           description: BankTransferBulk not found
-      tags: *a20
-      security: *a21
+      tags: *a22
+      security: *a23
   /bank-transfer-bulk/{id}/xml:
     get:
       operationId: BankTransferBulkController_getXmlCode
@@ -1434,8 +1712,8 @@ paths:
             application/xml: {}
         "404":
           description: BankTransferBulk not found or XML not generated
-      tags: *a20
-      security: *a21
+      tags: *a22
+      security: *a23
     patch:
       operationId: BankTransferBulkController_updateXmlExecutionDate
       summary: Update XML execution date to Today + 6 days for a BankTransferBulk
@@ -1454,8 +1732,8 @@ paths:
                 $ref: "#/components/schemas/BankTransferBulkResponseDto"
         "404":
           description: BankTransferBulk not found or XML not generated
-      tags: *a20
-      security: *a21
+      tags: *a22
+      security: *a23
   /mail/send:
     post:
       operationId: MailController_send
@@ -2116,7 +2394,7 @@ components:
         type:
           type: string
           description: type
-          enum: &a22
+          enum: &a24
             - BASIC
           default: BASIC
           example: BASIC
@@ -2253,7 +2531,7 @@ components:
         type:
           type: string
           description: type
-          enum: *a22
+          enum: *a24
           default: BASIC
           example: BASIC
         externalId:
@@ -2488,7 +2766,7 @@ components:
         periodUnit:
           type: string
           description: Period unit of the recurring charge
-          enum: &a23
+          enum: &a25
             - HOUR
             - DAY
             - WEEK
@@ -2537,6 +2815,11 @@ components:
           items:
             type: string
             format: uuid
+        costCenterId:
+          type: string
+          description: costCenter
+          format: uuid
+          nullable: true
       required:
         - id
         - createdAt
@@ -2638,7 +2921,7 @@ components:
         periodUnit:
           type: string
           description: Period unit of the recurring charge
-          enum: *a23
+          enum: *a25
           example: MONTH
         externalId:
           type: string
@@ -2676,6 +2959,11 @@ components:
           type: string
           description: customer
           format: uuid
+        costCenterId:
+          type: string
+          description: costCenter
+          format: uuid
+          nullable: true
       required:
         - id
         - createdAt
@@ -2782,6 +3070,11 @@ components:
           type: number
           description: taxRate
           example: 0.19
+        costCenterId:
+          type: string
+          description: costCenterId
+          format: uuid
+          nullable: true
       required:
         - customerId
         - startAt
@@ -2830,6 +3123,11 @@ components:
           description: taxRate
           nullable: true
           example: 0.19
+        costCenterId:
+          type: string
+          description: costCenterId
+          format: uuid
+          nullable: true
     EndRecurringChargeItemDto:
       type: object
       properties:
@@ -2939,6 +3237,11 @@ components:
           description: recurringChargeItem
           format: uuid
           nullable: true
+        costCenterId:
+          type: string
+          description: costCenter
+          format: uuid
+          nullable: true
       required:
         - id
         - createdAt
@@ -3035,6 +3338,11 @@ components:
           type: number
           description: taxRate
           example: 0.19
+        costCenterId:
+          type: string
+          description: costCenterId
+          format: uuid
+          nullable: true
       required:
         - customerId
         - serviceDate
@@ -3097,6 +3405,108 @@ components:
           description: taxRate
           nullable: true
           example: 0.19
+        costCenterId:
+          type: string
+          description: costCenterId
+          format: uuid
+          nullable: true
+    CostCenterEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the entity
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was created
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date when the entity was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date when the entity was deleted
+        version:
+          type: number
+          readOnly: true
+          description: Version number of the entity used for optimistic locking
+        name:
+          type: string
+          description: Name of the cost center
+          example: Rechenzentrum
+        alias:
+          type: string
+          description: URL-friendly unique alias (auto-generated from name)
+          example: rechenzentrum
+        parentId:
+          type: string
+          description: Parent cost center UUID
+          format: uuid
+          nullable: true
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - version
+        - name
+        - alias
+    ListReturnOfCostCenterEntity:
+      type: object
+      properties:
+        items:
+          description: List of items
+          type: array
+          items:
+            $ref: "#/components/schemas/CostCenterEntity"
+        totalItems:
+          type: number
+          example: 20
+        page:
+          type: number
+          example: 1
+        size:
+          type: number
+          example: 10
+      required:
+        - items
+        - totalItems
+        - page
+        - size
+    CreateCostCenterDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the cost center
+          example: Rechenzentrum
+        parentId:
+          type: string
+          description: Parent cost center UUID
+          format: uuid
+          nullable: true
+      required:
+        - name
+    UpdateCostCenterDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the cost center
+          example: Rechenzentrum
+        parentId:
+          type: string
+          description: Parent cost center UUID
+          format: uuid
+          nullable: true
     ChargeEntity:
       type: object
       properties:
@@ -3136,7 +3546,7 @@ components:
         type:
           type: string
           description: type
-          enum: &a24
+          enum: &a26
             - INVOICE
             - CREDIT_NOTE
           example: INVOICE
@@ -3302,7 +3712,7 @@ components:
         type:
           type: string
           description: type
-          enum: *a24
+          enum: *a26
           example: INVOICE
         serviceDate:
           type: string
