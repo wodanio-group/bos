@@ -138,7 +138,7 @@ const mainMenuItems = computed<IMenuItem[]>(() => ([
   { title: $t('layout.aside.persons'), icon: 'users-round', to: '/person', hide: !user?.rights.includes('contact.all.view') },
   { title: $t('layout.aside.quotes'), icon: 'file-text', to: '/quote', hide: !user?.rights.includes('quote.all.view') },
   // { title: $t('layout.aside.timeTrackings'), icon: 'timer', to: '/time-tracking', hide: !(user?.rights.includes('timetracking.all.view') || user?.rights.includes('timetracking.own.view')) },
-  { title: $t('layout.aside.pes'), icon: 'landmark', to: '/pes/charge', hide: !user?.rights.includes('pes.read') },
+  { title: $t('layout.aside.pes'), icon: 'landmark', to: '/pes/analytics', hide: !user?.rights.includes('pes.read') },
 ]));
 
 const secondMenuItems = computed<IMenuItem[]>(() => ([
