@@ -67,6 +67,10 @@
           <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.recurringChargeItems.taxRate') }}</span>
           <span class="text-sm text-right">{{ (rci.taxRate * 100).toFixed(0) }} %</span>
         </div>
+        <div v-if="rci.costCenterId" class="w-full flex items-center justify-between gap-2">
+          <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.recurringChargeItems.costCenter') }}</span>
+          <span class="text-sm text-right">{{ costCenterName(rci.costCenterId) ?? rci.costCenterId }}</span>
+        </div>
         <div class="w-full flex items-center justify-between gap-2">
           <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.recurringChargeItems.startAt') }}</span>
           <span class="text-sm text-right">{{ formatDate(rci.startAt) }}</span>
@@ -157,6 +161,10 @@
             v-model="newRciUnit">
           </molecular-select-unit>
         </div>
+        <pes-cost-center-select
+          :title="$t('company.pes.recurringChargeItems.costCenter')"
+          :null-label="$t('pes.costCenters.noParent')"
+          v-model="newRciCostCenterId"/>
         <div class="border-t border-secondary-200 pt-3 flex flex-col gap-1">
           <div class="w-full flex items-center justify-between gap-2">
             <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.preview.subtotal') }}</span>
@@ -229,6 +237,10 @@
             v-model="editRciUnit">
           </molecular-select-unit>
         </div>
+        <pes-cost-center-select
+          :title="$t('company.pes.recurringChargeItems.costCenter')"
+          :null-label="$t('pes.costCenters.noParent')"
+          v-model="editRciCostCenterId"/>
         <div class="border-t border-secondary-200 pt-3 flex flex-col gap-1">
           <div class="w-full flex items-center justify-between gap-2">
             <span class="text-xs font-semibold text-secondary-600">{{ $t('company.pes.preview.subtotal') }}</span>
@@ -296,6 +308,7 @@ type RecurringChargeItem = {
   price: number;
   unit: string | null;
   taxRate: number;
+  costCenterId: string | null;
   customerId: string;
 };
 
@@ -304,6 +317,7 @@ const props = defineProps<{
   hasPesInteractRight: boolean;
   search: string;
   statusFilter: 'all' | 'active' | 'ending' | 'ended';
+  costCenterFilter: string | null;
 }>();
 
 const toast = useToast();
@@ -311,24 +325,28 @@ const { item: taxRatesOptionItem, loadItem: loadTaxRatesOption } = useOption('SY
 const { item: unitsOptionItem, loadItem: loadUnitsOption } = useOption('SYSTEM_UNITS');
 
 const recurringChargeItems = ref<RecurringChargeItem[]>([]);
+const costCenters = ref<{ id: string; name: string }[]>([]);
+
+const costCenterName = (id: string | null) =>
+  id ? (costCenters.value.find(c => c.id === id)?.name ?? null) : null;
 
 const filteredAndSortedRcis = computed(() => {
   const q = props.search.trim().toLowerCase();
   const now = new Date();
-  return recurringChargeItems.value
-    .filter(rci => {
-      if (q && !rci.title.toLowerCase().includes(q) && !(rci.description ?? '').toLowerCase().includes(q)) return false;
-      if (props.statusFilter === 'active') return !rci.endAt;
-      if (props.statusFilter === 'ending') return !!rci.endAt && new Date(rci.endAt) > now;
-      if (props.statusFilter === 'ended') return !!rci.endAt && new Date(rci.endAt) <= now;
-      return true;
-    })
-    .sort((a, b) => {
-      if (!a.nextAt && !b.nextAt) return 0;
-      if (!a.nextAt) return 1;
-      if (!b.nextAt) return -1;
-      return new Date(a.nextAt).getTime() - new Date(b.nextAt).getTime();
-    });
+  const filtered = recurringChargeItems.value.filter(rci => {
+    if (q && !rci.title.toLowerCase().includes(q) && !(rci.description ?? '').toLowerCase().includes(q)) return false;
+    if (props.statusFilter === 'active') return !rci.endAt;
+    if (props.statusFilter === 'ending') return !!rci.endAt && new Date(rci.endAt) > now;
+    if (props.statusFilter === 'ended') return !!rci.endAt && new Date(rci.endAt) <= now;
+    if (props.costCenterFilter) return rci.costCenterId === props.costCenterFilter;
+    return true;
+  });
+  return [...filtered].sort((a, b) => {
+    if (!a.nextAt && !b.nextAt) return 0;
+    if (!a.nextAt) return 1;
+    if (!b.nextAt) return -1;
+    return new Date(a.nextAt).getTime() - new Date(b.nextAt).getTime();
+  });
 });
 
 const showCreateRciDialog = ref(false);
@@ -345,6 +363,7 @@ const newRciPrice = ref('');
 const newRciQuantity = ref('1');
 const newRciUnit = ref<string | undefined>(undefined);
 const newRciTaxRate = ref<number | undefined>(undefined);
+const newRciCostCenterId = ref<string | null>(null);
 
 const editRciTitle = ref('');
 const editRciDescription = ref('');
@@ -352,6 +371,7 @@ const editRciQuantity = ref('');
 const editRciPrice = ref('');
 const editRciUnit = ref<string | undefined>(undefined);
 const editRciTaxRate = ref<number | undefined>(undefined);
+const editRciCostCenterId = ref<string | null>(null);
 const newRciEndAtDate = ref('');
 
 const showRciCreateErrors = ref(false);
@@ -416,10 +436,20 @@ const loadRecurringChargeItems = async () => {
   recurringChargeItems.value = result.items;
 };
 
+const loadCostCenters = async () => {
+  try {
+    const result = await $fetch<{ items: { id: string; name: string }[] }>('/api/pes/cost-center', {
+      query: { take: 999999 },
+    });
+    costCenters.value = result.items;
+  } catch { /* non-critical */ }
+};
+
 onMounted(() => {
   loadRecurringChargeItems();
   loadTaxRatesOption();
   loadUnitsOption();
+  loadCostCenters();
 });
 
 const openEditRci = (rci: RecurringChargeItem) => {
@@ -429,6 +459,7 @@ const openEditRci = (rci: RecurringChargeItem) => {
   editRciPrice.value = String(rci.price);
   editRciUnit.value = rci.unit ?? undefined;
   editRciTaxRate.value = rci.taxRate;
+  editRciCostCenterId.value = rci.costCenterId;
   rciToEdit.value = rci;
 };
 
@@ -455,6 +486,7 @@ const onCreateRci = async () => {
         quantity: parseFloat(String(newRciQuantity.value)),
         unit: newRciUnit.value || undefined,
         taxRate: newRciTaxRate.value ?? 0,
+        costCenterId: newRciCostCenterId.value || undefined,
       },
     });
     showCreateRciDialog.value = false;
@@ -468,6 +500,7 @@ const onCreateRci = async () => {
     newRciQuantity.value = '1';
     newRciUnit.value = defaultUnit.value;
     newRciTaxRate.value = defaultTaxRate.value;
+    newRciCostCenterId.value = null;
     await loadRecurringChargeItems();
     toast.add({ type: 'success', title: $t('company.pes.recurringChargeItems.toast.createSuccess') });
   } catch {
@@ -488,6 +521,7 @@ const onEditRci = async () => {
         price: parseFloat(String(editRciPrice.value)),
         unit: editRciUnit.value || undefined,
         taxRate: editRciTaxRate.value ?? 0,
+        costCenterId: editRciCostCenterId.value || undefined,
       },
     });
     rciToEdit.value = null;

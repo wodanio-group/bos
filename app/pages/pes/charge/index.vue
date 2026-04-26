@@ -202,7 +202,7 @@ const loadItems = async () => {
         take,
         page: page.value,
         order: 'DESC',
-        ...(chargeNumberSearch.value ? { chargeNumber: chargeNumberSearch.value } : {}),
+        ...(chargeNumberSearch.value ? { search: chargeNumberSearch.value } : {}),
         ...(paymentStatusFilter.value ? { paymentStatus: paymentStatusFilter.value } : {}),
       },
     });

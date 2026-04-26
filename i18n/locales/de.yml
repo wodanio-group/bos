@@ -2,6 +2,7 @@
 
 general:
   copied: "In Zwischenablage kopiert"
+  reload: "Aktualisieren"
   name: "Name"
   name2: "Namenszusatz"
   user: "Benutzer"
@@ -136,6 +137,8 @@ layout:
     pesDunnings: "Mahnungen"
     pesDirectDebitBulk: "Lastschrift Bulk"
     pesTransferBulk: "Überweisung Bulk"
+    pesCostCenters: "Kostenstellen"
+    pesAnalytics: "Auswertung"
     pesExport: "Export"
   dialogSearch:
     searchPlaceholder: "Suchen ..."
@@ -182,6 +185,7 @@ company:
   pes:
     title: "PES"
     search: "Suchen..."
+    allCostCenters: "Alle Kostenstellen"
     mandates:
       tabTitle: "Lastschriftmandate"
       referenceID: "Referenz-ID"
@@ -220,6 +224,7 @@ company:
       quantity: "Menge"
       unit: "Einheit"
       taxRate: "Steuersatz"
+      costCenter: "Kostenstelle"
       startAt: "Start"
       endAt: "Ende"
       nextAt: "Nächste Ausführung"
@@ -259,6 +264,7 @@ company:
       price: "Preis"
       unit: "Einheit"
       taxRate: "Steuersatz"
+      costCenter: "Kostenstelle"
       total: "Gesamt"
       assigned: "In Rechnung"
       unassigned: "Offen"
@@ -727,14 +733,63 @@ pes:
       markUploadedError: "Fehler beim Markieren"
       updateXmlDateSuccess: "XML-Datum aktualisiert"
       updateXmlDateError: "Fehler beim Aktualisieren des XML-Datums"
+  analytics:
+    mrr:
+      title: "Monthly Recurring Revenue (MRR)"
+      realistic: "Realistisch"
+      realisticDesc: "Laufende Dauerposten, die den gesamten aktuellen Monat abdecken"
+      optimistic: "Optimistisch"
+      optimisticDesc: "Alle nicht abgelaufenen Dauerposten"
+    revenue:
+      title: "Umsatz (Buchungsposten)"
+      from: "Von"
+      to: "Bis"
+      month: "Monat"
+      items: "Posten"
+      net: "Netto"
+      gross: "Brutto"
+      total: "Gesamt"
+  costCenters:
+    title: "Kostenstellen"
+    add: "Kostenstelle hinzufügen"
+    addChild: "Untergruppe hinzufügen"
+    edit: "Bearbeiten"
+    delete: "Löschen"
+    noParent: "Keine (oberste Ebene)"
+    fields:
+      id: "ID"
+      name: "Name"
+      alias: "Alias"
+      parent: "Übergeordnete Kostenstelle"
+    createDialog:
+      title: "Kostenstelle erstellen"
+    editDialog:
+      title: "Kostenstelle bearbeiten"
+    deleteDialog:
+      title: "Kostenstelle löschen"
+      description: "Soll \"{name}\" wirklich gelöscht werden?"
+    toast:
+      createSuccess: "Kostenstelle erstellt"
+      createError: "Fehler beim Erstellen"
+      updateSuccess: "Kostenstelle aktualisiert"
+      updateError: "Fehler beim Aktualisieren"
+      deleteSuccess: "Kostenstelle gelöscht"
+      deleteError: "Fehler beim Löschen"
+      deleteHasChildren: "Kostenstelle hat noch Untergruppen und kann nicht gelöscht werden"
   export:
     title: "Exporte"
-    selectType: "Export-Typ"
-    selectTypePlaceholder: "Export-Typ auswählen ..."
+    selectFormat: "Format"
+    selectFormatPlaceholder: "Format auswählen ..."
     download: "Herunterladen"
+    sections:
+      customers: "Kunden"
+      charges: "Rechnungen"
     types:
       customerDatev:
         title: "Kunden (DATEV)"
         description: "Exportiert alle Kunden als DATEV Debitoren/Kreditoren EXTF CSV (Format Version 3)."
+      chargesDatev:
+        title: "Rechnungen (DATEV)"
+        description: "Exportiert alle Rechnungen und Gutschriften als DATEV Buchungsstapel EXTF CSV (Format Version 13)."
     toast:
       downloadError: "Fehler beim Herunterladen des Exports"

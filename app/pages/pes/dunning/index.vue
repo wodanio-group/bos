@@ -107,7 +107,7 @@ const loadItems = async () => {
         take,
         page: page.value,
         order: 'DESC',
-        ...(dunningNumberSearch.value ? { dunningNumber: dunningNumberSearch.value } : {}),
+        ...(dunningNumberSearch.value ? { search: dunningNumberSearch.value } : {}),
       },
     });
     items.value = result.items;

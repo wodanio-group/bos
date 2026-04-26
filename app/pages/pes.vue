@@ -29,10 +29,12 @@ definePageMeta({
 const route = useRoute();
 
 const tabs = computed(() => [
+  { title: $t('layout.aside.pesAnalytics'),        icon: 'chart-bar',          to: '/pes/analytics' },
   { title: $t('layout.aside.pesCharges'),         icon: 'receipt',            to: '/pes/charge' },
   { title: $t('layout.aside.pesDunnings'),         icon: 'mail-warning',       to: '/pes/dunning' },
   { title: $t('layout.aside.pesDirectDebitBulk'), icon: 'arrow-down-to-line', to: '/pes/bank-direct-debit-bulk' },
   { title: $t('layout.aside.pesTransferBulk'),    icon: 'arrow-up-to-line',   to: '/pes/bank-transfer-bulk' },
+  { title: $t('layout.aside.pesCostCenters'),     icon: 'landmark',           to: '/pes/cost-center' },
   { title: $t('layout.aside.pesExport'),          icon: 'file-down',          to: '/pes/export' },
 ]);
 
