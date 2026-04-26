@@ -29,6 +29,7 @@ definePageMeta({
 const route = useRoute();
 
 const tabs = computed(() => [
+  { title: $t('layout.aside.pesAnalytics'),        icon: 'chart-bar',          to: '/pes/analytics' },
   { title: $t('layout.aside.pesCharges'),         icon: 'receipt',            to: '/pes/charge' },
   { title: $t('layout.aside.pesDunnings'),         icon: 'mail-warning',       to: '/pes/dunning' },
   { title: $t('layout.aside.pesDirectDebitBulk'), icon: 'arrow-down-to-line', to: '/pes/bank-direct-debit-bulk' },

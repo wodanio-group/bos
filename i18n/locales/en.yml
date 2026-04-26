@@ -2,6 +2,7 @@
 
 general:
   copied: "Copied to clipboard"
+  reload: "Reload"
   name: "Name"
   name2: "Name suffix"
   user: "User"
@@ -137,6 +138,7 @@ layout:
     pesDirectDebitBulk: "Direct Debit Bulk"
     pesTransferBulk: "Transfer Bulk"
     pesCostCenters: "Cost Centers"
+    pesAnalytics: "Analytics"
     pesExport: "Export"
   dialogSearch:
     searchPlaceholder: "Search ..."
@@ -730,6 +732,22 @@ pes:
       markUploadedError: "Error marking as uploaded"
       updateXmlDateSuccess: "XML date updated"
       updateXmlDateError: "Error updating XML date"
+  analytics:
+    mrr:
+      title: "Monthly Recurring Revenue (MRR)"
+      realistic: "Realistic"
+      realisticDesc: "Active recurring items covering the entire current month"
+      optimistic: "Optimistic"
+      optimisticDesc: "All non-expired recurring items"
+    revenue:
+      title: "Revenue (Charge Items)"
+      from: "From"
+      to: "To"
+      month: "Month"
+      items: "Items"
+      net: "Net"
+      gross: "Gross"
+      total: "Total"
   costCenters:
     title: "Cost Centers"
     add: "Add cost center"

@@ -2,6 +2,7 @@
 
 general:
   copied: "In Zwischenablage kopiert"
+  reload: "Aktualisieren"
   name: "Name"
   name2: "Namenszusatz"
   user: "Benutzer"
@@ -137,6 +138,7 @@ layout:
     pesDirectDebitBulk: "Lastschrift Bulk"
     pesTransferBulk: "Überweisung Bulk"
     pesCostCenters: "Kostenstellen"
+    pesAnalytics: "Auswertung"
     pesExport: "Export"
   dialogSearch:
     searchPlaceholder: "Suchen ..."
@@ -731,6 +733,22 @@ pes:
       markUploadedError: "Fehler beim Markieren"
       updateXmlDateSuccess: "XML-Datum aktualisiert"
       updateXmlDateError: "Fehler beim Aktualisieren des XML-Datums"
+  analytics:
+    mrr:
+      title: "Monthly Recurring Revenue (MRR)"
+      realistic: "Realistisch"
+      realisticDesc: "Laufende Dauerposten, die den gesamten aktuellen Monat abdecken"
+      optimistic: "Optimistisch"
+      optimisticDesc: "Alle nicht abgelaufenen Dauerposten"
+    revenue:
+      title: "Umsatz (Buchungsposten)"
+      from: "Von"
+      to: "Bis"
+      month: "Monat"
+      items: "Posten"
+      net: "Netto"
+      gross: "Brutto"
+      total: "Gesamt"
   costCenters:
     title: "Kostenstellen"
     add: "Kostenstelle hinzufügen"
