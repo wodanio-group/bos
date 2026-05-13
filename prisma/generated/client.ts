@@ -134,3 +134,8 @@ export type Quote = Prisma.QuoteModel
  * 
  */
 export type QuoteItem = Prisma.QuoteItemModel
+/**
+ * Model QuoteItemPesConversion
+ * 
+ */
+export type QuoteItemPesConversion = Prisma.QuoteItemPesConversionModel

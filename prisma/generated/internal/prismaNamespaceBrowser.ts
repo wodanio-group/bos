@@ -69,7 +69,8 @@ export const ModelName = {
   OpportunityStage: 'OpportunityStage',
   Opportunity: 'Opportunity',
   Quote: 'Quote',
-  QuoteItem: 'QuoteItem'
+  QuoteItem: 'QuoteItem',
+  QuoteItemPesConversion: 'QuoteItemPesConversion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -379,6 +380,17 @@ export const QuoteItemScalarFieldEnum = {
 } as const
 
 export type QuoteItemScalarFieldEnum = (typeof QuoteItemScalarFieldEnum)[keyof typeof QuoteItemScalarFieldEnum]
+
+
+export const QuoteItemPesConversionScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  quoteItemId: 'quoteItemId',
+  type: 'type',
+  pesId: 'pesId'
+} as const
+
+export type QuoteItemPesConversionScalarFieldEnum = (typeof QuoteItemPesConversionScalarFieldEnum)[keyof typeof QuoteItemPesConversionScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -40,6 +40,7 @@ general:
   add: "Hinzufügen"
   delete: "Löschen"
   cancel: "Abbrechen"
+  back: "Zurück"
   submit: "Absenden"
   view: "Ansehen"
   save: "Speichern"
@@ -186,6 +187,12 @@ company:
     title: "PES"
     search: "Suchen..."
     allCostCenters: "Alle Kostenstellen"
+    quotes:
+      tabTitle: "Angebote"
+      create: "Neues Angebot erstellen"
+    dunnings:
+      tabTitle: "Mahnungen"
+      level: "Stufe {level}"
     mandates:
       tabTitle: "Lastschriftmandate"
       referenceID: "Referenz-ID"
@@ -353,6 +360,16 @@ person:
 quote:
   title: "Angebote"
   openPdf: "PDF öffnen"
+  pesConvert:
+    menuItem: "Als PES-Position anlegen"
+    overviewTitle: "PES-Positionen anlegen"
+    typeRecurring: "Dauerposition"
+    typeCharge: "Buchungsposition"
+    createRecurring: "Als Dauerposition anlegen"
+    createCharge: "Als Buchungsposition anlegen"
+    fromItem: "Aus Position"
+    showMore: "Mehr anzeigen"
+    showLess: "Weniger anzeigen"
   deleteTitle: "\"{quoteId}\" löschen"
   deleteDescription: "Möchten Sie das Angebot dauerhaft löschen?"
   deleteSuccessToast: "Angebot \"{quoteId}\" gelöscht"

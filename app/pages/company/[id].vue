@@ -33,6 +33,7 @@
 
     <contact-pes-section-box
       :customer-id="item.customerId ?? null"
+      :company-id="item.id"
       class="col-span-1 lg:col-span-12">
     </contact-pes-section-box>
 

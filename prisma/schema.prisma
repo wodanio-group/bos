@@ -426,4 +426,14 @@ model QuoteItem {
   total                   Float
   quoteId                 String
   quote                   Quote                       @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  pesConversions          QuoteItemPesConversion[]
+}
+
+model QuoteItemPesConversion {
+  id          String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  quoteItemId String
+  quoteItem   QuoteItem @relation(fields: [quoteItemId], references: [id], onDelete: Cascade)
+  type        String
+  pesId       String
 }
