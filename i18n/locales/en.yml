@@ -135,8 +135,8 @@ layout:
     pes: "Payment"
     pesCharges: "Charges"
     pesDunnings: "Dunnings"
-    pesDirectDebitBulk: "Direct Debit Bulk"
-    pesTransferBulk: "Transfer Bulk"
+    pesPayments: "Payments"
+    pesBulk: "Bulk"
     pesCostCenters: "Cost Centers"
     pesAnalytics: "Analytics"
     pesExport: "Export"
@@ -674,13 +674,43 @@ pes:
       generatedAt: "Generated at"
       mailSentAt: "Sent at"
     pdf: "PDF"
-  directDebitBulk:
-    title: "Direct Debit Bulk"
+  payment:
+    searchPlaceholder: "Search end-to-end ID ..."
+    type:
+      directDebit: "Direct Debit"
+      transfer: "Transfer"
     filter:
+      allTypes: "All Types"
+      allStatuses: "All Statuses"
+    fields:
+      type: "Type"
+      endToEndId: "End-to-End ID"
+      amount: "Amount"
+      createdAt: "Created at"
+      status: "Status"
+    status:
+      ok: "OK"
+      failed: "Failed"
+    setFailed: "Mark as failed"
+    setFailedDialog:
+      title: "Mark as failed"
+      failedAt: "Date"
+      failedMessage: "Description (optional)"
+      submit: "Mark as failed"
+    toast:
+      setFailedSuccess: "Marked as failed"
+      setFailedError: "Error marking as failed"
+  bulk:
+    type:
+      directDebit: "Direct Debit"
+      transfer: "Transfer"
+    filter:
+      allTypes: "All Types"
       all: "All"
       pending: "Pending"
       uploaded: "Uploaded"
     fields:
+      type: "Type"
       id: "ID"
       createdAt: "Created at"
       uploadedAt: "Uploaded at"
@@ -688,50 +718,37 @@ pes:
     status:
       uploaded: "Uploaded"
       pending: "Pending"
-    createButton: "Create New Bulk"
-    createDialog:
+    createDirectDebitButton: "Create Direct Debit Bulk"
+    createTransferButton: "Create Transfer Bulk"
+    createDirectDebitDialog:
       title: "Create new direct debit bulk?"
       description: "A new bulk will be created with all pending direct debits."
       submit: "Create"
-    downloadXml: "Download XML"
-    markUploaded: "Mark as uploaded"
-    updateXmlDate: "Update XML date"
-    toast:
-      createSuccess: "Direct debit bulk created"
-      createError: "Error creating bulk"
-      markUploadedSuccess: "Marked as uploaded"
-      markUploadedError: "Error marking as uploaded"
-      updateXmlDateSuccess: "XML date updated"
-      updateXmlDateError: "Error updating XML date"
-  transferBulk:
-    title: "Transfer Bulk"
-    filter:
-      all: "All"
-      pending: "Pending"
-      uploaded: "Uploaded"
-    fields:
-      id: "ID"
-      createdAt: "Created at"
-      uploadedAt: "Uploaded at"
-      status: "Status"
-    status:
-      uploaded: "Uploaded"
-      pending: "Pending"
-    createButton: "Create New Bulk"
-    createDialog:
+    createTransferDialog:
       title: "Create new transfer bulk?"
       description: "A new bulk will be created with all pending transfers."
       submit: "Create"
-    downloadXml: "Download XML"
-    markUploaded: "Mark as uploaded"
+    exportCsv: "Export"
+    downloadXml: "XML"
+    markUploaded: "Uploaded"
     updateXmlDate: "Update XML date"
+    csv:
+      chargeNumber: "invoice_number"
+      invoiceDate: "invoice_date"
+      customerNumber: "customer_number"
+      debitorNumber: "debtor_number"
+      grossAmount: "gross_amount"
+      endToEndId: "end_to_end_id"
+      bulkDate: "bulk_date"
     toast:
-      createSuccess: "Transfer bulk created"
+      createDirectDebitSuccess: "Direct debit bulk created"
+      createTransferSuccess: "Transfer bulk created"
       createError: "Error creating bulk"
       markUploadedSuccess: "Marked as uploaded"
       markUploadedError: "Error marking as uploaded"
       updateXmlDateSuccess: "XML date updated"
       updateXmlDateError: "Error updating XML date"
+      exportCsvError: "Error exporting CSV"
   analytics:
     mrr:
       title: "Monthly Recurring Revenue (MRR)"
