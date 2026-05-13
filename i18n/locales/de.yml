@@ -135,8 +135,8 @@ layout:
     pes: "Zahlung"
     pesCharges: "Rechnungen"
     pesDunnings: "Mahnungen"
-    pesDirectDebitBulk: "Lastschrift Bulk"
-    pesTransferBulk: "Überweisung Bulk"
+    pesPayments: "Zahlungen"
+    pesBulk: "Bulk"
     pesCostCenters: "Kostenstellen"
     pesAnalytics: "Auswertung"
     pesExport: "Export"
@@ -675,13 +675,43 @@ pes:
       generatedAt: "Erstellt am"
       mailSentAt: "Versendet am"
     pdf: "PDF"
-  directDebitBulk:
-    title: "Lastschrift Bulk"
+  payment:
+    searchPlaceholder: "End-to-End-ID suchen ..."
+    type:
+      directDebit: "Lastschrift"
+      transfer: "Überweisung"
     filter:
+      allTypes: "Alle Typen"
+      allStatuses: "Alle Status"
+    fields:
+      type: "Typ"
+      endToEndId: "End-to-End-ID"
+      amount: "Betrag"
+      createdAt: "Erstellt am"
+      status: "Status"
+    status:
+      ok: "OK"
+      failed: "Fehlgeschlagen"
+    setFailed: "Als fehlgeschlagen markieren"
+    setFailedDialog:
+      title: "Als fehlgeschlagen markieren"
+      failedAt: "Datum"
+      failedMessage: "Beschreibung (optional)"
+      submit: "Fehlgeschlagen markieren"
+    toast:
+      setFailedSuccess: "Als fehlgeschlagen markiert"
+      setFailedError: "Fehler beim Markieren"
+  bulk:
+    type:
+      directDebit: "Lastschrift"
+      transfer: "Überweisung"
+    filter:
+      allTypes: "Alle Typen"
       all: "Alle"
       pending: "Ausstehend"
       uploaded: "Hochgeladen"
     fields:
+      type: "Typ"
       id: "ID"
       createdAt: "Erstellt am"
       uploadedAt: "Hochgeladen am"
@@ -689,50 +719,37 @@ pes:
     status:
       uploaded: "Hochgeladen"
       pending: "Ausstehend"
-    createButton: "Neuen Bulk erstellen"
-    createDialog:
+    createDirectDebitButton: "Neuen Lastschrift-Bulk erstellen"
+    createTransferButton: "Neuen Überweisungs-Bulk erstellen"
+    createDirectDebitDialog:
       title: "Neuen Lastschrift-Bulk erstellen?"
       description: "Es wird ein neuer Bulk mit allen ausstehenden Lastschriften erstellt."
       submit: "Erstellen"
-    downloadXml: "XML herunterladen"
-    markUploaded: "Als hochgeladen markieren"
-    updateXmlDate: "XML-Datum aktualisieren"
-    toast:
-      createSuccess: "Lastschrift-Bulk erstellt"
-      createError: "Fehler beim Erstellen"
-      markUploadedSuccess: "Als hochgeladen markiert"
-      markUploadedError: "Fehler beim Markieren"
-      updateXmlDateSuccess: "XML-Datum aktualisiert"
-      updateXmlDateError: "Fehler beim Aktualisieren des XML-Datums"
-  transferBulk:
-    title: "Überweisung Bulk"
-    filter:
-      all: "Alle"
-      pending: "Ausstehend"
-      uploaded: "Hochgeladen"
-    fields:
-      id: "ID"
-      createdAt: "Erstellt am"
-      uploadedAt: "Hochgeladen am"
-      status: "Status"
-    status:
-      uploaded: "Hochgeladen"
-      pending: "Ausstehend"
-    createButton: "Neuen Bulk erstellen"
-    createDialog:
+    createTransferDialog:
       title: "Neuen Überweisungs-Bulk erstellen?"
       description: "Es wird ein neuer Bulk mit allen ausstehenden Überweisungen erstellt."
       submit: "Erstellen"
-    downloadXml: "XML herunterladen"
-    markUploaded: "Als hochgeladen markieren"
+    exportCsv: "Export"
+    downloadXml: "XML"
+    markUploaded: "Hochgeladen"
     updateXmlDate: "XML-Datum aktualisieren"
+    csv:
+      chargeNumber: "invoice_number"
+      invoiceDate: "invoice_date"
+      customerNumber: "customer_number"
+      debitorNumber: "debtor_number"
+      grossAmount: "gross_amount"
+      endToEndId: "end_to_end_id"
+      bulkDate: "bulk_date"
     toast:
-      createSuccess: "Überweisungs-Bulk erstellt"
+      createDirectDebitSuccess: "Lastschrift-Bulk erstellt"
+      createTransferSuccess: "Überweisungs-Bulk erstellt"
       createError: "Fehler beim Erstellen"
       markUploadedSuccess: "Als hochgeladen markiert"
       markUploadedError: "Fehler beim Markieren"
       updateXmlDateSuccess: "XML-Datum aktualisiert"
       updateXmlDateError: "Fehler beim Aktualisieren des XML-Datums"
+      exportCsvError: "Fehler beim CSV-Export"
   analytics:
     mrr:
       title: "Monthly Recurring Revenue (MRR)"
