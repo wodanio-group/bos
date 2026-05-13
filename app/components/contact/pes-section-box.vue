@@ -136,7 +136,9 @@
       v-show="activeTab === 'quotes'"
       ref="quotesTabRef"
       :companyId="companyId"
-      :search="search">
+      :search="search"
+      :pesCustomer="pesCustomer"
+      :hasPesInteractRight="hasPesInteractRight">
     </contact-pes-section-box-quotes-tab>
 
     <contact-pes-section-box-mandates-tab

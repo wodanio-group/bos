@@ -1,5 +1,13 @@
 <template>
 
+  <quote-pes-convert-dialog
+    v-if="showPesDialog && pesCustomer"
+    :quote="quote"
+    :pesCustomer="pesCustomer"
+    :open="showPesDialog"
+    @update:open="showPesDialog = false">
+  </quote-pes-convert-dialog>
+
   <tr
     class="text-sm text-primary-950 border-b border-b-secondary-200 transition-color hover:bg-secondary-50 cursor-pointer"
     @click="navigateTo(`/quote/${quote.id}`)">
@@ -34,6 +42,13 @@
                 <atom-icon icon="download" class="flex-shrink-0"/>
                 <span>{{ $t('quote.item.downloadPdf') }}</span>
               </DropdownMenuItem>
+              <DropdownMenuItem
+                v-if="pesCustomer && hasPesInteractRight"
+                class="flex justify-start items-center gap-2 px-3 py-1 cursor-pointer text-sm text-left rounded-lg transition-colors hover:bg-secondary-100 whitespace-nowrap"
+                @select="showPesDialog = true">
+                <atom-icon icon="package-plus" class="flex-shrink-0"/>
+                <span>{{ $t('quote.pesConvert.menuItem') }}</span>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenuPortal>
         </DropdownMenuRoot>
@@ -48,8 +63,14 @@ import { DateTime } from 'luxon';
 import { formatCurrency } from '~~/shared/utils/default';
 import type { QuoteViewModel } from '~~/shared/types/quote';
 
-defineProps<{ quote: QuoteViewModel }>();
+defineProps<{
+  quote: QuoteViewModel;
+  pesCustomer?: { id: string } | null;
+  hasPesInteractRight?: boolean;
+}>();
 const emit = defineEmits<{ downloadPdf: [quote: QuoteViewModel] }>();
+
+const showPesDialog = ref(false);
 
 const formatDate = (dateStr: string) =>
   DateTime.fromISO(dateStr).toFormat($t('format.date'));

@@ -313,6 +313,7 @@ export type QuoteItemWhereInput = {
   total?: Prisma.FloatFilter<"QuoteItem"> | number
   quoteId?: Prisma.StringFilter<"QuoteItem"> | string
   quote?: Prisma.XOR<Prisma.QuoteScalarRelationFilter, Prisma.QuoteWhereInput>
+  pesConversions?: Prisma.QuoteItemPesConversionListRelationFilter
 }
 
 export type QuoteItemOrderByWithRelationInput = {
@@ -331,6 +332,7 @@ export type QuoteItemOrderByWithRelationInput = {
   total?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   quote?: Prisma.QuoteOrderByWithRelationInput
+  pesConversions?: Prisma.QuoteItemPesConversionOrderByRelationAggregateInput
 }
 
 export type QuoteItemWhereUniqueInput = Prisma.AtLeast<{
@@ -352,6 +354,7 @@ export type QuoteItemWhereUniqueInput = Prisma.AtLeast<{
   total?: Prisma.FloatFilter<"QuoteItem"> | number
   quoteId?: Prisma.StringFilter<"QuoteItem"> | string
   quote?: Prisma.XOR<Prisma.QuoteScalarRelationFilter, Prisma.QuoteWhereInput>
+  pesConversions?: Prisma.QuoteItemPesConversionListRelationFilter
 }, "id">
 
 export type QuoteItemOrderByWithAggregationInput = {
@@ -411,6 +414,7 @@ export type QuoteItemCreateInput = {
   tax: number
   total: number
   quote: Prisma.QuoteCreateNestedOneWithoutQuoteItemsInput
+  pesConversions?: Prisma.QuoteItemPesConversionCreateNestedManyWithoutQuoteItemInput
 }
 
 export type QuoteItemUncheckedCreateInput = {
@@ -428,6 +432,7 @@ export type QuoteItemUncheckedCreateInput = {
   tax: number
   total: number
   quoteId: string
+  pesConversions?: Prisma.QuoteItemPesConversionUncheckedCreateNestedManyWithoutQuoteItemInput
 }
 
 export type QuoteItemUpdateInput = {
@@ -445,6 +450,7 @@ export type QuoteItemUpdateInput = {
   tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   quote?: Prisma.QuoteUpdateOneRequiredWithoutQuoteItemsNestedInput
+  pesConversions?: Prisma.QuoteItemPesConversionUpdateManyWithoutQuoteItemNestedInput
 }
 
 export type QuoteItemUncheckedUpdateInput = {
@@ -462,6 +468,7 @@ export type QuoteItemUncheckedUpdateInput = {
   tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  pesConversions?: Prisma.QuoteItemPesConversionUncheckedUpdateManyWithoutQuoteItemNestedInput
 }
 
 export type QuoteItemCreateManyInput = {
@@ -595,6 +602,11 @@ export type QuoteItemSumOrderByAggregateInput = {
   total?: Prisma.SortOrder
 }
 
+export type QuoteItemScalarRelationFilter = {
+  is?: Prisma.QuoteItemWhereInput
+  isNot?: Prisma.QuoteItemWhereInput
+}
+
 export type QuoteItemCreateNestedManyWithoutQuoteInput = {
   create?: Prisma.XOR<Prisma.QuoteItemCreateWithoutQuoteInput, Prisma.QuoteItemUncheckedCreateWithoutQuoteInput> | Prisma.QuoteItemCreateWithoutQuoteInput[] | Prisma.QuoteItemUncheckedCreateWithoutQuoteInput[]
   connectOrCreate?: Prisma.QuoteItemCreateOrConnectWithoutQuoteInput | Prisma.QuoteItemCreateOrConnectWithoutQuoteInput[]
@@ -637,6 +649,20 @@ export type QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput = {
   deleteMany?: Prisma.QuoteItemScalarWhereInput | Prisma.QuoteItemScalarWhereInput[]
 }
 
+export type QuoteItemCreateNestedOneWithoutPesConversionsInput = {
+  create?: Prisma.XOR<Prisma.QuoteItemCreateWithoutPesConversionsInput, Prisma.QuoteItemUncheckedCreateWithoutPesConversionsInput>
+  connectOrCreate?: Prisma.QuoteItemCreateOrConnectWithoutPesConversionsInput
+  connect?: Prisma.QuoteItemWhereUniqueInput
+}
+
+export type QuoteItemUpdateOneRequiredWithoutPesConversionsNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteItemCreateWithoutPesConversionsInput, Prisma.QuoteItemUncheckedCreateWithoutPesConversionsInput>
+  connectOrCreate?: Prisma.QuoteItemCreateOrConnectWithoutPesConversionsInput
+  upsert?: Prisma.QuoteItemUpsertWithoutPesConversionsInput
+  connect?: Prisma.QuoteItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteItemUpdateToOneWithWhereWithoutPesConversionsInput, Prisma.QuoteItemUpdateWithoutPesConversionsInput>, Prisma.QuoteItemUncheckedUpdateWithoutPesConversionsInput>
+}
+
 export type QuoteItemCreateWithoutQuoteInput = {
   id?: string
   createdAt?: Date | string
@@ -651,6 +677,7 @@ export type QuoteItemCreateWithoutQuoteInput = {
   subtotal: number
   tax: number
   total: number
+  pesConversions?: Prisma.QuoteItemPesConversionCreateNestedManyWithoutQuoteItemInput
 }
 
 export type QuoteItemUncheckedCreateWithoutQuoteInput = {
@@ -667,6 +694,7 @@ export type QuoteItemUncheckedCreateWithoutQuoteInput = {
   subtotal: number
   tax: number
   total: number
+  pesConversions?: Prisma.QuoteItemPesConversionUncheckedCreateNestedManyWithoutQuoteItemInput
 }
 
 export type QuoteItemCreateOrConnectWithoutQuoteInput = {
@@ -715,6 +743,90 @@ export type QuoteItemScalarWhereInput = {
   quoteId?: Prisma.StringFilter<"QuoteItem"> | string
 }
 
+export type QuoteItemCreateWithoutPesConversionsInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  quotePosition: number
+  title: string
+  description?: string | null
+  quantity: number
+  unit?: string | null
+  price: number
+  taxRate: number
+  subtotal: number
+  tax: number
+  total: number
+  quote: Prisma.QuoteCreateNestedOneWithoutQuoteItemsInput
+}
+
+export type QuoteItemUncheckedCreateWithoutPesConversionsInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  quotePosition: number
+  title: string
+  description?: string | null
+  quantity: number
+  unit?: string | null
+  price: number
+  taxRate: number
+  subtotal: number
+  tax: number
+  total: number
+  quoteId: string
+}
+
+export type QuoteItemCreateOrConnectWithoutPesConversionsInput = {
+  where: Prisma.QuoteItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteItemCreateWithoutPesConversionsInput, Prisma.QuoteItemUncheckedCreateWithoutPesConversionsInput>
+}
+
+export type QuoteItemUpsertWithoutPesConversionsInput = {
+  update: Prisma.XOR<Prisma.QuoteItemUpdateWithoutPesConversionsInput, Prisma.QuoteItemUncheckedUpdateWithoutPesConversionsInput>
+  create: Prisma.XOR<Prisma.QuoteItemCreateWithoutPesConversionsInput, Prisma.QuoteItemUncheckedCreateWithoutPesConversionsInput>
+  where?: Prisma.QuoteItemWhereInput
+}
+
+export type QuoteItemUpdateToOneWithWhereWithoutPesConversionsInput = {
+  where?: Prisma.QuoteItemWhereInput
+  data: Prisma.XOR<Prisma.QuoteItemUpdateWithoutPesConversionsInput, Prisma.QuoteItemUncheckedUpdateWithoutPesConversionsInput>
+}
+
+export type QuoteItemUpdateWithoutPesConversionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quotePosition?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  taxRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  quote?: Prisma.QuoteUpdateOneRequiredWithoutQuoteItemsNestedInput
+}
+
+export type QuoteItemUncheckedUpdateWithoutPesConversionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quotePosition?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  taxRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 export type QuoteItemCreateManyQuoteInput = {
   id?: string
   createdAt?: Date | string
@@ -745,6 +857,7 @@ export type QuoteItemUpdateWithoutQuoteInput = {
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pesConversions?: Prisma.QuoteItemPesConversionUpdateManyWithoutQuoteItemNestedInput
 }
 
 export type QuoteItemUncheckedUpdateWithoutQuoteInput = {
@@ -761,6 +874,7 @@ export type QuoteItemUncheckedUpdateWithoutQuoteInput = {
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
+  pesConversions?: Prisma.QuoteItemPesConversionUncheckedUpdateManyWithoutQuoteItemNestedInput
 }
 
 export type QuoteItemUncheckedUpdateManyWithoutQuoteInput = {
@@ -780,6 +894,35 @@ export type QuoteItemUncheckedUpdateManyWithoutQuoteInput = {
 }
 
 
+/**
+ * Count Type QuoteItemCountOutputType
+ */
+
+export type QuoteItemCountOutputType = {
+  pesConversions: number
+}
+
+export type QuoteItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pesConversions?: boolean | QuoteItemCountOutputTypeCountPesConversionsArgs
+}
+
+/**
+ * QuoteItemCountOutputType without action
+ */
+export type QuoteItemCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteItemCountOutputType
+   */
+  select?: Prisma.QuoteItemCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * QuoteItemCountOutputType without action
+ */
+export type QuoteItemCountOutputTypeCountPesConversionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteItemPesConversionWhereInput
+}
+
 
 export type QuoteItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -797,6 +940,8 @@ export type QuoteItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   total?: boolean
   quoteId?: boolean
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
+  pesConversions?: boolean | Prisma.QuoteItem$pesConversionsArgs<ExtArgs>
+  _count?: boolean | Prisma.QuoteItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["quoteItem"]>
 
 export type QuoteItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -855,6 +1000,8 @@ export type QuoteItemSelectScalar = {
 export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "quotePosition" | "title" | "description" | "quantity" | "unit" | "price" | "taxRate" | "subtotal" | "tax" | "total" | "quoteId", ExtArgs["result"]["quoteItem"]>
 export type QuoteItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
+  pesConversions?: boolean | Prisma.QuoteItem$pesConversionsArgs<ExtArgs>
+  _count?: boolean | Prisma.QuoteItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type QuoteItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
@@ -867,6 +1014,7 @@ export type $QuoteItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "QuoteItem"
   objects: {
     quote: Prisma.$QuotePayload<ExtArgs>
+    pesConversions: Prisma.$QuoteItemPesConversionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1278,6 +1426,7 @@ readonly fields: QuoteItemFieldRefs;
 export interface Prisma__QuoteItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   quote<T extends Prisma.QuoteDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteDefaultArgs<ExtArgs>>): Prisma.Prisma__QuoteClient<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  pesConversions<T extends Prisma.QuoteItem$pesConversionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteItem$pesConversionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteItemPesConversionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1714,6 +1863,30 @@ export type QuoteItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many QuoteItems to delete.
    */
   limit?: number
+}
+
+/**
+ * QuoteItem.pesConversions
+ */
+export type QuoteItem$pesConversionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteItemPesConversion
+   */
+  select?: Prisma.QuoteItemPesConversionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the QuoteItemPesConversion
+   */
+  omit?: Prisma.QuoteItemPesConversionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteItemPesConversionInclude<ExtArgs> | null
+  where?: Prisma.QuoteItemPesConversionWhereInput
+  orderBy?: Prisma.QuoteItemPesConversionOrderByWithRelationInput | Prisma.QuoteItemPesConversionOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteItemPesConversionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteItemPesConversionScalarFieldEnum | Prisma.QuoteItemPesConversionScalarFieldEnum[]
 }
 
 /**

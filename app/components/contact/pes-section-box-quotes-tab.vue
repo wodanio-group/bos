@@ -22,6 +22,8 @@
           v-for="quote in filteredItems"
           :key="quote.id"
           :quote="quote"
+          :pesCustomer="pesCustomer"
+          :hasPesInteractRight="hasPesInteractRight"
           @download-pdf="onDownloadPdf">
         </quote-list-item>
       </tbody>
@@ -36,6 +38,8 @@ import type { QuoteViewModel } from '~~/shared/types/quote';
 const props = defineProps<{
   companyId: string;
   search: string;
+  pesCustomer?: { id: string } | null;
+  hasPesInteractRight?: boolean;
 }>();
 
 const { downloadFile } = useFileDownload();

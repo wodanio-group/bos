@@ -402,7 +402,8 @@ export const ModelName = {
   OpportunityStage: 'OpportunityStage',
   Opportunity: 'Opportunity',
   Quote: 'Quote',
-  QuoteItem: 'QuoteItem'
+  QuoteItem: 'QuoteItem',
+  QuoteItemPesConversion: 'QuoteItemPesConversion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -418,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userToken" | "option" | "person" | "company" | "companyPerson" | "contactCommunicationWay" | "contactAddress" | "country" | "contactNote" | "timeTrackingActivity" | "task" | "campaign" | "leadStatus" | "lead" | "opportunityStage" | "opportunity" | "quote" | "quoteItem"
+    modelProps: "user" | "userToken" | "option" | "person" | "company" | "companyPerson" | "contactCommunicationWay" | "contactAddress" | "country" | "contactNote" | "timeTrackingActivity" | "task" | "campaign" | "leadStatus" | "lead" | "opportunityStage" | "opportunity" | "quote" | "quoteItem" | "quoteItemPesConversion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1828,6 +1829,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    QuoteItemPesConversion: {
+      payload: Prisma.$QuoteItemPesConversionPayload<ExtArgs>
+      fields: Prisma.QuoteItemPesConversionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteItemPesConversionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteItemPesConversionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteItemPesConversionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteItemPesConversionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload>
+        }
+        findMany: {
+          args: Prisma.QuoteItemPesConversionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload>[]
+        }
+        create: {
+          args: Prisma.QuoteItemPesConversionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload>
+        }
+        createMany: {
+          args: Prisma.QuoteItemPesConversionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuoteItemPesConversionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload>[]
+        }
+        delete: {
+          args: Prisma.QuoteItemPesConversionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload>
+        }
+        update: {
+          args: Prisma.QuoteItemPesConversionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteItemPesConversionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteItemPesConversionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuoteItemPesConversionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuoteItemPesConversionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteItemPesConversionPayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteItemPesConversionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteItemPesConversion>
+        }
+        groupBy: {
+          args: Prisma.QuoteItemPesConversionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteItemPesConversionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteItemPesConversionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteItemPesConversionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2158,6 +2233,17 @@ export const QuoteItemScalarFieldEnum = {
 } as const
 
 export type QuoteItemScalarFieldEnum = (typeof QuoteItemScalarFieldEnum)[keyof typeof QuoteItemScalarFieldEnum]
+
+
+export const QuoteItemPesConversionScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  quoteItemId: 'quoteItemId',
+  type: 'type',
+  pesId: 'pesId'
+} as const
+
+export type QuoteItemPesConversionScalarFieldEnum = (typeof QuoteItemPesConversionScalarFieldEnum)[keyof typeof QuoteItemPesConversionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2550,6 +2636,7 @@ export type GlobalOmitConfig = {
   opportunity?: Prisma.OpportunityOmit
   quote?: Prisma.QuoteOmit
   quoteItem?: Prisma.QuoteItemOmit
+  quoteItemPesConversion?: Prisma.QuoteItemPesConversionOmit
 }
 
 /* Types for Logging */
