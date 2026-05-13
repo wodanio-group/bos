@@ -291,7 +291,7 @@ if (isCreateMode.value) {
 
 const editForm = ref({
   status: item.value?.status || 'DRAFT',
-  companyId: item.value?.companyId || '',
+  companyId: item.value?.companyId || (isCreateMode.value ? (route.query.companyId as string || '') : ''),
   ownerId: item.value?.ownerId || user?.id,
   quoteDate: item.value?.quoteDate || DateTime.now().toFormat('yyyy-LL-dd'),
   quoteValidUntil: item.value?.quoteValidUntil || '',

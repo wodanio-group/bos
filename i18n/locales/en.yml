@@ -186,6 +186,12 @@ company:
     title: "PES"
     search: "Search..."
     allCostCenters: "All cost centers"
+    quotes:
+      tabTitle: "Quotes"
+      create: "Create new quote"
+    dunnings:
+      tabTitle: "Dunnings"
+      level: "Level {level}"
     mandates:
       tabTitle: "Direct Debit Mandates"
       referenceID: "Reference ID"

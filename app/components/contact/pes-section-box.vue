@@ -1,47 +1,71 @@
 <template>
 
   <page-section-box
-    v-if="pesCustomer"
-    :title="$t('company.pes.title')"
+    v-if="pesCustomer || companyId"
     :fixedHeight="true"
     class="col-span-1 lg:col-span-12">
 
     <template #headerLeft>
       <button
         class="px-3 py-1 text-sm font-medium border-b-2 transition-colors"
-        :class="activeTab === 'mandates'
+        :class="activeTab === 'quotes'
           ? 'border-primary-600 text-primary-600'
           : 'border-transparent text-secondary-500 hover:text-secondary-700'"
-        @click="activeTab = 'mandates'">
-        {{ $t('company.pes.mandates.tabTitle') }}
+        @click="activeTab = 'quotes'">
+        {{ $t('company.pes.quotes.tabTitle') }}
       </button>
-      <button
-        class="px-3 py-1 text-sm font-medium border-b-2 transition-colors"
-        :class="activeTab === 'recurringChargeItems'
-          ? 'border-primary-600 text-primary-600'
-          : 'border-transparent text-secondary-500 hover:text-secondary-700'"
-        @click="activeTab = 'recurringChargeItems'">
-        {{ $t('company.pes.recurringChargeItems.tabTitle') }}
-      </button>
-      <button
-        class="px-3 py-1 text-sm font-medium border-b-2 transition-colors"
-        :class="activeTab === 'chargeItems'
-          ? 'border-primary-600 text-primary-600'
-          : 'border-transparent text-secondary-500 hover:text-secondary-700'"
-        @click="activeTab = 'chargeItems'">
-        {{ $t('company.pes.chargeItems.tabTitle') }}
-      </button>
-      <button
-        class="px-3 py-1 text-sm font-medium border-b-2 transition-colors"
-        :class="activeTab === 'charges'
-          ? 'border-primary-600 text-primary-600'
-          : 'border-transparent text-secondary-500 hover:text-secondary-700'"
-        @click="activeTab = 'charges'">
-        {{ $t('company.pes.charges.tabTitle') }}
-      </button>
+      <template v-if="pesCustomer">
+        <button
+          class="px-3 py-1 text-sm font-medium border-b-2 transition-colors"
+          :class="activeTab === 'mandates'
+            ? 'border-primary-600 text-primary-600'
+            : 'border-transparent text-secondary-500 hover:text-secondary-700'"
+          @click="activeTab = 'mandates'">
+          {{ $t('company.pes.mandates.tabTitle') }}
+        </button>
+        <button
+          class="px-3 py-1 text-sm font-medium border-b-2 transition-colors"
+          :class="activeTab === 'recurringChargeItems'
+            ? 'border-primary-600 text-primary-600'
+            : 'border-transparent text-secondary-500 hover:text-secondary-700'"
+          @click="activeTab = 'recurringChargeItems'">
+          {{ $t('company.pes.recurringChargeItems.tabTitle') }}
+        </button>
+        <button
+          class="px-3 py-1 text-sm font-medium border-b-2 transition-colors"
+          :class="activeTab === 'chargeItems'
+            ? 'border-primary-600 text-primary-600'
+            : 'border-transparent text-secondary-500 hover:text-secondary-700'"
+          @click="activeTab = 'chargeItems'">
+          {{ $t('company.pes.chargeItems.tabTitle') }}
+        </button>
+        <button
+          class="px-3 py-1 text-sm font-medium border-b-2 transition-colors"
+          :class="activeTab === 'charges'
+            ? 'border-primary-600 text-primary-600'
+            : 'border-transparent text-secondary-500 hover:text-secondary-700'"
+          @click="activeTab = 'charges'">
+          {{ $t('company.pes.charges.tabTitle') }}
+        </button>
+        <button
+          class="px-3 py-1 text-sm font-medium border-b-2 transition-colors"
+          :class="activeTab === 'dunnings'
+            ? 'border-primary-600 text-primary-600'
+            : 'border-transparent text-secondary-500 hover:text-secondary-700'"
+          @click="activeTab = 'dunnings'">
+          {{ $t('company.pes.dunnings.tabTitle') }}
+        </button>
+      </template>
     </template>
 
     <template #headerRight>
+      <atom-button
+        v-if="activeTab === 'quotes' && companyId"
+        type="button"
+        icon="plus"
+        :title="$t('company.pes.quotes.create')"
+        @click="quotesTabRef?.triggerCreate()">
+      </atom-button>
       <atom-button
         v-if="hasPesInteractRight && activeTab === 'mandates'"
         type="button"
@@ -107,6 +131,14 @@
         :compact="true"/>
     </div>
 
+    <contact-pes-section-box-quotes-tab
+      v-if="companyId"
+      v-show="activeTab === 'quotes'"
+      ref="quotesTabRef"
+      :companyId="companyId"
+      :search="search">
+    </contact-pes-section-box-quotes-tab>
+
     <contact-pes-section-box-mandates-tab
       v-show="activeTab === 'mandates'"
       ref="mandatesTabRef"
@@ -145,6 +177,13 @@
       @charge-created="ciTabRef?.reload()">
     </contact-pes-section-box-charges-tab>
 
+    <contact-pes-section-box-dunnings-tab
+      v-show="activeTab === 'dunnings'"
+      ref="dunningsTabRef"
+      :pesCustomer="pesCustomer"
+      :search="search">
+    </contact-pes-section-box-dunnings-tab>
+
   </page-section-box>
 
 </template>
@@ -152,7 +191,7 @@
 <script setup lang="ts">
 type PesCustomer = { id: string };
 
-const props = defineProps<{ customerId: string | null }>();
+const props = defineProps<{ customerId: string | null; companyId?: string | null }>();
 
 const auth = useAuth();
 const user = await auth.getUser();
@@ -160,17 +199,19 @@ const hasPesInteractRight = user?.rights.includes('pes.interact') ?? false;
 const hasPesDeleteRight = user?.rights.includes('pes.delete') ?? false;
 
 const pesCustomer = ref<PesCustomer | null>(null);
-const activeTab = ref<'mandates' | 'recurringChargeItems' | 'chargeItems' | 'charges'>('mandates');
+const activeTab = ref<'quotes' | 'mandates' | 'recurringChargeItems' | 'chargeItems' | 'charges' | 'dunnings'>('quotes');
 const search = ref('');
 const rciStatusFilter = ref<'all' | 'active' | 'ending' | 'ended'>('all');
 const rciCostCenterFilter = ref<string | null>(null);
 const ciStatusFilter = ref<'all' | 'unassigned' | 'assigned'>('all');
 const ciCostCenterFilter = ref<string | null>(null);
 
+const quotesTabRef = ref<{ reload: () => void; triggerCreate: () => void } | null>(null);
 const mandatesTabRef = ref<{ reload: () => void; triggerCreate: () => void } | null>(null);
 const rciTabRef = ref<{ reload: () => void; triggerCreate: () => void } | null>(null);
 const ciTabRef = ref<{ reload: () => void; triggerCreate: () => void } | null>(null);
 const chargesTabRef = ref<{ reload: () => void; triggerCreate: () => void } | null>(null);
+const dunningsTabRef = ref<{ reload: () => void } | null>(null);
 
 const hasPesReadRight = user?.rights.includes('pes.read') ?? false;
 

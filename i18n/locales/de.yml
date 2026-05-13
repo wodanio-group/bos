@@ -186,6 +186,12 @@ company:
     title: "PES"
     search: "Suchen..."
     allCostCenters: "Alle Kostenstellen"
+    quotes:
+      tabTitle: "Angebote"
+      create: "Neues Angebot erstellen"
+    dunnings:
+      tabTitle: "Mahnungen"
+      level: "Stufe {level}"
     mandates:
       tabTitle: "Lastschriftmandate"
       referenceID: "Referenz-ID"
