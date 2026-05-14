@@ -153,19 +153,29 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     loadItems();
   };
 
-  /* const filter = computed<Record<string, string | number | null>>(() => ({}));
-  const filterSet = (filter: Record<string, string | number | null>) => {
-    filterAndSearchState.value = {
-      ...filterAndSearchState.value, filter
+  const extraFiltersState = useState<Record<string, string | null>>(
+    `crudFilters${opts.key ?? ''}${opts.apiPath}`,
+    () => ({})
+  );
+
+  const filterSet = (key: string, value: string | null) => {
+    extraFiltersState.value = {
+      ...extraFiltersState.value,
+      [key]: value || null,
     };
     loadItems();
-  }; */
+  };
 
   const loadItems = async () => {
     try {
+      const extra: Record<string, any> = {};
+      for (const [k, v] of Object.entries(extraFiltersState.value)) {
+        if (v !== null && v !== '') extra[k] = v;
+      }
       const queryParams: any = {
         ...(opts.query ?? {}),
         ...filterAndSearchState.value,
+        ...extra,
       };
 
       // Remove null sort values from query
@@ -228,6 +238,7 @@ export const useCrud = <T extends BaseViewModel>(opts: {
     paginationSet,
     search,
     searchSet,
+    filterSet,
     sort,
     sortSet,
     sortToggle,

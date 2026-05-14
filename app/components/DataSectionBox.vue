@@ -16,11 +16,12 @@
           class="w-[200px]"
           v-if="filter.type === 'select'">
           <atom-select
-            :title="filter.title"
+            :title="filter.title ?? undefined"
             :items="[
-              { value: '' },
+              { value: '', title: filter.emptyLabel ?? '' },
               ...filter.items,
             ]"
+            v-model="filterValues[filter.key]"
             @update:modelValue="emit('updateFilter', filter.key, String($event))">
           </atom-select>
         </div>
@@ -150,10 +151,11 @@ const props = defineProps<{
   itemClickActionKey?: string,
   fields: Field[],
   filters?: {
-    title: string,
+    title?: string,
     icon?: string,
     key: string,
     type: 'date' | 'select',
+    emptyLabel?: string,
     items?: { title: string, value: string }[],
   }[],
   headerActions?: {
@@ -177,6 +179,10 @@ const props = defineProps<{
   hideSearch?: boolean,
   hideAddButton?: boolean,
 }>();
+
+const filterValues = ref<Record<string, string>>(
+  Object.fromEntries((props.filters ?? []).map(f => [f.key, '']))
+);
 
 const emit = defineEmits<{
   (event: 'action', key: string, item?: any ): void,

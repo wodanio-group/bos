@@ -38,6 +38,7 @@ model User {
   leadOwners                Lead[]
   opportunityOwners         Opportunity[]
   quoteOwners               Quote[]
+  projectMembers            ProjectMember[]
 }
 
 model UserToken {
@@ -123,6 +124,7 @@ model Company {
   leads                       Lead[]
   opportunities               Opportunity[]
   quotes                      Quote[]
+  projects                    Project[]
 }
 
 model CompanyPerson {
@@ -436,4 +438,56 @@ model QuoteItemPesConversion {
   quoteItem   QuoteItem @relation(fields: [quoteItemId], references: [id], onDelete: Cascade)
   type        String
   pesId       String
+}
+
+// ------------
+// Project
+// ------------
+
+enum ProjectStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum ProjectMemberRole {
+  MANAGER
+  MEMBER
+}
+
+model Project {
+  id              String          @id @default(uuid())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  name            String
+  status          ProjectStatus   @default(DRAFT)
+  description     String?
+  companyId       String?
+  company         Company?        @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  members         ProjectMember[]
+  notes           ProjectNote[]
+}
+
+model ProjectMember {
+  id        String            @id @default(uuid())
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  role      ProjectMemberRole @default(MEMBER)
+  projectId String
+  project   Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+}
+
+model ProjectNote {
+  id        String          @id @default(uuid())
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  type      ContactNoteType @default(NOTE)
+  timestamp DateTime?
+  content   String
+  projectId String
+  project   Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
