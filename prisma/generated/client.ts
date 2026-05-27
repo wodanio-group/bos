@@ -139,3 +139,18 @@ export type QuoteItem = Prisma.QuoteItemModel
  * 
  */
 export type QuoteItemPesConversion = Prisma.QuoteItemPesConversionModel
+/**
+ * Model Project
+ * 
+ */
+export type Project = Prisma.ProjectModel
+/**
+ * Model ProjectMember
+ * 
+ */
+export type ProjectMember = Prisma.ProjectMemberModel
+/**
+ * Model ProjectNote
+ * 
+ */
+export type ProjectNote = Prisma.ProjectNoteModel

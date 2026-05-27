@@ -221,6 +221,7 @@ export type PersonWhereInput = {
   tasks?: Prisma.TaskListRelationFilter
   leads?: Prisma.LeadListRelationFilter
   opportunities?: Prisma.OpportunityListRelationFilter
+  quotes?: Prisma.QuoteListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -240,6 +241,7 @@ export type PersonOrderByWithRelationInput = {
   tasks?: Prisma.TaskOrderByRelationAggregateInput
   leads?: Prisma.LeadOrderByRelationAggregateInput
   opportunities?: Prisma.OpportunityOrderByRelationAggregateInput
+  quotes?: Prisma.QuoteOrderByRelationAggregateInput
 }
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -262,6 +264,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   tasks?: Prisma.TaskListRelationFilter
   leads?: Prisma.LeadListRelationFilter
   opportunities?: Prisma.OpportunityListRelationFilter
+  quotes?: Prisma.QuoteListRelationFilter
 }, "id">
 
 export type PersonOrderByWithAggregationInput = {
@@ -311,6 +314,7 @@ export type PersonCreateInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -330,6 +334,7 @@ export type PersonUncheckedCreateInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUpdateInput = {
@@ -349,6 +354,7 @@ export type PersonUpdateInput = {
   tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -368,6 +374,7 @@ export type PersonUncheckedUpdateInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -570,6 +577,22 @@ export type PersonUpdateOneWithoutOpportunitiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutOpportunitiesInput, Prisma.PersonUpdateWithoutOpportunitiesInput>, Prisma.PersonUncheckedUpdateWithoutOpportunitiesInput>
 }
 
+export type PersonCreateNestedOneWithoutQuotesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutQuotesInput, Prisma.PersonUncheckedCreateWithoutQuotesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutQuotesInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutQuotesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutQuotesInput, Prisma.PersonUncheckedCreateWithoutQuotesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutQuotesInput
+  upsert?: Prisma.PersonUpsertWithoutQuotesInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutQuotesInput, Prisma.PersonUpdateWithoutQuotesInput>, Prisma.PersonUncheckedUpdateWithoutQuotesInput>
+}
+
 export type PersonCreateWithoutCompanyPersonsInput = {
   id?: string
   createdAt?: Date | string
@@ -586,6 +609,7 @@ export type PersonCreateWithoutCompanyPersonsInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutCompanyPersonsInput = {
@@ -604,6 +628,7 @@ export type PersonUncheckedCreateWithoutCompanyPersonsInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCompanyPersonsInput = {
@@ -638,6 +663,7 @@ export type PersonUpdateWithoutCompanyPersonsInput = {
   tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCompanyPersonsInput = {
@@ -656,6 +682,7 @@ export type PersonUncheckedUpdateWithoutCompanyPersonsInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutContactCommunicationWaysInput = {
@@ -674,6 +701,7 @@ export type PersonCreateWithoutContactCommunicationWaysInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutContactCommunicationWaysInput = {
@@ -692,6 +720,7 @@ export type PersonUncheckedCreateWithoutContactCommunicationWaysInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutContactCommunicationWaysInput = {
@@ -726,6 +755,7 @@ export type PersonUpdateWithoutContactCommunicationWaysInput = {
   tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutContactCommunicationWaysInput = {
@@ -744,6 +774,7 @@ export type PersonUncheckedUpdateWithoutContactCommunicationWaysInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutContactAddressesInput = {
@@ -762,6 +793,7 @@ export type PersonCreateWithoutContactAddressesInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutContactAddressesInput = {
@@ -780,6 +812,7 @@ export type PersonUncheckedCreateWithoutContactAddressesInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutContactAddressesInput = {
@@ -814,6 +847,7 @@ export type PersonUpdateWithoutContactAddressesInput = {
   tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutContactAddressesInput = {
@@ -832,6 +866,7 @@ export type PersonUncheckedUpdateWithoutContactAddressesInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutContactNotesInput = {
@@ -850,6 +885,7 @@ export type PersonCreateWithoutContactNotesInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutContactNotesInput = {
@@ -868,6 +904,7 @@ export type PersonUncheckedCreateWithoutContactNotesInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutContactNotesInput = {
@@ -902,6 +939,7 @@ export type PersonUpdateWithoutContactNotesInput = {
   tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutContactNotesInput = {
@@ -920,6 +958,7 @@ export type PersonUncheckedUpdateWithoutContactNotesInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutTasksInput = {
@@ -938,6 +977,7 @@ export type PersonCreateWithoutTasksInput = {
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutTasksInput = {
@@ -956,6 +996,7 @@ export type PersonUncheckedCreateWithoutTasksInput = {
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutTasksInput = {
@@ -990,6 +1031,7 @@ export type PersonUpdateWithoutTasksInput = {
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutTasksInput = {
@@ -1008,6 +1050,7 @@ export type PersonUncheckedUpdateWithoutTasksInput = {
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutLeadsInput = {
@@ -1026,6 +1069,7 @@ export type PersonCreateWithoutLeadsInput = {
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
   tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutLeadsInput = {
@@ -1044,6 +1088,7 @@ export type PersonUncheckedCreateWithoutLeadsInput = {
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
   opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutLeadsInput = {
@@ -1078,6 +1123,7 @@ export type PersonUpdateWithoutLeadsInput = {
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutLeadsInput = {
@@ -1096,6 +1142,7 @@ export type PersonUncheckedUpdateWithoutLeadsInput = {
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
   opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutOpportunitiesInput = {
@@ -1114,6 +1161,7 @@ export type PersonCreateWithoutOpportunitiesInput = {
   contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
   tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutOpportunitiesInput = {
@@ -1132,6 +1180,7 @@ export type PersonUncheckedCreateWithoutOpportunitiesInput = {
   contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutOpportunitiesInput = {
@@ -1166,6 +1215,7 @@ export type PersonUpdateWithoutOpportunitiesInput = {
   contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutOpportunitiesInput = {
@@ -1184,6 +1234,99 @@ export type PersonUncheckedUpdateWithoutOpportunitiesInput = {
   contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutQuotesInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  firstname?: string | null
+  surename?: string | null
+  familyname?: string | null
+  gender?: $Enums.ContactGender
+  birthdayAt?: Date | string | null
+  companyPersons?: Prisma.CompanyPersonCreateNestedManyWithoutPersonInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayCreateNestedManyWithoutPersonInput
+  contactAddresses?: Prisma.ContactAddressCreateNestedManyWithoutPersonInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutQuotesInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalId?: string | null
+  firstname?: string | null
+  surename?: string | null
+  familyname?: string | null
+  gender?: $Enums.ContactGender
+  birthdayAt?: Date | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedCreateNestedManyWithoutPersonInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedCreateNestedManyWithoutPersonInput
+  contactAddresses?: Prisma.ContactAddressUncheckedCreateNestedManyWithoutPersonInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPersonInput
+  opportunities?: Prisma.OpportunityUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutQuotesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutQuotesInput, Prisma.PersonUncheckedCreateWithoutQuotesInput>
+}
+
+export type PersonUpsertWithoutQuotesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutQuotesInput, Prisma.PersonUncheckedUpdateWithoutQuotesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutQuotesInput, Prisma.PersonUncheckedCreateWithoutQuotesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutQuotesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutQuotesInput, Prisma.PersonUncheckedUpdateWithoutQuotesInput>
+}
+
+export type PersonUpdateWithoutQuotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  surename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  familyname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumContactGenderFieldUpdateOperationsInput | $Enums.ContactGender
+  birthdayAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  companyPersons?: Prisma.CompanyPersonUpdateManyWithoutPersonNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUpdateManyWithoutPersonNestedInput
+  contactAddresses?: Prisma.ContactAddressUpdateManyWithoutPersonNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutQuotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  surename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  familyname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumContactGenderFieldUpdateOperationsInput | $Enums.ContactGender
+  birthdayAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  companyPersons?: Prisma.CompanyPersonUncheckedUpdateManyWithoutPersonNestedInput
+  contactCommunicationWays?: Prisma.ContactCommunicationWayUncheckedUpdateManyWithoutPersonNestedInput
+  contactAddresses?: Prisma.ContactAddressUncheckedUpdateManyWithoutPersonNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutPersonNestedInput
+  opportunities?: Prisma.OpportunityUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 
@@ -1199,6 +1342,7 @@ export type PersonCountOutputType = {
   tasks: number
   leads: number
   opportunities: number
+  quotes: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1209,6 +1353,7 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   tasks?: boolean | PersonCountOutputTypeCountTasksArgs
   leads?: boolean | PersonCountOutputTypeCountLeadsArgs
   opportunities?: boolean | PersonCountOutputTypeCountOpportunitiesArgs
+  quotes?: boolean | PersonCountOutputTypeCountQuotesArgs
 }
 
 /**
@@ -1270,6 +1415,13 @@ export type PersonCountOutputTypeCountOpportunitiesArgs<ExtArgs extends runtime.
   where?: Prisma.OpportunityWhereInput
 }
 
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountQuotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteWhereInput
+}
+
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1288,6 +1440,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   tasks?: boolean | Prisma.Person$tasksArgs<ExtArgs>
   leads?: boolean | Prisma.Person$leadsArgs<ExtArgs>
   opportunities?: boolean | Prisma.Person$opportunitiesArgs<ExtArgs>
+  quotes?: boolean | Prisma.Person$quotesArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
@@ -1336,6 +1489,7 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   tasks?: boolean | Prisma.Person$tasksArgs<ExtArgs>
   leads?: boolean | Prisma.Person$leadsArgs<ExtArgs>
   opportunities?: boolean | Prisma.Person$opportunitiesArgs<ExtArgs>
+  quotes?: boolean | Prisma.Person$quotesArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1351,6 +1505,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     tasks: Prisma.$TaskPayload<ExtArgs>[]
     leads: Prisma.$LeadPayload<ExtArgs>[]
     opportunities: Prisma.$OpportunityPayload<ExtArgs>[]
+    quotes: Prisma.$QuotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1763,6 +1918,7 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   tasks<T extends Prisma.Person$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leads<T extends Prisma.Person$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   opportunities<T extends Prisma.Person$opportunitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$opportunitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  quotes<T extends Prisma.Person$quotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$quotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2354,6 +2510,30 @@ export type Person$opportunitiesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.OpportunityScalarFieldEnum | Prisma.OpportunityScalarFieldEnum[]
+}
+
+/**
+ * Person.quotes
+ */
+export type Person$quotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Quote
+   */
+  select?: Prisma.QuoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Quote
+   */
+  omit?: Prisma.QuoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteInclude<ExtArgs> | null
+  where?: Prisma.QuoteWhereInput
+  orderBy?: Prisma.QuoteOrderByWithRelationInput | Prisma.QuoteOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteScalarFieldEnum | Prisma.QuoteScalarFieldEnum[]
 }
 
 /**

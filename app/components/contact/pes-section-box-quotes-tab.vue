@@ -13,6 +13,7 @@
           <th class="text-left px-4 py-2">{{ $t('quote.fields.status') }}</th>
           <th class="text-left px-4 py-2">{{ $t('quote.fields.quoteId') }}</th>
           <th class="text-left px-4 py-2">{{ $t('quote.fields.quoteDate') }}</th>
+          <th class="text-left px-4 py-2">{{ $t('quote.fields.person') }}</th>
           <th class="text-right px-4 py-2">{{ $t('quote.fields.subtotal') }}</th>
           <th class="px-4 py-2 w-12"></th>
         </tr>

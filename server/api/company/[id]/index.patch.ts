@@ -122,6 +122,7 @@ export default defineEventHandler(async (event) => {
       id: z.string().uuid(),
       main: z.boolean().default(false),
       role: z.string().optional().nullable(),
+      department: z.string().optional().nullable(),
       invoiceRecipient: z.boolean().default(false),
     })).optional().nullable(),
     communicationWays: z.array(contactCommunicationWayValidator).optional().nullable(),
@@ -167,8 +168,8 @@ export default defineEventHandler(async (event) => {
       companyPersons: !body.data.persons ? {} : {
         upsert: body.data.persons.map(o => ({
           where: { personId_companyId: { personId: o.id, companyId: id } },
-          create: { personId: o.id, main: o.main, role: o.role, invoiceRecipient: o.invoiceRecipient },
-          update: { main: o.main, role: o.role, invoiceRecipient: o.invoiceRecipient },
+          create: { personId: o.id, main: o.main, role: o.role, department: o.department, invoiceRecipient: o.invoiceRecipient },
+          update: { main: o.main, role: o.role, department: o.department, invoiceRecipient: o.invoiceRecipient },
         })),
         deleteMany: findItem.companyPersons
           .filter(o => !body.data.persons?.find(oo => o.personId === oo.id))

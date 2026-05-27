@@ -70,6 +70,12 @@
               :to="`/company/${item.companyId}`"
               :title="companyName" />
           </div>
+          <div v-if="personName && item.personId" class="w-full flex items-center justify-between gap-2 px-4 -my-2">
+            <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.fields.person') }}</span>
+            <molecule-link-button
+              :to="`/person/${item.personId}`"
+              :title="personName" />
+          </div>
           <div v-if="ownerName && item.ownerId" class="w-full flex items-center justify-between gap-2 px-4">
             <span class="text-xs font-semibold text-secondary-600">{{ $t('quote.fields.owner') }}</span>
             <span class="text-sm text-right">{{ ownerName }}</span>
@@ -118,8 +124,8 @@
 
 import type { QuoteViewModel } from '~~/shared/types/quote';
 import { formatCurrency } from '~~/shared/utils/default';
-import { userDisplayName } from '~~/shared/utils/user';
-import { companyDisplayName } from '~~/shared/utils/contact';
+import { userDisplayName, } from '~~/shared/utils/user';
+import { companyDisplayName, personDisplayName } from '~~/shared/utils/contact';
 import { DateTime } from 'luxon';
 
 definePageMeta({
@@ -176,13 +182,38 @@ const loadCompanyName = async () => {
   }
 };
 
-// Watch for item changes and load owner and company names
+// Load person name + relation (role/department) if personId is set
+const personName = ref<string>('');
+const personRelation = ref<{ role: string | null; department: string | null }>({ role: null, department: null });
+const loadPersonName = async () => {
+  if (item.value?.personId && item.value?.companyId) {
+    try {
+      const [person, company] = await Promise.all([
+        $fetch(`/api/person/${item.value.personId}`),
+        $fetch(`/api/company/${item.value.companyId}`),
+      ]);
+      personName.value = personDisplayName(person as any);
+      const rel = (company as any)?.persons?.find((p: any) => p.id === item.value!.personId);
+      personRelation.value = {
+        role: rel?.role ?? null,
+        department: rel?.department ?? null,
+      };
+    } catch (e) {
+      console.error('Failed to load person', e);
+    }
+  }
+};
+
+// Watch for item changes and load owner, company and person
 watch(item, async (newItem) => {
   if (newItem?.ownerId) {
     await loadOwnerName();
   }
   if (newItem?.companyId) {
     await loadCompanyName();
+  }
+  if (newItem?.personId) {
+    await loadPersonName();
   }
 }, { immediate: true });
 

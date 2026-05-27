@@ -22,7 +22,7 @@
  *         - key
  *         - value
  */
-export type StatsKey = 'TOTAL_COMPANY_COUNT' | 'TOTAL_PERSON_COUNT';
+export type StatsKey = 'TOTAL_COMPANY_COUNT' | 'TOTAL_PERSON_COUNT' | 'TOTAL_PROJECT_COUNT';
 
 export interface StatsItem {
   key: StatsKey;

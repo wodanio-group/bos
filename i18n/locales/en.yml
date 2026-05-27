@@ -14,6 +14,7 @@ general:
   phone: "Phone"
   role: "Role"
   roleAt: "{role} at"
+  department: "Department"
   createdAt: "Created at"
   updatedAt: "Updated at"
   address: "Address"
@@ -59,6 +60,7 @@ general:
   noDunnings: "No Dunning"
   yes: "Yes"
   no: "No"
+  all: "All"
 
 format:
   datetime: "dd. LLL yyyy, HH:mm"
@@ -119,6 +121,15 @@ registrationError:
   text: "The login or registration could not be completed successfully. Automatic registration may have been disabled. Please contact the administrator."
   retry: "Retry"
 
+projectStatuses:
+  DRAFT: "Draft"
+  ACTIVE: "Active"
+  ARCHIVED: "Archived"
+
+projectMemberRoles:
+  MANAGER: "Manager"
+  MEMBER: "Member"
+
 layout:
   aside:
     dashboard: "Dashboard"
@@ -126,6 +137,7 @@ layout:
     persons: "Persons"
     tasks: "Tasks"
     quotes: "Quotes"
+    projects: "Projects"
     options: "Options"
     users: "User Management"
     userTokens: "API Tokens"
@@ -152,6 +164,8 @@ dashboard:
     totalCompanies: "Total companies"
     persons: "Persons"
     totalPersons: "Total persons"
+    projects: "Projects"
+    totalProjects: "Total projects"
 
 company:
   title: "Companies"
@@ -384,6 +398,7 @@ quote:
     quoteId: "Quote ID"
     quoteDate: "Quote Date"
     company: "Company"
+    person: "Contact Person"
     owner: "Owner"
     subtotal: "Subtotal"
     total: "Total"
@@ -445,6 +460,7 @@ quote:
     helpText2: "The quote ID will be generated automatically."
     searchCompany: "Search for a company"
     selectCompany: "Select a company"
+    selectPerson: "Select contact person"
     searchOwner: "Search for a user"
     selectOwner: "Select owner"
     titleTemplate: "Quote {quoteId}"
@@ -616,6 +632,7 @@ contactEdit:
     companiesTitle: "Companies"
     personsTitle: "Persons"
     invoiceRecipient: "Invoice recipient"
+    department: "Department"
     searchDialog:
       company:
         title: "Search and select company..."
@@ -826,3 +843,50 @@ pes:
         description: "Exports all charges (invoices and credit notes) as DATEV Buchungsstapel EXTF CSV (format version 13)."
     toast:
       downloadError: "Error downloading export"
+
+project:
+  title: "Projects"
+  internal: "Internal"
+  deleteTitle: "Delete \"{name}\""
+  deleteDescription: "Do you want to permanently delete this project?"
+  deleteSuccessToast: "Project \"{name}\" deleted"
+  deleteErrorToast: "Error deleting project"
+  createDialogTitle: "Create project"
+  createSuccess: "Project \"{name}\" created!"
+  createError: "Error creating project"
+  fields:
+    name: "Name"
+    status: "Status"
+    description: "Short description"
+    company: "Company / Client"
+    members: "Members"
+  notes:
+    toast:
+      success: "Notes updated successfully."
+      error: "Error updating notes."
+  item:
+    subtitle: "Project"
+    infoTitle: "Project info"
+    membersTitle: "Members"
+    delete:
+      title: "Delete \"{name}\""
+      description: "Do you want to permanently delete this project?"
+      success: "Project deleted"
+      error: "Error deleting project"
+  edit:
+    subtitle: "Edit project"
+    save: "Save"
+    baseDataTitle: "Base data"
+    companyTitle: "Company / Client"
+    companySearch: "Search company"
+    selectCompany: "Select company ..."
+    noCompanyHint: "No company set – project will be treated as internal."
+    removeCompany: "Remove link"
+    membersTitle: "Members"
+    memberSearch: "Search user"
+    selectMember: "Select user ..."
+    addMember: "Add"
+    memberLoadError: "Error loading user"
+    toast:
+      success: "Project updated successfully."
+      error: "Error updating project."

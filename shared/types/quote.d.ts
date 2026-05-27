@@ -206,6 +206,8 @@ export interface QuoteViewModel extends BaseViewModel {
   readonly total: number;
   /** Reference to the company receiving the quote */
   companyId: string;
+  /** Reference to the contact person for this quote */
+  personId: string | null;
   /** Reference to the user who owns/created the quote */
   ownerId: string | null;
   /** List of items in this quote */

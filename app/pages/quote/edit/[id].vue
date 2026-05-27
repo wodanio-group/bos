@@ -46,8 +46,21 @@
             :search-fn="searchCompany"
             :load-entity-fn="loadCompany"
             v-model="editForm.companyId"
-            class="col-span-2">
+            @update:model-value="onCompanyChange">
           </molecular-input-entity-select>
+
+          <div>
+            <atom-select
+              :title="$t('quote.fields.person')"
+              :items="personSelectItems"
+              :placeholder="$t('quote.create.selectPerson')"
+              v-model="editForm.personId"
+              :disabled="!editForm.companyId || personSelectItems.length === 0"/>
+            <div v-if="selectedPersonRelation" class="mt-1 flex gap-4 text-xs text-secondary-500">
+              <span v-if="selectedPersonRelation.role">{{ $t('general.role') }}: {{ selectedPersonRelation.role }}</span>
+              <span v-if="selectedPersonRelation.department">{{ $t('general.department') }}: {{ selectedPersonRelation.department }}</span>
+            </div>
+          </div>
 
           <atom-input
             type="date"
@@ -262,6 +275,66 @@ const loadCompany = async (id: string) => {
   return await $fetch(`/api/company/${id}`) as any;
 };
 
+// Person selection (filtered to selected company)
+interface CompanyPersonRelation {
+  id: string;
+  role: string | null;
+  department: string | null;
+}
+const companyPersons = ref<CompanyPersonRelation[]>([]);
+
+const loadCompanyPersons = async (companyId: string) => {
+  if (!companyId) {
+    companyPersons.value = [];
+    return;
+  }
+  try {
+    const company = await $fetch(`/api/company/${companyId}`) as any;
+    const persons = company?.persons ?? [];
+    const personDetails = await Promise.all(
+      persons.map(async (p: any) => {
+        const person = await $fetch(`/api/person/${p.id}`) as any;
+        return {
+          id: p.id,
+          role: p.role ?? null,
+          department: p.department ?? null,
+          displayName: [person?.firstname, person?.surename, person?.familyname].filter(Boolean).join(' ') || p.id,
+        };
+      })
+    );
+    companyPersons.value = personDetails;
+  } catch {
+    companyPersons.value = [];
+  }
+};
+
+const personSelectItems = computed(() => [
+  { title: '–', value: '' },
+  ...companyPersons.value.map((p: any) => ({
+    title: p.displayName,
+    value: p.id,
+  }))
+]);
+
+const selectedPersonRelation = computed(() =>
+  companyPersons.value.find((p: any) => p.id === editForm.value.personId) ?? null
+);
+
+const onCompanyChange = async (companyId: string) => {
+  editForm.value.personId = '';
+  await loadCompanyPersons(companyId);
+};
+
+// Load persons for existing company on mount
+if (isCreateMode.value) {
+  const initialCompanyId = route.query.companyId as string;
+  if (initialCompanyId) {
+    loadCompanyPersons(initialCompanyId);
+  }
+} else if (item.value?.companyId) {
+  await loadCompanyPersons(item.value.companyId);
+}
+
 // User search
 const searchUser = async (query: string) => {
   const results: any = await $fetch('/api/user', {
@@ -292,6 +365,7 @@ if (isCreateMode.value) {
 const editForm = ref({
   status: item.value?.status || 'DRAFT',
   companyId: item.value?.companyId || (isCreateMode.value ? (route.query.companyId as string || '') : ''),
+  personId: item.value?.personId || '',
   ownerId: item.value?.ownerId || user?.id,
   quoteDate: item.value?.quoteDate || DateTime.now().toFormat('yyyy-LL-dd'),
   quoteValidUntil: item.value?.quoteValidUntil || '',
@@ -408,6 +482,7 @@ const onSave = async () => {
       ...(item.value ?? {}),
       status: editForm.value.status,
       companyId: filterString(editForm.value.companyId),
+      personId: filterString(editForm.value.personId),
       ownerId: filterString(editForm.value.ownerId),
       quoteDate: editForm.value.quoteDate,
       quoteValidUntil: filterString(editForm.value.quoteValidUntil),

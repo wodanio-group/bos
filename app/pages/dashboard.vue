@@ -19,7 +19,7 @@
       </PageSectionBox>
 
       <!-- Persons Stats -->
-      <PageSectionBox 
+      <PageSectionBox
         v-if="personsCount !== null"
         :title="$t('dashboard.stats.persons')">
         <div class="p-6">
@@ -28,6 +28,20 @@
           </div>
           <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">
             {{ $t('dashboard.stats.totalPersons') }}
+          </div>
+        </div>
+      </PageSectionBox>
+
+      <!-- Projects Stats -->
+      <PageSectionBox
+        v-if="projectsCount !== null"
+        :title="$t('dashboard.stats.projects')">
+        <div class="p-6">
+          <div class="text-3xl font-bold text-gray-900 dark:text-white">
+            {{ projectsCount }}
+          </div>
+          <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            {{ $t('dashboard.stats.totalProjects') }}
           </div>
         </div>
       </PageSectionBox>
@@ -59,21 +73,19 @@ const hasRightTimetrackingOwn = computed(() => user
 // Fetch dashboard statistics
 const companiesCount = ref<number | null>(null);
 const personsCount = ref<number | null>(null);
+const projectsCount = ref<number | null>(null);
 
-// Load stats from the new stats endpoint
 const { data: stats } = await useFetch<StatsItem[]>('/api/stats', {
   method: 'POST',
   body: {
-    keys: ['TOTAL_COMPANY_COUNT', 'TOTAL_PERSON_COUNT']
+    keys: ['TOTAL_COMPANY_COUNT', 'TOTAL_PERSON_COUNT', 'TOTAL_PROJECT_COUNT']
   }
 });
 
 if (stats.value) {
-  const companyStats = stats.value.find(s => s.key === 'TOTAL_COMPANY_COUNT');
-  const personStats = stats.value.find(s => s.key === 'TOTAL_PERSON_COUNT');
-
-  companiesCount.value = companyStats?.value ?? null;
-  personsCount.value = personStats?.value ?? null;
+  companiesCount.value = stats.value.find(s => s.key === 'TOTAL_COMPANY_COUNT')?.value ?? null;
+  personsCount.value   = stats.value.find(s => s.key === 'TOTAL_PERSON_COUNT')?.value ?? null;
+  projectsCount.value  = stats.value.find(s => s.key === 'TOTAL_PROJECT_COUNT')?.value ?? null;
 }
 
 </script>

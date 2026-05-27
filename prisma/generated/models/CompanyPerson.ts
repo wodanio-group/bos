@@ -28,6 +28,7 @@ export type CompanyPersonMinAggregateOutputType = {
   createdAt: Date | null
   main: boolean | null
   role: string | null
+  department: string | null
   invoiceRecipient: boolean | null
   personId: string | null
   companyId: string | null
@@ -37,6 +38,7 @@ export type CompanyPersonMaxAggregateOutputType = {
   createdAt: Date | null
   main: boolean | null
   role: string | null
+  department: string | null
   invoiceRecipient: boolean | null
   personId: string | null
   companyId: string | null
@@ -46,6 +48,7 @@ export type CompanyPersonCountAggregateOutputType = {
   createdAt: number
   main: number
   role: number
+  department: number
   invoiceRecipient: number
   personId: number
   companyId: number
@@ -57,6 +60,7 @@ export type CompanyPersonMinAggregateInputType = {
   createdAt?: true
   main?: true
   role?: true
+  department?: true
   invoiceRecipient?: true
   personId?: true
   companyId?: true
@@ -66,6 +70,7 @@ export type CompanyPersonMaxAggregateInputType = {
   createdAt?: true
   main?: true
   role?: true
+  department?: true
   invoiceRecipient?: true
   personId?: true
   companyId?: true
@@ -75,6 +80,7 @@ export type CompanyPersonCountAggregateInputType = {
   createdAt?: true
   main?: true
   role?: true
+  department?: true
   invoiceRecipient?: true
   personId?: true
   companyId?: true
@@ -157,6 +163,7 @@ export type CompanyPersonGroupByOutputType = {
   createdAt: Date
   main: boolean
   role: string | null
+  department: string | null
   invoiceRecipient: boolean
   personId: string
   companyId: string
@@ -187,6 +194,7 @@ export type CompanyPersonWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"CompanyPerson"> | Date | string
   main?: Prisma.BoolFilter<"CompanyPerson"> | boolean
   role?: Prisma.StringNullableFilter<"CompanyPerson"> | string | null
+  department?: Prisma.StringNullableFilter<"CompanyPerson"> | string | null
   invoiceRecipient?: Prisma.BoolFilter<"CompanyPerson"> | boolean
   personId?: Prisma.StringFilter<"CompanyPerson"> | string
   companyId?: Prisma.StringFilter<"CompanyPerson"> | string
@@ -198,6 +206,7 @@ export type CompanyPersonOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   main?: Prisma.SortOrder
   role?: Prisma.SortOrderInput | Prisma.SortOrder
+  department?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceRecipient?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -213,6 +222,7 @@ export type CompanyPersonWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"CompanyPerson"> | Date | string
   main?: Prisma.BoolFilter<"CompanyPerson"> | boolean
   role?: Prisma.StringNullableFilter<"CompanyPerson"> | string | null
+  department?: Prisma.StringNullableFilter<"CompanyPerson"> | string | null
   invoiceRecipient?: Prisma.BoolFilter<"CompanyPerson"> | boolean
   personId?: Prisma.StringFilter<"CompanyPerson"> | string
   companyId?: Prisma.StringFilter<"CompanyPerson"> | string
@@ -224,6 +234,7 @@ export type CompanyPersonOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   main?: Prisma.SortOrder
   role?: Prisma.SortOrderInput | Prisma.SortOrder
+  department?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceRecipient?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -239,6 +250,7 @@ export type CompanyPersonScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CompanyPerson"> | Date | string
   main?: Prisma.BoolWithAggregatesFilter<"CompanyPerson"> | boolean
   role?: Prisma.StringNullableWithAggregatesFilter<"CompanyPerson"> | string | null
+  department?: Prisma.StringNullableWithAggregatesFilter<"CompanyPerson"> | string | null
   invoiceRecipient?: Prisma.BoolWithAggregatesFilter<"CompanyPerson"> | boolean
   personId?: Prisma.StringWithAggregatesFilter<"CompanyPerson"> | string
   companyId?: Prisma.StringWithAggregatesFilter<"CompanyPerson"> | string
@@ -248,6 +260,7 @@ export type CompanyPersonCreateInput = {
   createdAt?: Date | string
   main?: boolean
   role?: string | null
+  department?: string | null
   invoiceRecipient?: boolean
   person: Prisma.PersonCreateNestedOneWithoutCompanyPersonsInput
   company: Prisma.CompanyCreateNestedOneWithoutCompanyPersonsInput
@@ -257,6 +270,7 @@ export type CompanyPersonUncheckedCreateInput = {
   createdAt?: Date | string
   main?: boolean
   role?: string | null
+  department?: string | null
   invoiceRecipient?: boolean
   personId: string
   companyId: string
@@ -266,6 +280,7 @@ export type CompanyPersonUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
   person?: Prisma.PersonUpdateOneRequiredWithoutCompanyPersonsNestedInput
   company?: Prisma.CompanyUpdateOneRequiredWithoutCompanyPersonsNestedInput
@@ -275,6 +290,7 @@ export type CompanyPersonUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
   personId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -284,6 +300,7 @@ export type CompanyPersonCreateManyInput = {
   createdAt?: Date | string
   main?: boolean
   role?: string | null
+  department?: string | null
   invoiceRecipient?: boolean
   personId: string
   companyId: string
@@ -293,6 +310,7 @@ export type CompanyPersonUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -300,6 +318,7 @@ export type CompanyPersonUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
   personId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -324,6 +343,7 @@ export type CompanyPersonCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   main?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  department?: Prisma.SortOrder
   invoiceRecipient?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -333,6 +353,7 @@ export type CompanyPersonMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   main?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  department?: Prisma.SortOrder
   invoiceRecipient?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -342,6 +363,7 @@ export type CompanyPersonMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   main?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  department?: Prisma.SortOrder
   invoiceRecipient?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -435,6 +457,7 @@ export type CompanyPersonCreateWithoutPersonInput = {
   createdAt?: Date | string
   main?: boolean
   role?: string | null
+  department?: string | null
   invoiceRecipient?: boolean
   company: Prisma.CompanyCreateNestedOneWithoutCompanyPersonsInput
 }
@@ -443,6 +466,7 @@ export type CompanyPersonUncheckedCreateWithoutPersonInput = {
   createdAt?: Date | string
   main?: boolean
   role?: string | null
+  department?: string | null
   invoiceRecipient?: boolean
   companyId: string
 }
@@ -480,6 +504,7 @@ export type CompanyPersonScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"CompanyPerson"> | Date | string
   main?: Prisma.BoolFilter<"CompanyPerson"> | boolean
   role?: Prisma.StringNullableFilter<"CompanyPerson"> | string | null
+  department?: Prisma.StringNullableFilter<"CompanyPerson"> | string | null
   invoiceRecipient?: Prisma.BoolFilter<"CompanyPerson"> | boolean
   personId?: Prisma.StringFilter<"CompanyPerson"> | string
   companyId?: Prisma.StringFilter<"CompanyPerson"> | string
@@ -489,6 +514,7 @@ export type CompanyPersonCreateWithoutCompanyInput = {
   createdAt?: Date | string
   main?: boolean
   role?: string | null
+  department?: string | null
   invoiceRecipient?: boolean
   person: Prisma.PersonCreateNestedOneWithoutCompanyPersonsInput
 }
@@ -497,6 +523,7 @@ export type CompanyPersonUncheckedCreateWithoutCompanyInput = {
   createdAt?: Date | string
   main?: boolean
   role?: string | null
+  department?: string | null
   invoiceRecipient?: boolean
   personId: string
 }
@@ -531,6 +558,7 @@ export type CompanyPersonCreateManyPersonInput = {
   createdAt?: Date | string
   main?: boolean
   role?: string | null
+  department?: string | null
   invoiceRecipient?: boolean
   companyId: string
 }
@@ -539,6 +567,7 @@ export type CompanyPersonUpdateWithoutPersonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
   company?: Prisma.CompanyUpdateOneRequiredWithoutCompanyPersonsNestedInput
 }
@@ -547,6 +576,7 @@ export type CompanyPersonUncheckedUpdateWithoutPersonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -555,6 +585,7 @@ export type CompanyPersonUncheckedUpdateManyWithoutPersonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -563,6 +594,7 @@ export type CompanyPersonCreateManyCompanyInput = {
   createdAt?: Date | string
   main?: boolean
   role?: string | null
+  department?: string | null
   invoiceRecipient?: boolean
   personId: string
 }
@@ -571,6 +603,7 @@ export type CompanyPersonUpdateWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
   person?: Prisma.PersonUpdateOneRequiredWithoutCompanyPersonsNestedInput
 }
@@ -579,6 +612,7 @@ export type CompanyPersonUncheckedUpdateWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
   personId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -587,6 +621,7 @@ export type CompanyPersonUncheckedUpdateManyWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   main?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceRecipient?: Prisma.BoolFieldUpdateOperationsInput | boolean
   personId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -597,6 +632,7 @@ export type CompanyPersonSelect<ExtArgs extends runtime.Types.Extensions.Interna
   createdAt?: boolean
   main?: boolean
   role?: boolean
+  department?: boolean
   invoiceRecipient?: boolean
   personId?: boolean
   companyId?: boolean
@@ -608,6 +644,7 @@ export type CompanyPersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   createdAt?: boolean
   main?: boolean
   role?: boolean
+  department?: boolean
   invoiceRecipient?: boolean
   personId?: boolean
   companyId?: boolean
@@ -619,6 +656,7 @@ export type CompanyPersonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   createdAt?: boolean
   main?: boolean
   role?: boolean
+  department?: boolean
   invoiceRecipient?: boolean
   personId?: boolean
   companyId?: boolean
@@ -630,12 +668,13 @@ export type CompanyPersonSelectScalar = {
   createdAt?: boolean
   main?: boolean
   role?: boolean
+  department?: boolean
   invoiceRecipient?: boolean
   personId?: boolean
   companyId?: boolean
 }
 
-export type CompanyPersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"createdAt" | "main" | "role" | "invoiceRecipient" | "personId" | "companyId", ExtArgs["result"]["companyPerson"]>
+export type CompanyPersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"createdAt" | "main" | "role" | "department" | "invoiceRecipient" | "personId" | "companyId", ExtArgs["result"]["companyPerson"]>
 export type CompanyPersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
@@ -659,6 +698,7 @@ export type $CompanyPersonPayload<ExtArgs extends runtime.Types.Extensions.Inter
     createdAt: Date
     main: boolean
     role: string | null
+    department: string | null
     invoiceRecipient: boolean
     personId: string
     companyId: string
@@ -1090,6 +1130,7 @@ export interface CompanyPersonFieldRefs {
   readonly createdAt: Prisma.FieldRef<"CompanyPerson", 'DateTime'>
   readonly main: Prisma.FieldRef<"CompanyPerson", 'Boolean'>
   readonly role: Prisma.FieldRef<"CompanyPerson", 'String'>
+  readonly department: Prisma.FieldRef<"CompanyPerson", 'String'>
   readonly invoiceRecipient: Prisma.FieldRef<"CompanyPerson", 'Boolean'>
   readonly personId: Prisma.FieldRef<"CompanyPerson", 'String'>
   readonly companyId: Prisma.FieldRef<"CompanyPerson", 'String'>
