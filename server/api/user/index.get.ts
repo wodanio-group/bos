@@ -35,7 +35,7 @@ import { authMiddleware } from "~~/server/utils/auth";
  */
 export default defineEventHandler(async (event) => {
   await authMiddleware(event, {
-    rights: ['user.all.view'] 
+    rights: ['user.all.view', 'project.all.edit', 'project.all.create']
   });
 
   const query = z.object({

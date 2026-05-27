@@ -14,6 +14,7 @@ general:
   phone: "Telefon"
   role: "Rolle"
   roleAt: "{role} bei"
+  department: "Abteilung"
   createdAt: "Erstellt am"
   updatedAt: "Aktualisiert am"
   address: "Adresse"
@@ -59,6 +60,7 @@ general:
   noDunnings: "Kein Mahnwesen"
   yes: "Ja"
   no: "Nein"
+  all: "Alle"
 
 format:
   datetime: "dd. LLL yyyy, HH:mm"
@@ -119,6 +121,15 @@ registrationError:
   text: "Die Anmeldung oder Registrierung konnte nicht erfolgreich abgeschlossen werden. Möglicherweise wurde die automatische Registrierung deaktiviert. Bitte wenden Sie sich an den Administrator."
   retry: "Erneut versuchen"
 
+projectStatuses:
+  DRAFT: "Entwurf"
+  ACTIVE: "Aktiv"
+  ARCHIVED: "Archiviert"
+
+projectMemberRoles:
+  MANAGER: "Manager"
+  MEMBER: "Mitglied"
+
 layout:
   aside:
     dashboard: "Dashboard"
@@ -126,6 +137,7 @@ layout:
     persons: "Personen"
     tasks: "Aufgaben"
     quotes: "Angebote"
+    projects: "Projekte"
     options: "Optionen"
     users: "Benutzerverwaltung"
     userTokens: "API-Tokens"
@@ -152,6 +164,8 @@ dashboard:
     totalCompanies: "Unternehmen gesamt"
     persons: "Personen"
     totalPersons: "Personen gesamt"
+    projects: "Projekte"
+    totalProjects: "Projekte gesamt"
 
 company:
   title: "Unternehmen"
@@ -384,6 +398,7 @@ quote:
     quoteId: "Angebots-Nr."
     quoteDate: "Angebotsdatum"
     company: "Unternehmen"
+    person: "Ansprechpartner"
     owner: "Verantwortlicher"
     subtotal: "Zwischensumme"
     total: "Gesamt"
@@ -445,6 +460,7 @@ quote:
     helpText2: "Die Angebots-ID wird automatisch generiert."
     searchCompany: "Unternehmen suchen"
     selectCompany: "Unternehmen auswählen"
+    selectPerson: "Ansprechpartner auswählen"
     searchOwner: "Benutzer suchen"
     selectOwner: "Verantwortlichen auswählen"
     titleTemplate: "Angebot {quoteId}"
@@ -616,6 +632,7 @@ contactEdit:
     companiesTitle: "Unternehmen"
     personsTitle: "Personen"
     invoiceRecipient: "Rechnungsempfänger"
+    department: "Abteilung"
     searchDialog:
       company:
         title: "Unternehmen suchen und auswählen..."
@@ -827,3 +844,50 @@ pes:
         description: "Exportiert alle Rechnungen und Gutschriften als DATEV Buchungsstapel EXTF CSV (Format Version 13)."
     toast:
       downloadError: "Fehler beim Herunterladen des Exports"
+
+project:
+  title: "Projekte"
+  internal: "Intern"
+  deleteTitle: "\"{name}\" löschen"
+  deleteDescription: "Möchten Sie das Projekt dauerhaft löschen?"
+  deleteSuccessToast: "Projekt \"{name}\" gelöscht"
+  deleteErrorToast: "Fehler beim Löschen"
+  createDialogTitle: "Projekt erstellen"
+  createSuccess: "Projekt \"{name}\" erstellt!"
+  createError: "Fehler beim Erstellen"
+  fields:
+    name: "Name"
+    status: "Status"
+    description: "Kurzbeschreibung"
+    company: "Unternehmen / Kunde"
+    members: "Mitglieder"
+  notes:
+    toast:
+      success: "Notizen erfolgreich aktualisiert."
+      error: "Fehler beim Aktualisieren der Notizen."
+  item:
+    subtitle: "Projekt"
+    infoTitle: "Projektinfo"
+    membersTitle: "Mitglieder"
+    delete:
+      title: "\"{name}\" löschen"
+      description: "Möchten Sie das Projekt dauerhaft löschen?"
+      success: "Projekt gelöscht"
+      error: "Fehler beim Löschen"
+  edit:
+    subtitle: "Projekt bearbeiten"
+    save: "Speichern"
+    baseDataTitle: "Stammdaten"
+    companyTitle: "Unternehmen / Kunde"
+    companySearch: "Unternehmen suchen"
+    selectCompany: "Unternehmen auswählen ..."
+    noCompanyHint: "Kein Unternehmen gesetzt – Projekt wird als intern behandelt."
+    removeCompany: "Verknüpfung entfernen"
+    membersTitle: "Mitglieder"
+    memberSearch: "Nutzer suchen"
+    selectMember: "Nutzer auswählen ..."
+    addMember: "Hinzufügen"
+    memberLoadError: "Fehler beim Laden des Nutzers"
+    toast:
+      success: "Projekt erfolgreich aktualisiert."
+      error: "Fehler beim Aktualisieren des Projekts."

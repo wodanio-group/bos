@@ -18,7 +18,8 @@
       </div>
     </td>
     <td class="px-4 py-3 font-medium truncate">{{ quote.quoteId }}</td>
-    <td class="px-4 py-3 text-secondary-600">{{ formatDate(quote.quoteDate) }}</td>
+    <td class="px-4 py-3">{{ formatDate(quote.quoteDate) }}</td>
+    <td class="px-4 py-3 truncate">{{ personName }}</td>
     <td class="px-4 py-3 text-right">{{ formatCurrency(quote.subtotal) }}</td>
     <td class="px-4 py-3 w-12" @click.stop>
       <div class="flex justify-end items-center">
@@ -61,9 +62,10 @@
 <script setup lang="ts">
 import { DateTime } from 'luxon';
 import { formatCurrency } from '~~/shared/utils/default';
+import { personDisplayName } from '~~/shared/utils/contact';
 import type { QuoteViewModel } from '~~/shared/types/quote';
 
-defineProps<{
+const props = defineProps<{
   quote: QuoteViewModel;
   pesCustomer?: { id: string } | null;
   hasPesInteractRight?: boolean;
@@ -71,6 +73,18 @@ defineProps<{
 const emit = defineEmits<{ downloadPdf: [quote: QuoteViewModel] }>();
 
 const showPesDialog = ref(false);
+
+const personName = ref<string>('');
+onMounted(async () => {
+  if (props.quote.personId) {
+    try {
+      const person = await $fetch(`/api/person/${props.quote.personId}`);
+      personName.value = personDisplayName(person as any);
+    } catch {
+      // ignore
+    }
+  }
+});
 
 const formatDate = (dateStr: string) =>
   DateTime.fromISO(dateStr).toFormat($t('format.date'));

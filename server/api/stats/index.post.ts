@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
   const user = await authMiddleware(event);
 
   const body = z.object({
-    keys: z.array(z.enum(['TOTAL_COMPANY_COUNT', 'TOTAL_PERSON_COUNT'])),
+    keys: z.array(z.enum(['TOTAL_COMPANY_COUNT', 'TOTAL_PERSON_COUNT', 'TOTAL_PROJECT_COUNT'])),
   }).safeParse(await readBody(event));
 
   if (!body.success)
@@ -79,6 +79,11 @@ export default defineEventHandler(async (event) => {
         value = hasRoleRights(user.role, ['contact.all.view'])
           ? (await prisma.person.count())
           : null;
+        break;
+      case 'TOTAL_PROJECT_COUNT':
+        value = hasRoleRights(user.role, ['project.all.view'])
+          ? (await prisma.project.count())
+          : (await prisma.project.count({ where: { members: { some: { userId: user.id } } } }));
         break;
     }
     results.push({ key, value });

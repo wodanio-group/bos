@@ -59,7 +59,7 @@
 import { companyDisplayName, personDisplayName } from '#imports';
 
 interface IFinding {
-  type: 'person' | 'company' | 'quote';
+  type: 'person' | 'company' | 'quote' | 'project';
   id: string;
   title: string;
   subtitle?: string | null;
@@ -105,10 +105,11 @@ const onUpdateSearch = async (value: string | null | undefined) => {
   }
 
   try {
-    const [persons, companies, quotes] = await Promise.all([
-      $fetch(`/api/person?search=${search}&take=10`),
-      $fetch(`/api/company?search=${search}&take=10`),
-      $fetch(`/api/quote?search=${search}&take=10`)
+    const [persons, companies, quotes, projects] = await Promise.all([
+      $fetch(`/api/person?search=${search}&take=10`).catch(() => []),
+      $fetch(`/api/company?search=${search}&take=10`).catch(() => []),
+      $fetch(`/api/quote?search=${search}&take=10`).catch(() => []),
+      $fetch(`/api/project?search=${search}&take=10`).catch(() => []),
     ]);
 
     searchResults.value = ([
@@ -136,6 +137,14 @@ const onUpdateSearch = async (value: string | null | undefined) => {
         to: `/quote/${o.id}`,
         updatedAt: (new Date(o.updatedAt ?? o.createdAt)).getTime()
       })),
+      ...projects.map((o: any) => ({
+        type: 'project' as const,
+        id: o.id,
+        title: o.name,
+        subtitle: o.companyName ?? null,
+        to: `/project/${o.id}`,
+        updatedAt: (new Date(o.updatedAt ?? o.createdAt)).getTime()
+      })),
     ] as IFinding[]).sort((a, b) => b.updatedAt - a.updatedAt);
 
     selectedIndex.value = -1;
@@ -151,6 +160,7 @@ const getIconForType = (type: IFinding['type']) => {
     case 'person': return 'user-round';
     case 'company': return 'building';
     case 'quote': return 'file-text';
+    case 'project': return 'folder-kanban';
     default: return 'file-text';
   }
 };
@@ -160,6 +170,7 @@ const getIconClassForType = (type: IFinding['type']) => {
     case 'person': return 'text-blue-600';
     case 'company': return 'text-green-600';
     case 'quote': return 'text-purple-600';
+    case 'project': return 'text-orange-500';
     default: return 'text-gray-600';
   }
 };

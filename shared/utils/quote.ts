@@ -56,6 +56,7 @@ export const quoteToViewModel = (item: Quote): QuoteViewModel => {
     tax: item.tax,
     total: item.total,
     companyId: item.companyId,
+    personId: item.personId ?? null,
     ownerId: item.ownerId,
     quoteItems: ((item as any)?.quoteItems ?? []).map((o: any) => quoteItemToViewModel(o)),
   };

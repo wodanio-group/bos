@@ -220,6 +220,7 @@ export type UserWhereInput = {
   leadOwners?: Prisma.LeadListRelationFilter
   opportunityOwners?: Prisma.OpportunityListRelationFilter
   quoteOwners?: Prisma.QuoteListRelationFilter
+  projectMembers?: Prisma.ProjectMemberListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -238,6 +239,7 @@ export type UserOrderByWithRelationInput = {
   leadOwners?: Prisma.LeadOrderByRelationAggregateInput
   opportunityOwners?: Prisma.OpportunityOrderByRelationAggregateInput
   quoteOwners?: Prisma.QuoteOrderByRelationAggregateInput
+  projectMembers?: Prisma.ProjectMemberOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -259,6 +261,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   leadOwners?: Prisma.LeadListRelationFilter
   opportunityOwners?: Prisma.OpportunityListRelationFilter
   quoteOwners?: Prisma.QuoteListRelationFilter
+  projectMembers?: Prisma.ProjectMemberListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -307,6 +310,7 @@ export type UserCreateInput = {
   leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -325,6 +329,7 @@ export type UserUncheckedCreateInput = {
   leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteUncheckedCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -343,6 +348,7 @@ export type UserUpdateInput = {
   leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -361,6 +367,7 @@ export type UserUncheckedUpdateInput = {
   leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUncheckedUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -551,6 +558,20 @@ export type UserUpdateOneWithoutQuoteOwnersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutQuoteOwnersInput, Prisma.UserUpdateWithoutQuoteOwnersInput>, Prisma.UserUncheckedUpdateWithoutQuoteOwnersInput>
 }
 
+export type UserCreateNestedOneWithoutProjectMembersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProjectMembersInput, Prisma.UserUncheckedCreateWithoutProjectMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProjectMembersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutProjectMembersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProjectMembersInput, Prisma.UserUncheckedCreateWithoutProjectMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProjectMembersInput
+  upsert?: Prisma.UserUpsertWithoutProjectMembersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProjectMembersInput, Prisma.UserUpdateWithoutProjectMembersInput>, Prisma.UserUncheckedUpdateWithoutProjectMembersInput>
+}
+
 export type UserCreateWithoutUserTokensInput = {
   id?: string
   createdAt?: Date | string
@@ -566,6 +587,7 @@ export type UserCreateWithoutUserTokensInput = {
   leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserTokensInput = {
@@ -583,6 +605,7 @@ export type UserUncheckedCreateWithoutUserTokensInput = {
   leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteUncheckedCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserTokensInput = {
@@ -616,6 +639,7 @@ export type UserUpdateWithoutUserTokensInput = {
   leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserTokensInput = {
@@ -633,6 +657,7 @@ export type UserUncheckedUpdateWithoutUserTokensInput = {
   leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUncheckedUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTimeTrackingActivitiesInput = {
@@ -650,6 +675,7 @@ export type UserCreateWithoutTimeTrackingActivitiesInput = {
   leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTimeTrackingActivitiesInput = {
@@ -667,6 +693,7 @@ export type UserUncheckedCreateWithoutTimeTrackingActivitiesInput = {
   leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteUncheckedCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTimeTrackingActivitiesInput = {
@@ -700,6 +727,7 @@ export type UserUpdateWithoutTimeTrackingActivitiesInput = {
   leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
@@ -717,6 +745,7 @@ export type UserUncheckedUpdateWithoutTimeTrackingActivitiesInput = {
   leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUncheckedUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTasksInput = {
@@ -734,6 +763,7 @@ export type UserCreateWithoutTasksInput = {
   leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTasksInput = {
@@ -751,6 +781,7 @@ export type UserUncheckedCreateWithoutTasksInput = {
   leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteUncheckedCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTasksInput = {
@@ -784,6 +815,7 @@ export type UserUpdateWithoutTasksInput = {
   leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasksInput = {
@@ -801,6 +833,7 @@ export type UserUncheckedUpdateWithoutTasksInput = {
   leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUncheckedUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLeadOwnersInput = {
@@ -818,6 +851,7 @@ export type UserCreateWithoutLeadOwnersInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLeadOwnersInput = {
@@ -835,6 +869,7 @@ export type UserUncheckedCreateWithoutLeadOwnersInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteUncheckedCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLeadOwnersInput = {
@@ -868,6 +903,7 @@ export type UserUpdateWithoutLeadOwnersInput = {
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeadOwnersInput = {
@@ -885,6 +921,7 @@ export type UserUncheckedUpdateWithoutLeadOwnersInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUncheckedUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOpportunityOwnersInput = {
@@ -902,6 +939,7 @@ export type UserCreateWithoutOpportunityOwnersInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOpportunityOwnersInput = {
@@ -919,6 +957,7 @@ export type UserUncheckedCreateWithoutOpportunityOwnersInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
   quoteOwners?: Prisma.QuoteUncheckedCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOpportunityOwnersInput = {
@@ -952,6 +991,7 @@ export type UserUpdateWithoutOpportunityOwnersInput = {
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOpportunityOwnersInput = {
@@ -969,6 +1009,7 @@ export type UserUncheckedUpdateWithoutOpportunityOwnersInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
   quoteOwners?: Prisma.QuoteUncheckedUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutQuoteOwnersInput = {
@@ -986,6 +1027,7 @@ export type UserCreateWithoutQuoteOwnersInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutQuoteOwnersInput = {
@@ -1003,6 +1045,7 @@ export type UserUncheckedCreateWithoutQuoteOwnersInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
   opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
+  projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutQuoteOwnersInput = {
@@ -1036,6 +1079,7 @@ export type UserUpdateWithoutQuoteOwnersInput = {
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutQuoteOwnersInput = {
@@ -1053,6 +1097,95 @@ export type UserUncheckedUpdateWithoutQuoteOwnersInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
   opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
+  projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutProjectMembersInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  davPasswordHash?: string | null
+  timeTrackingActivities?: Prisma.TimeTrackingActivityCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityCreateNestedManyWithoutOwnerInput
+  quoteOwners?: Prisma.QuoteCreateNestedManyWithoutOwnerInput
+}
+
+export type UserUncheckedCreateWithoutProjectMembersInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  email: string
+  displayName?: string | null
+  role?: $Enums.UserRole
+  publicKey?: string
+  publicSecret?: string
+  davPasswordHash?: string | null
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedCreateNestedManyWithoutUserInput
+  userTokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  leadOwners?: Prisma.LeadUncheckedCreateNestedManyWithoutOwnerInput
+  opportunityOwners?: Prisma.OpportunityUncheckedCreateNestedManyWithoutOwnerInput
+  quoteOwners?: Prisma.QuoteUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type UserCreateOrConnectWithoutProjectMembersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutProjectMembersInput, Prisma.UserUncheckedCreateWithoutProjectMembersInput>
+}
+
+export type UserUpsertWithoutProjectMembersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutProjectMembersInput, Prisma.UserUncheckedUpdateWithoutProjectMembersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutProjectMembersInput, Prisma.UserUncheckedCreateWithoutProjectMembersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutProjectMembersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutProjectMembersInput, Prisma.UserUncheckedUpdateWithoutProjectMembersInput>
+}
+
+export type UserUpdateWithoutProjectMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUpdateManyWithoutOwnerNestedInput
+  quoteOwners?: Prisma.QuoteUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutProjectMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  publicSecret?: Prisma.StringFieldUpdateOperationsInput | string
+  davPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeTrackingActivities?: Prisma.TimeTrackingActivityUncheckedUpdateManyWithoutUserNestedInput
+  userTokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  leadOwners?: Prisma.LeadUncheckedUpdateManyWithoutOwnerNestedInput
+  opportunityOwners?: Prisma.OpportunityUncheckedUpdateManyWithoutOwnerNestedInput
+  quoteOwners?: Prisma.QuoteUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 
@@ -1067,6 +1200,7 @@ export type UserCountOutputType = {
   leadOwners: number
   opportunityOwners: number
   quoteOwners: number
+  projectMembers: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1076,6 +1210,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   leadOwners?: boolean | UserCountOutputTypeCountLeadOwnersArgs
   opportunityOwners?: boolean | UserCountOutputTypeCountOpportunityOwnersArgs
   quoteOwners?: boolean | UserCountOutputTypeCountQuoteOwnersArgs
+  projectMembers?: boolean | UserCountOutputTypeCountProjectMembersArgs
 }
 
 /**
@@ -1130,6 +1265,13 @@ export type UserCountOutputTypeCountQuoteOwnersArgs<ExtArgs extends runtime.Type
   where?: Prisma.QuoteWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountProjectMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectMemberWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1147,6 +1289,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   leadOwners?: boolean | Prisma.User$leadOwnersArgs<ExtArgs>
   opportunityOwners?: boolean | Prisma.User$opportunityOwnersArgs<ExtArgs>
   quoteOwners?: boolean | Prisma.User$quoteOwnersArgs<ExtArgs>
+  projectMembers?: boolean | Prisma.User$projectMembersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1194,6 +1337,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   leadOwners?: boolean | Prisma.User$leadOwnersArgs<ExtArgs>
   opportunityOwners?: boolean | Prisma.User$opportunityOwnersArgs<ExtArgs>
   quoteOwners?: boolean | Prisma.User$quoteOwnersArgs<ExtArgs>
+  projectMembers?: boolean | Prisma.User$projectMembersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1208,6 +1352,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     leadOwners: Prisma.$LeadPayload<ExtArgs>[]
     opportunityOwners: Prisma.$OpportunityPayload<ExtArgs>[]
     quoteOwners: Prisma.$QuotePayload<ExtArgs>[]
+    projectMembers: Prisma.$ProjectMemberPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1619,6 +1764,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   leadOwners<T extends Prisma.User$leadOwnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadOwnersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   opportunityOwners<T extends Prisma.User$opportunityOwnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$opportunityOwnersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   quoteOwners<T extends Prisma.User$quoteOwnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$quoteOwnersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  projectMembers<T extends Prisma.User$projectMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2186,6 +2332,30 @@ export type User$quoteOwnersArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.QuoteScalarFieldEnum | Prisma.QuoteScalarFieldEnum[]
+}
+
+/**
+ * User.projectMembers
+ */
+export type User$projectMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectMember
+   */
+  select?: Prisma.ProjectMemberSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectMember
+   */
+  omit?: Prisma.ProjectMemberOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectMemberInclude<ExtArgs> | null
+  where?: Prisma.ProjectMemberWhereInput
+  orderBy?: Prisma.ProjectMemberOrderByWithRelationInput | Prisma.ProjectMemberOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectMemberWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectMemberScalarFieldEnum | Prisma.ProjectMemberScalarFieldEnum[]
 }
 
 /**

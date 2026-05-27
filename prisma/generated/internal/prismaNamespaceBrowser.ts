@@ -70,7 +70,10 @@ export const ModelName = {
   Opportunity: 'Opportunity',
   Quote: 'Quote',
   QuoteItem: 'QuoteItem',
-  QuoteItemPesConversion: 'QuoteItemPesConversion'
+  QuoteItemPesConversion: 'QuoteItemPesConversion',
+  Project: 'Project',
+  ProjectMember: 'ProjectMember',
+  ProjectNote: 'ProjectNote'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -160,6 +163,7 @@ export const CompanyPersonScalarFieldEnum = {
   createdAt: 'createdAt',
   main: 'main',
   role: 'role',
+  department: 'department',
   invoiceRecipient: 'invoiceRecipient',
   personId: 'personId',
   companyId: 'companyId'
@@ -356,6 +360,7 @@ export const QuoteScalarFieldEnum = {
   tax: 'tax',
   total: 'total',
   companyId: 'companyId',
+  personId: 'personId',
   ownerId: 'ownerId'
 } as const
 
@@ -391,6 +396,44 @@ export const QuoteItemPesConversionScalarFieldEnum = {
 } as const
 
 export type QuoteItemPesConversionScalarFieldEnum = (typeof QuoteItemPesConversionScalarFieldEnum)[keyof typeof QuoteItemPesConversionScalarFieldEnum]
+
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  status: 'status',
+  description: 'description',
+  companyId: 'companyId'
+} as const
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const ProjectMemberScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  role: 'role',
+  projectId: 'projectId',
+  userId: 'userId'
+} as const
+
+export type ProjectMemberScalarFieldEnum = (typeof ProjectMemberScalarFieldEnum)[keyof typeof ProjectMemberScalarFieldEnum]
+
+
+export const ProjectNoteScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  type: 'type',
+  timestamp: 'timestamp',
+  content: 'content',
+  projectId: 'projectId'
+} as const
+
+export type ProjectNoteScalarFieldEnum = (typeof ProjectNoteScalarFieldEnum)[keyof typeof ProjectNoteScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -114,6 +114,7 @@ export default defineEventHandler(async (event) => {
   const body = z.object({
     status: quoteStatusValidator.optional(),
     companyId: z.string().uuid(),
+    personId: z.string().uuid().optional().nullable(),
     quoteDate: z.iso.date(),
     quoteValidUntil: z.iso.date().optional().nullable(),
     introText: z.string().trim().optional().nullable(),
@@ -136,6 +137,18 @@ export default defineEventHandler(async (event) => {
       statusCode: 400,
       statusMessage: 'Company not found',
     });
+
+  // Verify person belongs to company if provided
+  if (body.data.personId) {
+    const relation = await prisma.companyPerson.findUnique({
+      where: { personId_companyId: { personId: body.data.personId, companyId: body.data.companyId } }
+    });
+    if (!relation)
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Person is not associated with the selected company',
+      });
+  }
 
   // Verify owner exists if provided
   if (body.data.ownerId) {
@@ -175,6 +188,7 @@ export default defineEventHandler(async (event) => {
       tax: quoteTotals.tax,
       total: quoteTotals.total,
       companyId: body.data.companyId,
+      personId: body.data.personId ?? null,
       ownerId: body.data.ownerId,
       quoteItems: {
         create: itemsWithTotals.map(item => ({
@@ -193,6 +207,7 @@ export default defineEventHandler(async (event) => {
     },
     include: {
       company: true,
+      person: true,
       quoteItems: {
         orderBy: {
           quotePosition: 'asc'

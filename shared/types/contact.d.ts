@@ -326,6 +326,8 @@ export interface PersonViewModel extends BaseViewModel {
     id: string;
     /** Person's role or position in the company */
     role: string | null;
+    /** Person's department in the company */
+    department: string | null;
     /** Whether this person is the invoice recipient for the company */
     invoiceRecipient: boolean;
   }[];
@@ -435,6 +437,8 @@ export interface CompanyViewModel extends BaseViewModel {
     id: string;
     /** Person's role or position in the company */
     role: string | null;
+    /** Person's department in the company */
+    department: string | null;
     /** Whether this person is the invoice recipient for the company */
     invoiceRecipient: boolean;
   }[];

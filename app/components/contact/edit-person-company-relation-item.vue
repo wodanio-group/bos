@@ -1,9 +1,9 @@
 <template>
 
   <div class="flex items-stretch justify-between gap-4">
-    <div class="grid grid-cols-1 lg:grid-cols-6 gap-4 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 w-full">
 
-      <div class="flex flex-col justify-center col-span-1 lg:col-span-2">
+      <div class="flex flex-col justify-center col-span-1 lg:col-span-4">
         <span class="text-xs text-primary-950/60 font-semibold" v-html="customerId" v-if="customerId"></span>
         <span class="text-primary-950" v-html="name"></span>
       </div>
@@ -15,9 +15,16 @@
         v-model="role">
       </atom-input>
 
+      <atom-input
+        type="text"
+        :title="$t('contactEdit.personCompanyRelations.department')"
+        class="col-span-1 lg:col-span-3"
+        v-model="department">
+      </atom-input>
+
       <atom-select
         :title="$t('contactEdit.personCompanyRelations.invoiceRecipient')"
-        class="col-span-1"
+        class="col-span-2"
         :items="[{ title: $t('general.yes'), value: 'true' }, { title: $t('general.no'), value: 'false' }]"
         v-model="invoiceRecipientSelect">
       </atom-select>
@@ -38,11 +45,11 @@
 
 const props = defineProps<{
   contactType: 'company' | 'person',
-  item: { id: string, role: string | null, invoiceRecipient: boolean },
+  item: { id: string, role: string | null, department: string | null, invoiceRecipient: boolean },
 }>();
 
 const emits = defineEmits<{
-  change: [{ id: string, role: string | null, invoiceRecipient: boolean }],
+  change: [{ id: string, role: string | null, department: string | null, invoiceRecipient: boolean }],
   delete: [void],
 }>();
 
@@ -60,12 +67,14 @@ const name = computed(() => (item.value && props.contactType === 'company')
     : '?');
 
 const role = ref(props.item.role ?? '');
+const department = ref(props.item.department ?? '');
 const invoiceRecipientSelect = ref<string>(props.item.invoiceRecipient ? 'true' : 'false');
 
-watch([role, invoiceRecipientSelect], ([roleVal, invoiceRecipientVal]: [string, string]) => {
+watch([role, department, invoiceRecipientSelect], ([roleVal, departmentVal, invoiceRecipientVal]: [string, string, string]) => {
   emits('change', {
     ...props.item,
     role: filterString(roleVal),
+    department: filterString(departmentVal),
     invoiceRecipient: invoiceRecipientVal === 'true',
   });
 }, { immediate: true });

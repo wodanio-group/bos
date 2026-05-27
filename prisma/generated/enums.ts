@@ -131,3 +131,20 @@ export const QuoteStatus = {
 } as const
 
 export type QuoteStatus = (typeof QuoteStatus)[keyof typeof QuoteStatus]
+
+
+export const ProjectStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
+
+
+export const ProjectMemberRole = {
+  MANAGER: 'MANAGER',
+  MEMBER: 'MEMBER'
+} as const
+
+export type ProjectMemberRole = (typeof ProjectMemberRole)[keyof typeof ProjectMemberRole]
