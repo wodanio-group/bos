@@ -11,8 +11,10 @@
           {{#if customer.displayName}}
             <span>{{customer.displayName}}</span>
           {{/if}}
-          {{#if customer.address.address}}
-            <span>{{customer.address.address}}</span>
+          {{#if contactPerson}}
+            <span>
+              {{contactPerson.displayName}}{{#if contactPerson.department}}, {{contactPerson.department}}{{/if}}
+            </span>
           {{/if}}
           {{#if customer.address.address2}}
             <span>{{customer.address.address2}}</span>
@@ -22,6 +24,9 @@
           {{/if}}
           {{#if customer.address.address4}}
             <span>{{customer.address.address4}}</span>
+          {{/if}}
+          {{#if customer.address.address}}
+            <span>{{customer.address.address}}</span>
           {{/if}}
           {{#if (or customer.address.zipCode customer.address.city)}}
             <span>{{customer.address.zipCode}} {{customer.address.city}}</span>

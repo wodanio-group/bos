@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { getOptions, setOptions } from "./option";
-import type { Company, ContactAddress, Country, Quote, QuoteItem, User } from "~~/lib/prisma.server";
+import type { Company, CompanyPerson, ContactAddress, Country, Person, Quote, QuoteItem, User } from "~~/lib/prisma.server";
 import { generatePdf, PdfTemplateKey } from "./pdf";
 
 export const getNextAvailableQuoteId = async (): Promise<string> => {
@@ -24,10 +24,11 @@ export const increaseQuoteId = async (): Promise<void> => {
 }
 
 export const generateQuotePdf = async (quote: Quote & {
-  quoteItems: QuoteItem[], 
-  company: Company & { 
+  quoteItems: QuoteItem[],
+  company: Company & {
     contactAddresses: ContactAddress[],
   },
+  person: (Person & { companyPersons: CompanyPerson[] }) | null,
   owner: User | null,
 }): Promise<Uint8Array> => {
   const runtimeConfig = useRuntimeConfig();
@@ -53,6 +54,15 @@ export const generateQuotePdf = async (quote: Quote & {
       displayName: companyDisplayName(quote.company),
       address: quote.company.contactAddresses.at(0),
     },
+    contactPerson: quote.person ? (() => {
+      const relation = quote.person!.companyPersons.find(cp => cp.companyId === quote.companyId);
+      return {
+        ...quote.person,
+        displayName: personDisplayName(quote.person!),
+        role: relation?.role ?? null,
+        department: relation?.department ?? null,
+      };
+    })() : null,
     owner: {
       ...quote.owner,
       displayName: quote.owner ? userDisplayName(quote.owner) : null,

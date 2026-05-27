@@ -14,6 +14,7 @@ general:
   phone: "Telefon"
   role: "Rolle"
   roleAt: "{role} bei"
+  department: "Abteilung"
   createdAt: "Erstellt am"
   updatedAt: "Aktualisiert am"
   address: "Adresse"
@@ -397,6 +398,7 @@ quote:
     quoteId: "Angebots-Nr."
     quoteDate: "Angebotsdatum"
     company: "Unternehmen"
+    person: "Ansprechpartner"
     owner: "Verantwortlicher"
     subtotal: "Zwischensumme"
     total: "Gesamt"
@@ -458,6 +460,7 @@ quote:
     helpText2: "Die Angebots-ID wird automatisch generiert."
     searchCompany: "Unternehmen suchen"
     selectCompany: "Unternehmen auswählen"
+    selectPerson: "Ansprechpartner auswählen"
     searchOwner: "Benutzer suchen"
     selectOwner: "Verantwortlichen auswählen"
     titleTemplate: "Angebot {quoteId}"
@@ -629,6 +632,7 @@ contactEdit:
     companiesTitle: "Unternehmen"
     personsTitle: "Personen"
     invoiceRecipient: "Rechnungsempfänger"
+    department: "Abteilung"
     searchDialog:
       company:
         title: "Unternehmen suchen und auswählen..."

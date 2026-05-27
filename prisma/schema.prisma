@@ -103,6 +103,7 @@ model Person {
   tasks                       Task[]
   leads                       Lead[]
   opportunities               Opportunity[]
+  quotes                      Quote[]
 }
 
 model Company {
@@ -131,6 +132,7 @@ model CompanyPerson {
   createdAt          DateTime      @default(now())
   main               Boolean       @default(false)
   role               String?
+  department         String?
   invoiceRecipient   Boolean       @default(false)
   personId           String
   person             Person        @relation(fields: [personId], references: [id], onDelete: Cascade)
@@ -407,6 +409,8 @@ model Quote {
   total                   Float
   companyId               String
   company                 Company                     @relation(fields: [companyId], references: [id])
+  personId                String?
+  person                  Person?                     @relation(fields: [personId], references: [id], onDelete: SetNull)
   ownerId                 String?
   owner                   User?                       @relation(fields: [ownerId], references: [id])
   quoteItems              QuoteItem[]

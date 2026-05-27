@@ -60,6 +60,11 @@ export default defineEventHandler(async (event) => {
           contactAddresses: true,
         }
       },
+      person: {
+        include: {
+          companyPersons: true,
+        }
+      },
       owner: true,
       quoteItems: true,
     }
@@ -83,7 +88,8 @@ export default defineEventHandler(async (event) => {
           ?? quote.company.contactAddresses[0]) as ContactAddress
       ] : []),
     },
-  }); 
+    person: quote.person,
+  });
 
   // Set response headers
   setResponseHeader(event, 'Content-Type', 'application/pdf');

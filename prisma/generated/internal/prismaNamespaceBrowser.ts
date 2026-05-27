@@ -163,6 +163,7 @@ export const CompanyPersonScalarFieldEnum = {
   createdAt: 'createdAt',
   main: 'main',
   role: 'role',
+  department: 'department',
   invoiceRecipient: 'invoiceRecipient',
   personId: 'personId',
   companyId: 'companyId'
@@ -359,6 +360,7 @@ export const QuoteScalarFieldEnum = {
   tax: 'tax',
   total: 'total',
   companyId: 'companyId',
+  personId: 'personId',
   ownerId: 'ownerId'
 } as const
 
